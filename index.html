@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Math Quiz</title>
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Interactive educational quiz platform with real-world math problems and flexible answer validation.">
+    <meta name="keywords" content="math quiz, education, interactive learning, mathematics">
+    <meta name="author" content="Your Name">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Interactive Math Quiz">
+    <meta property="og:description" content="Test your knowledge with real-world problem solving">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:title" content="Interactive Math Quiz">
+    <meta property="twitter:description" content="Test your knowledge with real-world problem solving">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- KaTeX CSS for math rendering -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" 
+          integrity="sha512-7nTa5CnxbcfzztRfh3YPYx7VtKrZnGRxY4r4xJXVjqMZFLM9rB8oYxOMGwBfFqPYmKQEu/X8W4yIEh3VULBw==" 
+          crossorigin="anonymous">
+    
+    <!-- Main CSS (includes Tailwind) -->
+    <link rel="stylesheet" href="/src/styles/main.css">
+</head>
+<body class="bg-gradient-to-br from-blue-500 via-purple-600 to-purple-800 min-h-screen">
+    <div id="app">
+        <!-- Loading spinner while JavaScript loads -->
+        <div id="loading" class="flex items-center justify-center min-h-screen">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-white"></div>
+        </div>
+        
+        <!-- Main quiz container - will be populated by JavaScript -->
+        <div id="quiz-root" class="hidden">
+            <!-- Quiz content will be inserted here -->
+        </div>
+    </div>
+
+    <!-- KaTeX JavaScript for math rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.js" 
+            integrity="sha512-rGjJ4v4E8aWWq0VElZQGdO3W6iNNNhWNCtW3Z8oPa3YPtU8ZNYHhNt9LH0Z8+KKKzNfSEoGCX0f2yt7uGU8MUA==" 
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/contrib/auto-render.min.js" 
+            integrity="sha512-7BAeA6xqJ5+/3mKi4KPG7/TI9nNf9LfUorlOwG5HTbQiVPY6Y/GzQF7RdNz2AHm0L6C/5IjS12xOlFKvLfxGg==" 
+            crossorigin="anonymous"></script>
+    
+    <!-- Main application script -->
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>
