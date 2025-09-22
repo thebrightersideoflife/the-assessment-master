@@ -1,32 +1,63 @@
+/* Add these custom styles to your src/styles/tailwind.css */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom styles for math rendering and complex animations */
 @layer components {
-  .quiz-gradient {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  /* Sidebar transition improvements */
+  .sidebar-transition {
+    transition: all 0.2s ease-in-out;
   }
   
-  .katex {
-    font-size: 1.1em;
+  /* Custom scrollbar for sidebar */
+  .sidebar-scroll::-webkit-scrollbar {
+    width: 4px;
   }
   
-  .katex-display {
-    margin: 20px 0;
+  .sidebar-scroll::-webkit-scrollbar-track {
+    background: transparent;
   }
   
-  .loading {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #ffffff;
-    border-radius: 50%;
-    border-top-color: transparent;
-    animation: spin 1s ease-in-out infinite;
+  .sidebar-scroll::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 2px;
   }
   
-  @keyframes spin {
-    to { transform: rotate(360deg); }
+  .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
   }
+  
+  /* Enhanced button hover effects */
+  .nav-button-hover {
+    @apply transition-all duration-200 ease-in-out;
+  }
+  
+  .nav-button-hover:hover {
+    @apply transform translate-x-1;
+  }
+}
+
+/* Math rendering styles */
+.katex {
+  font-size: 1.1em;
+}
+
+.katex-display {
+  margin: 20px 0;
+}
+
+/* Loading animation */
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
