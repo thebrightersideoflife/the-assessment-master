@@ -1,25 +1,25 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { 
-  FiHome, 
-  FiBookOpen, 
-  FiAward, 
-  FiBarChart3, 
-  FiUser,
-  FiRefreshCw,
-  FiSettings
-} from 'react-icons/fi';
+  AiOutlineHome, 
+  AiOutlineFileText, 
+  AiOutlineBook, 
+  AiOutlineDashboard, 
+  AiOutlineUser,
+  AiOutlineSetting,
+  AiOutlineMenuFold,
+  AiOutlineMenuUnfold
+} from 'react-icons/ai';
 
-const Sidebar = ({ sidebarState, setSidebarState, onResetQuiz }) => {
+const Sidebar = ({ sidebarState, setSidebarState }) => {
   const location = useLocation();
-  const navigate = useNavigate();
-
+  
   const navigationItems = [
-    { id: "", name: "Home", icon: <FiHome />, path: "/" },
-    { id: "quiz", name: "Take Quiz", icon: <FiBookOpen />, path: "/quiz" },
-    { id: "topics", name: "Topics", icon: <FiAward />, path: "/topics" },
-    { id: "dashboard", name: "Dashboard", icon: <FiBarChart3 />, path: "/dashboard" },
-    { id: "profile", name: "Profile", icon: <FiUser />, path: "/profile" },
+    { name: "Home", path: "/", icon: AiOutlineHome },
+    { name: "Quiz", path: "/quiz", icon: AiOutlineFileText },
+    { name: "Topics", path: "/topics", icon: AiOutlineBook },
+    { name: "Dashboard", path: "/dashboard", icon: AiOutlineDashboard },
+    { name: "Profile", path: "/profile", icon: AiOutlineUser },
   ];
 
   return (
@@ -28,45 +28,48 @@ const Sidebar = ({ sidebarState, setSidebarState, onResetQuiz }) => {
         sidebarState.open ? "translate-x-0" : "-translate-x-full"
       } md:translate-x-0 ${sidebarState.collapsed ? "w-20" : "w-64"}`}
     >
-      <div className="p-4 border-b flex items-center justify-between">
+      <div className="p-4 border-b border-[#3498DB]/20 flex items-center justify-between">
         {!sidebarState.collapsed && (
-          <h2 className="text-lg font-semibold text-gray-800">Navigation</h2>
+          <h2 className="text-lg font-semibold text-[#4169E1]">Navigation</h2>
         )}
+        <button
+          onClick={() => setSidebarState(prev => ({ ...prev, collapsed: !prev.collapsed }))}
+          className="p-2 hover:bg-[#FFC300]/10 rounded-lg transition-colors"
+        >
+          {sidebarState.collapsed ? 
+            <AiOutlineMenuUnfold className="w-5 h-5 text-[#4169E1]" /> : 
+            <AiOutlineMenuFold className="w-5 h-5 text-[#4169E1]" />
+          }
+        </button>
       </div>
       
       <nav className="flex-1 overflow-y-auto p-2">
-        {navigationItems.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => {
-              navigate(item.path);
-              setSidebarState((prev) => ({ ...prev, open: false }));
-            }}
-            className={`w-full flex items-center p-3 rounded-lg mb-1 transition-colors ${
-              location.pathname === item.path
-                ? "bg-indigo-100 text-indigo-600"
-                : "text-gray-600 hover:bg-gray-100"
-            }`}
-          >
-            <span className="mr-3">{item.icon}</span>
-            {!sidebarState.collapsed && <span>{item.name}</span>}
-          </button>
-        ))}
-        
-        <button
-          onClick={onResetQuiz}
-          className={`md:hidden w-full flex items-center p-3 rounded-lg mb-1 text-gray-600 hover:bg-gray-100 transition-colors ${
-            !sidebarState.collapsed ? "" : "justify-center"
-          }`}
-        >
-          <span className="mr-3"><FiRefreshCw /></span>
-          {!sidebarState.collapsed && <span>Reset Quiz</span>}
-        </button>
+        {navigationItems.map((item) => {
+          const IconComponent = item.icon;
+          return (
+            <Link
+              key={item.path}
+              to={item.path}
+              onClick={() => setSidebarState(prev => ({ ...prev, open: false }))}
+              className={`w-full flex items-center p-3 rounded-lg mb-1 transition-colors ${
+                location.pathname === item.path
+                  ? "bg-gradient-to-r from-[#FFC300]/20 to-[#E67E22]/20 text-[#4169E1] border-l-4 border-[#FFC300]"
+                  : "text-gray-600 hover:bg-[#3498DB]/10 hover:text-[#4169E1]"
+              }`}
+            >
+              <IconComponent className="w-5 h-5 mr-3 flex-shrink-0" />
+              {!sidebarState.collapsed && <span>{item.name}</span>}
+            </Link>
+          );
+        })}
       </nav>
-
-      <div className="p-4 border-t">
-        <button className="w-full flex items-center p-3 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
-          <FiSettings className="mr-3" />
+      
+      <div className="p-4 border-t border-[#3498DB]/20">
+        <button 
+          onClick={() => setSidebarState(prev => ({ ...prev, collapsed: !prev.collapsed }))}
+          className="w-full flex items-center p-3 rounded-lg text-gray-600 hover:bg-[#28B463]/10 hover:text-[#28B463] transition-colors"
+        >
+          <AiOutlineSetting className="w-5 h-5 mr-3 flex-shrink-0" />
           {!sidebarState.collapsed && <span>Settings</span>}
         </button>
       </div>

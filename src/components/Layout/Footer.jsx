@@ -2,10 +2,8 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-white bg-opacity-90 backdrop-blur-lg rounded-2xl mx-4 mb-6 p-6 text-center shadow-lg">
-      <p className="text-gray-600">
-        © 2024 The Assessment Master. Built for University IT Students.
-      </p>
+    <footer className="bg-white text-center p-4 shadow-md text-gray-700">
+      &copy; {new Date().getFullYear()} Assessment Master. Built for University IT Students.
     </footer>
   );
 };
