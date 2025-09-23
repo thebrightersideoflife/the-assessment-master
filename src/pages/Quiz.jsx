@@ -43,7 +43,7 @@ const Quiz = () => {
             
             <button
               onClick={handleResetQuiz}
-              className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-[#FFC300]/20 to-[#E67E22]/20 hover:from-[#FFC300]/30 hover:to-[#E67E22]/30 rounded-xl transition-all font-semibold backdrop-blur-sm border border-[#FFC300]/50"
+              className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-[#ad1457]/20 to-[#E67E22]/20 hover:from-[#880e4f]/30 hover:to-[#E67E22]/30 rounded-xl transition-all font-semibold backdrop-blur-sm border border-[#ffffff]/50"
             >
               <AiOutlineReload className="w-5 h-5" />
               <span>Reset Quiz</span>

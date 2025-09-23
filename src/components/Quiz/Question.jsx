@@ -47,12 +47,12 @@ const Question = ({ question, questionNumber, onNext, isLastQuestion }) => {
   };
 
   return (
-    <div className="bg-white bg-opacity-98 backdrop-blur-lg rounded-2xl p-10 shadow-2xl hover:transform hover:-translate-y-2 transition-all">
+    <div className="bg-white bg-opacity-98 backdrop-blur-lg rounded-2xl p-10 shadow-2xl hover:transform hover:-translate-y-2 transition-all border border-[#FFC300]/20">
       <div className="flex items-start mb-8">
-        <div className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mr-6">
+        <div className="bg-gradient-to-r from-[#4169E1] to-[#3498DB] text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mr-6 shadow-lg">
           {questionNumber}
         </div>
-        <div className="text-xl font-medium text-gray-800 leading-relaxed">
+        <div className="text-xl font-medium text-[#4169E1] leading-relaxed">
           {question.question}
         </div>
       </div>
@@ -69,7 +69,7 @@ const Question = ({ question, questionNumber, onNext, isLastQuestion }) => {
       {isAnswered && isCorrect && (
         <button
           onClick={handleShowExplanation}
-          className="mt-4 bg-green-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-600 transition-colors"
+          className="mt-4 bg-gradient-to-r from-[#28B463] to-[#28B463] text-white px-6 py-2 rounded-lg font-semibold hover:from-[#28B463]/90 hover:to-[#28B463]/90 transition-all shadow-md"
         >
           Show Explanation
         </button>
@@ -83,7 +83,7 @@ const Question = ({ question, questionNumber, onNext, isLastQuestion }) => {
         <div className="mt-8 text-center">
           <button
             onClick={handleNext}
-            className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all"
+            className="bg-gradient-to-r from-[#FFC300] to-[#E67E22] text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all hover:from-[#E67E22] hover:to-[#C0392B]"
           >
             {isLastQuestion ? 'Finish Quiz' : 'Next Question'}
           </button>

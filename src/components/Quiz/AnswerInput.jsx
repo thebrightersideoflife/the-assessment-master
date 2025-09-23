@@ -1,4 +1,5 @@
 import React from 'react';
+import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 
 const AnswerInput = ({ value, onChange, onSubmit, disabled, isCorrect, correctAnswer }) => {
   const handleKeyPress = (e) => {
@@ -12,12 +13,12 @@ const AnswerInput = ({ value, onChange, onSubmit, disabled, isCorrect, correctAn
     
     if (disabled) {
       if (isCorrect === true) {
-        classes += "border-green-500 bg-green-50";
+        classes += "border-[#28B463] bg-[#28B463]/10";
       } else if (isCorrect === false) {
-        classes += "border-red-500 bg-red-50";
+        classes += "border-[#C0392B] bg-[#C0392B]/10";
       }
     } else {
-      classes += "border-gray-300 focus:border-indigo-500 focus:shadow-lg focus:shadow-indigo-200";
+      classes += "border-gray-300 focus:border-[#4169E1] focus:shadow-lg focus:shadow-[#4169E1]/20";
     }
     
     return classes;
@@ -27,9 +28,19 @@ const AnswerInput = ({ value, onChange, onSubmit, disabled, isCorrect, correctAn
     if (!disabled) return null;
     
     if (isCorrect) {
-      return <div className="text-green-600 font-semibold mt-4">✅ Correct! Well done.</div>;
+      return (
+        <div className="text-[#28B463] font-semibold mt-4 flex items-center gap-2">
+          <AiOutlineCheck className="w-5 h-5" />
+          Correct! Well done.
+        </div>
+      );
     } else {
-      return <div className="text-red-600 font-semibold mt-4">❌ Incorrect. The answer was: {correctAnswer}</div>;
+      return (
+        <div className="text-[#C0392B] font-semibold mt-4 flex items-center gap-2">
+          <AiOutlineClose className="w-5 h-5" />
+          Incorrect. The answer was: {correctAnswer}
+        </div>
+      );
     }
   };
 
@@ -50,7 +61,7 @@ const AnswerInput = ({ value, onChange, onSubmit, disabled, isCorrect, correctAn
         {!disabled && (
           <button
             onClick={onSubmit}
-            className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all min-w-36"
+            className="bg-gradient-to-r from-[#4169E1] to-[#3498DB] text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all min-w-36 hover:from-[#3498DB] hover:to-[#4169E1]"
           >
             Check Answer
           </button>

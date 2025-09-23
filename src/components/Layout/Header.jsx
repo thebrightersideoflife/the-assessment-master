@@ -12,6 +12,9 @@ const Header = ({ sidebarState, setSidebarState }) => {
             alt="Company Logo" 
             className="h-12 w-auto"
           />
+          <span className="ml-2 text-gray-800 font-bold text-base">
+            The Brighter Side of Life
+          </span>
         </div>
         
         {/* Project Name & Slogan - Center */}
