@@ -4,12 +4,14 @@ import { useStore } from '../../store/useStore';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
+import GamificationSettings from '../UI/GamificationSettings';
 
 const Layout = ({ children }) => {
   const [sidebarState, setSidebarState] = useState({
     open: false,
     collapsed: false
   });
+  const [showGamificationSettings, setShowGamificationSettings] = useState(false);
   
   const location = useLocation();
   const navigate = useNavigate();
@@ -42,6 +44,7 @@ const Layout = ({ children }) => {
         <Sidebar 
           sidebarState={sidebarState}
           setSidebarState={setSidebarState}
+          onSettingsClick={() => setShowGamificationSettings(true)}
         />
         
         <main
@@ -54,6 +57,12 @@ const Layout = ({ children }) => {
       </div>
       
       <Footer />
+      
+      {/* Gamification Settings Modal */}
+      <GamificationSettings 
+        isOpen={showGamificationSettings}
+        onClose={() => setShowGamificationSettings(false)}
+      />
       
       {/* Mobile Overlay */}
       {sidebarState.open && (
