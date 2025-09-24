@@ -1,3 +1,6 @@
+//The AnswerValidator class has a method checkAnswer that compares the user's answer with the correct answers.
+// It normalizes the answers and checks for equivalence.
+
 export class AnswerValidator {
   constructor() {
     this.patterns = {

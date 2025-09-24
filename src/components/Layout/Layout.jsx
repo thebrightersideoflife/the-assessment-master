@@ -4,7 +4,7 @@ import { useStore } from '../../store/useStore';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
-import GamificationSettings from '../UI/GamificationSettings';
+import GamificationSettings from '../Quiz/GamificationSettings';
 
 const Layout = ({ children }) => {
   const [sidebarState, setSidebarState] = useState({
@@ -37,7 +37,8 @@ const Layout = ({ children }) => {
     <div className="flex flex-col h-screen bg-gray-100">
       <Header 
         sidebarState={sidebarState} 
-        setSidebarState={setSidebarState} 
+        setSidebarState={setSidebarState}
+        onSettingsClick={() => setShowGamificationSettings(true)}
       />
       
       <div className="flex flex-1 overflow-hidden">

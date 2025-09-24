@@ -8,8 +8,10 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import { useStore } from './store/useStore';
 import './styles/tailwind.css';
+import { injectAnimations } from './utils/gamificationUtils';
 
 function App() {
+  injectAnimations(); // Ensure animations are ready
   return (
     <Router>
       <Layout>

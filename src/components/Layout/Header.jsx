@@ -1,7 +1,7 @@
 import React from 'react';
-import { AiOutlineMenu, AiOutlineClose, AiOutlineUser } from 'react-icons/ai';
+import { AiOutlineMenu, AiOutlineClose, AiOutlineSetting } from 'react-icons/ai';
 
-const Header = ({ sidebarState, setSidebarState }) => {
+const Header = ({ sidebarState, setSidebarState, onSettingsClick }) => {
   return (
     <header className="bg-white shadow-sm py-4 px-6">
       <div className="flex items-center justify-between">
@@ -28,15 +28,19 @@ const Header = ({ sidebarState, setSidebarState }) => {
           </div>
         </div>
         
-        {/* Profile Section - Right */}
+        {/* Settings & Mobile Menu - Right */}
         <div className="flex items-center space-x-4">
-          <div className="hidden md:flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-[#3498DB] to-[#4169E1] rounded-full flex items-center justify-center">
-              <AiOutlineUser className="text-white w-4 h-4" />
-            </div>
-            <span className="text-sm text-gray-700">Student</span>
-          </div>
+          {/* Desktop Settings Button */}
+          <button
+            onClick={onSettingsClick}
+            className="hidden md:flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-[#3498DB]/10 to-[#4169E1]/10 hover:from-[#3498DB]/20 hover:to-[#4169E1]/20 rounded-lg transition-all border border-[#3498DB]/20"
+            title="Gamification Settings"
+          >
+            <AiOutlineSetting className="w-5 h-5 text-[#4169E1]" />
+            <span className="text-sm text-[#4169E1] font-medium">Settings</span>
+          </button>
           
+          {/* Mobile Menu Toggle */}
           <button
             onClick={() => setSidebarState(prev => ({ ...prev, open: !prev.open }))}
             className="md:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
