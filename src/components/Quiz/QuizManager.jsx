@@ -9,7 +9,6 @@ import { soundManager, createAchievementConfetti } from '../../utils/gamificatio
 const QuizManager = () => {
   const { currentQuestionIndex, stats, accuracy, nextQuestion, restart } = useQuiz();
   const [isComplete, setIsComplete] = useState(false);
-  const [showAchievement, setShowAchievement] = useState(false);
   const [achievementPlayed, setAchievementPlayed] = useState(false);
   const completionRef = useRef(null);
 
@@ -62,13 +61,6 @@ const QuizManager = () => {
         badge.classList.add('achievement-glow');
         setTimeout(() => badge.classList.remove('achievement-glow'), 1500);
       }
-
-      // Show achievement notification
-      if (accuracy >= 80) {
-        console.log('Showing achievement notification');
-        setShowAchievement(true);
-        setTimeout(() => setShowAchievement(false), 4000);
-      }
     } else {
       console.warn('completionRef.current is null');
     }
@@ -87,7 +79,6 @@ const QuizManager = () => {
     console.log('Restarting quiz');
     restart();
     setIsComplete(false);
-    setShowAchievement(false);
     setAchievementPlayed(false);
   };
 
@@ -160,23 +151,6 @@ const QuizManager = () => {
 
     return (
       <div className="space-y-6">
-        {/* Achievement Notification */}
-        {showAchievement && achievementDetails && (
-          <div 
-            className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 animate-fade-in" 
-            role="alert" 
-            aria-live="polite"
-          >
-            <div className={`bg-gradient-to-r ${achievementDetails.bgGradient} backdrop-blur-lg rounded-2xl p-6 shadow-2xl border border-[#FFC300]/30 text-center min-w-80`}>
-              <div className="text-5xl mb-2">{achievementDetails.emoji}</div>
-              <h3 className={`text-2xl font-bold bg-gradient-to-r ${achievementDetails.gradient} bg-clip-text text-transparent`}>
-                {achievementDetails.title}
-              </h3>
-              <p className="text-gray-700 font-medium">{achievementDetails.subtitle}</p>
-            </div>
-          </div>
-        )}
-
         {/* Completion Screen */}
         <div 
           ref={completionRef}
