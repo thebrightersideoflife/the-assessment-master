@@ -1,92 +1,128 @@
-import React, { useState, useEffect } from 'react';
-import AnswerInput from './AnswerInput';
-import Explanation from './Explanation';
-import { useQuiz } from '../../hooks/useQuiz';
+import React, { useState, useRef } from 'react';
+import { InlineMath, BlockMath } from 'react-katex';
+import 'katex/dist/katex.min.css';
+import { questions } from '../../data/questions';
+import { createConfetti, createShakeEffect, soundManager } from '../../utils/gamificationUtils';
 
-const Question = ({ question, questionNumber, onNext, isLastQuestion }) => {
+const Question = ({ questionIndex, moduleId, weekId, onAnswerSubmit, onNext }) => {
   const [userAnswer, setUserAnswer] = useState('');
-  const [isAnswered, setIsAnswered] = useState(false);
-  const [isCorrect, setIsCorrect] = useState(false);
-  const [showExplanation, setShowExplanation] = useState(false);
-  const { handleAnswerSubmit } = useQuiz();
+  const [feedback, setFeedback] = useState(null);
+  const inputRef = useRef(null);
 
-  // Reset state when question changes
-  useEffect(() => {
-    setUserAnswer('');
-    setIsAnswered(false);
-    setIsCorrect(false);
-    setShowExplanation(false);
-  }, [question.id]); // Reset when question ID changes
+  // Find the current question based on module, week, and index
+  const question = questions.find(
+    (q) => q.moduleId === moduleId && q.weekId === weekId && q.index === questionIndex
+  );
 
-  const handleSubmit = () => {
-    if (!userAnswer.trim()) {
-      alert('Please enter an answer before checking.');
-      return;
-    }
+  if (!question) {
+    return (
+      <div className="text-center text-[#C0392B]">
+        Question not found.
+      </div>
+    );
+  }
 
-    const correct = handleAnswerSubmit(userAnswer, question.correctAnswers);
-    setIsCorrect(correct);
-    setIsAnswered(true);
-    
-    if (!correct) {
-      setShowExplanation(true);
-    }
+  // Render text with LaTeX math support
+  const renderMath = (text) => {
+    return text.split(/(\$\$.*?\$\$|\$.*?\$)/).map((part, index) => {
+      if (part.startsWith('$$') && part.endsWith('$$')) {
+        return <BlockMath key={index} math={part.slice(2, -2)} />;
+      } else if (part.startsWith('$') && part.endsWith('$')) {
+        return <InlineMath key={index} math={part.slice(1, -1)} />;
+      }
+      return part;
+    });
   };
 
-  const handleShowExplanation = () => {
-    setShowExplanation(true);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!userAnswer.trim()) return;
+
+    const isCorrect = onAnswerSubmit(userAnswer, question.correctAnswers);
+
+    setFeedback({
+      isCorrect,
+      message: isCorrect
+        ? 'Correct! Well done! 🎉'
+        : `Incorrect. Try again or proceed. The correct answer is: ${question.correctAnswers[0]}.`
+    });
+
+    if (isCorrect) {
+      soundManager.playCorrectSound();
+      createConfetti(inputRef.current);
+    } else {
+      soundManager.playIncorrectSound();
+      createShakeEffect(inputRef.current);
+    }
   };
 
   const handleNext = () => {
-    // Reset state before moving to next question
     setUserAnswer('');
-    setIsAnswered(false);
-    setIsCorrect(false);
-    setShowExplanation(false);
+    setFeedback(null);
     onNext();
   };
 
   return (
-    <div className="bg-white bg-opacity-98 backdrop-blur-lg rounded-2xl p-10 shadow-2xl hover:transform hover:-translate-y-2 transition-all border border-[#FFC300]/20">
-      <div className="flex items-start mb-8">
-        <div className="bg-gradient-to-r from-[#4169E1] to-[#3498DB] text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mr-6 shadow-lg">
-          {questionNumber}
-        </div>
-        <div className="text-xl font-medium text-[#4169E1] leading-relaxed">
-          {question.question}
-        </div>
+    <div className="space-y-6">
+      {/* Question Text with Math Rendering */}
+      <div className="prose text-gray-700">
+        {renderMath(question.text)}
       </div>
 
-      <AnswerInput
-        value={userAnswer}
-        onChange={setUserAnswer}
-        onSubmit={handleSubmit}
-        disabled={isAnswered}
-        isCorrect={isAnswered ? isCorrect : null}
-        correctAnswer={isAnswered && !isCorrect ? question.correctAnswers[0] : null}
-      />
+      {/* Answer Form */}
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label htmlFor="answer" className="sr-only">
+            Your answer
+          </label>
+          <input
+            ref={inputRef}
+            id="answer"
+            type="text"
+            value={userAnswer}
+            onChange={(e) => setUserAnswer(e.target.value)}
+            placeholder="Enter your answer"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4169E1]"
+            aria-label="Enter your answer"
+            autoFocus
+          />
+        </div>
 
-      {isAnswered && isCorrect && (
-        <button
-          onClick={handleShowExplanation}
-          className="mt-4 bg-gradient-to-r from-[#28B463] to-[#28B463] text-white px-6 py-2 rounded-lg font-semibold hover:from-[#28B463]/90 hover:to-[#28B463]/90 transition-all shadow-md"
-        >
-          Show Explanation
-        </button>
-      )}
-
-      {showExplanation && (
-        <Explanation explanation={question.explanation} />
-      )}
-
-      {isAnswered && (
-        <div className="mt-8 text-center">
+        <div className="flex gap-4">
           <button
-            onClick={handleNext}
-            className="bg-gradient-to-r from-[#FFC300] to-[#E67E22] text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all hover:from-[#E67E22] hover:to-[#C0392B]"
+            type="submit"
+            className="bg-gradient-to-r from-[#28B463] to-[#3498DB] text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all"
+            aria-label="Submit answer"
           >
-            {isLastQuestion ? 'Finish Quiz' : 'Next Question'}
+            Submit
           </button>
+
+          {feedback && (
+            <button
+              type="button"
+              onClick={handleNext}
+              className="bg-gradient-to-r from-[#FFC300] to-[#E67E22] text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all"
+              aria-label="Next question"
+            >
+              Next
+            </button>
+          )}
+        </div>
+      </form>
+
+      {/* Feedback Box */}
+      {feedback && (
+        <div
+          className={`p-4 rounded-lg ${
+            feedback.isCorrect
+              ? 'bg-[#28B463]/10 border border-[#28B463]/30'
+              : 'bg-[#C0392B]/10 border border-[#C0392B]/30'
+          }`}
+          role="alert"
+        >
+          <p className={feedback.isCorrect ? 'text-[#28B463]' : 'text-[#C0392B]'}>
+            {renderMath(feedback.message)}
+          </p>
         </div>
       )}
     </div>

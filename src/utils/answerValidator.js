@@ -1,8 +1,8 @@
-//The AnswerValidator class has a method checkAnswer that compares the user's answer with the correct answers.
-// It normalizes the answers and checks for equivalence.
+import { evaluate } from 'mathjs';
 
 export class AnswerValidator {
-  constructor() {
+  constructor({ tolerance = 0.001 } = {}) {
+    this.tolerance = tolerance;
     this.patterns = {
       fraction: /^(-?\d+)\/(-?\d+)$/,
       decimal: /^-?\d*\.?\d+$/,
@@ -25,50 +25,50 @@ export class AnswerValidator {
 
   convertToDecimal(answer) {
     const normalized = this.normalize(answer);
-    
+
     if (normalized.includes('%')) {
       const num = parseFloat(normalized.replace('%', ''));
       return num / 100;
     }
-    
+
     const fractionMatch = normalized.match(this.patterns.fraction);
     if (fractionMatch) {
       const numerator = parseFloat(fractionMatch[1]);
       const denominator = parseFloat(fractionMatch[2]);
-      return numerator / denominator;
+      return denominator !== 0 ? numerator / denominator : null;
     }
-    
+
     if (this.patterns.decimal.test(normalized)) {
       return parseFloat(normalized);
     }
-    
-    if (normalized.includes('π')) {
-      let expr = normalized.replace(/π/g, Math.PI.toString());
+
+    if (normalized.includes('π') || this.patterns.expression.test(normalized)) {
       try {
-        return eval(expr);
+        const expr = normalized.replace(/π/g, 'pi');
+        return evaluate(expr);
       } catch {
         return null;
       }
     }
-    
+
     return null;
   }
 
-  isEquivalent(userAnswer, correctAnswer, tolerance = 0.001) {
+  isEquivalent(userAnswer, correctAnswer) {
     const normalizedUser = this.normalize(userAnswer);
     const normalizedCorrect = this.normalize(correctAnswer);
-    
+
     if (normalizedUser === normalizedCorrect) {
       return true;
     }
-    
+
     const userDecimal = this.convertToDecimal(normalizedUser);
     const correctDecimal = this.convertToDecimal(normalizedCorrect);
-    
+
     if (userDecimal !== null && correctDecimal !== null) {
-      return Math.abs(userDecimal - correctDecimal) < tolerance;
+      return Math.abs(userDecimal - correctDecimal) < this.tolerance;
     }
-    
+
     return false;
   }
 

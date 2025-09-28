@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -18,6 +18,14 @@ module.exports = {
           700: '#1d4ed8',
           800: '#1e40af',
           900: '#1e3a8a',
+        },
+        brand: {
+          yellow: '#FFC300',
+          orange: '#E67E22',
+          green: '#28B463',
+          blue: '#3498DB',
+          darkBlue: '#4169E1',
+          red: '#C0392B',
         },
       },
       fontFamily: {
@@ -41,4 +49,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};
