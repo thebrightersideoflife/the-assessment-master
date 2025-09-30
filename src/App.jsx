@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import Home from './pages/Home';
 import Quiz from './pages/Quiz';
@@ -46,6 +46,7 @@ function App() {
           <Route path="/modules/:moduleId" element={<Modules />} />
           <Route path="/modules/:moduleId/:weekId" element={<Week />} />
           <Route path="/quizzes/module/:moduleId/:weekId" element={<Quiz />} />
+          <Route path="/quizzes/exam/:examId" element={<Quiz />} />
           <Route path="/topics" element={<Topics />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />

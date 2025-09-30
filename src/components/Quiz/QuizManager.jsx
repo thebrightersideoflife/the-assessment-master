@@ -1,13 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
-import { useQuiz } from '../../hooks/useQuiz';
-import Question from './Question';
-import ProgressBar from './ProgressBar';
-import { renderMath } from '../../utils/mathRenderer';
-import { soundManager, createAchievementConfetti } from '../../utils/gamificationUtils';
+import React, { useEffect, useState, useRef } from "react";
+import { useQuiz } from "../../hooks/useQuiz";
+import Question from "./Question";
+import ProgressBar from "./ProgressBar";
+import { InlineMath, BlockMath } from "react-katex";
+import "katex/dist/katex.min.css";
+import {
+  soundManager,
+  createAchievementConfetti,
+} from "../../utils/gamificationUtils";
+import { questions } from "../../data/questions";
 
-const QuizManager = () => {
-  const { moduleId, weekId } = useParams();
+const QuizManager = ({ moduleId, weekId }) => {
   const {
     currentQuestionIndex,
     totalQuestions,
@@ -17,82 +20,137 @@ const QuizManager = () => {
     nextQuestion,
     restart,
     loading,
-    error
+    error,
   } = useQuiz(moduleId, weekId);
 
   const [isComplete, setIsComplete] = useState(false);
   const [achievementPlayed, setAchievementPlayed] = useState(false);
   const containerRef = useRef(null);
 
-  // ✅ Math rendering after each question render
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      renderMath();
-    }, 100);
-    return () => clearTimeout(timer);
-  }, [currentQuestionIndex]);
+  // Filter questions for the given module/week
+  const filteredQuestions = questions.filter(
+    (q) => q.moduleId === moduleId && q.weekId === weekId
+  );
+  const currentQuestion = filteredQuestions[currentQuestionIndex];
 
-  // ✅ Watch for quiz completion
+  // Watch for quiz completion
   useEffect(() => {
     if (currentQuestionIndex >= totalQuestions && totalQuestions > 0) {
       setIsComplete(true);
     }
   }, [currentQuestionIndex, totalQuestions]);
 
-  // ✅ Trigger celebration effects once on completion
+  // Trigger celebration effects
   useEffect(() => {
     if (isComplete && !achievementPlayed && containerRef.current) {
       setAchievementPlayed(true);
       soundManager.audioContext?.resume();
 
-      // Confetti intensity based on accuracy
-      const intensity = accuracy >= 100 ? 'high' : accuracy >= 90 ? 'medium' : accuracy >= 80 ? 'low' : null;
+      const intensity =
+        accuracy >= 100
+          ? "high"
+          : accuracy >= 90
+          ? "medium"
+          : accuracy >= 80
+          ? "low"
+          : null;
+
       if (intensity) {
         soundManager.playAchievementSound(accuracy);
         createAchievementConfetti(containerRef.current, intensity);
       } else {
-        soundManager.play('/sounds/correct.mp3');
+        soundManager.playCorrectSound();
       }
 
-      // Animate stat cards & badge glow
-      const cards = containerRef.current.querySelectorAll('.stats-card');
-      cards.forEach(card => {
-        card.classList.add('success-pulse');
-        setTimeout(() => card.classList.remove('success-pulse'), 600);
+      const cards = containerRef.current.querySelectorAll(".stats-card");
+      cards.forEach((card) => {
+        card.classList.add("achievement-glow");
+        setTimeout(() => card.classList.remove("achievement-glow"), 1500);
       });
 
-      const badge = containerRef.current.querySelector('.achievement-badge');
+      const badge = containerRef.current.querySelector(".achievement-badge");
       if (badge) {
-        badge.classList.add('achievement-glow');
-        setTimeout(() => badge.classList.remove('achievement-glow'), 1500);
+        badge.classList.add("achievement-glow");
+        setTimeout(() => badge.classList.remove("achievement-glow"), 1500);
       }
     }
   }, [isComplete, achievementPlayed, accuracy]);
 
+  // Restart handler
   const handleRestart = () => {
     restart();
     setIsComplete(false);
     setAchievementPlayed(false);
   };
 
-  // 🎯 Dynamic message based on accuracy
+  // Completion feedback
   const getCompletionMessage = (acc) => {
-    if (acc >= 100) return { message: "Perfect! You've mastered every question!", emoji: "👑", color: "text-[#FFC300]" };
-    if (acc >= 90) return { message: "Excellent work! You're showing real mastery!", emoji: "🌟", color: "text-[#28B463]" };
-    if (acc >= 80) return { message: "Great job! You're on the right track!", emoji: "🎯", color: "text-[#3498DB]" };
-    if (acc >= 60) return { message: "Good effort! Keep practicing to improve further.", emoji: "📚", color: "text-[#E67E22]" };
-    return { message: "Keep studying and try again! Every attempt helps you learn.", emoji: "💪", color: "text-[#7b1fa2]" };
+    if (acc >= 100)
+      return {
+        message: "Perfect! You've mastered every question!",
+        emoji: "👑",
+        color: "text-[#FFC300]",
+      };
+    if (acc >= 90)
+      return {
+        message: "Excellent work! You're showing real mastery!",
+        emoji: "🌟",
+        color: "text-[#28B463]",
+      };
+    if (acc >= 80)
+      return {
+        message: "Great job! You're on the right track!",
+        emoji: "🎯",
+        color: "text-[#3498DB]",
+      };
+    if (acc >= 60)
+      return {
+        message: "Good effort! Keep practicing to improve further.",
+        emoji: "📚",
+        color: "text-[#E67E22]",
+      };
+    return {
+      message: "Keep studying and try again! Every attempt helps you learn.",
+      emoji: "💪",
+      color: "text-[#7b1fa2]",
+    };
   };
 
-  // 🏆 Optional achievement badge for high scores
   const getAchievementBadge = (acc) => {
-    if (acc >= 100) return { emoji: "🏆", title: "PERFECT SCORE!", gradient: "from-[#FFC300]/20 to-[#E67E22]/30" };
-    if (acc >= 90) return { emoji: "🌟", title: "EXCELLENT!", gradient: "from-[#28B463]/20 to-[#3498DB]/30" };
-    if (acc >= 80) return { emoji: "💪", title: "GOOD JOB!", gradient: "from-[#3498DB]/20 to-[#4169E1]/30" };
+    if (acc >= 100)
+      return {
+        emoji: "🏆",
+        title: "PERFECT SCORE!",
+        gradient: "from-[#FFC300]/20 to-[#E67E22]/30",
+      };
+    if (acc >= 90)
+      return {
+        emoji: "🌟",
+        title: "EXCELLENT!",
+        gradient: "from-[#28B463]/20 to-[#3498DB]/30",
+      };
+    if (acc >= 80)
+      return {
+        emoji: "💪",
+        title: "GOOD JOB!",
+        gradient: "from-[#3498DB]/20 to-[#4169E1]/30",
+      };
     return null;
   };
 
-  // 🌀 Loading state
+  // Math rendering (KaTeX support)
+  const renderMath = (text) => {
+    return text.split(/(\$\$.*?\$\$|\$.*?\$)/).map((part, index) => {
+      if (part.startsWith("$$") && part.endsWith("$$")) {
+        return <BlockMath key={index} math={part.slice(2, -2)} />;
+      } else if (part.startsWith("$") && part.endsWith("$")) {
+        return <InlineMath key={index} math={part.slice(1, -1)} />;
+      }
+      return part;
+    });
+  };
+
+  // Loading state
   if (loading) {
     return (
       <div className="text-center p-6">
@@ -101,16 +159,18 @@ const QuizManager = () => {
     );
   }
 
-  // ❌ Error state
-  if (error) {
+  // Error or no questions
+  if (error || filteredQuestions.length === 0) {
     return (
       <div className="bg-white rounded-2xl p-6 shadow-2xl text-center border border-[#C0392B]/30">
-        <p className="text-xl text-[#C0392B]">{error}</p>
+        <p className="text-xl text-[#C0392B]" aria-live="assertive">
+          {error || "No questions found for this quiz."}
+        </p>
       </div>
     );
   }
 
-  // 🟢 Completion screen
+  // Completion screen
   if (isComplete) {
     const message = getCompletionMessage(accuracy);
     const badge = getAchievementBadge(accuracy);
@@ -122,42 +182,52 @@ const QuizManager = () => {
         role="region"
         aria-labelledby="quiz-complete-title"
       >
-        <h2 id="quiz-complete-title" className="text-3xl font-bold text-[#4169E1] mb-4">
+        <h2
+          id="quiz-complete-title"
+          className="text-3xl font-bold text-[#4169E1] mb-4"
+        >
           Quiz Complete!
         </h2>
-
         <div className={`text-6xl font-bold ${message.color}`}>{accuracy}%</div>
-
-        <div className={`text-lg ${message.color} flex items-center justify-center gap-3`} aria-live="polite">
+        <div
+          className={`text-lg ${message.color} flex items-center justify-center gap-3`}
+          aria-live="polite"
+        >
           <span>{message.emoji}</span>
           <span>{message.message}</span>
         </div>
-
         {badge && (
-          <div className={`achievement-badge inline-block bg-gradient-to-r ${badge.gradient} px-6 py-3 rounded-xl border border-[#FFC300]/40`}>
+          <div
+            className={`achievement-badge inline-block bg-gradient-to-r ${badge.gradient} px-6 py-3 rounded-xl border border-[#FFC300]/40`}
+          >
             <div className="flex items-center gap-3">
               <span className="text-xl">{badge.emoji}</span>
-              <span className="font-semibold text-gray-800">Achievement Unlocked: {badge.title}</span>
+              <span className="font-semibold text-gray-800">
+                Achievement Unlocked: {badge.title}
+              </span>
             </div>
           </div>
         )}
-
-        {/* 🧾 Stats breakdown */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="stats-card bg-gradient-to-br from-[#28B463]/10 to-[#28B463]/20 p-4 rounded-xl border border-[#28B463]/30">
-            <div className="text-2xl font-bold text-[#28B463]">{stats.correct}</div>
+            <div className="text-2xl font-bold text-[#28B463]">
+              {stats.correct}
+            </div>
             <div className="text-sm text-gray-600">Correct Answers</div>
           </div>
           <div className="stats-card bg-gradient-to-br from-[#E67E22]/10 to-[#E67E22]/20 p-4 rounded-xl border border-[#E67E22]/30">
-            <div className="text-2xl font-bold text-[#E67E22]">{stats.total - stats.correct}</div>
+            <div className="text-2xl font-bold text-[#E67E22]">
+              {stats.total - stats.correct}
+            </div>
             <div className="text-sm text-gray-600">To Review</div>
           </div>
           <div className="stats-card bg-gradient-to-br from-[#4169E1]/10 to-[#4169E1]/20 p-4 rounded-xl border border-[#4169E1]/30">
-            <div className="text-2xl font-bold text-[#4169E1]">{stats.total}</div>
+            <div className="text-2xl font-bold text-[#4169E1]">
+              {stats.total}
+            </div>
             <div className="text-sm text-gray-600">Total Questions</div>
           </div>
         </div>
-
         <button
           onClick={handleRestart}
           className="bg-gradient-to-r from-[#FFC300] to-[#E67E22] text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all"
@@ -169,18 +239,17 @@ const QuizManager = () => {
     );
   }
 
-  // 📝 Question screen
+  // Active quiz state
   return (
     <div
       className="bg-white bg-opacity-98 rounded-2xl p-8 shadow-2xl border border-[#3498DB]/30"
       role="region"
       aria-labelledby="quiz-manager"
+      ref={containerRef}
     >
       <h2 id="quiz-manager" className="text-2xl font-bold text-[#3498DB] mb-6">
         Question {currentQuestionIndex + 1} of {totalQuestions}
       </h2>
-
-      {/* ✅ Progress bar */}
       <ProgressBar
         current={currentQuestionIndex + 1}
         total={totalQuestions}
@@ -188,13 +257,14 @@ const QuizManager = () => {
         total_answered={stats.total}
         accuracy={accuracy}
       />
-
       <Question
+        question={currentQuestion}
         questionIndex={currentQuestionIndex}
         moduleId={moduleId}
         weekId={weekId}
         onAnswerSubmit={handleAnswerSubmit}
         onNext={nextQuestion}
+        renderMath={renderMath}
       />
     </div>
   );

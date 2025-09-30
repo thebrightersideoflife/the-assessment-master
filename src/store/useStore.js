@@ -1,48 +1,57 @@
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 
 export const useStore = create(
   persist(
     (set, get) => ({
-      // Quiz state
+      // Quiz state per moduleId/weekId
       quizzes: {}, // { [moduleId-weekId]: { currentQuestionIndex, stats } }
       
+      // Initialize or get quiz state
+      getQuizState: (moduleId, weekId) => {
+        const quizKey = `${moduleId}-${weekId}`;
+        return (
+          get().quizzes[quizKey] || {
+            currentQuestionIndex: 0,
+            stats: { correct: 0, total: 0 },
+          }
+        );
+      },
+
       // Actions
-      setQuizState: (moduleId, weekId, state) =>
-        set((s) => ({
-          quizzes: {
-            ...s.quizzes,
-            [`${moduleId}-${weekId}`]: {
-              ...s.quizzes[`${moduleId}-${weekId}`],
-              ...state,
-            },
-          },
-        })),
-
       incrementQuestionIndex: (moduleId, weekId) =>
-        set((s) => ({
-          quizzes: {
-            ...s.quizzes,
-            [`${moduleId}-${weekId}`]: {
-              ...s.quizzes[`${moduleId}-${weekId}`],
-              currentQuestionIndex:
-                (s.quizzes[`${moduleId}-${weekId}`]?.currentQuestionIndex || 0) + 1,
-            },
-          },
-        })),
-
-      updateStats: (moduleId, weekId, isCorrect) =>
-        set((s) => {
-          const key = `${moduleId}-${weekId}`;
-          const currentStats = s.quizzes[key]?.stats || { correct: 0, total: 0 };
+        set((state) => {
+          const quizKey = `${moduleId}-${weekId}`;
+          const quizState = state.quizzes[quizKey] || {
+            currentQuestionIndex: 0,
+            stats: { correct: 0, total: 0 },
+          };
           return {
             quizzes: {
-              ...s.quizzes,
-              [key]: {
-                ...s.quizzes[key],
+              ...state.quizzes,
+              [quizKey]: {
+                ...quizState,
+                currentQuestionIndex: quizState.currentQuestionIndex + 1,
+              },
+            },
+          };
+        }),
+
+      updateStats: (moduleId, weekId, isCorrect) =>
+        set((state) => {
+          const quizKey = `${moduleId}-${weekId}`;
+          const quizState = state.quizzes[quizKey] || {
+            currentQuestionIndex: 0,
+            stats: { correct: 0, total: 0 },
+          };
+          return {
+            quizzes: {
+              ...state.quizzes,
+              [quizKey]: {
+                ...quizState,
                 stats: {
-                  correct: currentStats.correct + (isCorrect ? 1 : 0),
-                  total: currentStats.total + 1,
+                  correct: quizState.stats.correct + (isCorrect ? 1 : 0),
+                  total: quizState.stats.total + 1,
                 },
               },
             },
@@ -50,29 +59,28 @@ export const useStore = create(
         }),
 
       resetQuiz: (moduleId, weekId) =>
-        set((s) => {
-          const key = `${moduleId}-${weekId}`;
+        set((state) => {
+          const quizKey = `${moduleId}-${weekId}`;
           return {
             quizzes: {
-              ...s.quizzes,
-              [key]: { currentQuestionIndex: 0, stats: { correct: 0, total: 0 } },
+              ...state.quizzes,
+              [quizKey]: {
+                currentQuestionIndex: 0,
+                stats: { correct: 0, total: 0 },
+              },
             },
           };
         }),
 
       getAccuracy: (moduleId, weekId) => {
-        const key = `${moduleId}-${weekId}`;
-        const stats = get().quizzes[key]?.stats || { correct: 0, total: 0 };
+        const quizState = get().getQuizState(moduleId, weekId);
+        const { stats } = quizState;
         return stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
       },
-
-      clearAllProgress: () =>
-        set({ quizzes: {} }),
     }),
     {
       name: 'quiz-storage',
-      storage: createJSONStorage(() => localStorage),
-      version: 1, // For future migrations
+      partialize: (state) => ({ quizzes: state.quizzes }),
     }
   )
 );

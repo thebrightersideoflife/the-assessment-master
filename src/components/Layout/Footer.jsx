@@ -1,32 +1,25 @@
-import React from 'react';
+import React from "react";
+import { AiOutlineCopyright } from "react-icons/ai";
 
-const Footer = () => {
+const Footer = ({ sidebarState }) => {
   return (
     <footer
-      className="bg-white text-center p-4 shadow-md text-gray-700 border-t border-[#FFC300]/20"
+      className={`bg-white border-t border-[#3498DB]/20 px-6 py-4 flex items-center justify-center text-sm text-gray-600 transition-all duration-200 ${
+        sidebarState.collapsed ? "md:ml-20" : "md:ml-64"
+      }`}
       role="contentinfo"
       aria-label="Site footer"
     >
-      <p>
-        &copy; {new Date().getFullYear()} Assessment Master. Built for University IT Students.
-      </p>
-      <div className="mt-2 text-sm">
-        <a
-          href="mailto:support@assessmentmaster.com"
-          className="text-[#4169E1] hover:text-[#3498DB] transition-colors"
-          aria-label="Contact support"
-        >
-          Contact
-        </a>
-        {' | '}
-        <a
-          href="/about"
-          className="text-[#4169E1] hover:text-[#3498DB] transition-colors"
-          aria-label="About Assessment Master"
-        >
-          About
-        </a>
-      </div>
+      <AiOutlineCopyright className="w-4 h-4 mr-2 text-gray-500" />
+      <img
+        src="/logo.png"
+        alt="The Brighter Side logo"
+        className="w-6 h-6 mx-2 rounded"
+      />
+      <span className="font-medium text-[#4169E1]">
+        The Brighter Side of Life
+      </span>
+      <span className="ml-2 text-gray-600">· All rights reserved</span>
     </footer>
   );
 };

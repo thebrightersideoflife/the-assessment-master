@@ -4,18 +4,11 @@ import { useStore } from '../store/useStore';
 import { questions } from '../data/questions';
 
 export const useQuiz = (moduleId, weekId) => {
-  const [validator] = useState(() => new AnswerValidator({ tolerance: 0.001 }));
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quizQuestions, setQuizQuestions] = useState([]);
-  const { 
-    currentQuestionIndex, 
-    stats, 
-    incrementQuestionIndex, 
-    updateStats, 
-    resetQuiz, 
-    getAccuracy 
-  } = useStore();
+  const { getQuizState, incrementQuestionIndex, updateStats, resetQuiz, getAccuracy } = useStore();
+  const { currentQuestionIndex, stats } = getQuizState(moduleId, weekId);
 
   useEffect(() => {
     setLoading(true);
@@ -34,20 +27,24 @@ export const useQuiz = (moduleId, weekId) => {
     }
   }, [moduleId, weekId]);
 
-  // Load saved progress
   useEffect(() => {
     const savedProgress = JSON.parse(localStorage.getItem(`quiz-progress-${moduleId}-${weekId}`));
-    if (savedProgress) {
+    if (savedProgress && savedProgress.currentQuestionIndex !== undefined && savedProgress.stats) {
+      resetQuiz(moduleId, weekId);
       setTimeout(() => {
-        useStore.setState({
-          currentQuestionIndex: savedProgress.currentQuestionIndex,
-          stats: savedProgress.stats,
-        });
+        useStore.setState((state) => ({
+          quizzes: {
+            ...state.quizzes,
+            [`${moduleId}-${weekId}`]: {
+              currentQuestionIndex: savedProgress.currentQuestionIndex,
+              stats: savedProgress.stats,
+            },
+          },
+        }));
       }, 0);
     }
-  }, [moduleId, weekId]);
+  }, [moduleId, weekId, resetQuiz]);
 
-  // Save progress
   useEffect(() => {
     localStorage.setItem(
       `quiz-progress-${moduleId}-${weekId}`,
@@ -57,35 +54,39 @@ export const useQuiz = (moduleId, weekId) => {
 
   const checkAnswer = useCallback(
     (userAnswer, correctAnswers) => {
-      return validator.checkAnswer(userAnswer, correctAnswers);
+      return AnswerValidator.checkAnswer(userAnswer, correctAnswers, {
+        caseSensitive: false,
+        allowPartialCredit: true,
+        tolerance: 0.0001
+      });
     },
-    [validator]
+    []
   );
 
   const handleAnswerSubmit = useCallback(
     (userAnswer, correctAnswers) => {
-      const isCorrect = checkAnswer(userAnswer, correctAnswers);
-      updateStats(isCorrect);
-      return isCorrect;
+      const result = checkAnswer(userAnswer, correctAnswers);
+      updateStats(moduleId, weekId, result.isCorrect);
+      return result; // Return full result for Question.jsx
     },
-    [checkAnswer, updateStats]
+    [checkAnswer, moduleId, weekId, updateStats]
   );
 
   const nextQuestion = useCallback(() => {
     if (currentQuestionIndex < quizQuestions.length - 1) {
-      incrementQuestionIndex();
+      incrementQuestionIndex(moduleId, weekId);
     }
-  }, [currentQuestionIndex, incrementQuestionIndex, quizQuestions.length]);
+  }, [currentQuestionIndex, quizQuestions.length, moduleId, weekId]);
 
   const restart = useCallback(() => {
-    resetQuiz();
+    resetQuiz(moduleId, weekId);
     localStorage.removeItem(`quiz-progress-${moduleId}-${weekId}`);
   }, [resetQuiz, moduleId, weekId]);
 
   return {
     currentQuestionIndex,
-    stats,
-    accuracy: getAccuracy(),
+    stats: stats || { correct: 0, total: 0 },
+    accuracy: getAccuracy(moduleId, weekId),
     checkAnswer,
     handleAnswerSubmit,
     nextQuestion,

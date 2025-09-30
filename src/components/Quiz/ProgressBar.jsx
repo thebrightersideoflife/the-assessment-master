@@ -1,34 +1,28 @@
 import React from 'react';
 
 const ProgressBar = ({ current, total, correct, total_answered, accuracy }) => {
-  const progress = (current / total) * 100;
+  const progressPercentage = (current / total) * 100;
 
   return (
-    <>
-      {/* Stats */}
-      <div className="flex justify-between items-center bg-white bg-opacity-90 p-6 rounded-xl mb-6 shadow-lg border border-[#FFC300]/20">
-        <div className="text-center">
-          <div className="text-3xl font-bold text-[#28B463]">{correct}</div>
-          <div className="text-sm text-gray-600 mt-1">Correct</div>
-        </div>
-        <div className="text-center">
-          <div className="text-3xl font-bold text-[#3498DB]">{total_answered}</div>
-          <div className="text-sm text-gray-600 mt-1">Answered</div>
-        </div>
-        <div className="text-center">
-          <div className="text-3xl font-bold text-[#4169E1]">{accuracy}%</div>
-          <div className="text-sm text-gray-600 mt-1">Accuracy</div>
-        </div>
-      </div>
-
-      {/* Progress Bar */}
-      <div className="bg-gray-300 h-3 rounded-full mb-8 overflow-hidden shadow-inner">
-        <div 
-          className="bg-gradient-to-r from-[#FFC300] to-[#E67E22] h-full transition-all duration-500 ease-out shadow-sm"
-          style={{ width: `${progress}%` }}
+    <div className="space-y-4 mb-6">
+      <div
+        className="relative w-full h-4 bg-gray-200 rounded-full overflow-hidden"
+        role="progressbar"
+        aria-valuenow={progressPercentage}
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-label={`Progress: ${current} of ${total} questions`}
+      >
+        <div
+          className="absolute h-full bg-gradient-to-r from-[#28B463] to-[#3498DB] transition-all duration-300"
+          style={{ width: `${progressPercentage}%` }}
         />
       </div>
-    </>
+      <div className="flex flex-col sm:flex-row justify-between text-sm text-gray-600">
+        <span>Question {current} of {total}</span>
+        <span>Correct: {correct} | Total Answered: {total_answered} | Accuracy: {accuracy}%</span>
+      </div>
+    </div>
   );
 };
 

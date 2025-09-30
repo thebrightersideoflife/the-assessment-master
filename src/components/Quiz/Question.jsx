@@ -1,128 +1,149 @@
-import React, { useState, useRef } from 'react';
-import { InlineMath, BlockMath } from 'react-katex';
-import 'katex/dist/katex.min.css';
-import { questions } from '../../data/questions';
-import { createConfetti, createShakeEffect, soundManager } from '../../utils/gamificationUtils';
+// src/components/Quiz/Question.jsx
+import React, { useState } from "react";
+import { InlineMath, BlockMath } from "react-katex";
+import "katex/dist/katex.min.css";
+import { soundManager } from "../../utils/gamificationUtils";
+import { AnswerValidator } from "../../utils/answerValidator";
 
-const Question = ({ questionIndex, moduleId, weekId, onAnswerSubmit, onNext }) => {
-  const [userAnswer, setUserAnswer] = useState('');
+/**
+ * Utility to render inline and block math inside text
+ */
+const renderMath = (text) => {
+  if (!text) return null;
+  return text.split(/(\$\$.*?\$\$|\$.*?\$)/).map((part, index) => {
+    if (part.startsWith("$$") && part.endsWith("$$")) {
+      return <BlockMath key={index} math={part.slice(2, -2)} />;
+    } else if (part.startsWith("$") && part.endsWith("$")) {
+      return <InlineMath key={index} math={part.slice(1, -1)} />;
+    }
+    return <span key={index}>{part}</span>;
+  });
+};
+
+const Question = ({
+  question,
+  questionIndex,
+  moduleId,
+  weekId,
+  onAnswerSubmit,
+  onNext,
+}) => {
+  const [userAnswer, setUserAnswer] = useState("");
+  const [submitted, setSubmitted] = useState(false);
   const [feedback, setFeedback] = useState(null);
-  const inputRef = useRef(null);
 
-  // Find the current question based on module, week, and index
-  const question = questions.find(
-    (q) => q.moduleId === moduleId && q.weekId === weekId && q.index === questionIndex
-  );
+  if (!question) return null;
 
-  if (!question) {
-    return (
-      <div className="text-center text-[#C0392B]">
-        Question not found.
-      </div>
-    );
-  }
-
-  // Render text with LaTeX math support
-  const renderMath = (text) => {
-    return text.split(/(\$\$.*?\$\$|\$.*?\$)/).map((part, index) => {
-      if (part.startsWith('$$') && part.endsWith('$$')) {
-        return <BlockMath key={index} math={part.slice(2, -2)} />;
-      } else if (part.startsWith('$') && part.endsWith('$')) {
-        return <InlineMath key={index} math={part.slice(1, -1)} />;
-      }
-      return part;
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     if (!userAnswer.trim()) return;
 
-    const isCorrect = onAnswerSubmit(userAnswer, question.correctAnswers);
-
-    setFeedback({
-      isCorrect,
-      message: isCorrect
-        ? 'Correct! Well done! 🎉'
-        : `Incorrect. Try again or proceed. The correct answer is: ${question.correctAnswers[0]}.`
+    const result = AnswerValidator.checkAnswer(userAnswer, question.correctAnswers, {
+      tolerance: 0.001,
     });
 
-    if (isCorrect) {
-      soundManager.playCorrectSound();
-      createConfetti(inputRef.current);
-    } else {
-      soundManager.playIncorrectSound();
-      createShakeEffect(inputRef.current);
-    }
-  };
+    setSubmitted(true);
+    setFeedback(result);
 
-  const handleNext = () => {
-    setUserAnswer('');
-    setFeedback(null);
-    onNext();
+    if (result.isCorrect) {
+      soundManager.playCorrectSound();
+    } else {
+      soundManager.playWrongSound();
+    }
+
+    onAnswerSubmit(result.isCorrect, {
+      questionId: question.id,
+      userAnswer,
+      method: result.method,
+    });
   };
 
   return (
     <div className="space-y-6">
-      {/* Question Text with Math Rendering */}
-      <div className="prose text-gray-700">
+      {/* Question text */}
+      <div className="text-lg font-medium text-gray-800">
         {renderMath(question.text)}
       </div>
 
-      {/* Answer Form */}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="answer" className="sr-only">
-            Your answer
-          </label>
-          <input
-            ref={inputRef}
-            id="answer"
-            type="text"
-            value={userAnswer}
-            onChange={(e) => setUserAnswer(e.target.value)}
-            placeholder="Enter your answer"
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4169E1]"
-            aria-label="Enter your answer"
-            autoFocus
-          />
+      {/* Multiple-choice options */}
+      {question.type === "multiple-choice" && (
+        <div className="space-y-3">
+          {question.options.map((opt, idx) => (
+            <button
+              key={idx}
+              disabled={submitted}
+              onClick={() => setUserAnswer(opt)}
+              className={`w-full text-left p-3 rounded-xl border transition-all ${
+                userAnswer === opt
+                  ? "bg-[#3498DB]/10 border-[#3498DB] text-[#3498DB]"
+                  : "bg-white hover:bg-gray-50 border-gray-300"
+              }`}
+            >
+              {renderMath(opt)}
+            </button>
+          ))}
         </div>
+      )}
 
-        <div className="flex gap-4">
+      {/* Open-ended input */}
+      {question.type === "open-ended" && (
+        <input
+          type="text"
+          value={userAnswer}
+          onChange={(e) => setUserAnswer(e.target.value)}
+          disabled={submitted}
+          placeholder="Type your answer"
+          className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#3498DB] focus:border-[#3498DB] disabled:bg-gray-100"
+        />
+      )}
+
+      {/* Submit / Next */}
+      <div className="flex items-center gap-4">
+        {!submitted ? (
           <button
-            type="submit"
-            className="bg-gradient-to-r from-[#28B463] to-[#3498DB] text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all"
-            aria-label="Submit answer"
+            onClick={handleSubmit}
+            disabled={!userAnswer.trim()}
+            className="px-6 py-3 bg-gradient-to-r from-[#4169E1] to-[#3498DB] text-white rounded-xl font-semibold hover:shadow-lg transition-all disabled:opacity-50"
           >
             Submit
           </button>
+        ) : (
+          <button
+            onClick={onNext}
+            className="px-6 py-3 bg-gradient-to-r from-[#28B463] to-[#3498DB] text-white rounded-xl font-semibold hover:shadow-lg transition-all"
+          >
+            Next
+          </button>
+        )}
+      </div>
 
-          {feedback && (
-            <button
-              type="button"
-              onClick={handleNext}
-              className="bg-gradient-to-r from-[#FFC300] to-[#E67E22] text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all"
-              aria-label="Next question"
-            >
-              Next
-            </button>
-          )}
-        </div>
-      </form>
-
-      {/* Feedback Box */}
-      {feedback && (
+      {/* Feedback */}
+      {submitted && feedback && (
         <div
-          className={`p-4 rounded-lg ${
+          className={`mt-4 p-4 rounded-xl border ${
             feedback.isCorrect
-              ? 'bg-[#28B463]/10 border border-[#28B463]/30'
-              : 'bg-[#C0392B]/10 border border-[#C0392B]/30'
+              ? "bg-green-50 border-green-300 text-green-700"
+              : "bg-red-50 border-red-300 text-red-700"
           }`}
-          role="alert"
         >
-          <p className={feedback.isCorrect ? 'text-[#28B463]' : 'text-[#C0392B]'}>
-            {renderMath(feedback.message)}
+          <p className="font-semibold mb-2">
+            {feedback.isCorrect ? "✅ Correct!" : "❌ Incorrect"}
           </p>
+
+          {/* Show explanation if provided */}
+          {question.explanation && (
+            <div className="text-gray-700 text-sm">
+              {renderMath(question.explanation)}
+            </div>
+          )}
+
+          {/* Suggestions from AnswerValidator */}
+          {!feedback.isCorrect && feedback.suggestions?.length > 0 && (
+            <ul className="mt-2 text-sm list-disc list-inside text-gray-600">
+              {feedback.suggestions.map((s, i) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ul>
+          )}
         </div>
       )}
     </div>
