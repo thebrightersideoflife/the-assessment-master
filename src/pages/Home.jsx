@@ -2,8 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { AiOutlineBook, AiOutlineEdit, AiOutlineStar } from 'react-icons/ai';
 import { modules } from '../data/modules';
+import { useStore } from '../store/useStore';
 
 const Home = () => {
+  const { isModuleVisible } = useStore();
+
   return (
     <div className="max-w-4xl mx-auto text-center">
       <div
@@ -56,21 +59,24 @@ const Home = () => {
             Featured Modules
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {modules.slice(0, 2).map((module) => (
-              <Link
-                key={module.id}
-                to={`/modules/${module.id}`}
-                className="p-6 rounded-xl bg-gradient-to-br from-[#3498DB]/10 to-[#4169E1]/20 border border-[#3498DB]/30 hover:shadow-lg transition-all"
-                aria-label={`Explore ${module.name}`}
-              >
-                <h4 className="text-lg font-semibold text-[#3498DB] mb-2">
-                  {module.name}
-                </h4>
-                <p className="text-sm text-gray-600">
-                  Start learning {module.name} with interactive lessons and quizzes.
-                </p>
-              </Link>
-            ))}
+            {modules
+              .filter((mod) => isModuleVisible(mod.id))
+              .slice(0, 2)
+              .map((module) => (
+                <Link
+                  key={module.id}
+                  to={`/modules/${module.id}`}
+                  className="p-6 rounded-xl bg-gradient-to-br from-[#3498DB]/10 to-[#4169E1]/20 border border-[#3498DB]/30 hover:shadow-lg transition-all"
+                  aria-label={`Explore ${module.name}`}
+                >
+                  <h4 className="text-lg font-semibold text-[#3498DB] mb-2">
+                    {module.name}
+                  </h4>
+                  <p className="text-sm text-gray-600">
+                    Start learning {module.name} with interactive lessons and quizzes.
+                  </p>
+                </Link>
+              ))}
           </div>
         </div>
       </div>

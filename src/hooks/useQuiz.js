@@ -1,19 +1,33 @@
-// src/hooks/useQuiz.js
 import { useState, useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AnswerValidator } from '../utils/answerValidator';
-import { soundManager, createConfetti } from '../utils/gamificationUtils';
+import { soundManager, createConfetti, createShakeEffect } from '../utils/gamificationUtils';
 import { useStore } from '../store/useStore';
 import { questions } from '../data/questions';
+import { modules } from '../data/modules';
 
 export const useQuiz = (moduleId, weekId) => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quizQuestions, setQuizQuestions] = useState([]);
-  const { getQuizState, incrementQuestionIndex, updateStats, resetQuiz, getAccuracy } = useStore();
+  const { getQuizState, incrementQuestionIndex, updateStats, resetQuiz, getAccuracy, isModuleVisible } = useStore();
   const { currentQuestionIndex, stats } = getQuizState(moduleId, weekId);
 
   useEffect(() => {
+    if (!moduleId || !weekId) {
+      setError('Invalid module or week ID.');
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
+    const module = modules.find((m) => m.id === moduleId);
+    if (!module || !isModuleVisible(moduleId)) {
+      setError('This module is not available.');
+      navigate('/modules', { replace: true });
+      return;
+    }
     try {
       const filteredQuestions = questions.filter(
         (q) => q.moduleId === moduleId && q.weekId === weekId
@@ -28,7 +42,7 @@ export const useQuiz = (moduleId, weekId) => {
     } finally {
       setLoading(false);
     }
-  }, [moduleId, weekId]);
+  }, [moduleId, weekId, navigate, isModuleVisible]);
 
   useEffect(() => {
     const savedProgress = JSON.parse(localStorage.getItem(`quiz-progress-${moduleId}-${weekId}`));
@@ -53,7 +67,6 @@ export const useQuiz = (moduleId, weekId) => {
       `quiz-progress-${moduleId}-${weekId}`,
       JSON.stringify({ currentQuestionIndex, stats })
     );
-    // Trigger achievement sound on quiz completion
     if (currentQuestionIndex >= quizQuestions.length && quizQuestions.length > 0) {
       const accuracy = getAccuracy(moduleId, weekId);
       soundManager.playAchievementSound(accuracy);
@@ -72,7 +85,9 @@ export const useQuiz = (moduleId, weekId) => {
         soundManager.playCorrectSound();
       } else {
         soundManager.playIncorrectSound();
-        createShakeEffect(element);
+        if (createShakeEffect) {
+          createShakeEffect(element); // Safeguard in case createShakeEffect is undefined
+        }
       }
       return result;
     },

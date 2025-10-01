@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// src/pages/Quiz.jsx
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import QuizManager from "../components/Quiz/QuizManager";
 import ErrorBoundary from "../components/UI/ErrorBoundary";
@@ -10,16 +11,28 @@ import { modules } from "../data/modules";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
 
 const Quiz = () => {
-  const { moduleId, weekId } = useParams();
+  const { moduleId, weekId, examId } = useParams();
   const { resetQuiz, getQuizState, getAccuracy } = useStore();
   const { loading, error } = useQuiz(moduleId, weekId);
   const navigate = useNavigate();
-  const module = modules.find((m) => m.id === moduleId);
+
+  const module = moduleId ? modules.find((m) => m.id === moduleId) : null;
   const week =
     module?.weeks.find((w) => w.id === weekId) ||
     module?.exams?.find((e) => e.id === weekId);
+
   const [showResetModal, setShowResetModal] = useState(false);
-  const stats = getQuizState(moduleId, weekId).stats;
+  const stats = getQuizState(moduleId, weekId)?.stats || {
+    correct: 0,
+    total: 0,
+  };
+
+  // ✅ Visibility check: redirect if module is hidden
+  useEffect(() => {
+    if (moduleId && (!module || !module.isVisible)) {
+      navigate("/modules", { replace: true });
+    }
+  }, [moduleId, module, navigate]);
 
   const handleResetQuiz = () => {
     resetQuiz(moduleId, weekId);
@@ -37,12 +50,13 @@ const Quiz = () => {
     );
   }
 
-  if (error || !module || !week) {
+  // ✅ Handle invalid params gracefully
+  if (error || !module || (!weekId && !examId)) {
     return (
       <div className="max-w-4xl mx-auto p-6 text-center">
-        <div className="bg-white bg-opacity-95 backdrop-blur-lg rounded-2xl p-8 shadow-2xl border border-[#C0392B]/30">
+        <div className="bg-white bg-opacity-95 rounded-2xl p-8 shadow-2xl border border-[#C0392B]/30">
           <p className="text-xl text-[#C0392B] mb-4" aria-live="assertive">
-            {error || "Quiz not found. Please select a valid module and week."}
+            {error || "Invalid quiz parameters."}
           </p>
           <Link
             to="/modules"
@@ -65,7 +79,9 @@ const Quiz = () => {
             { label: "Home", path: "/" },
             { label: "Modules", path: "/modules" },
             { label: module.name, path: `/modules/${module.id}` },
-            { label: week.name, path: `/modules/${module.id}/${week.id}` },
+            ...(week
+              ? [{ label: week.name, path: `/modules/${module.id}/${week.id}` }]
+              : []),
             { label: "Quiz" },
           ]}
         />
@@ -74,7 +90,9 @@ const Quiz = () => {
         <div className="bg-gradient-to-r from-[#4169E1] to-[#3498DB] rounded-2xl p-6 text-white shadow-2xl border border-[#FFC300]/30">
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
-              <h2 className="text-3xl font-bold mb-2">{week.name} Quiz</h2>
+              <h2 className="text-3xl font-bold mb-2">
+                {week ? week.name : "Exam"} Quiz
+              </h2>
               <p className="text-blue-100">
                 Test your knowledge with interactive math problems
               </p>
@@ -82,28 +100,15 @@ const Quiz = () => {
 
             {/* Quick Stats */}
             <div className="flex items-center space-x-6">
-              <div
-                className="text-center"
-                aria-label={`${stats.correct} correct answers`}
-              >
-                <div className="text-2xl font-bold text-[#FFC300]">
-                  {stats.correct}
-                </div>
+              <div className="text-center" aria-label={`${stats.correct} correct answers`}>
+                <div className="text-2xl font-bold text-[#FFC300]">{stats.correct}</div>
                 <div className="text-sm text-blue-200">Correct</div>
               </div>
-              <div
-                className="text-center"
-                aria-label={`${stats.total} questions attempted`}
-              >
-                <div className="text-2xl font-bold text-[#FFC300]">
-                  {stats.total}
-                </div>
+              <div className="text-center" aria-label={`${stats.total} questions attempted`}>
+                <div className="text-2xl font-bold text-[#FFC300]">{stats.total}</div>
                 <div className="text-sm text-blue-200">Total</div>
               </div>
-              <div
-                className="text-center"
-                aria-label={`${getAccuracy(moduleId, weekId)}% accuracy`}
-              >
+              <div className="text-center" aria-label={`${getAccuracy(moduleId, weekId)}% accuracy`}>
                 <div className="text-2xl font-bold text-[#FFC300]">
                   {getAccuracy(moduleId, weekId)}%
                 </div>
@@ -131,15 +136,11 @@ const Quiz = () => {
             aria-labelledby="reset-modal-title"
           >
             <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl">
-              <h3
-                id="reset-modal-title"
-                className="text-xl font-semibold text-[#4169E1] mb-4"
-              >
+              <h3 id="reset-modal-title" className="text-xl font-semibold text-[#4169E1] mb-4">
                 Confirm Reset
               </h3>
               <p className="text-gray-600 mb-6">
-                Are you sure you want to reset the quiz? This will clear all
-                your progress.
+                Are you sure you want to reset the quiz? This will clear all your progress.
               </p>
               <div className="flex justify-end gap-4">
                 <button
@@ -162,7 +163,11 @@ const Quiz = () => {
         )}
 
         {/* Quiz Content */}
-        <QuizManager moduleId={moduleId} weekId={weekId} />
+        {weekId ? (
+          <QuizManager moduleId={moduleId} weekId={weekId} />
+        ) : examId ? (
+          <QuizManager examId={examId} />
+        ) : null}
       </div>
     </ErrorBoundary>
   );

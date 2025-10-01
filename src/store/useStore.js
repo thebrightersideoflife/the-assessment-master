@@ -1,7 +1,7 @@
-// src/store/useStore.js
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { format, isToday, addDays } from 'date-fns';
+import { modules } from '../data/modules';
 
 export const useStore = create(
   persist(
@@ -14,6 +14,11 @@ export const useStore = create(
         currentStreak: 0,
         longestStreak: 0,
       },
+      // Module visibility state
+      moduleVisibility: modules.reduce((acc, mod) => ({
+        ...acc,
+        [mod.id]: mod.isVisible !== false,
+      }), {}),
 
       // Initialize or get quiz state
       getQuizState: (moduleId, weekId) => {
@@ -107,11 +112,29 @@ export const useStore = create(
         set(() => ({
           quizzes: {},
           streaks: { lastActivityDate: null, currentStreak: 0, longestStreak: 0 },
+          moduleVisibility: modules.reduce((acc, mod) => ({
+            ...acc,
+            [mod.id]: mod.isVisible !== false,
+          }), {}),
         })),
+
+      toggleModuleVisibility: (moduleId) =>
+        set((state) => ({
+          moduleVisibility: {
+            ...state.moduleVisibility,
+            [moduleId]: !state.moduleVisibility[moduleId],
+          },
+        })),
+
+      isModuleVisible: (moduleId) => get().moduleVisibility[moduleId] !== false,
     }),
     {
       name: 'quiz-storage',
-      partialize: (state) => ({ quizzes: state.quizzes, streaks: state.streaks }),
+      partialize: (state) => ({
+        quizzes: state.quizzes,
+        streaks: state.streaks,
+        moduleVisibility: state.moduleVisibility,
+      }),
     }
   )
 );

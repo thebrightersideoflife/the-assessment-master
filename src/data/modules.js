@@ -1,7 +1,12 @@
+// src/data/modules.js
 export const modules = [
   {
     id: "ITMTA",
     name: "ITMTA",
+    isVisible: false, // Hide ITMTA
+    exams: [
+      { id: 'ITMTA_EXAM1', name: 'Final Exam', description: 'Comprehensive exam covering all ITMTA topics.' }
+    ],
     weeks: [
       {
         id: "ITMTA_W1",
@@ -33,7 +38,7 @@ export const modules = [
             name: "Vertical Line Test",
             competency: "AC 1.3",
             explanation: "A graph is a function if no vertical line intersects it more than once. A circle ($x^2 + y^2 = 1$) fails this test.",
-            example: "Does $y = x^2$ pass the vertical line test? Yes, it’s a function.",
+            example: "Does $y = x^2$ pass the vertical line test? Yes, it's a function.",
             studyTip: "Mnemonic: 'One x, one y.'",
             videoUrl: "https://www.youtube.com/watch?v=EPBWO4DIA0U",
             quizId: "ITMTA_W1_Quiz"
@@ -317,6 +322,11 @@ export const modules = [
   {
     id: "ITMTB",
     name: "ITMTB",
+    isVisible: true, // Show ITMTB
+    exams: [
+      { id: 'ITMTB_EXAM1', name: 'Midterm Exam', description: 'Covers integration fundamentals and techniques.' },
+      { id: 'ITMTB_EXAM2', name: 'Final Exam', description: 'Comprehensive exam covering all ITMTB topics including applications.' }
+    ],
     weeks: [
       {
         id: "ITMTB_W1",
@@ -393,7 +403,7 @@ export const modules = [
           {
             id: "ITMTB_W2_T2",
             name: "Indefinite Integrals",
-            dependency: "AC 1.8",
+            competency: "AC 1.8",
             explanation: "Compute general antiderivatives, e.g., $\\int x^2 \\, dx = \\frac{x^3}{3} + C$.",
             example: "Find $\\int (x^2 + 2x) \\, dx$.",
             studyTip: "Always add $+C$ for indefinite integrals.",
