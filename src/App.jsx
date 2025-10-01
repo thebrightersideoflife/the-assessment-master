@@ -1,14 +1,20 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Layout from './components/Layout/Layout';
-import Home from './pages/Home';
-import Quiz from './pages/Quiz';
-import Topics from './pages/Topics';
-import Dashboard from './pages/Dashboard';
-import Week from './pages/Week';
-import Modules from './pages/Modules';
-import { injectAnimations } from './utils/gamificationUtils';
-import './styles/tailwind.css';
+// src/App.jsx
+import React, { Suspense, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Layout from "./components/Layout/Layout";
+import { renderMath } from "./utils/mathRenderer";
+import { injectAnimations } from "./utils/gamificationUtils";
+import "./styles/tailwind.css";
+import LoadingSpinner from "./components/UI/LoadingSpinner";
+
+// Lazy-loaded pages
+const Home = React.lazy(() => import("./pages/Home"));
+const Quiz = React.lazy(() => import("./pages/Quiz"));
+const Topics = React.lazy(() => import("./pages/Topics"));
+const Dashboard = React.lazy(() => import("./pages/Dashboard"));
+const Week = React.lazy(() => import("./pages/Week"));
+const Modules = React.lazy(() => import("./pages/Modules"));
+const Admin = React.lazy(() => import("./pages/Admin")); // ✅ New lazy-loaded Admin page
 
 const NotFound = () => (
   <div className="max-w-4xl mx-auto text-center p-6">
@@ -37,21 +43,33 @@ const Profile = () => (
 
 function App() {
   injectAnimations();
+
+  // Render math formulas globally on mount
+  useEffect(() => {
+    renderMath();
+  }, []);
+
   return (
     <Router>
       <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/modules" element={<Modules />} />
-          <Route path="/modules/:moduleId" element={<Modules />} />
-          <Route path="/modules/:moduleId/:weekId" element={<Week />} />
-          <Route path="/quizzes/module/:moduleId/:weekId" element={<Quiz />} />
-          <Route path="/quizzes/exam/:examId" element={<Quiz />} />
-          <Route path="/topics" element={<Topics />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Suspense fallback={<LoadingSpinner />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/modules" element={<Modules />} />
+            <Route path="/modules/:moduleId" element={<Modules />} />
+            <Route path="/modules/:moduleId/:weekId" element={<Week />} />
+            <Route
+              path="/quizzes/module/:moduleId/:weekId"
+              element={<Quiz />}
+            />
+            <Route path="/quizzes/exam/:examId" element={<Quiz />} />
+            <Route path="/topics" element={<Topics />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/admin" element={<Admin />} /> {/* ✅ New Admin route */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </Layout>
     </Router>
   );

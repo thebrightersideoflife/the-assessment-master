@@ -43,3 +43,7 @@ code {
     scroll-behavior: auto !important;
   }
 }
+
+main {
+  min-height: 0; /* Prevent main from expanding beyond content */
+}

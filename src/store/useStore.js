@@ -1,12 +1,20 @@
+// src/store/useStore.js
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { format, isToday, addDays } from 'date-fns';
 
 export const useStore = create(
   persist(
     (set, get) => ({
       // Quiz state per moduleId/weekId
       quizzes: {}, // { [moduleId-weekId]: { currentQuestionIndex, stats } }
-      
+      // Streak tracking
+      streaks: {
+        lastActivityDate: null,
+        currentStreak: 0,
+        longestStreak: 0,
+      },
+
       // Initialize or get quiz state
       getQuizState: (moduleId, weekId) => {
         const quizKey = `${moduleId}-${weekId}`;
@@ -44,6 +52,18 @@ export const useStore = create(
             currentQuestionIndex: 0,
             stats: { correct: 0, total: 0 },
           };
+          const today = format(new Date(), 'yyyy-MM-dd');
+          const lastActivityDate = state.streaks.lastActivityDate;
+          let currentStreak = state.streaks.currentStreak;
+          let longestStreak = state.streaks.longestStreak;
+
+          // Update streak
+          if (!lastActivityDate || !isToday(new Date(lastActivityDate))) {
+            const yesterday = format(addDays(new Date(), -1), 'yyyy-MM-dd');
+            currentStreak = lastActivityDate === yesterday ? currentStreak + 1 : 1;
+            longestStreak = Math.max(longestStreak, currentStreak);
+          }
+
           return {
             quizzes: {
               ...state.quizzes,
@@ -54,6 +74,11 @@ export const useStore = create(
                   total: quizState.stats.total + 1,
                 },
               },
+            },
+            streaks: {
+              lastActivityDate: today,
+              currentStreak,
+              longestStreak,
             },
           };
         }),
@@ -77,10 +102,16 @@ export const useStore = create(
         const { stats } = quizState;
         return stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
       },
+
+      resetAllProgress: () =>
+        set(() => ({
+          quizzes: {},
+          streaks: { lastActivityDate: null, currentStreak: 0, longestStreak: 0 },
+        })),
     }),
     {
       name: 'quiz-storage',
-      partialize: (state) => ({ quizzes: state.quizzes }),
+      partialize: (state) => ({ quizzes: state.quizzes, streaks: state.streaks }),
     }
   )
 );

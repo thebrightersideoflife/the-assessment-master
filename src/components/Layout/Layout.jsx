@@ -34,24 +34,25 @@ const Layout = ({ children }) => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
-      {/* Header */}
+    <div className="flex flex-col min-h-screen bg-gray-100">
+      {/* Header (stays at top) */}
       <Header
         sidebarState={sidebarState}
         setSidebarState={setSidebarState}
         onSettingsClick={() => setShowGamificationSettings(true)}
       />
 
-      {/* Main Content */}
-      <div className="flex flex-1 overflow-hidden">
+      {/* Content + Sidebar (takes remaining space) */}
+      <div className="flex flex-1">
         <Sidebar
           sidebarState={sidebarState}
           setSidebarState={setSidebarState}
           onSettingsClick={() => setShowGamificationSettings(true)}
         />
 
+        {/* Main Content scrolls if needed */}
         <main
-          className={`flex-1 p-6 overflow-auto transition-all duration-200 ${
+          className={`flex-1 p-6 pb-20 transition-all duration-200 overflow-y-auto ${
             sidebarState.collapsed ? "md:ml-20" : "md:ml-64"
           }`}
         >
@@ -59,7 +60,7 @@ const Layout = ({ children }) => {
         </main>
       </div>
 
-      {/* Footer */}
+      {/* Footer (always visible at bottom) */}
       <Footer sidebarState={sidebarState} />
 
       {/* Gamification Settings Modal */}

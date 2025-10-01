@@ -1,5 +1,7 @@
+// src/hooks/useQuiz.js
 import { useState, useCallback, useEffect } from 'react';
 import { AnswerValidator } from '../utils/answerValidator';
+import { soundManager, createConfetti } from '../utils/gamificationUtils';
 import { useStore } from '../store/useStore';
 import { questions } from '../data/questions';
 
@@ -21,7 +23,8 @@ export const useQuiz = (moduleId, weekId) => {
       }
       setQuizQuestions(filteredQuestions);
     } catch (err) {
-      setError('Failed to load questions.');
+      setError('Failed to load questions. Please try again.');
+      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -50,33 +53,50 @@ export const useQuiz = (moduleId, weekId) => {
       `quiz-progress-${moduleId}-${weekId}`,
       JSON.stringify({ currentQuestionIndex, stats })
     );
-  }, [currentQuestionIndex, stats, moduleId, weekId]);
+    // Trigger achievement sound on quiz completion
+    if (currentQuestionIndex >= quizQuestions.length && quizQuestions.length > 0) {
+      const accuracy = getAccuracy(moduleId, weekId);
+      soundManager.playAchievementSound(accuracy);
+    }
+  }, [currentQuestionIndex, stats, moduleId, weekId, quizQuestions.length, getAccuracy]);
 
   const checkAnswer = useCallback(
-    (userAnswer, correctAnswers) => {
-      return AnswerValidator.checkAnswer(userAnswer, correctAnswers, {
+    (userAnswer, correctAnswers, element) => {
+      const result = AnswerValidator.checkAnswer(userAnswer, correctAnswers, {
         caseSensitive: false,
-        allowPartialCredit: true,
-        tolerance: 0.0001
+        allowPartialCredit: false,
+        tolerance: 0.0001,
       });
+      if (result.isCorrect) {
+        createConfetti(element);
+        soundManager.playCorrectSound();
+      } else {
+        soundManager.playIncorrectSound();
+        createShakeEffect(element);
+      }
+      return result;
     },
     []
   );
 
   const handleAnswerSubmit = useCallback(
-    (userAnswer, correctAnswers) => {
-      const result = checkAnswer(userAnswer, correctAnswers);
+    (userAnswer, questionId, element) => {
+      const question = quizQuestions.find((q) => q.id === questionId);
+      if (!question) {
+        return { isCorrect: false, message: 'Question not found', method: 'error' };
+      }
+      const result = checkAnswer(userAnswer, question.correctAnswers, element);
       updateStats(moduleId, weekId, result.isCorrect);
-      return result; // Return full result for Question.jsx
+      return result;
     },
-    [checkAnswer, moduleId, weekId, updateStats]
+    [checkAnswer, moduleId, weekId, quizQuestions, updateStats]
   );
 
   const nextQuestion = useCallback(() => {
     if (currentQuestionIndex < quizQuestions.length - 1) {
       incrementQuestionIndex(moduleId, weekId);
     }
-  }, [currentQuestionIndex, quizQuestions.length, moduleId, weekId]);
+  }, [currentQuestionIndex, quizQuestions.length, moduleId, weekId, incrementQuestionIndex]);
 
   const restart = useCallback(() => {
     resetQuiz(moduleId, weekId);
@@ -94,5 +114,6 @@ export const useQuiz = (moduleId, weekId) => {
     totalQuestions: quizQuestions.length,
     loading,
     error,
+    questions: quizQuestions,
   };
 };
