@@ -15,19 +15,21 @@ const Quiz = () => {
   const { resetQuiz, getQuizState, getAccuracy } = useStore();
   const { loading, error } = useQuiz(moduleId, weekId);
   const navigate = useNavigate();
-
+  
   const module = moduleId ? modules.find((m) => m.id === moduleId) : null;
   const week =
     module?.weeks.find((w) => w.id === weekId) ||
     module?.exams?.find((e) => e.id === weekId);
 
   const [showResetModal, setShowResetModal] = useState(false);
+  const [quizKey, setQuizKey] = useState(0); // Key to force remount
+
   const stats = getQuizState(moduleId, weekId)?.stats || {
     correct: 0,
     total: 0,
   };
 
-  // ✅ Visibility check: redirect if module is hidden
+  // Visibility check: redirect if module is hidden
   useEffect(() => {
     if (moduleId && (!module || !module.isVisible)) {
       navigate("/modules", { replace: true });
@@ -35,11 +37,15 @@ const Quiz = () => {
   }, [moduleId, module, navigate]);
 
   const handleResetQuiz = () => {
+    // Clear store and localStorage
     resetQuiz(moduleId, weekId);
     localStorage.removeItem(`quiz-progress-${moduleId}-${weekId}`);
+    
+    // Close modal
     setShowResetModal(false);
-    navigate("/");
-    setTimeout(() => navigate(`/quizzes/module/${moduleId}/${weekId}`), 10);
+    
+    // Force remount by changing key - this clears all component state
+    setQuizKey(prev => prev + 1);
   };
 
   if (loading) {
@@ -50,7 +56,7 @@ const Quiz = () => {
     );
   }
 
-  // ✅ Handle invalid params gracefully
+  // Handle invalid params gracefully
   if (error || !module || (!weekId && !examId)) {
     return (
       <div className="max-w-4xl mx-auto p-6 text-center">
@@ -114,7 +120,6 @@ const Quiz = () => {
                 </div>
                 <div className="text-sm text-blue-200">Accuracy</div>
               </div>
-
               <button
                 onClick={() => setShowResetModal(true)}
                 className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-[#ad1457]/20 to-[#E67E22]/20 hover:from-[#880e4f]/30 hover:to-[#E67E22]/30 rounded-xl transition-all font-semibold backdrop-blur-sm border border-[#ffffff]/50"
@@ -134,39 +139,42 @@ const Quiz = () => {
             role="dialog"
             aria-modal="true"
             aria-labelledby="reset-modal-title"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) setShowResetModal(false);
+            }}
           >
             <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl">
               <h3 id="reset-modal-title" className="text-xl font-semibold text-[#4169E1] mb-4">
                 Confirm Reset
               </h3>
               <p className="text-gray-600 mb-6">
-                Are you sure you want to reset the quiz? This will clear all your progress.
+                Are you sure you want to reset the quiz? This will clear all your progress and start fresh.
               </p>
               <div className="flex justify-end gap-4">
                 <button
                   onClick={() => setShowResetModal(false)}
-                  className="px-4 py-2 text-gray-600 rounded-lg hover:bg-gray-100"
+                  className="px-4 py-2 text-gray-600 rounded-lg hover:bg-gray-100 transition-colors"
                   aria-label="Cancel reset"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleResetQuiz}
-                  className="px-4 py-2 bg-[#C0392B] text-white rounded-lg hover:bg-[#E67E22]"
+                  className="px-4 py-2 bg-[#C0392B] text-white rounded-lg hover:bg-[#E67E22] transition-colors"
                   aria-label="Confirm reset"
                 >
-                  Reset
+                  Reset Quiz
                 </button>
               </div>
             </div>
           </div>
         )}
 
-        {/* Quiz Content */}
+        {/* Quiz Content - Key prop forces complete remount on reset */}
         {weekId ? (
-          <QuizManager moduleId={moduleId} weekId={weekId} />
+          <QuizManager key={quizKey} moduleId={moduleId} weekId={weekId} />
         ) : examId ? (
-          <QuizManager examId={examId} />
+          <QuizManager key={quizKey} examId={examId} />
         ) : null}
       </div>
     </ErrorBoundary>

@@ -1,8 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useStore } from '../store/useStore';
-import { AiOutlineStar, AiOutlineBook, AiOutlineTrophy } from 'react-icons/ai';
-import { modules } from '../data/modules';
+// src/pages/Dashboard.jsx
+import React from "react";
+import { Link } from "react-router-dom";
+import { useStore } from "../store/useStore";
+import { AiOutlineStar, AiOutlineBook, AiOutlineTrophy } from "react-icons/ai";
+import { modules } from "../data/modules";
 
 const Dashboard = () => {
   const { quizzes, getQuizState, getAccuracy } = useStore();
@@ -24,11 +25,11 @@ const Dashboard = () => {
   // Export progress as JSON file
   const handleExportProgress = () => {
     const data = JSON.stringify(quizzes);
-    const blob = new Blob([data], { type: 'application/json' });
+    const blob = new Blob([data], { type: "application/json" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = 'quiz-progress.json';
+    a.download = "quiz-progress.json";
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -42,10 +43,10 @@ const Dashboard = () => {
       try {
         const data = JSON.parse(event.target.result);
         useStore.setState({ quizzes: data });
-        alert('✅ Progress imported successfully!');
+        alert("✅ Progress imported successfully!");
       } catch (err) {
-        console.error('Failed to import progress:', err);
-        alert('❌ Invalid file format');
+        console.error("Failed to import progress:", err);
+        alert("❌ Invalid file format");
       }
     };
     reader.readAsText(file);
@@ -53,9 +54,10 @@ const Dashboard = () => {
 
   // Reset all quizzes
   const handleResetProgress = () => {
-    if (window.confirm('Are you sure you want to reset all progress?')) {
+    if (window.confirm("Are you sure you want to reset all progress?")) {
       const newQuizzes = {};
       modules.forEach((module) => {
+        if (!module.isVisible) return; // ✅ Skip hidden modules
         module.weeks.forEach((week) => {
           newQuizzes[`${module.id}-${week.id}`] = {
             currentQuestionIndex: 0,
@@ -74,23 +76,26 @@ const Dashboard = () => {
     }
   };
 
-  // Build per-module stats
-  const moduleStats = modules.map((module) => ({
-    moduleId: module.id,
-    moduleName: module.name,
-    weeks: module.weeks.map((week) => {
-      const quizState = getQuizState(module.id, week.id);
-      const stats = quizState.stats || { correct: 0, total: 0 };
-      const accuracy = getAccuracy(module.id, week.id);
-      return { weekId: week.id, weekName: week.name, stats, accuracy };
-    }),
-    exams: module.exams?.map((exam) => {
-      const quizState = getQuizState(module.id, exam.id);
-      const stats = quizState.stats || { correct: 0, total: 0 };
-      const accuracy = getAccuracy(module.id, exam.id);
-      return { examId: exam.id, examName: exam.name, stats, accuracy };
-    }) || [],
-  }));
+  // Build per-module stats, only for visible modules
+  const moduleStats = modules
+    .filter((module) => module.isVisible !== false) // ✅ Hide invisible modules
+    .map((module) => ({
+      moduleId: module.id,
+      moduleName: module.name,
+      weeks: module.weeks.map((week) => {
+        const quizState = getQuizState(module.id, week.id);
+        const stats = quizState.stats || { correct: 0, total: 0 };
+        const accuracy = getAccuracy(module.id, week.id);
+        return { weekId: week.id, weekName: week.name, stats, accuracy };
+      }),
+      exams:
+        module.exams?.map((exam) => {
+          const quizState = getQuizState(module.id, exam.id);
+          const stats = quizState.stats || { correct: 0, total: 0 };
+          const accuracy = getAccuracy(module.id, exam.id);
+          return { examId: exam.id, examName: exam.name, stats, accuracy };
+        }) || [],
+    }));
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-12 space-y-12">
@@ -127,12 +132,12 @@ const Dashboard = () => {
       {/* Motivation message */}
       <div className="text-center text-gray-600 text-sm">
         {overallAccuracy >= 80
-          ? '🌟 Excellent performance! Keep it up!'
+          ? "🌟 Excellent performance! Keep it up!"
           : overallAccuracy >= 60
-          ? '📚 Good work — there’s room to improve.'
+          ? "📚 Good work — there’s room to improve."
           : aggregateStats.total === 0
-          ? 'Start taking quizzes to see your stats!'
-          : '💪 Keep practicing to improve your scores!'}
+          ? "Start taking quizzes to see your stats!"
+          : "💪 Keep practicing to improve your scores!"}
       </div>
 
       {/* Action Buttons */}
@@ -149,20 +154,26 @@ const Dashboard = () => {
         >
           Export Progress
         </button>
-        <label className="px-6 py-2 rounded-lg font-semibold border border-[#28B463]/30 text-[#28B463] bg-[#28B463]/5 hover:bg-[#28B463]/10 transition-all cursor-pointer">
-          Import Progress
+        <button
+            onClick={() => document.getElementById("importProgressInput").click()}
+            className="px-6 py-2 rounded-lg font-semibold border border-[#28B463]/30 text-[#28B463] bg-[#28B463]/5 hover:bg-[#28B463]/10 transition-all"
+          >
+            Import Progress
+          </button>
           <input
+            id="importProgressInput"
             type="file"
             accept=".json"
             onChange={handleImportProgress}
             className="hidden"
           />
-        </label>
       </div>
 
       {/* Progress by Module */}
       <div className="space-y-8">
-        <h2 className="text-2xl font-semibold text-[#3498DB]">Progress by Module</h2>
+        <h2 className="text-2xl font-semibold text-[#3498DB]">
+          Progress by Module
+        </h2>
         {moduleStats.map((module) => (
           <div key={module.moduleId} className="space-y-4">
             <h3 className="text-xl font-semibold text-[#4169E1]">
@@ -178,14 +189,15 @@ const Dashboard = () => {
                     {week.weekName}
                   </h4>
                   <p className="text-gray-600 text-sm">
-                    {week.stats.correct} / {week.stats.total} correct ({week.accuracy}%)
+                    {week.stats.correct} / {week.stats.total} correct (
+                    {week.accuracy}%)
                   </p>
                   <Link
                     to={`/quizzes/module/${module.moduleId}/${week.weekId}`}
                     className="mt-2 inline-block text-sm text-[#4169E1] hover:text-[#3498DB] transition-colors"
                     aria-label={`Go to ${week.weekName} quiz`}
                   >
-                    {week.stats.total > 0 ? 'Continue' : 'Start'} Quiz
+                    {week.stats.total > 0 ? "Continue" : "Start"} Quiz
                   </Link>
                 </div>
               ))}
@@ -198,14 +210,15 @@ const Dashboard = () => {
                     {exam.examName}
                   </h4>
                   <p className="text-gray-600 text-sm">
-                    {exam.stats.correct} / {exam.stats.total} correct ({exam.accuracy}%)
+                    {exam.stats.correct} / {exam.stats.total} correct (
+                    {exam.accuracy}%)
                   </p>
                   <Link
                     to={`/quizzes/module/${module.moduleId}/${exam.examId}`}
                     className="mt-2 inline-block text-sm text-[#4169E1] hover:text-[#3498DB] transition-colors"
                     aria-label={`Go to ${exam.examName} exam`}
                   >
-                    {exam.stats.total > 0 ? 'Continue' : 'Start'} Exam
+                    {exam.stats.total > 0 ? "Continue" : "Start"} Exam
                   </Link>
                 </div>
               ))}

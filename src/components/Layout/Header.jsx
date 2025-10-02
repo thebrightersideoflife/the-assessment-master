@@ -12,7 +12,7 @@ const Header = ({ sidebarState, setSidebarState, onSettingsClick }) => {
         {/* Company Logo */}
         <div className="flex items-center">
           <img
-            src="logo.png"
+            src="/logo.png"
             alt="Company Logo"
             className="h-12 w-auto"
           />

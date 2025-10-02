@@ -31,6 +31,7 @@ const QuizManager = ({ moduleId, weekId }) => {
   const filteredQuestions = questions.filter(
     (q) => q.moduleId === moduleId && q.weekId === weekId
   );
+
   const currentQuestion = filteredQuestions[currentQuestionIndex];
 
   // Watch for quiz completion
@@ -154,7 +155,8 @@ const QuizManager = ({ moduleId, weekId }) => {
   if (loading) {
     return (
       <div className="text-center p-6">
-        <span className="loading" aria-label="Loading quiz"></span>
+        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#4169E1]"></div>
+        <p className="mt-4 text-gray-600">Loading quiz...</p>
       </div>
     );
   }
@@ -188,7 +190,9 @@ const QuizManager = ({ moduleId, weekId }) => {
         >
           Quiz Complete!
         </h2>
+
         <div className={`text-6xl font-bold ${message.color}`}>{accuracy}%</div>
+
         <div
           className={`text-lg ${message.color} flex items-center justify-center gap-3`}
           aria-live="polite"
@@ -196,6 +200,7 @@ const QuizManager = ({ moduleId, weekId }) => {
           <span>{message.emoji}</span>
           <span>{message.message}</span>
         </div>
+
         {badge && (
           <div
             className={`achievement-badge inline-block bg-gradient-to-r ${badge.gradient} px-6 py-3 rounded-xl border border-[#FFC300]/40`}
@@ -208,6 +213,7 @@ const QuizManager = ({ moduleId, weekId }) => {
             </div>
           </div>
         )}
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="stats-card bg-gradient-to-br from-[#28B463]/10 to-[#28B463]/20 p-4 rounded-xl border border-[#28B463]/30">
             <div className="text-2xl font-bold text-[#28B463]">
@@ -215,12 +221,14 @@ const QuizManager = ({ moduleId, weekId }) => {
             </div>
             <div className="text-sm text-gray-600">Correct Answers</div>
           </div>
+
           <div className="stats-card bg-gradient-to-br from-[#E67E22]/10 to-[#E67E22]/20 p-4 rounded-xl border border-[#E67E22]/30">
             <div className="text-2xl font-bold text-[#E67E22]">
               {stats.total - stats.correct}
             </div>
             <div className="text-sm text-gray-600">To Review</div>
           </div>
+
           <div className="stats-card bg-gradient-to-br from-[#4169E1]/10 to-[#4169E1]/20 p-4 rounded-xl border border-[#4169E1]/30">
             <div className="text-2xl font-bold text-[#4169E1]">
               {stats.total}
@@ -228,6 +236,7 @@ const QuizManager = ({ moduleId, weekId }) => {
             <div className="text-sm text-gray-600">Total Questions</div>
           </div>
         </div>
+
         <button
           onClick={handleRestart}
           className="bg-gradient-to-r from-[#FFC300] to-[#E67E22] text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all"
@@ -250,6 +259,7 @@ const QuizManager = ({ moduleId, weekId }) => {
       <h2 id="quiz-manager" className="text-2xl font-bold text-[#3498DB] mb-6">
         Question {currentQuestionIndex + 1} of {totalQuestions}
       </h2>
+
       <ProgressBar
         current={currentQuestionIndex + 1}
         total={totalQuestions}
@@ -257,6 +267,7 @@ const QuizManager = ({ moduleId, weekId }) => {
         total_answered={stats.total}
         accuracy={accuracy}
       />
+
       <Question
         question={currentQuestion}
         questionIndex={currentQuestionIndex}
@@ -264,7 +275,7 @@ const QuizManager = ({ moduleId, weekId }) => {
         weekId={weekId}
         onAnswerSubmit={handleAnswerSubmit}
         onNext={nextQuestion}
-        renderMath={renderMath}
+        totalQuestions={totalQuestions}
       />
     </div>
   );
