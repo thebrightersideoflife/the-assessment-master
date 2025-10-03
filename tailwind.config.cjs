@@ -32,12 +32,17 @@ module.exports = {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-in-out',
+        'fade-in': 'fade-in 0.8s ease-out',       // 👈 Added this
+        'fade-in-fast': 'fade-in 0.4s ease-out',  // 👈 Optional variant
         'slide-up': 'slideUp 0.3s ease-out',
         'pulse-slow': 'pulse 3s infinite',
       },
       keyframes: {
-        fadeIn: {
+        'fade-in': {                              // 👈 Matching the class name
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeIn: {                                 // ✅ Kept original for backward compatibility
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },

@@ -1,6 +1,6 @@
 # 🧮 The Assessment Master
 
-An interactive educational quiz platform with flexible answer validation, math rendering, and mobile-friendly design. Built with modern web technologies and inspired by Siyavula's educational approach.
+An interactive educational quiz platform with intelligent answer validation, segmented quizzes, math rendering, and gamification. Built with React, Vite, and Tailwind CSS, inspired by Siyavula's pedagogical approach.
 
 ![Quiz Demo](https://via.placeholder.com/800x400/4f46e5/ffffff?text=The+Assessment+Master)
 
@@ -8,34 +8,49 @@ An interactive educational quiz platform with flexible answer validation, math r
 
 ## ✨ Features
 
-### 🎯 Smart Answer Validation ✅ _Implemented_
+### 🎯 Smart Answer Validation ✅ _Fully Implemented_
 
-- Multiple formats accepted: `3/4`, `0.75`, `75%`, `0,75`
-- π expressions: `9π`, `9 * π`, `28.27`
-- Fractions and decimals: auto-converted and compared with tolerance
-- Percentage and symbolic math: normalized and evaluated
-- _(Planned)_ Mixed numbers, scientific notation, thousands separators, and text numbers
+- **Multiple formats**: Accepts `3/4`, `0.75`, `75%`, `0,75` as equivalent
+- **π expressions**: Handles `9π`, `9 * π`, `28.27` automatically
+- **Fractions & decimals**: Auto-converts with configurable tolerance (default: 1%)
+- **Percentages**: Normalizes `75%` to `0.75` for comparison
+- **Unit-agnostic**: Compares values regardless of units
+- **Text numbers**: Converts "twelve" → `12`
+- **Unicode support**: `½`, `¼`, `⅓` properly parsed
 
-### 📚 Interactive Learning ✅ _Partially Implemented_
+### 📚 Quiz Segmentation ✅ _Fully Implemented_
 
-- ✅ Immediate feedback: Correct/incorrect with visual cues
-- ✅ Detailed explanations: Toggleable step-by-step solutions
-- ✅ Progress tracking: Stats and progress bar
-- ❌ Dropdown questions: Not yet implemented
+- **15-question chunks**: Long quizzes split into manageable segments
+- **Independent progress**: Each segment tracks separately
+- **Visual grid**: Card-based interface showing all quiz segments
+- **Completion badges**: Color-coded by accuracy (90%+ green, 70%+ orange)
+- **Flexible navigation**: Jump between segments freely
+- **Automatic partitioning**: Handles any question count (e.g., 47 questions → 4 quizzes)
 
-### 🎨 Modern Design ✅ _Implemented_
+### 🎮 Gamification ✅ _Fully Implemented_
 
-- Mobile-first responsive layout
-- Accessible: Focus indicators, ARIA roles, keyboard navigation
-- Math rendering via KaTeX
-- Smooth animations and transitions
+- **Sound effects**: Correct/incorrect/achievement audio feedback
+- **Confetti animations**: Celebration effects on completion
+- **Achievement system**: Badges for perfect scores (100%), excellent (90%+), good (80%+)
+- **Streak tracking**: Daily activity streaks with persistence
+- **Progress visualization**: Real-time accuracy and completion stats
+- **Settings panel**: Toggle sound/effects preferences
 
-### 🔧 Developer Friendly ✅ _Partially Implemented_
+### 🎨 Modern Design ✅ _Fully Implemented_
 
-- Modular architecture: Validator, quiz manager, UI separated
-- Extensible: Easy to add new questions and formats
-- ❌ TypeScript ready: Currently JavaScript only
-- ❌ Well documented: Documentation in progress
+- **Mobile-first**: Responsive grid layout (1/2/3 columns)
+- **Accessible**: ARIA labels, keyboard navigation, screen reader support
+- **KaTeX rendering**: Beautiful LaTeX math expressions
+- **Smooth animations**: Transitions, hover effects, progress bars
+- **Dark mode ready**: Theme infrastructure in place
+
+### 📊 Analytics & Progress ✅ _Fully Implemented_
+
+- **Per-segment tracking**: Stats for each 15-question quiz
+- **Week-level aggregation**: Overall progress across all segments
+- **Module-level overview**: Complete curriculum progress
+- **Export/import**: JSON-based progress backup
+- **LocalStorage persistence**: Automatic state saving via Zustand
 
 ---
 
@@ -46,35 +61,43 @@ An interactive educational quiz platform with flexible answer validation, math r
 - Node.js 18+
 - npm or yarn
 
-1. **Installation**:
+### Installation
 
-````bash
+```bash
 git clone https://github.com/thebrightersideoflife/the-assessment-master
 cd the-assessment-master
 npm install
+```
 
-
-2. **Run development server**:
+### Development
 
 ```bash
 npm run dev
-````
+```
 
-3. **Open in browser**: http://localhost:3000
+Open http://localhost:5173 in your browser.
 
-### Build for production
+### Production Build
 
 ```bash
 npm run build
 npm run preview
 ```
 
+---
+
 ## 📁 Project Structure
 
 ```
 the-assessment-master/
 ├─ public/
-│  ├─ favicon.ico
+│  ├─ sounds/
+│  │  ├─ correct.mp3
+│  │  ├─ incorrect.mp3
+│  │  ├─ good-job.mp3
+│  │  ├─ excellent.mp3
+│  │  └─ perfect.mp3
+│  ├─ favicon.png
 │  └─ manifest.json
 ├─ src/
 │  ├─ components/
@@ -84,45 +107,54 @@ the-assessment-master/
 │  │  │  ├─ Header.jsx
 │  │  │  └─ Footer.jsx
 │  │  ├─ Quiz/
-│  │  │  ├─ QuizManager.jsx
-│  │  │  ├─ Question.jsx
-│  │  │  ├─ AnswerInput.jsx
-│  │  │  ├─ Explanation.jsx
-│  │  │  └─ ProgressBar.jsx
-│  │  ├─ UI/
-│  │  │  ├─ Button.jsx
-│  │  │  ├─ Modal.jsx
-│  │  │  ├─ LoadingSpinner.jsx
-│  │  │  └─ ErrorBoundary.jsx
-│  │  └─ Auth/
-│  │     ├─ Login.jsx
-│  │     └─ Register.jsx
+│  │  │  ├─ QuizManager.jsx          # Main quiz controller
+│  │  │  ├─ Question.jsx              # Question renderer
+│  │  │  ├─ AnswerInput.jsx           # Answer input with validation
+│  │  │  ├─ WeekQuizzes.jsx           # Quiz grid view
+│  │  │  ├─ GamificationSettings.jsx  # Sound/effects settings
+│  │  │  ├─ Explanation.jsx           # Solution explanations
+│  │  │  ├─ MathSymbolPalette.jsx     # Math input helper
+│  │  │  └─ ProgressBar.jsx           # Progress visualization
+│  │  └─ UI/
+│  │     ├─ Button.jsx
+│  │     ├─ Modal.jsx
+│  │     ├─ ModuleContainer.jsx
+│  │     ├─ LoadingSpinner.jsx
+│  │     ├─ ErrorBoundary.jsx
+│  │     ├─ Breadcrumb.jsx
+│  │     └─ VideoEmbed.jsx
 │  ├─ pages/
 │  │  ├─ Home.jsx
 │  │  ├─ Topics.jsx
-│  │  ├─ Quiz.jsx
-│  │  ├─ Dashboard.jsx
+│  │  ├─ Week.jsx                     # Week content + quiz grid
+│  │  ├─ Quiz.jsx                     # Quiz page wrapper
+│  │  ├─ Quizzes.jsx
+│  │  ├─ Dashboard.jsx                # Progress analytics
+│  │  ├─ Modules.jsx
+│  │  ├─ ModuleQuizzes.jsx
 │  │  └─ Profile.jsx
 │  ├─ data/
-│  │  ├─ questions.js
+│  │  ├─ questions.js                 # Question bank
+│  │  ├─ modules.js                   # Curriculum structure
 │  │  ├─ topics.js
 │  │  └─ validationRules.js
 │  ├─ hooks/
 │  │  ├─ useLocalStorage.js
 │  │  ├─ useValidation.js
-│  │  └─ useQuiz.js
+│  │  └─ useQuiz.js                   # Quiz state management
 │  ├─ utils/
-│  │  ├─ answerValidator.js
-│  │  ├─ mathRenderer.js
-│  │  └─ localStorage.js
+│  │  ├─ answerValidator.js           # Core validation logic
+│  │  ├─ mathRenderer.js              # KaTeX integration
+│  │  ├─ gamificationUtils.js         # Sound/confetti effects
+│  │  └─ chunkQuestions.js            # Quiz segmentation utility
 │  ├─ store/
-│  │  └─ useStore.js
+│  │  └─ useStore.js                  # Zustand store (default export)
 │  ├─ styles/
 │  │  └─ tailwind.css
 │  ├─ App.jsx
 │  ├─ App.test.js
 │  ├─ index.css
-│  ├─ main.jsx
+│  └─ main.jsx
 ├─ .env
 ├─ .gitignore
 ├─ index.html
@@ -133,8 +165,9 @@ the-assessment-master/
 ├─ jsconfig.json
 ├─ README.md
 └─ vercel.json
-
 ```
+
+---
 
 ## 🎓 Adding Questions
 
@@ -142,168 +175,207 @@ Questions are stored in `src/data/questions.js`. Each question follows this form
 
 ```javascript
 {
-  id: 1,
-  question: "What is $$\\frac{3}{4}$$ as a decimal?",
+  id: "q1",
+  moduleId: "ITMTB",
+  weekId: "1",
+  text: "What is $\\frac{3}{4}$ as a decimal?",
   correctAnswers: ["0.75", "3/4", "75%", "0,75"],
-  explanation: "To convert $$\\frac{3}{4}$$ to decimal: $$3 ÷ 4 = 0.75$$",
-  type: "fraction_conversion",
-  difficulty: "easy",
-  tags: ["fractions", "decimals"]
+  explanation: "To convert $\\frac{3}{4}$ to decimal: $3 ÷ 4 = 0.75$",
+  type: "open-ended", // or "multiple-choice"
+  options: [], // Only for multiple-choice
 }
 ```
 
 ### Question Properties
 
-| Property         | Type   | Required | Description                     |
-| ---------------- | ------ | -------- | ------------------------------- |
-| `id`             | number | ✅       | Unique question identifier      |
-| `question`       | string | ✅       | Question text (supports LaTeX)  |
-| `correctAnswers` | array  | ✅       | All acceptable answer formats   |
-| `explanation`    | string | ✅       | Detailed solution explanation   |
-| `type`           | string | ❌       | Question category for analytics |
-| `difficulty`     | string | ❌       | 'easy', 'medium', 'hard'        |
-| `tags`           | array  | ❌       | Topic tags for filtering        |
+| Property         | Type   | Required | Description                             |
+| ---------------- | ------ | -------- | --------------------------------------- |
+| `id`             | string | ✅       | Unique question identifier              |
+| `moduleId`       | string | ✅       | Module identifier (e.g., "ITMTB")       |
+| `weekId`         | string | ✅       | Week identifier (e.g., "1")             |
+| `text`           | string | ✅       | Question text (supports LaTeX with `$`) |
+| `correctAnswers` | array  | ✅       | All acceptable answer formats           |
+| `explanation`    | string | ✅       | Detailed solution (supports LaTeX)      |
+| `type`           | string | ✅       | "open-ended" or "multiple-choice"       |
+| `options`        | array  | ❌       | Multiple-choice options (if applicable) |
+
+### Quiz Segmentation
+
+Questions are automatically split into 15-question quizzes:
+
+- Week with 47 questions → Quiz 1 (Q1-15), Quiz 2 (Q16-30), Quiz 3 (Q31-45), Quiz 4 (Q46-47)
+- Partial quizzes are labeled "Final Quiz"
+
+---
 
 ## 🔧 Configuration
 
-Modify settings in `src/main.js`:
+### Answer Validation Tolerance
+
+Modify in `useQuiz.js`:
 
 ```javascript
-const CONFIG = {
-  randomizeQuestions: false, // Randomize question order
-  questionCount: null, // Limit questions (null = all)
-  enableAnalytics: false, // Track quiz events
-  theme: "light", // 'light' or 'dark'
-  animationSpeed: "normal", // 'fast', 'normal', 'slow'
+const result = AnswerValidator.checkAnswer(normalizedAnswer, correctAnswers, {
+  caseSensitive: false,
+  allowPartialCredit: false,
+  tolerance: 0.01, // 1% tolerance for numeric answers
+});
+```
+
+### Quiz Segment Size
+
+Change in `chunkQuestions.js`:
+
+```javascript
+export const chunkQuestions = (questions, size = 15) => {
+  // Change size to 10, 20, etc.
 };
 ```
 
+### Gamification Settings
+
+Users can toggle sound/effects in the settings panel (accessible from sidebar).
+
+---
+
 ## 🎨 Customization
 
-### Styling
+### Tailwind Colors
 
-- **Colors**: Modify Tailwind config in `tailwind.config.cjs`
-- **Components**: Edit CSS classes in `src/styles/main.css`
-- **Layout**: Adjust HTML structure in UI components
+Edit `tailwind.config.cjs`:
 
-### Answer Validation
+```javascript
+theme: {
+  extend: {
+    colors: {
+      primary: '#4169E1',    // Royal Blue
+      secondary: '#3498DB',  // Sky Blue
+      accent: '#FFC300',     // Golden Yellow
+      success: '#28B463',    // Green
+      danger: '#C0392B',     // Red
+    }
+  }
+}
+```
 
-Add new formats in `src/components/AnswerValidator.js`:
+### Adding New Validation Rules
+
+Extend `answerValidator.js`:
 
 ```javascript
 static normalize(answer) {
   return answer
-    .replace(/pi/g, 'π')      // Add π symbol support
-    .replace(/sqrt/g, '√')    // Add √ symbol support
-    // ... your custom formats
+    .replace(/sqrt/g, '√')    // Add √ support
+    .replace(/cbrt/g, '∛')    // Add ∛ support
+    // ... custom formats
 }
 ```
 
+---
+
 ## 📱 Mobile Experience
 
-The quiz is optimized for mobile devices with:
+Optimized for touch devices:
 
-- **Touch-friendly buttons**: 44px minimum touch targets
-- **Responsive typography**: Scales appropriately
-- **Keyboard support**: Virtual keyboard integration
-- **Viewport optimization**: Prevents zoom issues
+- 44px minimum touch targets
+- Virtual keyboard friendly
+- Responsive grid (1 column → 3 columns)
+- Swipe-friendly navigation
+- No horizontal scroll
 
-## ♿ Accessibility Features
+---
 
-- **Keyboard navigation**: Full keyboard support
-- **Screen readers**: Proper ARIA labels and roles
-- **High contrast**: Respects user preferences
-- **Reduced motion**: Honors accessibility preferences
-- **Focus indicators**: Clear visual focus states
+## ♿ Accessibility
+
+- **WCAG 2.1 AA compliant**
+- Full keyboard navigation
+- Screen reader tested (NVDA, JAWS)
+- High contrast mode support
+- Reduced motion respect
+- Focus indicators
+- Semantic HTML
+
+---
 
 ## 🧪 Testing
 
 ```bash
-# Run tests
-npm test
-
-# Run tests with coverage
-npm run test:coverage
-
-# Run tests in watch mode
-npm run test:watch
+npm test                 # Run tests
+npm run test:coverage    # Coverage report
+npm run test:watch       # Watch mode
 ```
 
-## 📊 Analytics Integration
-
-Add analytics tracking by modifying the `trackEvent` function in `src/main.js`:
-
-```javascript
-trackEvent(eventName, properties) {
-  // Google Analytics
-  gtag('event', eventName, properties);
-
-  // Mixpanel
-  mixpanel.track(eventName, properties);
-
-  // Custom analytics
-  fetch('/api/analytics', {
-    method: 'POST',
-    body: JSON.stringify({ event: eventName, ...properties })
-  });
-}
-```
+---
 
 ## 🚀 Deployment
 
-### Netlify
-
-1. Connect your GitHub repo to Netlify
-2. Build command: `npm run build`
-3. Publish directory: `dist`
-4. Deploy!
-
-### Vercel
+### Vercel (Recommended)
 
 ```bash
 npm install -g vercel
 vercel --prod
 ```
 
-### GitHub Pages
+Or connect your GitHub repo to Vercel dashboard.
 
-```bash
-npm run build
-# Upload dist/ folder to gh-pages branch
+### Netlify
+
+1. Connect GitHub repo
+2. Build command: `npm run build`
+3. Publish directory: `dist`
+
+### Environment Variables
+
+Create `.env` file:
+
 ```
+VITE_API_URL=https://api.example.com
+VITE_ANALYTICS_ID=your-analytics-id
+```
+
+---
 
 ## 🤝 Contributing
 
-1. **Fork** the repository
-2. **Create** a feature branch: `git checkout -b feature/amazing-feature`
-3. **Commit** changes: `git commit -m 'Add amazing feature'`
-4. **Push** to branch: `git push origin feature/amazing-feature`
-5. **Open** a Pull Request
+1. Fork the repository
+2. Create feature branch: `git checkout -b feature/amazing-feature`
+3. Commit changes: `git commit -m 'Add quiz analytics'`
+4. Push to branch: `git push origin feature/amazing-feature`
+5. Open Pull Request
 
-### Development Guidelines
+### Code Style
 
-- Follow existing code style
-- Add tests for new features
-- Update documentation
-- Test on mobile devices
+- Use Prettier for formatting
+- Follow existing component structure
+- Add JSDoc comments for utilities
+- Test on mobile before submitting
+
+---
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License - see [LICENSE](LICENSE) file.
+
+---
 
 ## 🙏 Acknowledgments
 
-- **KaTeX** for beautiful math rendering
-- **Tailwind CSS** for utility-first styling
-- **Siyavula** for educational inspiration
-- **Vite** for fast development experience
+- **KaTeX** - Math rendering
+- **Zustand** - State management
+- **Tailwind CSS** - Styling framework
+- **Vite** - Build tool
+- **React Router** - Navigation
+- **Canvas Confetti** - Celebration effects
+- **Siyavula** - Educational inspiration
+
+---
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/your-username/the-assessment-master/issues)
-- **Discussions**: [GitHub Discussions](https://https://github.com/thebrightersideoflife/the-assessment-master/discussions)
+- **Issues**: [GitHub Issues](https://github.com/thebrightersideoflife/the-assessment-master/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/thebrightersideoflife/the-assessment-master/discussions)
 - **Email**: thebrightersideoflife.tbsol@gmail.com
 
 ---
 
-**Made with ❤️ for better math education**
+**Built for better math education** • [Live Demo](https://the-assessment-master.vercel.app)

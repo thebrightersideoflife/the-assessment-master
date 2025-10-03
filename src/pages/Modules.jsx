@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Breadcrumb from '../components/UI/Breadcrumb';
 import { modules } from '../data/modules';
-import { useStore } from '../store/useStore';
+import useStore from '../store/useStore';
 
 const Modules = () => {
   const { moduleId } = useParams();

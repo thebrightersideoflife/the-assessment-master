@@ -1,5 +1,6 @@
 import React from "react";
 import { AiOutlineCopyright } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const Footer = ({ sidebarState }) => {
   return (
@@ -16,9 +17,15 @@ const Footer = ({ sidebarState }) => {
         alt="The Brighter Side logo"
         className="w-6 h-6 mx-2 rounded"
       />
-      <span className="font-medium text-[#4169E1]">
+
+      {/* Link to Home (root path) */}
+      <Link
+        to="/"
+        className="font-medium text-[#4169E1] hover:text-[#E67E22] transition-colors duration-200"
+      >
         The Brighter Side of Life
-      </span>
+      </Link>
+
       <span className="ml-2 text-gray-600">· All rights reserved</span>
     </footer>
   );

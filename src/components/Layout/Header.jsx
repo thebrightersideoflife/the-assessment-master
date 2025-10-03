@@ -4,6 +4,7 @@ import {
   AiOutlineClose,
   AiOutlineSetting,
 } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const Header = ({ sidebarState, setSidebarState, onSettingsClick }) => {
   return (
@@ -11,14 +12,22 @@ const Header = ({ sidebarState, setSidebarState, onSettingsClick }) => {
       <div className="flex items-center justify-between">
         {/* Company Logo and Slogan */}
         <div className="flex items-center flex-wrap max-w-[160px] sm:max-w-none">
-          <img
-            src="/logo.png"
-            alt="Company Logo"
-            className="h-12 w-auto"
-          />
-          <span className="ml-2 text-gray-800 font-bold text-base break-words">
+          <Link
+            to="/"
+            className="flex items-center focus:outline-none focus:ring-0"
+          >
+            <img
+              src="/logo.png"
+              alt="Company Logo"
+              className="h-12 w-auto"
+            />
+          </Link>
+          <Link
+            to="/"
+            className="ml-2 text-gray-800 font-bold text-base break-words hover:text-[#4169E1] transition-colors duration-200 focus:outline-none focus:ring-0"
+          >
             The Brighter Side of Life
-          </span>
+          </Link>
         </div>
 
         {/* Project Name & Slogan - Center */}
@@ -43,7 +52,7 @@ const Header = ({ sidebarState, setSidebarState, onSettingsClick }) => {
           {/* Desktop Settings Button */}
           <button
             onClick={onSettingsClick}
-            className="hidden md:flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-[#3498DB]/10 to-[#4169E1]/10 hover:from-[#3498DB]/20 hover:to-[#4169E1]/20 rounded-lg transition-all border border-[#3498DB]/20"
+            className="hidden md:flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-[#3498DB]/10 to-[#4169E1]/10 hover:from-[#3498DB]/20 hover:to-[#4169E1]/20 rounded-lg transition-all border border-[#3498DB]/20 focus:outline-none focus:ring-0"
             title="Gamification Settings"
           >
             <AiOutlineSetting className="w-5 h-5 text-[#4169E1]" />
@@ -57,7 +66,7 @@ const Header = ({ sidebarState, setSidebarState, onSettingsClick }) => {
             onClick={() =>
               setSidebarState((prev) => ({ ...prev, open: !prev.open }))
             }
-            className="md:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="md:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors focus:outline-none focus:ring-0"
             aria-label={sidebarState.open ? "Close menu" : "Open menu"}
           >
             {sidebarState.open ? (

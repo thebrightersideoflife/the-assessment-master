@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { AiOutlineBook, AiOutlineEdit, AiOutlineStar } from 'react-icons/ai';
 import { modules } from '../data/modules';
-import { useStore } from '../store/useStore';
+import useStore from '../store/useStore';
 
 const Home = () => {
   const { isModuleVisible } = useStore();
