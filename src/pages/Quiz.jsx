@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import QuizManager from "../components/Quiz/QuizManager";
 import ErrorBoundary from "../components/UI/ErrorBoundary";
-import { useStore } from "../store/useStore";
+import useStore from "../store/useStore";
 import { useQuiz } from "../hooks/useQuiz";
 import { AiOutlineReload } from "react-icons/ai";
 import Breadcrumb from "../components/UI/Breadcrumb";

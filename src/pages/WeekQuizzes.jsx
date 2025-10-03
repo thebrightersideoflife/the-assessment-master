@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { questions } from "../data/questions";
 import { chunkQuestions } from "../utils/chunkQuestions";
-import { useStore } from "../store/useStore";
+import useStore from "../store/useStore";
 
 const WeekQuizzes = ({ moduleId, weekId }) => {
   const { getQuizState } = useStore();

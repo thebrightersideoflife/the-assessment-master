@@ -4,11 +4,11 @@ import { persist } from 'zustand/middleware';
 import { format, isToday, addDays } from 'date-fns';
 import { modules } from '../data/modules';
 
-export const useStore = create(
+const useStore = create(
   persist(
     (set, get) => ({
       // Quiz state per moduleId-weekId-quizIndex
-      quizzes: {}, // { [moduleId-weekId-quizIndex]: { currentQuestionIndex, stats, completed } }
+      quizzes: {},
       
       // Streak tracking
       streaks: {
@@ -40,6 +40,7 @@ export const useStore = create(
             currentQuestionIndex: 0,
             stats: { correct: 0, total: 0 },
             completed: false,
+            lastAnsweredQuestion: -1, // Track last answered question index
           }
         );
       },
@@ -54,6 +55,7 @@ export const useStore = create(
             currentQuestionIndex: 0,
             stats: { correct: 0, total: 0 },
             completed: false,
+            lastAnsweredQuestion: -1,
           };
           return {
             quizzes: {
@@ -61,6 +63,7 @@ export const useStore = create(
               [quizKey]: {
                 ...quizState,
                 currentQuestionIndex: quizState.currentQuestionIndex + 1,
+                // Keep lastAnsweredQuestion - it will be updated on next submission
               },
             },
           };
@@ -73,7 +76,16 @@ export const useStore = create(
             currentQuestionIndex: 0,
             stats: { correct: 0, total: 0 },
             completed: false,
+            lastAnsweredQuestion: -1,
           };
+          
+          // CRITICAL: Prevent duplicate submissions for the same question
+          if (quizState.lastAnsweredQuestion === quizState.currentQuestionIndex) {
+            console.warn(
+              `[useStore] Duplicate submission blocked for question ${quizState.currentQuestionIndex} in ${quizKey}`
+            );
+            return state; // Return unchanged state
+          }
           
           const today = format(new Date(), 'yyyy-MM-dd');
           const lastActivityDate = state.streaks.lastActivityDate;
@@ -87,6 +99,10 @@ export const useStore = create(
             longestStreak = Math.max(longestStreak, currentStreak);
           }
           
+          console.log(
+            `[useStore] Recording answer for question ${quizState.currentQuestionIndex}: ${isCorrect ? 'correct' : 'incorrect'}`
+          );
+          
           return {
             quizzes: {
               ...state.quizzes,
@@ -96,6 +112,7 @@ export const useStore = create(
                   correct: quizState.stats.correct + (isCorrect ? 1 : 0),
                   total: quizState.stats.total + 1,
                 },
+                lastAnsweredQuestion: quizState.currentQuestionIndex, // Mark this question as answered
               },
             },
             streaks: {
@@ -114,6 +131,7 @@ export const useStore = create(
             currentQuestionIndex: 0,
             stats: { correct: 0, total: 0 },
             completed: false,
+            lastAnsweredQuestion: -1,
           };
           return {
             quizzes: {
@@ -212,26 +230,33 @@ export const useStore = create(
     }),
     {
       name: 'quiz-storage',
-      version: 2, // Incremented for segmentation support
+      version: 3, // Incremented for new lastAnsweredQuestion field
       partialize: (state) => ({
         quizzes: state.quizzes,
         streaks: state.streaks,
         moduleVisibility: state.moduleVisibility,
       }),
       migrate: (persistedState, version) => {
-        // Migration logic for older versions
-        if (version === 0 || version === 1) {
-          // Old format: { "moduleId-weekId": {...} }
-          // New format: { "moduleId-weekId-quizIndex": {...} }
+        if (version < 3) {
           const oldQuizzes = persistedState.quizzes || {};
           const newQuizzes = {};
           
           Object.keys(oldQuizzes).forEach((key) => {
-            // If key doesn't have quizIndex, add "-0" (first quiz)
+            const quiz = oldQuizzes[key];
+            
+            // Add lastAnsweredQuestion field to existing quizzes
             if (key.split("-").length === 2) {
-              newQuizzes[`${key}-0`] = oldQuizzes[key];
+              // Old format without quizIndex
+              newQuizzes[`${key}-0`] = {
+                ...quiz,
+                lastAnsweredQuestion: -1,
+              };
             } else {
-              newQuizzes[key] = oldQuizzes[key];
+              // New format with quizIndex
+              newQuizzes[key] = {
+                ...quiz,
+                lastAnsweredQuestion: quiz.lastAnsweredQuestion ?? -1,
+              };
             }
           });
           
@@ -246,3 +271,5 @@ export const useStore = create(
     }
   )
 );
+
+export default useStore;

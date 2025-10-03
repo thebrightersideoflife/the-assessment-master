@@ -5,7 +5,7 @@ import Breadcrumb from '../components/UI/Breadcrumb';
 import VideoEmbed from '../components/UI/VideoEmbed';
 import WeekQuizzes from './WeekQuizzes';
 import { modules } from '../data/modules';
-import { useStore } from '../store/useStore';
+import useStore from "../store/useStore";
 import { InlineMath, BlockMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
 import { AiOutlineRight } from 'react-icons/ai';

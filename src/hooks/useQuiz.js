@@ -1,21 +1,34 @@
+// src/hooks/useQuiz.js
 import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AnswerValidator } from '../utils/answerValidator';
 import { soundManager, createConfetti, createShakeEffect } from '../utils/gamificationUtils';
-import { useStore } from '../store/useStore';
+import useStore from '../store/useStore';
 import { questions } from '../data/questions';
 import { modules } from '../data/modules';
+import { chunkQuestions } from '../utils/chunkQuestions';
 
-export const useQuiz = (moduleId, weekId) => {
+export const useQuiz = (moduleId, weekId, quizIndex = 0) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quizQuestions, setQuizQuestions] = useState([]);
 
-  const { getQuizState, incrementQuestionIndex, updateStats, resetQuiz, getAccuracy, isModuleVisible } = useStore();
-  const { currentQuestionIndex, stats } = getQuizState(moduleId, weekId);
+  const { 
+    getQuizState, 
+    incrementQuestionIndex, 
+    updateStats, 
+    resetQuiz, 
+    getAccuracy, 
+    isModuleVisible,
+    completeQuiz 
+  } = useStore();
 
-  // Load questions and validate saved progress
+  // Get state for THIS specific quiz segment
+  const quizState = getQuizState(moduleId, weekId, quizIndex);
+  const { currentQuestionIndex, stats, completed } = quizState;
+
+  // Load questions ONLY
   useEffect(() => {
     if (!moduleId || !weekId) {
       setError('Invalid module or week ID.');
@@ -24,6 +37,7 @@ export const useQuiz = (moduleId, weekId) => {
     }
 
     setLoading(true);
+
     const module = modules.find((m) => m.id === moduleId);
     if (!module || !isModuleVisible(moduleId)) {
       setError('This module is not available.');
@@ -32,71 +46,49 @@ export const useQuiz = (moduleId, weekId) => {
     }
 
     try {
-      const filteredQuestions = questions.filter(
+      const weekQuestions = questions.filter(
         (q) => q.moduleId === moduleId && q.weekId === weekId
       );
 
-      if (filteredQuestions.length === 0) {
+      if (weekQuestions.length === 0) {
         setError('No questions found for this module and week.');
+        setQuizQuestions([]);
+        setLoading(false);
+        return;
       }
 
-      setQuizQuestions(filteredQuestions);
+      const questionChunks = chunkQuestions(weekQuestions, 15);
+      const segmentQuestions = questionChunks[quizIndex] || [];
 
-      // Validate saved progress
-      const savedProgress = JSON.parse(
-        localStorage.getItem(`quiz-progress-${moduleId}-${weekId}`)
-      );
-
-      if (
-        savedProgress &&
-        savedProgress.currentQuestionIndex !== undefined &&
-        savedProgress.stats
-      ) {
-        if (savedProgress.currentQuestionIndex >= filteredQuestions.length) {
-          console.warn("Saved progress invalid for this quiz, resetting.");
-          resetQuiz(moduleId, weekId);
-          localStorage.removeItem(`quiz-progress-${moduleId}-${weekId}`);
-        } else {
-          resetQuiz(moduleId, weekId);
-          setTimeout(() => {
-            useStore.setState((state) => ({
-              quizzes: {
-                ...state.quizzes,
-                [`${moduleId}-${weekId}`]: {
-                  currentQuestionIndex: savedProgress.currentQuestionIndex,
-                  stats: savedProgress.stats,
-                },
-              },
-            }));
-          }, 0);
-        }
+      if (segmentQuestions.length === 0) {
+        setError(`Quiz ${quizIndex + 1} does not exist for this week.`);
+        setQuizQuestions([]);
+        setLoading(false);
+        return;
       }
+
+      setQuizQuestions(segmentQuestions);
+      setError(null);
     } catch (err) {
       setError('Failed to load questions. Please try again.');
       console.error(err);
     } finally {
       setLoading(false);
     }
-  }, [moduleId, weekId, navigate, isModuleVisible, resetQuiz]);
+  }, [moduleId, weekId, quizIndex, navigate, isModuleVisible]);
 
-  // Persist progress
+  // Mark quiz as complete when all questions answered
   useEffect(() => {
-    localStorage.setItem(
-      `quiz-progress-${moduleId}-${weekId}`,
-      JSON.stringify({ currentQuestionIndex, stats })
-    );
-
-    // Achievement sound at end
-    if (currentQuestionIndex >= quizQuestions.length && quizQuestions.length > 0) {
-      const accuracy = getAccuracy(moduleId, weekId);
+    if (currentQuestionIndex >= quizQuestions.length && quizQuestions.length > 0 && !completed) {
+      completeQuiz(moduleId, weekId, quizIndex);
+      const accuracy = getAccuracy(moduleId, weekId, quizIndex);
       soundManager.playAchievementSound(accuracy);
     }
-  }, [currentQuestionIndex, stats, moduleId, weekId, quizQuestions.length, getAccuracy]);
+  }, [currentQuestionIndex, quizQuestions.length, completed, moduleId, weekId, quizIndex, completeQuiz, getAccuracy]);
 
-  // Answer checking with more lenient tolerance
+  // Answer checking
   const checkAnswer = useCallback(
     (userAnswer, correctAnswers, element) => {
-      // Normalize numeric input: commas → dots
       let normalizedAnswer = userAnswer;
       if (typeof userAnswer === 'string') {
         normalizedAnswer = userAnswer.replace(',', '.').trim();
@@ -105,7 +97,7 @@ export const useQuiz = (moduleId, weekId) => {
       const result = AnswerValidator.checkAnswer(normalizedAnswer, correctAnswers, {
         caseSensitive: false,
         allowPartialCredit: false,
-        tolerance: 0.01, // Increased from 0.001 to 0.01 (1% tolerance)
+        tolerance: 0.01,
       });
 
       if (element) {
@@ -116,8 +108,6 @@ export const useQuiz = (moduleId, weekId) => {
           soundManager.playIncorrectSound();
           createShakeEffect(element);
         }
-      } else {
-        console.warn('No element provided for effects');
       }
 
       return result;
@@ -125,51 +115,52 @@ export const useQuiz = (moduleId, weekId) => {
     []
   );
 
-  // Handle submission
+  // Handle submission - THIS IS CALLED BY QUESTION.JSX
   const handleAnswerSubmit = useCallback(
     (userAnswer, questionId, element) => {
       const question = quizQuestions.find((q) => q.id === questionId);
+      
       if (!question) {
-        console.warn("Invalid question submission", {
+        console.error("Question not found:", {
           questionId,
           moduleId,
           weekId,
+          quizIndex,
           availableIds: quizQuestions.map((q) => q.id),
         });
-        // Reset quiz automatically if IDs don't match
-        resetQuiz(moduleId, weekId);
-        localStorage.removeItem(`quiz-progress-${moduleId}-${weekId}`);
+        
         return {
           isCorrect: false,
-          message: 'Invalid question, restarting quiz',
+          message: 'Question not found',
           method: 'error',
         };
       }
 
       const result = checkAnswer(userAnswer, question.correctAnswers, element);
-      updateStats(moduleId, weekId, result.isCorrect);
+      
+      // Update stats ONCE per submission
+      updateStats(moduleId, weekId, quizIndex, result.isCorrect);
+
       return result;
     },
-    [checkAnswer, moduleId, weekId, quizQuestions, updateStats, resetQuiz]
+    [checkAnswer, moduleId, weekId, quizIndex, quizQuestions, updateStats]
   );
 
-  // Next question - NOW WORKS ON LAST QUESTION TOO
+  // Next question
   const nextQuestion = useCallback(() => {
-    // Always increment, even on the last question
-    // This will push currentQuestionIndex >= totalQuestions, triggering completion
-    incrementQuestionIndex(moduleId, weekId);
-  }, [moduleId, weekId, incrementQuestionIndex]);
+    incrementQuestionIndex(moduleId, weekId, quizIndex);
+  }, [moduleId, weekId, quizIndex, incrementQuestionIndex]);
 
-  // Restart quiz
+  // Restart this quiz segment
   const restart = useCallback(() => {
-    resetQuiz(moduleId, weekId);
-    localStorage.removeItem(`quiz-progress-${moduleId}-${weekId}`);
-  }, [resetQuiz, moduleId, weekId]);
+    resetQuiz(moduleId, weekId, quizIndex);
+  }, [resetQuiz, moduleId, weekId, quizIndex]);
 
   return {
     currentQuestionIndex,
     stats: stats || { correct: 0, total: 0 },
-    accuracy: getAccuracy(moduleId, weekId),
+    accuracy: getAccuracy(moduleId, weekId, quizIndex),
+    completed,
     checkAnswer,
     handleAnswerSubmit,
     nextQuestion,

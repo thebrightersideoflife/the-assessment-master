@@ -3,64 +3,36 @@ import { useQuiz } from "../../hooks/useQuiz";
 import Question from "./Question";
 import ProgressBar from "./ProgressBar";
 import { soundManager, createAchievementConfetti } from "../../utils/gamificationUtils";
-import { questions } from "../../data/questions";
 import { chunkQuestions } from "../../utils/chunkQuestions";
+import { questions } from "../../data/questions";
 
-// ============================================================================
-// UPDATED COMPONENT: QuizManager with Segmentation Support
-// ============================================================================
 const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
-  // Step 1: Filter all questions for this week
-  const weekQuestions = questions.filter(
-    (q) => q.moduleId === moduleId && q.weekId === weekId
-  );
-
-  // Step 2: Split into 15-question chunks
-  const questionChunks = chunkQuestions(weekQuestions, 15);
-  
-  // Step 3: Get only the questions for THIS quiz segment
-  const filteredQuestions = questionChunks[quizIndex] || [];
-
-  // Calculate total number of quizzes for this week
-  const totalQuizzes = questionChunks.length;
-
-  // Use the quiz hook (now working with segmented questions)
+  // Get everything from useQuiz hook
   const {
     currentQuestionIndex,
     totalQuestions,
     stats,
     accuracy,
-    handleAnswerSubmit,
+    handleAnswerSubmit, // Use this directly - it handles stat updates
     nextQuestion,
     restart,
     loading,
     error,
+    questions: filteredQuestions, // Renamed from the hook
   } = useQuiz(moduleId, weekId, quizIndex);
 
   const [isComplete, setIsComplete] = useState(false);
   const [achievementPlayed, setAchievementPlayed] = useState(false);
   const containerRef = useRef(null);
 
-  // Get current question from the SEGMENTED list
+  // Calculate total number of quizzes for this week
+  const weekQuestions = questions.filter(
+    (q) => q.moduleId === moduleId && q.weekId === weekId
+  );
+  const questionChunks = chunkQuestions(weekQuestions, 15);
+  const totalQuizzes = questionChunks.length;
+
   const currentQuestion = filteredQuestions[currentQuestionIndex];
-
-  // Validate and reset if saved progress is invalid
-  useEffect(() => {
-    if (filteredQuestions.length === 0) {
-      console.warn(`No questions found for quiz segment ${quizIndex + 1}`);
-      restart();
-      return;
-    }
-
-    if (
-      currentQuestionIndex >= filteredQuestions.length ||
-      currentQuestionIndex < 0 ||
-      !filteredQuestions[currentQuestionIndex]
-    ) {
-      console.warn("Saved progress invalid for this quiz segment, resetting.");
-      restart();
-    }
-  }, [currentQuestionIndex, filteredQuestions, restart, quizIndex]);
 
   // Watch for quiz completion
   useEffect(() => {
@@ -105,14 +77,12 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
     }
   }, [isComplete, achievementPlayed, accuracy]);
 
-  // Restart handler
   const handleRestart = () => {
     restart();
     setIsComplete(false);
     setAchievementPlayed(false);
   };
 
-  // Completion feedback
   const getCompletionMessage = (acc) => {
     if (acc >= 100)
       return {
@@ -167,7 +137,6 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
     return null;
   };
 
-  // Loading state
   if (loading) {
     return (
       <div className="text-center p-6">
@@ -177,7 +146,6 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
     );
   }
 
-  // Error or no questions
   if (error || filteredQuestions.length === 0) {
     return (
       <div className="bg-white rounded-2xl p-6 shadow-2xl text-center border border-[#C0392B]/30">
@@ -191,7 +159,6 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
     );
   }
 
-  // Completion screen
   if (isComplete) {
     const message = getCompletionMessage(accuracy);
     const badge = getAchievementBadge(accuracy);
@@ -203,7 +170,6 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
         role="region"
         aria-labelledby="quiz-complete-title"
       >
-        {/* Quiz Segment Identifier */}
         <div className="inline-block bg-gradient-to-r from-[#4169E1] to-[#3498DB] text-white px-4 py-2 rounded-full text-sm font-semibold mb-2">
           Quiz {quizIndex + 1} of {totalQuizzes}
         </div>
@@ -259,7 +225,6 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
             onClick={handleRestart}
@@ -277,7 +242,6 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
           </button>
         </div>
 
-        {/* Progress Indicator */}
         {quizIndex + 1 < totalQuizzes && (
           <div className="bg-[#3498DB]/10 border border-[#3498DB]/30 rounded-xl p-4 mt-4">
             <p className="text-sm text-gray-700">
@@ -297,7 +261,6 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
     );
   }
 
-  // Active quiz state
   return (
     <div
       className="bg-white bg-opacity-98 rounded-2xl p-8 shadow-2xl border border-[#3498DB]/30"
@@ -305,7 +268,6 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
       aria-labelledby="quiz-manager"
       ref={containerRef}
     >
-      {/* Header with Quiz Segment Info */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
         <div>
           <div className="text-sm text-gray-600 mb-1">
@@ -316,7 +278,6 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
           </h2>
         </div>
         
-        {/* Stats Badge */}
         <div className="bg-[#4169E1]/10 px-4 py-2 rounded-full">
           <span className="text-sm font-semibold text-[#4169E1]">
             {stats.correct}/{stats.total} correct
@@ -324,7 +285,6 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
         </div>
       </div>
 
-      {/* Progress Bar */}
       <ProgressBar
         current={currentQuestionIndex + 1}
         total={totalQuestions}
@@ -333,7 +293,6 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
         accuracy={accuracy}
       />
 
-      {/* Question Component */}
       <Question
         question={currentQuestion}
         questionIndex={currentQuestionIndex}
@@ -344,29 +303,6 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
         onNext={nextQuestion}
         totalQuestions={totalQuestions}
       />
-
-      {/* Optional: Quiz Progress Indicator */}
-      <div className="mt-6 pt-6 border-t border-gray-200">
-        <div className="flex items-center justify-between text-xs text-gray-600">
-          <span>Quiz Progress</span>
-          <span>{Math.round(((currentQuestionIndex + 1) / totalQuestions) * 100)}%</span>
-        </div>
-        <div className="mt-2 grid grid-cols-15 gap-1">
-          {filteredQuestions.map((_, idx) => (
-            <div
-              key={idx}
-              className={`h-1 rounded-full transition-all duration-300 ${
-                idx < currentQuestionIndex
-                  ? 'bg-[#28B463]'
-                  : idx === currentQuestionIndex
-                  ? 'bg-[#3498DB] animate-pulse'
-                  : 'bg-gray-200'
-              }`}
-              aria-label={`Question ${idx + 1}`}
-            />
-          ))}
-        </div>
-      </div>
     </div>
   );
 };

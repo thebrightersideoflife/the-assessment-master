@@ -333,289 +333,147 @@ export const modules = [
         name: "Week 1",
         title: "Integral: Area & Distance Problems, Definite Integrals",
         topics: [
-    {
-        id: "ITMTB_W1_T1",
-        name: "Lesson 1: Area & Distance Interpretation",
-        competency: "Assessment Coverage: 5.1",
-        explanation: "Interpret integrals or sums geometrically: area under curve or distance traveled over time.",
-        example: "If velocity is v(t) = t² on [0,2], area under v(t) is total distance.",
-        studyTip: "Draw the velocity graph and think ‘area = distance’.",
-        videoUrl: "https://www.youtube.com/watch?v=XrMSfljzBRg",  // 5.1 Areas & Distances video :contentReference[oaicite:7]{index=7}
-        quizId: "ITMTB_W1_Quiz"
-      },
       {
-        id: "ITMTB_W1_T2",
-        name: "Lesson 1: Riemann Sums (Left, Right, Midpoint)",
-        competency: "Assessment Coverage: 5.1",
-        explanation: "Approximate area by summing rectangles using left endpoints, right endpoints, or midpoints.",
-        example: "Approximate ∫₀² x² dx using 4 rectangles and midpoint rule.",
-        studyTip: "Start with small n, compare left/right/midpoint to see which is better.",
-        videoUrl: "https://www.youtube.com/watch?v=AkUa9Fkz2rw",  // Riemann Sums tutorial :contentReference[oaicite:8]{index=8}
-        quizId: "ITMTB_W1_Quiz"
-      },
-      {
-        id: "ITMTB_W1_T3",
-        name: "Lesson 1: Definite Integral via Limit of Riemann Sums",
-        competency: "Assessment Coverage: 5.1",
-        explanation: "Define the definite integral as the limit of Riemann sums as partition norm → 0.",
-        example: "Show limₙ→∞ Σ f(xᵢ*) Δx = ∫ₐᵇ f(x) dx for f(x)=x² on [0,1].",
-        studyTip: "Really link the sum notation to integral notation step by step.",
-        videoUrl: "https://www.youtube.com/watch?v=8W3gEuaj_0s",  // Riemann Sums → Definite Integrals video :contentReference[oaicite:9]{index=9}
-        quizId: "ITMTB_W1_Quiz"
-      },
-      {
-        id: "ITMTB_W1_T4",
-        name: "Lesson 1: Fundamental Theorem of Calculus",
-        competency: "Assessment Coverage: 5.1",
-        explanation: "Relates antiderivatives and definite integrals, enabling evaluation of integrals via antiderivatives.",
-        example: "Compute ∫₀¹ x² dx by finding F(x)=x³/3 and using F(1)–F(0).",
-        studyTip: "Memorize the statement: ∫ₐᵇ f(x) dx = F(b) – F(a) when F′(x)=f(x).",
-        videoUrl: "https://www.youtube.com/watch?v=aeB5BWY0RlE",  // FTC Part 1 video :contentReference[oaicite:10]{index=10}
-        quizId: "ITMTB_W1_Quiz"
-      },
+          id: "ITMTB_W1_T1",
+          name: "Lesson 1: Area & Distance Interpretation",
+          competency: "Assessment Coverage: 5.1",
+          explanation: "Interpret integrals or sums geometrically: area under curve or distance traveled over time.",
+          example: "If velocity is v(t) = t² on [0,2], area under v(t) is total distance.",
+          studyTip: "Draw the velocity graph and think ‘area = distance’.",
+          videoUrl: "https://www.youtube.com/watch?v=XrMSfljzBRg",  // 5.1 Areas & Distances video :contentReference[oaicite:7]{index=7}
+          quizId: "ITMTB_W1_Quiz"
+        },
         {
-    id: "ITMTB_W2_T1",
-    name: "Lesson 2: Definition of the Definite Integral",
-    competency: "Assessment Coverage: Section 5.2",
-    explanation: "The definite integral ∫_a^b f(x) dx is defined as the limit of Riemann sums as the number of subintervals approaches infinity and their width approaches zero. It formalizes the idea of summing infinitely many small products f(x_i*)Δx to find total accumulation over [a,b].",
-    example: "For f(x)=x² on [0,1], divide into n subintervals of width 1/n. The Riemann sum using right endpoints is ∑(i/n)²(1/n). Taking the limit as n→∞ gives 1/3, so ∫₀¹ x² dx = 1/3.",
-    studyTip: "Visualize Riemann sums with rectangles. As you increase n, the rectangles fit the curve more closely — this helps build intuition before working with formal limits.",
-    videoUrl: "https://www.youtube.com/watch?v=6o3b2u1-ZHQ", 
-    quizId: "ITMTB_W2_Quiz"
-  },
-  {
-    id: "ITMTB_W2_T2",
-    name: "Lesson 2: Interpreting Definite Integrals as Net Area",
-    competency: "Assessment Coverage: Section 5.2",
-    explanation: "A definite integral can be viewed as net signed area between the curve y=f(x) and the x-axis over [a,b]. Regions above the axis contribute positive area; regions below contribute negative area. The integral equals A₁ - A₂, where A₁ is area above and A₂ is area below the axis.",
-    example: "For f(x)=x³-6x on [0,3], parts of the curve lie above and below the axis. ∫₀³ (x³-6x) dx equals the positive area above minus the area below, yielding -26.75.",
-    studyTip: "Sketch the function before integrating to identify where it’s positive or negative. This makes it easier to interpret the integral geometrically.",
-    videoUrl: "https://www.khanacademy.org/math/ap-calculus-ab/ab-integration-new/ab-5-2/v/definite-integrals-as-net-area", 
-    quizId: "ITMTB_W2_Quiz"
-  },
-  {
-    id: "ITMTB_W2_T3",
-    name: "Lesson 2: Evaluating Definite Integrals Using Limits",
-    competency: "Assessment Coverage: Section 5.2",
-    explanation: "By Theorem 4, if f is integrable on [a,b], then ∫_a^b f(x) dx = lim (n→∞) ∑ f(x_i) Δx using right endpoints. This allows us to convert complicated sums to integrals, and vice versa, recognizing patterns in limits.",
-    example: "lim n→∞ ∑_{i=1}^n [x_i³ + x_i sin x_i] Δx on [0,π] equals ∫₀^π (x³+x sin x) dx by matching the Riemann sum structure.",
-    studyTip: "When faced with a sum in a limit, look for Δx = (b−a)/n and x_i = a + iΔx. If they match, rewrite as an integral — it simplifies the problem enormously.",
-    videoUrl: "https://www.youtube.com/watch?v=CYfK9lqYUF8", 
-    quizId: "ITMTB_W2_Quiz"
-  },
-  {
-    id: "ITMTB_W2_T4",
-    name: "Lesson 2: The Midpoint Rule",
-    competency: "Assessment Coverage: Section 5.2",
-    explanation: "The Midpoint Rule approximates ∫_a^b f(x) dx by sampling at midpoints of subintervals instead of left or right endpoints. This usually gives a better estimate with fewer rectangles because it balances over- and underestimation.",
-    example: "To approximate ∫₁² (1/x) dx with n=5 subintervals, use midpoints 1.1, 1.3, 1.5, 1.7, 1.9 and width Δx=0.2. The Midpoint Rule gives approximately 0.692, close to the exact ln(2)≈0.6931.",
-    studyTip: "For numeric integration without antiderivatives, midpoints usually outperform left or right sums. Use this method for faster, more accurate approximations.",
-    videoUrl: "https://www.youtube.com/watch?v=SW_uk0Jqz3c", 
-    quizId: "ITMTB_W2_Quiz"
-  },
-  {
-    id: "ITMTB_W2_T5",
-    name: "Lesson 2: Properties of the Definite Integral",
-    competency: "Assessment Coverage: Section 5.2",
-    explanation: "Properties like linearity, additivity over intervals, and reversal of limits simplify integration. For example, ∫_a^b c dx = c(b−a); ∫_a^b [f(x)+g(x)] dx = ∫_a^b f(x) dx + ∫_a^b g(x) dx; and ∫_b^a f(x) dx = −∫_a^b f(x) dx.",
-    example: "∫₀¹ [4+3x²] dx = ∫₀¹ 4 dx + 3∫₀¹ x² dx = 4(1) + 3(1/3) = 5.",
-    studyTip: "Memorize these core properties — they let you break complicated integrals into simpler pieces and avoid unnecessary calculations.",
-    videoUrl: "https://www.youtube.com/watch?v=VwVMRj2lTAI", 
-    quizId: "ITMTB_W2_Quiz"
-  },
-  {
-    id: "ITMTB_W2_T6",
-    name: "Lesson 2: Comparison Properties and Estimation",
-    competency: "Assessment Coverage: Section 5.2",
-    explanation: "Comparison properties bound integrals using min and max values. If m ≤ f(x) ≤ M on [a,b], then m(b−a) ≤ ∫_a^b f(x) dx ≤ M(b−a). These are useful for quick estimates without full calculation.",
-    example: "For f(x)=e^{-x²} on [0,1], m=f(1)=e^{-1}, M=f(0)=1. So e^{-1} ≤ ∫₀¹ e^{-x²} dx ≤ 1, giving 0.367 < ∫₀¹ e^{-x²} dx < 1.",
-    studyTip: "This property is a fast way to check whether your computed integral is reasonable — especially useful on exams when you’re unsure of your arithmetic.",
-    videoUrl: "https://www.youtube.com/watch?v=UAEiKJkk5tM", 
-    quizId: "ITMTB_W2_Quiz"
-  }
+          id: "ITMTB_W1_T2",
+          name: "Lesson 1: Riemann Sums (Left, Right, Midpoint)",
+          competency: "Assessment Coverage: 5.1",
+          explanation: "Approximate area by summing rectangles using left endpoints, right endpoints, or midpoints.",
+          example: "Approximate ∫₀² x² dx using 4 rectangles and midpoint rule.",
+          studyTip: "Start with small n, compare left/right/midpoint to see which is better.",
+          videoUrl: "https://www.youtube.com/watch?v=AkUa9Fkz2rw",  // Riemann Sums tutorial :contentReference[oaicite:8]{index=8}
+          quizId: "ITMTB_W1_Quiz"
+        },
+        {
+          id: "ITMTB_W1_T3",
+          name: "Lesson 1: Definite Integral via Limit of Riemann Sums",
+          competency: "Assessment Coverage: 5.1",
+          explanation: "Define the definite integral as the limit of Riemann sums as partition norm → 0.",
+          example: "Show limₙ→∞ Σ f(xᵢ*) Δx = ∫ₐᵇ f(x) dx for f(x)=x² on [0,1].",
+          studyTip: "Really link the sum notation to integral notation step by step.",
+          videoUrl: "https://www.youtube.com/watch?v=8W3gEuaj_0s",  // Riemann Sums → Definite Integrals video :contentReference[oaicite:9]{index=9}
+          quizId: "ITMTB_W1_Quiz"
+        },
+        {
+          id: "ITMTB_W1_T4",
+          name: "Lesson 1: Fundamental Theorem of Calculus",
+          competency: "Assessment Coverage: 5.1",
+          explanation: "Relates antiderivatives and definite integrals, enabling evaluation of integrals via antiderivatives.",
+          example: "Compute ∫₀¹ x² dx by finding F(x)=x³/3 and using F(1)–F(0).",
+          studyTip: "Memorize the statement: ∫ₐᵇ f(x) dx = F(b) – F(a) when F′(x)=f(x).",
+          videoUrl: "https://www.youtube.com/watch?v=aeB5BWY0RlE",  // FTC Part 1 video :contentReference[oaicite:10]{index=10}
+          quizId: "ITMTB_W1_Quiz"
+        },
+        {
+          id: "ITMTB_W1_T5",
+          name: "Lesson 2: Definition of the Definite Integral",
+          competency: "Assessment Coverage: Section 5.2",
+          explanation: "The definite integral ∫_a^b f(x) dx is defined as the limit of Riemann sums as the number of subintervals approaches infinity and their width approaches zero. It formalizes the idea of summing infinitely many small products f(x_i*)Δx to find total accumulation over [a,b].",
+          example: "For f(x)=x² on [0,1], divide into n subintervals of width 1/n. The Riemann sum using right endpoints is ∑(i/n)²(1/n). Taking the limit as n→∞ gives 1/3, so ∫₀¹ x² dx = 1/3.",
+          studyTip: "Visualize Riemann sums with rectangles. As you increase n, the rectangles fit the curve more closely — this helps build intuition before working with formal limits.",
+          videoUrl: "https://www.youtube.com/watch?v=6o3b2u1-ZHQ", 
+          quizId: "ITMTB_W1_Quiz"
+        },
+        {
+          id: "ITMTB_W1_T6",
+          name: "Lesson 2: Interpreting Definite Integrals as Net Area",
+          competency: "Assessment Coverage: Section 5.2",
+          explanation: "A definite integral can be viewed as net signed area between the curve y=f(x) and the x-axis over [a,b]. Regions above the axis contribute positive area; regions below contribute negative area. The integral equals A₁ - A₂, where A₁ is area above and A₂ is area below the axis.",
+          example: "For f(x)=x³-6x on [0,3], parts of the curve lie above and below the axis. ∫₀³ (x³-6x) dx equals the positive area above minus the area below, yielding -26.75.",
+          studyTip: "Sketch the function before integrating to identify where it’s positive or negative. This makes it easier to interpret the integral geometrically.",
+          videoUrl: "https://www.khanacademy.org/math/ap-calculus-ab/ab-integration-new/ab-5-2/v/definite-integrals-as-net-area", 
+          quizId: "ITMTB_W1_Quiz"
+        },
+        {
+          id: "ITMTB_W1_T7",
+          name: "Lesson 2: Evaluating Definite Integrals Using Limits",
+          competency: "Assessment Coverage: Section 5.2",
+          explanation: "By Theorem 4, if f is integrable on [a,b], then ∫_a^b f(x) dx = lim (n→∞) ∑ f(x_i) Δx using right endpoints. This allows us to convert complicated sums to integrals, and vice versa, recognizing patterns in limits.",
+          example: "lim n→∞ ∑_{i=1}^n [x_i³ + x_i sin x_i] Δx on [0,π] equals ∫₀^π (x³+x sin x) dx by matching the Riemann sum structure.",
+          studyTip: "When faced with a sum in a limit, look for Δx = (b−a)/n and x_i = a + iΔx. If they match, rewrite as an integral — it simplifies the problem enormously.",
+          videoUrl: "https://www.youtube.com/watch?v=CYfK9lqYUF8", 
+          quizId: "ITMTB_W1_Quiz"
+        },
+        {
+          id: "ITMTB_W1_T8",
+          name: "Lesson 2: The Midpoint Rule",
+          competency: "Assessment Coverage: Section 5.2",
+          explanation: "The Midpoint Rule approximates ∫_a^b f(x) dx by sampling at midpoints of subintervals instead of left or right endpoints. This usually gives a better estimate with fewer rectangles because it balances over- and underestimation.",
+          example: "To approximate ∫₁² (1/x) dx with n=5 subintervals, use midpoints 1.1, 1.3, 1.5, 1.7, 1.9 and width Δx=0.2. The Midpoint Rule gives approximately 0.692, close to the exact ln(2)≈0.6931.",
+          studyTip: "For numeric integration without antiderivatives, midpoints usually outperform left or right sums. Use this method for faster, more accurate approximations.",
+          videoUrl: "https://www.youtube.com/watch?v=SW_uk0Jqz3c", 
+          quizId: "ITMTB_W2_Quiz"
+        },
+        {
+          id: "ITMTB_W1_T9",
+          name: "Lesson 2: Properties of the Definite Integral",
+          competency: "Assessment Coverage: Section 5.2",
+          explanation: "Properties like linearity, additivity over intervals, and reversal of limits simplify integration. For example, ∫_a^b c dx = c(b−a); ∫_a^b [f(x)+g(x)] dx = ∫_a^b f(x) dx + ∫_a^b g(x) dx; and ∫_b^a f(x) dx = −∫_a^b f(x) dx.",
+          example: "∫₀¹ [4+3x²] dx = ∫₀¹ 4 dx + 3∫₀¹ x² dx = 4(1) + 3(1/3) = 5.",
+          studyTip: "Memorize these core properties — they let you break complicated integrals into simpler pieces and avoid unnecessary calculations.",
+          videoUrl: "https://www.youtube.com/watch?v=VwVMRj2lTAI", 
+          quizId: "ITMTB_W1_Quiz"
+        },
+        {
+          id: "ITMTB_W1_T10",
+          name: "Lesson 2: Comparison Properties and Estimation",
+          competency: "Assessment Coverage: Section 5.2",
+          explanation: "Comparison properties bound integrals using min and max values. If m ≤ f(x) ≤ M on [a,b], then m(b−a) ≤ ∫_a^b f(x) dx ≤ M(b−a). These are useful for quick estimates without full calculation.",
+          example: "For f(x)=e^{-x²} on [0,1], m=f(1)=e^{-1}, M=f(0)=1. So e^{-1} ≤ ∫₀¹ e^{-x²} dx ≤ 1, giving 0.367 < ∫₀¹ e^{-x²} dx < 1.",
+          studyTip: "This property is a fast way to check whether your computed integral is reasonable — especially useful on exams when you’re unsure of your arithmetic.",
+          videoUrl: "https://www.youtube.com/watch?v=UAEiKJkk5tM", 
+          quizId: "ITMTB_W1_Quiz"
+        }
         ]
       },
       {
         id: "ITMTB_W2",
         name: "Week 2",
         title: "Fundamental Theorem of Calculus, Indefinite Integrals & Net Change",
-        topics: [
-          {
-            id: "ITMTB_W2_T1",
-            name: "Fundamental Theorem of Calculus",
-            competency: "AC 1.7",
-            explanation: "Evaluate definite integrals using antiderivatives.",
-            example: "$\\int_0^2 x^3 \\, dx = [\\frac{x^4}{4}]_0^2 = 4$.",
-            studyTip: "Practice finding antiderivatives first.",
-            videoUrl: "https://www.youtube.com/watch?v=8y0-2kF6Qyk",
-            quizId: "ITMTB_W2_Quiz"
-          },
-          {
-            id: "ITMTB_W2_T2",
-            name: "Indefinite Integrals",
-            competency: "AC 1.8",
-            explanation: "Compute general antiderivatives, e.g., $\\int x^2 \\, dx = \\frac{x^3}{3} + C$.",
-            example: "Find $\\int (x^2 + 2x) \\, dx$.",
-            studyTip: "Always add $+C$ for indefinite integrals.",
-            videoUrl: "https://www.youtube.com/watch?v=8y0-2kF6Qyk",
-            quizId: "ITMTB_W2_Quiz"
-          },
-          {
-            id: "ITMTB_W2_T3",
-            name: "Net Change Theorem",
-            competency: "AC 1.9",
-            explanation: "$\\int_a^b f'(x) \\, dx = f(b) - f(a)$.",
-            example: "If $v(t) = t$, find displacement from $t=0$ to $t=2$.",
-            studyTip: "Think: Integral of rate = total change.",
-            videoUrl: "https://www.youtube.com/watch?v=8y0-2kF6Qyk",
-            quizId: "ITMTB_W2_Quiz"
-          }
-        ]
+        title: "Not Yet Assigned 🙂‍↔️",
+        topics: []
       },
       {
         id: "ITMTB_W3",
         name: "Week 3",
         title: "Substitution Rule, Techniques of Integration, Average Value",
-        topics: [
-          {
-            id: "ITMTB_W3_T1",
-            name: "Substitution Rule",
-            competency: "AC 1.10",
-            explanation: "Replace complex integrals with simpler ones via substitution.",
-            example: "$\\int x \\cdot e^{x^2} \\, dx$, let $u = x^2$.",
-            studyTip: "Choose $u$ to simplify the integrand.",
-            videoUrl: "https://www.youtube.com/watch?v=8y0-2kF6Qyk",
-            quizId: "ITMTB_W3_Quiz"
-          },
-          {
-            id: "ITMTB_W3_T2",
-            name: "Integration by Parts",
-            competency: "AC 1.11",
-            explanation: "$\\int u \\, dv = uv - \\int v \\, du$.",
-            example: "$\\int x \\cdot e^x \\, dx$, let $u = x$, $dv = e^x \\, dx$.",
-            studyTip: "Choose $u$ to simplify when differentiated.",
-            videoUrl: "https://www.youtube.com/watch?v=8y0-2kF6Qyk",
-            quizId: "ITMTB_W3_Quiz"
-          },
-          {
-            id: "ITMTB_W3_T3",
-            name: "Partial Fractions",
-            competency: "AC 1.12",
-            explanation: "Integrate rational functions by decomposing into simpler fractions.",
-            example: "$\\int \\frac{1}{x^2-1} \\, dx$.",
-            studyTip: "Factor denominator, solve for coefficients.",
-            videoUrl: "https://www.youtube.com/watch?v=8y0-2kF6Qyk",
-            quizId: "ITMTB_W3_Quiz"
-          },
-          {
-            id: "ITMTB_W3_T4",
-            name: "Average Value of a Function",
-            competency: "AC 1.13",
-            explanation: "Average = $\\frac{1}{b-a} \\int_a^b f(x) \\, dx$.",
-            example: "Find average of $f(x) = x^2$ on $[0,1]$.",
-            studyTip: "Think: Integral divided by interval length.",
-            videoUrl: "https://www.youtube.com/watch?v=8y0-2kF6Qyk",
-            quizId: "ITMTB_W3_Quiz"
-          }
-        ]
+        title: "Not Yet Assigned 🙂‍↔️",
+        topics: []
       },
       {
         id: "ITMTB_W4",
         name: "Week 4",
         title: "Applications of Integration: Areas Between Curves",
-        topics: [
-          {
-            id: "ITMTB_W4_T1",
-            name: "Areas Between Curves",
-            competency: "AC 1.10",
-            explanation: "Area = $\\int_a^b |f(x) - g(x)| \\, dx$ for curves $f(x)$, $g(x)$.",
-            example: "Find area between $y = x^2$ and $y = x$ from $x=0$ to $x=1$.",
-            studyTip: "Sketch curves to find intersection points.",
-            videoUrl: "https://www.youtube.com/watch?v=8y0-2kF6Qyk",
-            quizId: "ITMTB_W4_Quiz"
-          }
-        ]
+        title: "Not Yet Assigned 🙂‍↔️",
+        topics: []
       },
       {
         id: "ITMTB_W5",
         name: "Week 5",
         title: "Volumes (Disk/Washer Method, Cylindrical Shells)",
-        topics: [
-          {
-            id: "ITMTB_W5_T1",
-            name: "Disk/Washer Method",
-            competency: "AC 2.2",
-            explanation: "Volume = $\\int_a^b \\pi [f(x)^2 - g(x)^2] \\, dx$ for rotation around x-axis.",
-            example: "Find volume of solid from $y = x^2$, $x=0$ to $x=1$, rotated about x-axis.",
-            studyTip: "Visualize cross-sections as disks or washers.",
-            videoUrl: "https://www.youtube.com/watch?v=8y0-2kF6Qyk",
-            quizId: "ITMTB_W5_Quiz"
-          },
-          {
-            id: "ITMTB_W5_T2",
-            name: "Cylindrical Shells",
-            competency: "AC 2.3-2.4",
-            explanation: "Volume = $\\int_a^b 2\\pi x f(x) \\, dx$ for rotation around y-axis.",
-            example: "Find volume of $y = x^2$, $x=0$ to $x=1$, rotated about y-axis.",
-            studyTip: "Shells use height and radius.",
-            videoUrl: "https://www.youtube.com/watch?v=8y0-2kF6Qyk",
-            quizId: "ITMTB_W5_Quiz"
-          }
-        ]
+        title: "Not Yet Assigned 🙂‍↔️",
+        topics: []
       },
       {
         id: "ITMTB_W6",
         name: "Week 6",
-        title: "Arc Length, Area of Surfaces of Revolution",
-        topics: [
-          {
-            id: "ITMTB_W6_T1",
-            name: "Arc Length",
-            competency: "AC 2.5",
-            explanation: "Arc length = $\\int_a^b \\sqrt{1 + [f'(x)]^2} \\, dx$.",
-            example: "Find arc length of $y = x^2$ from $x=0$ to $x=1$.",
-            studyTip: "Compute derivative first, then integrate.",
-            videoUrl: "https://www.youtube.com/watch?v=8y0-2kF6Qyk",
-            quizId: "ITMTB_W6_Quiz"
-          },
-          {
-            id: "ITMTB_W6_T2",
-            name: "Surface Area of Revolution",
-            competency: "AC 2.6",
-            explanation: "Surface area = $\\int_a^b 2\\pi f(x) \\sqrt{1 + [f'(x)]^2} \\, dx$.",
-            example: "Find surface area of $y = x^2$, $x=0$ to $x=1$, rotated about x-axis.",
-            studyTip: "Similar to arc length, multiply by $2\\pi f(x)$.",
-            videoUrl: "https://www.youtube.com/watch?v=8y0-2kF6Qyk",
-            quizId: "ITMTB_W6_Quiz"
-          }
-        ]
+        title: "Not Yet Assigned 🙂‍↔️",
+        topics: []
       },
       {
         id: "ITMTB_W7",
         name: "Week 7",
-        title: "Differential Equations (First-Order Linear & Separable)",
-        topics: [
-          {
-            id: "ITMTB_W7_T1",
-            name: "Separable Differential Equations",
-            competency: "AC 3.1",
-            explanation: "Solve by separating variables: $\\frac{dy}{dx} = f(x)g(y)$.",
-            example: "Solve $\\frac{dy}{dx} = \\frac{x}{y}$.",
-            studyTip: "Isolate $y$ terms on one side, $x$ on the other.",
-            videoUrl: "https://www.youtube.com/watch?v=8y0-2kF6Qyk",
-            quizId: "ITMTB_W7_Quiz"
-          },
-          {
-            id: "ITMTB_W7_T2",
-            name: "First-Order Linear Differential Equations",
-            competency: "AC 3.2",
-            explanation: "Solve $\\frac{dy}{dx} + P(x)y = Q(x)$ using integrating factor $e^{\\int P(x) \\, dx}$.",
-            example: "Solve $\\frac{dy}{dx} + 2y = x$.",
-            studyTip: "Memorize integrating factor formula.",
-            videoUrl: "https://www.youtube.com/watch?v=8y0-2kF6Qyk",
-            quizId: "ITMTB_W7_Quiz"
-          }
-        ]
+        title: "Not Yet Assigned 🙂‍↔️",
+        topics: []
       }
     ]
   }

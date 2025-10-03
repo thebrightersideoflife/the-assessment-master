@@ -11,7 +11,7 @@ import {
   AiOutlineRight,
 } from "react-icons/ai";
 import { modules } from "../../data/modules";
-import { useStore } from "../../store/useStore";
+import useStore from "../../store/useStore";
 
 // Reusable collapsible wrapper with smooth animation
 const Collapsible = ({ isOpen, children, id }) => (

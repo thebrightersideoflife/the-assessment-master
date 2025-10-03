@@ -70,7 +70,7 @@ export const questions = [
   {
     id: "q6",
     moduleId: "ITMTB",
-    weekId: "ITMTB_W2",
+    weekId: "ITMTB_W1",
     type: "multiple-choice",
     text: "The definite integral \\( \\int_a^b f(x)\\,dx \\) represents:",
     options: [
@@ -86,7 +86,7 @@ export const questions = [
   {
     id: "q7",
     moduleId: "ITMTB",
-    weekId: "ITMTB_W2",
+    weekId: "ITMTB_W1",
     type: "open-ended",
     text: "Evaluate \\( \\int_0^2 3x\\,dx \\) using the definition of the integral.",
     correctAnswers: ["6"],
@@ -96,7 +96,7 @@ export const questions = [
   {
     id: "q8",
     moduleId: "ITMTB",
-    weekId: "ITMTB_W2",
+    weekId: "ITMTB_W1",
     type: "open-ended",
     text: "Use the Midpoint Rule with \\( n = 4 \\) to approximate \\( \\int_0^8 x^2 dx \\).",
     correctAnswers: ["341.33", "≈ 341.3"],
@@ -106,7 +106,7 @@ export const questions = [
   {
     id: "q9",
     moduleId: "ITMTB",
-    weekId: "ITMTB_W2",
+    weekId: "ITMTB_W1",
     type: "multiple-choice",
     text: "Which of the following is equivalent to \\( \\lim_{n\\to\\infty} \\sum_{i=1}^n \\frac{5}{n} \\left( \\frac{i}{n} \\right)^2 \\)?",
     options: [
@@ -122,7 +122,7 @@ export const questions = [
   {
     id: "q10",
     moduleId: "ITMTB",
-    weekId: "ITMTB_W2",
+    weekId: "ITMTB_W1",
     type: "open-ended",
     text: "Use properties of integrals to evaluate \\( \\int_1^3 (2e^x + 1)\\,dx \\).",
     correctAnswers: ["2(e^3 - e^1) + 2"],
@@ -132,7 +132,7 @@ export const questions = [
   {
     id: "q11",
     moduleId: "ITMTB",
-    weekId: "ITMTB_W2",
+    weekId: "ITMTB_W1",
     type: "multiple-choice",
     text: "If \\( f \\) is continuous on [a,b], then the integral \\( \\int_a^b f(x) dx \\) exists because:",
     options: [

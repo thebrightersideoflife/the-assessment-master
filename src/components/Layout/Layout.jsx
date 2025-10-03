@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useStore } from "../../store/useStore";
+import useStore from "../../store/useStore";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
