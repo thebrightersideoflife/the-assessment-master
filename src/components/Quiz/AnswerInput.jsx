@@ -1,55 +1,39 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import { InlineMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
-import { 
-  soundManager, 
-  createConfetti, 
-  createShakeEffect 
-} from '../../utils/gamificationUtils';
-import MathSymbolPalette from './MathSymbolPalette'; // <-- import palette
+import MathSymbolPalette from './MathSymbolPalette';
 
 // Helper to render text with LaTeX
 const renderMath = (text) => {
   if (!text) return null;
-  
-  return text.split(/(\$\$.*?\$\$|\$.*?\$)/).map((part, index) => {
-    if (part.startsWith('$$') && part.endsWith('$$')) {
-      // Block math
-      return <InlineMath key={index} math={part.slice(2, -2)} />;
-    } else if (part.startsWith('$') && part.endsWith('$')) {
-      return <InlineMath key={index} math={part.slice(1, -1)} />;
-    }
-    if (part.includes('\\')) {
-      return <InlineMath key={index} math={part} />;
-    }
-    return <span key={index}>{part}</span>;
-  });
+ 
+  try {
+    return text.split(/(\$\$.*?\$\$|\$.*?\$|\\\(.*?\\\)|\\\[.*?\\\])/).map((part, index) => {
+      if (part.startsWith('$$') && part.endsWith('$$')) {
+        // Block math
+        return <InlineMath key={index} math={part.slice(2, -2)} />;
+      } else if (part.startsWith('$') && part.endsWith('$')) {
+        // Inline math
+        return <InlineMath key={index} math={part.slice(1, -1)} />;
+      } else if (part.startsWith('\\(') && part.endsWith('\\)')) {
+        // LaTeX inline math
+        return <InlineMath key={index} math={part.slice(2, -2)} />;
+      } else if (part.startsWith('\\[') && part.endsWith('\\]')) {
+        // LaTeX block math
+        return <InlineMath key={index} math={part.slice(2, -2)} />;
+      }
+      return <span key={index}>{part}</span>;
+    });
+  } catch (error) {
+    console.error('Error rendering LaTeX:', error);
+    return <span>{text}</span>;
+  }
 };
 
 const AnswerInput = ({ value, onChange, onSubmit, disabled, isCorrect, correctAnswer }) => {
   const inputRef = useRef(null);
   const containerRef = useRef(null);
-
-  useEffect(() => {
-    if (disabled && isCorrect !== null) {
-      if (isCorrect) {
-        soundManager.playCorrectSound();
-        setTimeout(() => {
-          createConfetti(inputRef.current);
-          inputRef.current?.classList.add('success-pulse');
-          setTimeout(() => inputRef.current?.classList.remove('success-pulse'), 600);
-        }, 30);
-      } else {
-        soundManager.playIncorrectSound();
-        setTimeout(() => {
-          createShakeEffect(containerRef.current);
-          inputRef.current?.classList.add('error-flash');
-          setTimeout(() => inputRef.current?.classList.remove('error-flash'), 400);
-        }, 30);
-      }
-    }
-  }, [disabled, isCorrect]);
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !disabled) {
@@ -60,7 +44,6 @@ const AnswerInput = ({ value, onChange, onSubmit, disabled, isCorrect, correctAn
   const handleInsertSymbol = (symbol) => {
     // insert symbol at the end of input value
     onChange(value + symbol);
-
     // Optional: focus input so students can continue typing
     inputRef.current?.focus();
   };
@@ -77,7 +60,7 @@ const AnswerInput = ({ value, onChange, onSubmit, disabled, isCorrect, correctAn
 
   const getFeedbackMessage = () => {
     if (!disabled) return null;
-    
+   
     return (
       <div className={`font-semibold mt-4 flex items-center gap-2 ${isCorrect ? 'text-[#28B463]' : 'text-[#C0392B]'}`}>
         {isCorrect ? <AiOutlineCheck className="w-5 h-5" /> : <AiOutlineClose className="w-5 h-5" />}
@@ -118,12 +101,10 @@ const AnswerInput = ({ value, onChange, onSubmit, disabled, isCorrect, correctAn
           </button>
         )}
       </div>
-
       {/* Mini math symbol palette */}
       {!disabled && (
         <MathSymbolPalette onInsert={handleInsertSymbol} />
       )}
-
       {getFeedbackMessage()}
     </div>
   );

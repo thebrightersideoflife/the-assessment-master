@@ -9,14 +9,14 @@ const Header = ({ sidebarState, setSidebarState, onSettingsClick }) => {
   return (
     <header className="bg-white shadow-sm py-4 px-6 sticky top-0 z-30">
       <div className="flex items-center justify-between">
-        {/* Company Logo */}
-        <div className="flex items-center">
+        {/* Company Logo and Slogan */}
+        <div className="flex items-center flex-wrap max-w-[160px] sm:max-w-none">
           <img
             src="/logo.png"
             alt="Company Logo"
             className="h-12 w-auto"
           />
-          <span className="ml-2 text-gray-800 font-bold text-base">
+          <span className="ml-2 text-gray-800 font-bold text-base break-words">
             The Brighter Side of Life
           </span>
         </div>

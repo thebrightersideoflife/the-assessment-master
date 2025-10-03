@@ -1,3 +1,4 @@
+// src/store/useStore.js
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { format, isToday, addDays } from 'date-fns';
@@ -6,38 +7,53 @@ import { modules } from '../data/modules';
 export const useStore = create(
   persist(
     (set, get) => ({
-      // Quiz state per moduleId/weekId
-      quizzes: {}, // { [moduleId-weekId]: { currentQuestionIndex, stats } }
+      // Quiz state per moduleId-weekId-quizIndex
+      quizzes: {}, // { [moduleId-weekId-quizIndex]: { currentQuestionIndex, stats, completed } }
+      
       // Streak tracking
       streaks: {
         lastActivityDate: null,
         currentStreak: 0,
         longestStreak: 0,
       },
+      
       // Module visibility state
       moduleVisibility: modules.reduce((acc, mod) => ({
         ...acc,
         [mod.id]: mod.isVisible !== false,
       }), {}),
 
+      // ============================================================================
+      // HELPER: Get quiz key
+      // ============================================================================
+      getQuizKey: (moduleId, weekId, quizIndex = 0) => {
+        return `${moduleId}-${weekId}-${quizIndex}`;
+      },
+
+      // ============================================================================
       // Initialize or get quiz state
-      getQuizState: (moduleId, weekId) => {
-        const quizKey = `${moduleId}-${weekId}`;
+      // ============================================================================
+      getQuizState: (moduleId, weekId, quizIndex = 0) => {
+        const quizKey = get().getQuizKey(moduleId, weekId, quizIndex);
         return (
           get().quizzes[quizKey] || {
             currentQuestionIndex: 0,
             stats: { correct: 0, total: 0 },
+            completed: false,
           }
         );
       },
 
-      // Actions
-      incrementQuestionIndex: (moduleId, weekId) =>
+      // ============================================================================
+      // ACTIONS: Quiz management
+      // ============================================================================
+      incrementQuestionIndex: (moduleId, weekId, quizIndex = 0) =>
         set((state) => {
-          const quizKey = `${moduleId}-${weekId}`;
+          const quizKey = state.getQuizKey(moduleId, weekId, quizIndex);
           const quizState = state.quizzes[quizKey] || {
             currentQuestionIndex: 0,
             stats: { correct: 0, total: 0 },
+            completed: false,
           };
           return {
             quizzes: {
@@ -50,25 +66,27 @@ export const useStore = create(
           };
         }),
 
-      updateStats: (moduleId, weekId, isCorrect) =>
+      updateStats: (moduleId, weekId, quizIndex = 0, isCorrect) =>
         set((state) => {
-          const quizKey = `${moduleId}-${weekId}`;
+          const quizKey = state.getQuizKey(moduleId, weekId, quizIndex);
           const quizState = state.quizzes[quizKey] || {
             currentQuestionIndex: 0,
             stats: { correct: 0, total: 0 },
+            completed: false,
           };
+          
           const today = format(new Date(), 'yyyy-MM-dd');
           const lastActivityDate = state.streaks.lastActivityDate;
           let currentStreak = state.streaks.currentStreak;
           let longestStreak = state.streaks.longestStreak;
-
+          
           // Update streak
           if (!lastActivityDate || !isToday(new Date(lastActivityDate))) {
             const yesterday = format(addDays(new Date(), -1), 'yyyy-MM-dd');
             currentStreak = lastActivityDate === yesterday ? currentStreak + 1 : 1;
             longestStreak = Math.max(longestStreak, currentStreak);
           }
-
+          
           return {
             quizzes: {
               ...state.quizzes,
@@ -88,24 +106,88 @@ export const useStore = create(
           };
         }),
 
-      resetQuiz: (moduleId, weekId) =>
+      // Mark quiz as completed
+      completeQuiz: (moduleId, weekId, quizIndex = 0) =>
         set((state) => {
-          const quizKey = `${moduleId}-${weekId}`;
+          const quizKey = state.getQuizKey(moduleId, weekId, quizIndex);
+          const quizState = state.quizzes[quizKey] || {
+            currentQuestionIndex: 0,
+            stats: { correct: 0, total: 0 },
+            completed: false,
+          };
           return {
             quizzes: {
               ...state.quizzes,
               [quizKey]: {
-                currentQuestionIndex: 0,
-                stats: { correct: 0, total: 0 },
+                ...quizState,
+                completed: true,
               },
             },
           };
         }),
 
-      getAccuracy: (moduleId, weekId) => {
-        const quizState = get().getQuizState(moduleId, weekId);
+      resetQuiz: (moduleId, weekId, quizIndex = 0) =>
+        set((state) => {
+          const quizKey = state.getQuizKey(moduleId, weekId, quizIndex);
+          const newQuizzes = { ...state.quizzes };
+          delete newQuizzes[quizKey];
+          return { quizzes: newQuizzes };
+        }),
+
+      // Reset all quizzes for a week
+      resetWeekQuizzes: (moduleId, weekId) =>
+        set((state) => {
+          const newQuizzes = { ...state.quizzes };
+          const prefix = `${moduleId}-${weekId}-`;
+          
+          Object.keys(newQuizzes).forEach((key) => {
+            if (key.startsWith(prefix)) {
+              delete newQuizzes[key];
+            }
+          });
+          
+          return { quizzes: newQuizzes };
+        }),
+
+      getAccuracy: (moduleId, weekId, quizIndex = 0) => {
+        const quizState = get().getQuizState(moduleId, weekId, quizIndex);
         const { stats } = quizState;
         return stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
+      },
+
+      // Get week progress (all quizzes in a week)
+      getWeekProgress: (moduleId, weekId, totalQuizzes) => {
+        const quizzes = get().quizzes;
+        let completedCount = 0;
+        let totalCorrect = 0;
+        let totalQuestions = 0;
+        
+        for (let i = 0; i < totalQuizzes; i++) {
+          const key = get().getQuizKey(moduleId, weekId, i);
+          const quiz = quizzes[key];
+          
+          if (quiz?.completed) {
+            completedCount++;
+          }
+          
+          if (quiz?.stats) {
+            totalCorrect += quiz.stats.correct;
+            totalQuestions += quiz.stats.total;
+          }
+        }
+        
+        const overallAccuracy = totalQuestions > 0 
+          ? Math.round((totalCorrect / totalQuestions) * 100)
+          : 0;
+        
+        return {
+          completedQuizzes: completedCount,
+          totalQuizzes,
+          completionPercentage: Math.round((completedCount / totalQuizzes) * 100),
+          totalCorrect,
+          totalQuestions,
+          overallAccuracy,
+        };
       },
 
       resetAllProgress: () =>
@@ -130,11 +212,37 @@ export const useStore = create(
     }),
     {
       name: 'quiz-storage',
+      version: 2, // Incremented for segmentation support
       partialize: (state) => ({
         quizzes: state.quizzes,
         streaks: state.streaks,
         moduleVisibility: state.moduleVisibility,
       }),
+      migrate: (persistedState, version) => {
+        // Migration logic for older versions
+        if (version === 0 || version === 1) {
+          // Old format: { "moduleId-weekId": {...} }
+          // New format: { "moduleId-weekId-quizIndex": {...} }
+          const oldQuizzes = persistedState.quizzes || {};
+          const newQuizzes = {};
+          
+          Object.keys(oldQuizzes).forEach((key) => {
+            // If key doesn't have quizIndex, add "-0" (first quiz)
+            if (key.split("-").length === 2) {
+              newQuizzes[`${key}-0`] = oldQuizzes[key];
+            } else {
+              newQuizzes[key] = oldQuizzes[key];
+            }
+          });
+          
+          return {
+            ...persistedState,
+            quizzes: newQuizzes,
+          };
+        }
+        
+        return persistedState;
+      },
     }
   )
 );

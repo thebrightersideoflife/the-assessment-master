@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import {
   AiOutlineHome,
@@ -19,7 +19,7 @@ const Collapsible = ({ isOpen, children, id }) => (
     id={id}
     className={`overflow-hidden transition-all duration-300 ease-in-out ${
       isOpen
-        ? "max-h-[1000px] opacity-100 translate-y-0"
+        ? "max-h-screen opacity-100 translate-y-0"
         : "max-h-0 opacity-0 -translate-y-2"
     }`}
     role="region"
@@ -49,6 +49,8 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
   const [openModules, setOpenModules] = useState({});
   const [openQuizModules, setOpenQuizModules] = useState({});
 
+
+
   // Close sidebar on mobile after navigation
   const handleMobileClose = () => {
     if (window.innerWidth < 768) {
@@ -64,7 +66,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
     }
   };
 
-  // Toggle a specific module (in modules or quizzes section)
+  // Toggle a specific module (accordion-style: closes others)
   const toggleModule = (moduleId, section) => {
     if (section === "modules") {
       setOpenModules((prev) => ({
@@ -127,6 +129,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
             }`
           }
           aria-current={({ isActive }) => (isActive ? "page" : undefined)}
+          title={sidebarState.collapsed ? "Home" : ""}
         >
           <AiOutlineHome className="w-5 h-5 mr-3 flex-shrink-0" aria-hidden="true" />
           {!sidebarState.collapsed && <span>Home</span>}
@@ -135,6 +138,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
         {/* Modules */}
         <div>
           <button
+            role="button"
             onClick={() => setIsModulesOpen(!isModulesOpen)}
             onKeyDown={(e) =>
               handleKeyDown(e, () => setIsModulesOpen(!isModulesOpen))
@@ -146,6 +150,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
             }`}
             aria-expanded={isModulesOpen}
             aria-controls="modules-submenu"
+            title={sidebarState.collapsed ? "Modules" : ""}
           >
             <AiOutlineBook className="w-5 h-5 mr-3 flex-shrink-0" aria-hidden="true" />
             {!sidebarState.collapsed && (
@@ -160,6 +165,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
               </>
             )}
           </button>
+
           {!sidebarState.collapsed && (
             <Collapsible isOpen={isModulesOpen} id="modules-submenu">
               <div className="pl-6 space-y-2 mt-2">
@@ -168,6 +174,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
                   .map((module) => (
                     <div key={module.id}>
                       <button
+                        role="button"
                         onClick={() => toggleModule(module.id, "modules")}
                         onKeyDown={(e) =>
                           handleKeyDown(e, () => toggleModule(module.id, "modules"))
@@ -235,6 +242,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
         {/* Quizzes */}
         <div>
           <button
+            role="button"
             onClick={() => setIsQuizzesOpen(!isQuizzesOpen)}
             onKeyDown={(e) =>
               handleKeyDown(e, () => setIsQuizzesOpen(!isQuizzesOpen))
@@ -246,6 +254,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
             }`}
             aria-expanded={isQuizzesOpen}
             aria-controls="quizzes-submenu"
+            title={sidebarState.collapsed ? "Quizzes" : ""}
           >
             <AiOutlineFileText className="w-5 h-5 mr-3 flex-shrink-0" aria-hidden="true" />
             {!sidebarState.collapsed && (
@@ -260,6 +269,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
               </>
             )}
           </button>
+
           {!sidebarState.collapsed && (
             <Collapsible isOpen={isQuizzesOpen} id="quizzes-submenu">
               <div className="pl-6 space-y-2 mt-2">
@@ -268,6 +278,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
                   .map((module) => (
                     <div key={module.id}>
                       <button
+                        role="button"
                         onClick={() => toggleModule(module.id, "quizzes")}
                         onKeyDown={(e) =>
                           handleKeyDown(e, () => toggleModule(module.id, "quizzes"))
@@ -344,6 +355,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
             }`
           }
           aria-current={({ isActive }) => (isActive ? "page" : undefined)}
+          title={sidebarState.collapsed ? "Dashboard" : ""}
         >
           <AiOutlineDashboard className="w-5 h-5 mr-3 flex-shrink-0" aria-hidden="true" />
           {!sidebarState.collapsed && <span>Dashboard</span>}
@@ -356,6 +368,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
           onClick={onSettingsClick}
           className="w-full flex items-center p-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-600 transition-colors"
           aria-label="Open settings"
+          title={sidebarState.collapsed ? "Settings" : ""}
         >
           <AiOutlineSetting className="w-5 h-5 mr-3 flex-shrink-0" aria-hidden="true" />
           {!sidebarState.collapsed && <span>Settings</span>}

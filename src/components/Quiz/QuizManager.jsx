@@ -2,15 +2,29 @@ import React, { useEffect, useState, useRef } from "react";
 import { useQuiz } from "../../hooks/useQuiz";
 import Question from "./Question";
 import ProgressBar from "./ProgressBar";
-import { InlineMath, BlockMath } from "react-katex";
-import "katex/dist/katex.min.css";
-import {
-  soundManager,
-  createAchievementConfetti,
-} from "../../utils/gamificationUtils";
+import { soundManager, createAchievementConfetti } from "../../utils/gamificationUtils";
 import { questions } from "../../data/questions";
+import { chunkQuestions } from "../../utils/chunkQuestions";
 
-const QuizManager = ({ moduleId, weekId }) => {
+// ============================================================================
+// UPDATED COMPONENT: QuizManager with Segmentation Support
+// ============================================================================
+const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
+  // Step 1: Filter all questions for this week
+  const weekQuestions = questions.filter(
+    (q) => q.moduleId === moduleId && q.weekId === weekId
+  );
+
+  // Step 2: Split into 15-question chunks
+  const questionChunks = chunkQuestions(weekQuestions, 15);
+  
+  // Step 3: Get only the questions for THIS quiz segment
+  const filteredQuestions = questionChunks[quizIndex] || [];
+
+  // Calculate total number of quizzes for this week
+  const totalQuizzes = questionChunks.length;
+
+  // Use the quiz hook (now working with segmented questions)
   const {
     currentQuestionIndex,
     totalQuestions,
@@ -21,18 +35,32 @@ const QuizManager = ({ moduleId, weekId }) => {
     restart,
     loading,
     error,
-  } = useQuiz(moduleId, weekId);
+  } = useQuiz(moduleId, weekId, quizIndex);
 
   const [isComplete, setIsComplete] = useState(false);
   const [achievementPlayed, setAchievementPlayed] = useState(false);
   const containerRef = useRef(null);
 
-  // Filter questions for the given module/week
-  const filteredQuestions = questions.filter(
-    (q) => q.moduleId === moduleId && q.weekId === weekId
-  );
-
+  // Get current question from the SEGMENTED list
   const currentQuestion = filteredQuestions[currentQuestionIndex];
+
+  // Validate and reset if saved progress is invalid
+  useEffect(() => {
+    if (filteredQuestions.length === 0) {
+      console.warn(`No questions found for quiz segment ${quizIndex + 1}`);
+      restart();
+      return;
+    }
+
+    if (
+      currentQuestionIndex >= filteredQuestions.length ||
+      currentQuestionIndex < 0 ||
+      !filteredQuestions[currentQuestionIndex]
+    ) {
+      console.warn("Saved progress invalid for this quiz segment, resetting.");
+      restart();
+    }
+  }, [currentQuestionIndex, filteredQuestions, restart, quizIndex]);
 
   // Watch for quiz completion
   useEffect(() => {
@@ -139,18 +167,6 @@ const QuizManager = ({ moduleId, weekId }) => {
     return null;
   };
 
-  // Math rendering (KaTeX support)
-  const renderMath = (text) => {
-    return text.split(/(\$\$.*?\$\$|\$.*?\$)/).map((part, index) => {
-      if (part.startsWith("$$") && part.endsWith("$$")) {
-        return <BlockMath key={index} math={part.slice(2, -2)} />;
-      } else if (part.startsWith("$") && part.endsWith("$")) {
-        return <InlineMath key={index} math={part.slice(1, -1)} />;
-      }
-      return part;
-    });
-  };
-
   // Loading state
   if (loading) {
     return (
@@ -165,8 +181,11 @@ const QuizManager = ({ moduleId, weekId }) => {
   if (error || filteredQuestions.length === 0) {
     return (
       <div className="bg-white rounded-2xl p-6 shadow-2xl text-center border border-[#C0392B]/30">
-        <p className="text-xl text-[#C0392B]" aria-live="assertive">
-          {error || "No questions found for this quiz."}
+        <p className="text-xl text-[#C0392B] mb-4" aria-live="assertive">
+          {error || `No questions found for Quiz ${quizIndex + 1}.`}
+        </p>
+        <p className="text-sm text-gray-600">
+          This quiz segment may not exist. Please return to the quiz selection.
         </p>
       </div>
     );
@@ -184,6 +203,11 @@ const QuizManager = ({ moduleId, weekId }) => {
         role="region"
         aria-labelledby="quiz-complete-title"
       >
+        {/* Quiz Segment Identifier */}
+        <div className="inline-block bg-gradient-to-r from-[#4169E1] to-[#3498DB] text-white px-4 py-2 rounded-full text-sm font-semibold mb-2">
+          Quiz {quizIndex + 1} of {totalQuizzes}
+        </div>
+
         <h2
           id="quiz-complete-title"
           className="text-3xl font-bold text-[#4169E1] mb-4"
@@ -221,14 +245,12 @@ const QuizManager = ({ moduleId, weekId }) => {
             </div>
             <div className="text-sm text-gray-600">Correct Answers</div>
           </div>
-
           <div className="stats-card bg-gradient-to-br from-[#E67E22]/10 to-[#E67E22]/20 p-4 rounded-xl border border-[#E67E22]/30">
             <div className="text-2xl font-bold text-[#E67E22]">
               {stats.total - stats.correct}
             </div>
             <div className="text-sm text-gray-600">To Review</div>
           </div>
-
           <div className="stats-card bg-gradient-to-br from-[#4169E1]/10 to-[#4169E1]/20 p-4 rounded-xl border border-[#4169E1]/30">
             <div className="text-2xl font-bold text-[#4169E1]">
               {stats.total}
@@ -237,13 +259,40 @@ const QuizManager = ({ moduleId, weekId }) => {
           </div>
         </div>
 
-        <button
-          onClick={handleRestart}
-          className="bg-gradient-to-r from-[#FFC300] to-[#E67E22] text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all"
-          aria-label="Restart quiz"
-        >
-          Restart Quiz
-        </button>
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <button
+            onClick={handleRestart}
+            className="bg-gradient-to-r from-[#3498DB] to-[#4169E1] text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all"
+            aria-label={`Retry Quiz ${quizIndex + 1}`}
+          >
+            Retry Quiz {quizIndex + 1}
+          </button>
+          <button
+            onClick={() => window.history.back()}
+            className="bg-gradient-to-r from-[#FFC300] to-[#E67E22] text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all"
+            aria-label="Back to quiz selection"
+          >
+            Back to Quizzes
+          </button>
+        </div>
+
+        {/* Progress Indicator */}
+        {quizIndex + 1 < totalQuizzes && (
+          <div className="bg-[#3498DB]/10 border border-[#3498DB]/30 rounded-xl p-4 mt-4">
+            <p className="text-sm text-gray-700">
+              🎯 <strong>Next up:</strong> Quiz {quizIndex + 2} of {totalQuizzes}
+            </p>
+          </div>
+        )}
+
+        {quizIndex + 1 === totalQuizzes && (
+          <div className="bg-[#28B463]/10 border border-[#28B463]/30 rounded-xl p-4 mt-4">
+            <p className="text-sm text-gray-700">
+              🎉 <strong>Congratulations!</strong> You've completed all quizzes for this week!
+            </p>
+          </div>
+        )}
       </div>
     );
   }
@@ -256,10 +305,26 @@ const QuizManager = ({ moduleId, weekId }) => {
       aria-labelledby="quiz-manager"
       ref={containerRef}
     >
-      <h2 id="quiz-manager" className="text-2xl font-bold text-[#3498DB] mb-6">
-        Question {currentQuestionIndex + 1} of {totalQuestions}
-      </h2>
+      {/* Header with Quiz Segment Info */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+        <div>
+          <div className="text-sm text-gray-600 mb-1">
+            Quiz {quizIndex + 1} of {totalQuizzes}
+          </div>
+          <h2 id="quiz-manager" className="text-2xl font-bold text-[#3498DB]">
+            Question {currentQuestionIndex + 1} of {totalQuestions}
+          </h2>
+        </div>
+        
+        {/* Stats Badge */}
+        <div className="bg-[#4169E1]/10 px-4 py-2 rounded-full">
+          <span className="text-sm font-semibold text-[#4169E1]">
+            {stats.correct}/{stats.total} correct
+          </span>
+        </div>
+      </div>
 
+      {/* Progress Bar */}
       <ProgressBar
         current={currentQuestionIndex + 1}
         total={totalQuestions}
@@ -268,15 +333,40 @@ const QuizManager = ({ moduleId, weekId }) => {
         accuracy={accuracy}
       />
 
+      {/* Question Component */}
       <Question
         question={currentQuestion}
         questionIndex={currentQuestionIndex}
         moduleId={moduleId}
         weekId={weekId}
+        quizIndex={quizIndex}
         onAnswerSubmit={handleAnswerSubmit}
         onNext={nextQuestion}
         totalQuestions={totalQuestions}
       />
+
+      {/* Optional: Quiz Progress Indicator */}
+      <div className="mt-6 pt-6 border-t border-gray-200">
+        <div className="flex items-center justify-between text-xs text-gray-600">
+          <span>Quiz Progress</span>
+          <span>{Math.round(((currentQuestionIndex + 1) / totalQuestions) * 100)}%</span>
+        </div>
+        <div className="mt-2 grid grid-cols-15 gap-1">
+          {filteredQuestions.map((_, idx) => (
+            <div
+              key={idx}
+              className={`h-1 rounded-full transition-all duration-300 ${
+                idx < currentQuestionIndex
+                  ? 'bg-[#28B463]'
+                  : idx === currentQuestionIndex
+                  ? 'bg-[#3498DB] animate-pulse'
+                  : 'bg-gray-200'
+              }`}
+              aria-label={`Question ${idx + 1}`}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

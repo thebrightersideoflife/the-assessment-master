@@ -1,18 +1,32 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { InlineMath, BlockMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
 import AnswerInput from './AnswerInput';
 
+// Helper function to render text with LaTeX expressions
 const renderMath = (text) => {
   if (!text) return null;
-  return text.split(/(\$\$.*?\$\$|\$.*?\$)/).map((part, index) => {
-    if (part.startsWith('$$') && part.endsWith('$$')) {
-      return <BlockMath key={index} math={part.slice(2, -2)} />;
-    } else if (part.startsWith('$') && part.endsWith('$')) {
-      return <InlineMath key={index} math={part.slice(1, -1)} />;
-    }
-    return <span key={index}>{part}</span>;
-  });
+  try {
+    // Regex to find all types of LaTeX delimiters
+    const mathRegex = /(\$\$[\s\S]*?\$\$|\$[\s\S]*?\$|\\\([\s\S]*?\\\)|\\\[[\s\S]*?\\])/g;
+    const parts = text.split(mathRegex).filter(Boolean);
+
+    return parts.map((part, index) => {
+      if (part.startsWith('$$') && part.endsWith('$$')) {
+        return <BlockMath key={index} math={part.slice(2, -2)} />;
+      } else if (part.startsWith('$') && part.endsWith('$')) {
+        return <InlineMath key={index} math={part.slice(1, -1)} />;
+      } else if (part.startsWith('\\(') && part.endsWith('\\)')) {
+        return <InlineMath key={index} math={part.slice(2, -2)} />;
+      } else if (part.startsWith('\\[') && part.endsWith('\\]')) {
+        return <BlockMath key={index} math={part.slice(2, -2)} />;
+      }
+      return <span key={index}>{part}</span>;
+    });
+  } catch (error) {
+    console.error('Math rendering error:', error, 'Text:', text);
+    return <span className="text-[#C0392B]">{text} (Math rendering failed)</span>;
+  }
 };
 
 const Question = ({
@@ -29,25 +43,45 @@ const Question = ({
   const [feedback, setFeedback] = useState(null);
   const [showExplanation, setShowExplanation] = useState(false);
   const inputRef = useRef(null);
+  const containerRef = useRef(null);
+
+  // CRITICAL: Reset state when the question changes to avoid stale data
+  useEffect(() => {
+    setUserAnswer('');
+    setSubmitted(false);
+    setFeedback(null);
+    setShowExplanation(false);
+  }, [question?.id, questionIndex]); // Dependency array ensures reset on new question
 
   if (!question) return null;
 
   const isLastQuestion = questionIndex === totalQuestions - 1;
 
+  // Extracts the letter from a multiple-choice option string (e.g., "A. ...")
+  const extractOptionLetter = (option) => {
+    const match = option.match(/^([A-Z])\./);
+    return match ? match[1] : option;
+  };
+
   const handleSubmit = () => {
     if (!userAnswer.trim()) return;
 
-    // Call the hook's handleAnswerSubmit with correct parameters
+    let answerToSubmit = userAnswer;
+    // For multiple-choice, we only need to submit the letter (e.g., 'A')
+    if (question.type === 'multiple-choice') {
+      answerToSubmit = extractOptionLetter(userAnswer);
+    }
+
     const result = onAnswerSubmit(
-      userAnswer,
+      answerToSubmit,
       question.id,
-      inputRef.current || document.querySelector('.question-container')
+      containerRef.current || document.querySelector('.question-container')
     );
 
     setSubmitted(true);
     setFeedback(result);
-    
-    // If incorrect, show explanation immediately
+
+    // Automatically show the explanation if the answer is incorrect
     if (!result.isCorrect) {
       setShowExplanation(true);
     }
@@ -58,27 +92,63 @@ const Question = ({
   };
 
   return (
-    <div className="space-y-6 question-container">
+    <div className="space-y-6 question-container" ref={containerRef}>
       <div className="text-lg font-medium text-gray-800">
         {renderMath(question.text)}
       </div>
 
       {question.type === 'multiple-choice' && (
         <div className="space-y-3">
-          {question.options.map((opt, idx) => (
-            <button
-              key={idx}
-              disabled={submitted}
-              onClick={() => setUserAnswer(opt)}
-              className={`w-full text-left p-3 rounded-xl border transition-all ${
-                userAnswer === opt
-                  ? 'bg-[#3498DB]/10 border-[#3498DB] text-[#3498DB]'
-                  : 'bg-white hover:bg-gray-50 border-gray-300'
-              } ${submitted ? 'cursor-not-allowed opacity-60' : 'hover:shadow-md'}`}
-            >
-              {renderMath(opt)}
-            </button>
-          ))}
+          {question.options.map((opt, idx) => {
+            const optionLetter = extractOptionLetter(opt);
+            const isSelected = userAnswer === opt;
+            const isCorrectOption = submitted && question.correctAnswers.includes(optionLetter);
+            const isIncorrectSelection = submitted && isSelected && !feedback?.isCorrect;
+
+            return (
+              <button
+                key={idx}
+                disabled={submitted}
+                onClick={() => setUserAnswer(opt)}
+                className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
+                  submitted
+                    ? isCorrectOption
+                      ? 'bg-[#28B463]/10 border-[#28B463] text-[#28B463] font-semibold'
+                      : isIncorrectSelection
+                      ? 'bg-[#C0392B]/10 border-[#C0392B] text-[#C0392B]'
+                      : 'bg-gray-50 border-gray-200 text-gray-500'
+                    : isSelected
+                    ? 'bg-[#3498DB]/10 border-[#3498DB] text-[#3498DB] shadow-md'
+                    : 'bg-white hover:bg-gray-50 border-gray-300 hover:border-[#3498DB]/50'
+                } ${submitted ? 'cursor-not-allowed' : 'hover:shadow-md cursor-pointer'}`}
+              >
+                <div className="flex items-start gap-3">
+                  <div className={`flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                      submitted
+                        ? isCorrectOption
+                          ? 'border-[#28B463] bg-[#28B463]'
+                          : isIncorrectSelection
+                          ? 'border-[#C0392B] bg-[#C0392B]'
+                          : 'border-gray-300'
+                        : isSelected
+                        ? 'border-[#3498DB] bg-[#3498DB]'
+                        : 'border-gray-300'
+                    }`}>
+                    {(submitted && isCorrectOption) && (
+                      <span className="text-white text-sm">✓</span>
+                    )}
+                    {(submitted && isIncorrectSelection) && (
+                      <span className="text-white text-sm">✗</span>
+                    )}
+                    {(isSelected && !submitted) && (
+                      <span className="w-3 h-3 rounded-full bg-white"></span>
+                    )}
+                  </div>
+                  <div className="flex-1">{renderMath(opt)}</div>
+                </div>
+              </button>
+            );
+          })}
         </div>
       )}
 
@@ -89,7 +159,8 @@ const Question = ({
           onSubmit={handleSubmit}
           disabled={submitted}
           isCorrect={feedback?.isCorrect}
-          correctAnswer={question.correctAnswers[0]}
+          correctAnswer={question.correctAnswers.join(' or ')}
+          expectedAnswers={question.correctAnswers.length}
           ref={inputRef}
         />
       )}
@@ -107,7 +178,6 @@ const Question = ({
           )
         ) : (
           <>
-            {/* Show Explanation button - only for CORRECT answers */}
             {feedback?.isCorrect && !showExplanation && question.explanation && (
               <button
                 onClick={handleShowExplanation}
@@ -116,8 +186,6 @@ const Question = ({
                 Show Explanation
               </button>
             )}
-            
-            {/* Next/Finish button - changes text based on whether it's the last question */}
             <button
               onClick={onNext}
               className="px-6 py-3 bg-gradient-to-r from-[#FFC300] to-[#E67E22] text-white rounded-xl font-semibold hover:shadow-lg transition-all"
@@ -128,10 +196,9 @@ const Question = ({
         )}
       </div>
 
-      {/* Feedback and Explanation Section */}
       {submitted && feedback && (
         <div
-          className={`mt-4 p-4 rounded-xl border transition-all ${
+          className={`mt-4 p-4 rounded-xl border-2 transition-all ${
             feedback.isCorrect
               ? 'bg-green-50 border-green-300 text-green-700'
               : 'bg-red-50 border-red-300 text-red-700'
@@ -140,33 +207,28 @@ const Question = ({
           <p className="font-semibold mb-2 flex items-center gap-2">
             {feedback.isCorrect ? (
               <>
-                <span className="text-xl">✅</span>
+                <span className="text-2xl">✅</span>
                 <span>Correct!</span>
               </>
             ) : (
               <>
-                <span className="text-xl">❌</span>
+                <span className="text-2xl">❌</span>
                 <span>Incorrect</span>
               </>
             )}
           </p>
 
-          {/* Show explanation if:
-              1. Answer is incorrect (immediately)
-              2. Answer is correct AND user clicked "Show Explanation"
-          */}
           {showExplanation && question.explanation && (
-            <div className="mt-3 p-3 bg-white/50 rounded-lg border border-gray-200">
+            <div className="mt-3 p-3 bg-white/70 rounded-lg border border-gray-200">
               <p className="font-semibold text-gray-800 mb-2">Explanation:</p>
-              <div className="text-gray-700 text-sm">
+              <div className="text-gray-700">
                 {renderMath(question.explanation)}
               </div>
             </div>
           )}
 
-          {/* Suggestions for incorrect answers */}
           {!feedback.isCorrect && feedback.suggestions?.length > 0 && (
-            <div className="mt-3 p-3 bg-white/50 rounded-lg border border-gray-200">
+            <div className="mt-3 p-3 bg-white/70 rounded-lg border border-gray-200">
               <p className="font-semibold text-gray-800 mb-2">💡 Hints:</p>
               <ul className="text-sm list-disc list-inside text-gray-600 space-y-1">
                 {feedback.suggestions.map((s, i) => (

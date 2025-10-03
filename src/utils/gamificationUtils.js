@@ -204,52 +204,50 @@ class SoundManager {
     });
   }
 
-  playAchievementSound(accuracy) {
-    if (!this.enabled) return;
-    let soundKey;
-    let fallbackTones;
-    if (accuracy >= 100) {
-      soundKey = 'perfect';
-      fallbackTones = [
-        { freq: 523.25, duration: 0.15, delay: 0 },
-        { freq: 698.46, duration: 0.15, delay: 0.1 },
-        { freq: 880.00, duration: 0.15, delay: 0.2 },
-        { freq: 1046.50, duration: 0.4, delay: 0.3 },
-      ];
-    } else if (accuracy >= 90) {
-      soundKey = 'excellent';
-      fallbackTones = [
-        { freq: 523.25, duration: 0.2, delay: 0 },
-        { freq: 659.25, duration: 0.2, delay: 0.15 },
-        { freq: 783.99, duration: 0.3, delay: 0.3 },
-      ];
-    } else if (accuracy >= 80) {
-      soundKey = 'goodJob';
-      fallbackTones = [
-        { freq: 523.25, duration: 0.2, delay: 0 },
-        { freq: 659.25, duration: 0.3, delay: 0.1 },
-      ];
-    } else {
-      soundKey = 'goodJob';
-      fallbackTones = [
-        { freq: 523.25, duration: 0.2, delay: 0 },
-        { freq: 659.25, duration: 0.2, delay: 0.1 },
-      ];
+    playAchievementSound(accuracy) {
+      if (!this.enabled) return;
+      
+      let soundKey;
+      let fallbackTones;
+      
+      if (accuracy >= 100) {
+        soundKey = 'perfect';
+        fallbackTones = [
+          { freq: 523.25, duration: 0.15, delay: 0 },
+          { freq: 698.46, duration: 0.15, delay: 0.1 },
+          { freq: 880.00, duration: 0.15, delay: 0.2 },
+          { freq: 1046.50, duration: 0.4, delay: 0.3 },
+        ];
+      } else if (accuracy >= 90) {
+        soundKey = 'excellent';
+        fallbackTones = [
+          { freq: 523.25, duration: 0.2, delay: 0 },
+          { freq: 659.25, duration: 0.2, delay: 0.15 },
+          { freq: 783.99, duration: 0.3, delay: 0.3 },
+        ];
+      } else {
+        // Changed: Both 80%+ AND <80% now use goodJob
+        soundKey = 'goodJob';
+        fallbackTones = [
+          { freq: 523.25, duration: 0.2, delay: 0 },
+          { freq: 659.25, duration: 0.3, delay: 0.1 },
+        ];
+      }
+
+      const audio = this.audioCache[soundKey];
+      if (audio && audio.readyState >= 2) {
+        try {
+          const audioClone = audio.cloneNode();
+          audioClone.volume = this.volume;
+          audioClone.currentTime = 0;
+          audioClone.play().catch(() => {
+            this.playToneSequence(fallbackTones);
+          });
+          return;
+        } catch {}
+      }
+      this.playToneSequence(fallbackTones);
     }
-    const audio = this.audioCache[soundKey];
-    if (audio && audio.readyState >= 2) {
-      try {
-        const audioClone = audio.cloneNode();
-        audioClone.volume = this.volume;
-        audioClone.currentTime = 0;
-        audioClone.play().catch(() => {
-          this.playToneSequence(fallbackTones);
-        });
-        return;
-      } catch {}
-    }
-    this.playToneSequence(fallbackTones);
-  }
 
   playCorrectSound() {
     if (!this.enabled) return;

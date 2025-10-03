@@ -1,20 +1,25 @@
-import React, { useEffect } from 'react';
+// src/pages/Week.jsx
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import Breadcrumb from '../components/UI/Breadcrumb';
 import VideoEmbed from '../components/UI/VideoEmbed';
+import WeekQuizzes from './WeekQuizzes';
 import { modules } from '../data/modules';
 import { useStore } from '../store/useStore';
 import { InlineMath, BlockMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
+import { AiOutlineRight } from 'react-icons/ai';
 
 const Week = () => {
   const { moduleId, weekId } = useParams();
   const navigate = useNavigate();
   const { isModuleVisible } = useStore();
+  
   const module = modules.find((m) => m.id === moduleId);
   const week = module?.weeks.find((w) => w.id === weekId);
-
-  // Custom renderMath function
+  
+  const [openTopicId, setOpenTopicId] = useState(null);
+  
   const renderMath = (text) => {
     if (!text) return null;
     return text.split(/(\$\$.*?\$\$|\$.*?\$)/).map((part, index) => {
@@ -26,18 +31,20 @@ const Week = () => {
       return part;
     });
   };
-
-  // Check if module or week is hidden or not found, redirect after 5 seconds
+  
   useEffect(() => {
     if (!module || !isModuleVisible(moduleId) || !week) {
       const timer = setTimeout(() => {
         navigate('/modules', { replace: true });
-      }, 5000); // 5-second delay
-      return () => clearTimeout(timer); // Cleanup timer on unmount
+      }, 5000);
+      return () => clearTimeout(timer);
     }
-  }, [module, week, navigate, isModuleVisible]);
-
-  // Error UI for hidden module or missing week
+  }, [module, week, navigate, isModuleVisible, moduleId]);
+  
+  const toggleTopic = (topicId) => {
+    setOpenTopicId(openTopicId === topicId ? null : topicId);
+  };
+  
   if (!module || !isModuleVisible(moduleId) || !week) {
     return (
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
@@ -82,7 +89,7 @@ const Week = () => {
       </div>
     );
   }
-
+  
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       <Breadcrumb
@@ -93,44 +100,93 @@ const Week = () => {
           { label: week.name },
         ]}
       />
+      
       <h1 className="text-3xl font-bold text-[#4169E1]">{week.title}</h1>
-      <div className="space-y-6">
-        {week.topics.map((topic) => (
-          <div
-            key={topic.id}
-            className="bg-white bg-opacity-98 rounded-lg p-6 shadow-md border border-[#FFC300]/20"
-            role="region"
-            aria-labelledby={`topic-${topic.id}`}
-          >
-            <h2
-              id={`topic-${topic.id}`}
-              className="text-2xl font-semibold text-[#3498DB] mb-4"
+      
+      {/* Accordion Topics */}
+      <div className="space-y-4">
+        {week.topics.map((topic) => {
+          const isOpen = openTopicId === topic.id;
+          
+          return (
+            <div
+              key={topic.id}
+              className="bg-white bg-opacity-98 rounded-lg shadow-md border border-[#FFC300]/20 overflow-hidden transition-all"
+              role="region"
+              aria-labelledby={`topic-header-${topic.id}`}
             >
-              {topic.name} ({topic.competency})
-            </h2>
-            <div className="prose text-gray-700 mb-4">{renderMath(topic.explanation)}</div>
-            {topic.example && (
-              <div className="prose text-gray-700 mb-4">
-                <strong>Example:</strong>
-                <div>{renderMath(topic.example)}</div>
+              <button
+                id={`topic-header-${topic.id}`}
+                onClick={() => toggleTopic(topic.id)}
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors focus:outline-none"
+                aria-expanded={isOpen}
+                aria-controls={`topic-content-${topic.id}`}
+              >
+                <div className="flex-1">
+                  <h2 className="text-2xl font-semibold text-[#3498DB]">
+                    {topic.name}
+                  </h2>
+                  <p className="text-sm font-bold mt-1" style={{ color: '#4d4d4dff' }}>
+                    {topic.competency}
+                  </p>
+                </div>
+                <div className="ml-4 flex-shrink-0">
+                  <AiOutlineRight className={`w-6 h-6 transform transition-transform duration-200 ${isOpen ? 'rotate-90 text-[#4169E1]' : 'rotate-0 text-gray-400'}`} />
+                </div>
+              </button>
+              
+              <div
+                id={`topic-content-${topic.id}`}
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                  isOpen
+                    ? 'max-h-screen opacity-100 translate-y-0'
+                    : 'max-h-0 opacity-0 -translate-y-2'
+                }`}
+                role="region"
+                aria-hidden={!isOpen}
+              >
+                <div className="px-6 pb-6 pt-2 space-y-4">
+                  <div className="prose text-gray-700">
+                    {renderMath(topic.explanation)}
+                  </div>
+                  
+                  {topic.example && (
+                    <div className="bg-[#4169E1]/5 rounded-lg p-4 border-l-4 border-[#4169E1]">
+                      <strong className="text-[#4169E1] block mb-2">Example:</strong>
+                      <div className="prose text-gray-700">
+                        {renderMath(topic.example)}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {topic.studyTip && (
+                    <div className="bg-[#FFC300]/10 rounded-lg p-4 border-l-4 border-[#FFC300]">
+                      <strong className="text-[#E67E22] block mb-2">💡 Study Tip:</strong>
+                      <p className="text-gray-700">
+                        {renderMath(topic.studyTip)}
+                      </p>
+                    </div>
+                  )}
+                  
+                  {topic.videoUrl && (
+                    <div className="mt-4">
+                      <VideoEmbed 
+                        videoUrl={topic.videoUrl} 
+                        title={`Video: ${topic.name}`} 
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
-            )}
-            {topic.studyTip && (
-              <p className="mt-2 text-gray-600">
-                <strong>Study Tip:</strong> {renderMath(topic.studyTip)}
-              </p>
-            )}
-            <VideoEmbed videoUrl={topic.videoUrl} title={`Video: ${topic.name}`} />
-          </div>
-        ))}
+            </div>
+          );
+        })}
       </div>
-      <Link
-        to={`/quizzes/module/${moduleId}/${weekId}`}
-        className="inline-block bg-gradient-to-r from-[#FFC300] to-[#E67E22] text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all"
-        aria-label={`Start ${week.name} Quiz`}
-      >
-        Start {week.name} Quiz
-      </Link>
+      
+      {/* Quiz Section - Now shows WeekQuizzes component */}
+      <div className="bg-gradient-to-br from-[#4169E1]/10 to-[#3498DB]/10 rounded-2xl p-6 border border-[#3498DB]/30 mt-8">
+        <WeekQuizzes moduleId={moduleId} weekId={weekId} />
+      </div>
     </div>
   );
 };
