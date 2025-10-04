@@ -79,7 +79,7 @@ export const questions = [
     text: "Use six rectangles with midpoints to estimate the area under \\( f(x) = \\frac{1}{1+x^2} \\) on \\([-1,2]\\).",
     correctAnswers: ["1.901", "2.21", "approximately 1.9", "≈ 1.9"],
     explanation:
-      "To estimate the area under $$f(x) = \\frac{1}{1+x^2}$$ on $$[-1, 2]$$ using the **Midpoint Rule** with six rectangles:\n\n" +
+      "To estimate the area under $$f(x) = \\frac{1}{1 + x^2}$$ on $$[-1, 2]$$ using the **Midpoint Rule** with six rectangles:\n\n" +
       "**Step 1: Calculate the width of each rectangle**\n" +
       "$$\\Delta x = \\frac{b - a}{n} = \\frac{2 - (-1)}{6} = \\frac{3}{6} = 0.5$$\n\n" +
       "**Step 2: Identify the six subintervals**\n" +
@@ -90,29 +90,26 @@ export const questions = [
       "- $$[1, 1.5]$$\n" +
       "- $$[1.5, 2]$$\n\n" +
       "**Step 3: Find the midpoint of each subinterval**\n" +
-      "$$x_1^* = -0.75, \\quad x_2^* = -0.25, \\quad x_3^* = 0.25$$\n" +
-      "$$x_4^* = 0.75, \\quad x_5^* = 1.25, \\quad x_6^* = 1.75$$\n\n" +
-      "**Step 4: Evaluate $$f(x)$$ at each midpoint**\n" +
-      "$$f(-0.75) = \\frac{1}{1+(-0.75)^2} = \\frac{1}{1.5625} \\approx 0.640$$\n" +
-      "$$f(-0.25) = \\frac{1}{1+(-0.25)^2} = \\frac{1}{1.0625} \\approx 0.941$$\n" +
-      "$$f(0.25) = \\frac{1}{1+(0.25)^2} = \\frac{1}{1.0625} \\approx 0.941$$\n" +
-      "$$f(0.75) = \\frac{1}{1+(0.75)^2} = \\frac{1}{1.5625} \\approx 0.640$$\n" +
-      "$$f(1.25) = \\frac{1}{1+(1.25)^2} = \\frac{1}{2.5625} \\approx 0.390$$\n" +
-      "$$f(1.75) = \\frac{1}{1+(1.75)^2} = \\frac{1}{4.0625} \\approx 0.246$$\n\n" +
+      "$$x_1^* = -0.75, \\quad x_2^* = -0.25, \\quad x_3^* = 0.25, \\quad x_4^* = 0.75, \\quad x_5^* = 1.25, \\quad x_6^* = 1.75$$\n\n" +
+      "**Step 4: Evaluate** $$f(x)$$ **at each midpoint**\n" +
+      "$$f(-0.75) = \\frac{1}{1 + (-0.75)^2} = \\frac{1}{1.5625} \\approx 0.640$$\n" +
+      "$$f(-0.25) = \\frac{1}{1 + (-0.25)^2} = \\frac{1}{1.0625} \\approx 0.941$$\n" +
+      "$$f(0.25) = \\frac{1}{1 + (0.25)^2} = \\frac{1}{1.0625} \\approx 0.941$$\n" +
+      "$$f(0.75) = \\frac{1}{1 + (0.75)^2} = \\frac{1}{1.5625} \\approx 0.640$$\n" +
+      "$$f(1.25) = \\frac{1}{1 + (1.25)^2} = \\frac{1}{2.5625} \\approx 0.390$$\n" +
+      "$$f(1.75) = \\frac{1}{1 + (1.75)^2} = \\frac{1}{4.0625} \\approx 0.246$$\n\n" +
       "**Step 5: Calculate the Midpoint Rule approximation**\n" +
       "$$M_6 = \\Delta x \\sum_{i=1}^{6} f(x_i^*)$$\n" +
       "$$= 0.5 \\times (0.640 + 0.941 + 0.941 + 0.640 + 0.390 + 0.246)$$\n" +
-      "$$= 0.5 \\times 3.798$$\n" +
-      "$$\\approx 1.899 \\approx 1.9$$\n\n" +
+      "$$= 0.5 \\times 3.798 = 1.899 \\approx 1.9$$\n\n" +
       "**Step 6: Compare with the exact value**\n" +
       "The exact integral is:\n" +
-      "$$\\int_{-1}^{2} \\frac{1}{1+x^2}\\,dx = [\\arctan(x)]_{-1}^{2} = \\arctan(2) - \\arctan(-1)$$\n" +
-      "$$= \\arctan(2) + \\frac{\\pi}{4} \\approx 1.1071 + 0.7854 \\approx 1.893$$\n\n" +
+      "$$\\int_{-1}^{2} \\frac{1}{1 + x^2} \\, dx = [\\arctan(x)]_{-1}^{2} = \\arctan(2) - \\arctan(-1)$$\n" +
+      "$$= \\arctan(2) + \\frac{\\pi}{4} \\approx 1.1071 + 0.7854 = 1.8925 \\approx 1.893$$\n\n" +
       "**Why the Midpoint Rule works well:**\n" +
-      "The Midpoint Rule typically provides a better approximation than left or right endpoint rules because:\n" +
-      "- It balances overestimation and underestimation\n" +
-      "- For functions with consistent concavity, errors tend to cancel\n" +
-      "- Our estimate (1.9) is very close to the exact value (1.893)!",
+      "- It balances overestimation and underestimation.\n" +
+      "- For functions with consistent concavity, errors tend to cancel.\n" +
+      "- Our estimate ($1.9$) is very close to the exact value ($1.893$)!",
   },
   {
     id: "q4",

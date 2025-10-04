@@ -1,46 +1,59 @@
-// src/utils/textRenderer.jsx
 import React from 'react';
 import { InlineMath, BlockMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
 
 /**
- * Enhanced text renderer that handles both LaTeX math and markdown formatting.
- * Supports:
- * - Inline math: $...$ or \( ... \)
- * - Block math: $$...$$ or \[ ... \]
- * - Markdown: **bold**, line breaks (\n)
+ * Remove invisible Unicode characters that break KaTeX rendering.
+ * This fixes issues like "arctan⁡(x)" or random spacing in formulas.
+ */
+const sanitizeMathText = (text) => {
+  if (!text) return text;
+
+  // Replace known invisible characters
+  return text
+    // Remove zero-width, function-application, word joiner, etc.
+    .replace(/[\u200B-\u200F\uFEFF\u2060-\u2064]/g, '')
+    .replace(/\u2061/g, '') // specifically remove invisible function application char (⁡)
+    // Replace odd Unicode minus signs or primes with ASCII equivalents
+    .replace(/\u2212/g, '-') // minus sign → hyphen-minus
+    .replace(/\u2032/g, "'"); // prime → apostrophe
+};
+
+/**
+ * Enhanced text renderer: handles LaTeX, markdown, and line breaks.
  */
 export const renderTextWithMathAndMarkdown = (text) => {
   if (!text) return null;
 
   try {
-    // Split text by any math expressions (inline or block)
+    const cleanText = sanitizeMathText(text);
+
     const mathRegex =
       /(\$\$[\s\S]*?\$\$|\$[^\$\n]+?\$|\\\([\s\S]*?\\\)|\\\[[\s\S]*?\\\])/g;
-    const parts = text.split(mathRegex).filter(Boolean);
+    const parts = cleanText.split(mathRegex).filter(Boolean);
 
     return parts.map((part, index) => {
-      // Handle block math: $$ ... $$
+      // $$ block math $$
       if (part.startsWith('$$') && part.endsWith('$$')) {
         return <BlockMath key={index} math={part.slice(2, -2)} />;
       }
 
-      // Handle inline math: $ ... $
+      // $ inline math $
       if (part.startsWith('$') && part.endsWith('$')) {
         return <InlineMath key={index} math={part.slice(1, -1)} />;
       }
 
-      // Handle inline math: \( ... \)
+      // \( inline math \)
       if (part.startsWith('\\(') && part.endsWith('\\)')) {
         return <InlineMath key={index} math={part.slice(2, -2)} />;
       }
 
-      // Handle block math: \[ ... \]
+      // \[ block math \]
       if (part.startsWith('\\[') && part.endsWith('\\]')) {
         return <BlockMath key={index} math={part.slice(2, -2)} />;
       }
 
-      // For non-math text, process markdown and line breaks
+      // Non-math text
       return <span key={index}>{processMarkdown(part)}</span>;
     });
   } catch (error) {
@@ -54,11 +67,10 @@ export const renderTextWithMathAndMarkdown = (text) => {
 };
 
 /**
- * Process markdown formatting (**bold**) and line breaks (\n)
+ * Basic markdown formatting (**bold**) and line breaks (\n)
  */
 const processMarkdown = (text) => {
   const lines = text.split('\n');
-
   return lines.map((line, lineIndex) => (
     <React.Fragment key={lineIndex}>
       {processBoldText(line)}
@@ -67,22 +79,16 @@ const processMarkdown = (text) => {
   ));
 };
 
-/**
- * Process bold markdown (**text**)
- */
 const processBoldText = (text) => {
   const boldRegex = /\*\*(.*?)\*\*/g;
   const parts = text.split(boldRegex);
-
-  return parts.map((part, index) => {
-    // Odd indices correspond to text between ** **
-    if (index % 2 === 1) {
-      return (
-        <strong key={index} className="font-semibold text-gray-900">
-          {part}
-        </strong>
-      );
-    }
-    return part;
-  });
+  return parts.map((part, index) =>
+    index % 2 === 1 ? (
+      <strong key={index} className="font-semibold text-gray-900">
+        {part}
+      </strong>
+    ) : (
+      part
+    )
+  );
 };
