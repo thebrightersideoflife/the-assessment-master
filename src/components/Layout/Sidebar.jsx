@@ -55,7 +55,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
 
   const handleSettingsClick = () => {
     onSettingsClick();
-    handleMobileClose(); // Close sidebar after opening settings on mobile
+    handleMobileClose();
   };
 
   const handleKeyDown = (e, toggle) => {
@@ -357,21 +357,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
           {!sidebarState.collapsed && <span>Dashboard</span>}
         </NavLink>
 
-        {/* Settings - Visible on mobile in nav */}
-        <div className="md:hidden">
-          <button
-            onClick={handleSettingsClick}
-            className="w-full flex items-center p-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-600 transition-colors"
-            aria-label="Open settings"
-          >
-            <AiOutlineSetting className="w-5 h-5 mr-3 flex-shrink-0" aria-hidden="true" />
-            <span>Settings</span>
-          </button>
-        </div>
-      </nav>
-
-      {/* Sidebar Footer (sticky bottom) - Hidden on mobile */}
-      <div className="hidden md:block p-4 border-t border-[#3498DB]/20">
+        {/* Settings - Part of main navigation */}
         <button
           onClick={handleSettingsClick}
           className="w-full flex items-center p-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-600 transition-colors"
@@ -381,7 +367,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
           <AiOutlineSetting className="w-5 h-5 mr-3 flex-shrink-0" aria-hidden="true" />
           {!sidebarState.collapsed && <span>Settings</span>}
         </button>
-      </div>
+      </nav>
     </aside>
   );
 };
