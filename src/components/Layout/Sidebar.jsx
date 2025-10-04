@@ -81,15 +81,15 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
 
   return (
     <aside
-      className={`bg-white shadow-lg transition-all duration-200 fixed z-30 md:z-10 ${
+      className={`bg-white shadow-lg transition-all duration-200 fixed top-0 left-0 bottom-0 z-30 md:z-10 ${
         sidebarState.open ? "translate-x-0" : "-translate-x-full"
       } md:translate-x-0 ${
         sidebarState.collapsed ? "w-20" : "w-64"
-      } flex flex-col h-full`}
+      } flex flex-col overflow-hidden`}
       aria-label="Main navigation"
     >
       {/* Sidebar Header */}
-      <div className="p-4 border-b border-[#3498DB]/20 flex items-center justify-between">
+      <div className="p-4 border-b border-[#3498DB]/20 flex items-center justify-between flex-shrink-0">
         {!sidebarState.collapsed && (
           <h2 className="text-lg font-semibold text-[#4169E1]">
             Navigation
@@ -357,7 +357,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
           {!sidebarState.collapsed && <span>Dashboard</span>}
         </NavLink>
 
-        {/* Settings - Part of main navigation */}
+        {/* Settings */}
         <button
           onClick={handleSettingsClick}
           className="w-full flex items-center p-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-600 transition-colors"
