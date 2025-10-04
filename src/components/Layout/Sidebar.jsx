@@ -13,7 +13,6 @@ import {
 import { modules } from "../../data/modules";
 import useStore from "../../store/useStore";
 
-// Reusable collapsible wrapper with smooth animation
 const Collapsible = ({ isOpen, children, id }) => (
   <div
     id={id}
@@ -29,7 +28,6 @@ const Collapsible = ({ isOpen, children, id }) => (
   </div>
 );
 
-// Helper for renaming modules
 const getModuleDisplayName = (module) => {
   switch (module.name) {
     case "Calculus":
@@ -49,16 +47,17 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
   const [openModules, setOpenModules] = useState({});
   const [openQuizModules, setOpenQuizModules] = useState({});
 
-
-
-  // Close sidebar on mobile after navigation
   const handleMobileClose = () => {
     if (window.innerWidth < 768) {
       setSidebarState((prev) => ({ ...prev, open: false }));
     }
   };
 
-  // Keyboard accessibility for dropdown toggles
+  const handleSettingsClick = () => {
+    onSettingsClick();
+    handleMobileClose(); // Close sidebar after opening settings on mobile
+  };
+
   const handleKeyDown = (e, toggle) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
@@ -66,7 +65,6 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
     }
   };
 
-  // Toggle a specific module (accordion-style: closes others)
   const toggleModule = (moduleId, section) => {
     if (section === "modules") {
       setOpenModules((prev) => ({
@@ -104,7 +102,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
               collapsed: !prev.collapsed,
             }))
           }
-          className="p-2 hover:bg-[#FFC300]/10 rounded-lg transition-colors"
+          className="p-2 hover:bg-[#FFC300]/10 rounded-lg transition-colors hidden md:block"
           aria-label={sidebarState.collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
           {sidebarState.collapsed ? (
@@ -165,7 +163,6 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
               </>
             )}
           </button>
-
           {!sidebarState.collapsed && (
             <Collapsible isOpen={isModulesOpen} id="modules-submenu">
               <div className="pl-6 space-y-2 mt-2">
@@ -269,7 +266,6 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
               </>
             )}
           </button>
-
           {!sidebarState.collapsed && (
             <Collapsible isOpen={isQuizzesOpen} id="quizzes-submenu">
               <div className="pl-6 space-y-2 mt-2">
@@ -360,12 +356,24 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
           <AiOutlineDashboard className="w-5 h-5 mr-3 flex-shrink-0" aria-hidden="true" />
           {!sidebarState.collapsed && <span>Dashboard</span>}
         </NavLink>
+
+        {/* Settings - Visible on mobile in nav */}
+        <div className="md:hidden">
+          <button
+            onClick={handleSettingsClick}
+            className="w-full flex items-center p-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-600 transition-colors"
+            aria-label="Open settings"
+          >
+            <AiOutlineSetting className="w-5 h-5 mr-3 flex-shrink-0" aria-hidden="true" />
+            <span>Settings</span>
+          </button>
+        </div>
       </nav>
 
-      {/* Sidebar Footer (sticky bottom) */}
-      <div className="p-4 border-t border-[#3498DB]/20">
+      {/* Sidebar Footer (sticky bottom) - Hidden on mobile */}
+      <div className="hidden md:block p-4 border-t border-[#3498DB]/20">
         <button
-          onClick={onSettingsClick}
+          onClick={handleSettingsClick}
           className="w-full flex items-center p-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-600 transition-colors"
           aria-label="Open settings"
           title={sidebarState.collapsed ? "Settings" : ""}

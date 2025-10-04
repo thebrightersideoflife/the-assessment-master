@@ -4,16 +4,22 @@ import { soundManager } from '../../utils/gamificationUtils';
 const GamificationSettings = ({ isOpen, onClose }) => {
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [effectsEnabled, setEffectsEnabled] = useState(true);
+  const [vibrationEnabled, setVibrationEnabled] = useState(true);
   const [volume, setVolume] = useState(0.3);
+
+  // Check if vibration API is supported
+  const vibrationSupported = 'vibrate' in navigator;
 
   useEffect(() => {
     // Load settings from localStorage
     const savedSound = localStorage.getItem('gamification-sound');
     const savedEffects = localStorage.getItem('gamification-effects');
+    const savedVibration = localStorage.getItem('gamification-vibration');
     const savedVolume = localStorage.getItem('gamification-volume');
 
     if (savedSound !== null) setSoundEnabled(JSON.parse(savedSound));
     if (savedEffects !== null) setEffectsEnabled(JSON.parse(savedEffects));
+    if (savedVibration !== null) setVibrationEnabled(JSON.parse(savedVibration));
     if (savedVolume !== null) {
       const vol = parseFloat(savedVolume);
       setVolume(vol);
@@ -42,6 +48,17 @@ const GamificationSettings = ({ isOpen, onClose }) => {
     document.body.classList.toggle('disable-effects', !newState);
   };
 
+  const handleVibrationToggle = () => {
+    const newState = !vibrationEnabled;
+    setVibrationEnabled(newState);
+    localStorage.setItem('gamification-vibration', JSON.stringify(newState));
+    
+    // Test vibration when enabled
+    if (newState && vibrationSupported) {
+      navigator.vibrate(50); // Short test vibration
+    }
+  };
+
   const handleVolumeChange = (e) => {
     const newVolume = parseFloat(e.target.value);
     setVolume(newVolume);
@@ -63,10 +80,11 @@ const GamificationSettings = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl p-6 max-w-lg w-full shadow-2xl border border-[#FFC300]/20 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-[#4169E1]">Gamification Settings</h2>
+          <h2 className="text-2xl font-bold text-[#4169E1]">Settings</h2>
           <button
             onClick={onClose}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-xl"
+            aria-label="Close settings"
           >
             ✕
           </button>
@@ -85,6 +103,7 @@ const GamificationSettings = ({ isOpen, onClose }) => {
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                   soundEnabled ? 'bg-[#28B463]' : 'bg-gray-300'
                 }`}
+                aria-label={`${soundEnabled ? 'Disable' : 'Enable'} sound effects`}
               >
                 <span
                   className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
@@ -118,6 +137,7 @@ const GamificationSettings = ({ isOpen, onClose }) => {
                     style={{
                       background: `linear-gradient(to right, #FFC300 0%, #FFC300 ${volume * 100}%, #e5e7eb ${volume * 100}%, #e5e7eb 100%)`
                     }}
+                    aria-label="Volume control"
                   />
                   <div className="flex justify-between text-xs text-gray-500 mt-1">
                     <span>Quiet</span>
@@ -168,10 +188,10 @@ const GamificationSettings = ({ isOpen, onClose }) => {
           </div>
 
           {/* Visual Effects Settings */}
-          <div className="pb-4">
+          <div className="border-b border-gray-200 pb-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-3">
-                <span className="text-xl">👁️</span>
+                <span className="text-xl">✨</span>
                 <span className="font-medium text-gray-800">Visual Effects</span>
               </div>
               <button
@@ -179,6 +199,7 @@ const GamificationSettings = ({ isOpen, onClose }) => {
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                   effectsEnabled ? 'bg-[#28B463]' : 'bg-gray-300'
                 }`}
+                aria-label={`${effectsEnabled ? 'Disable' : 'Enable'} visual effects`}
               >
                 <span
                   className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
@@ -189,6 +210,35 @@ const GamificationSettings = ({ isOpen, onClose }) => {
             </div>
             <p className="ml-8 text-sm text-gray-600">
               Confetti, shake effects, and visual feedback
+            </p>
+          </div>
+
+          {/* Vibration Settings */}
+          <div className="pb-4">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-3">
+                <span className="text-xl">📳</span>
+                <span className="font-medium text-gray-800">Haptic Feedback</span>
+              </div>
+              <button
+                onClick={handleVibrationToggle}
+                disabled={!vibrationSupported}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                  vibrationEnabled && vibrationSupported ? 'bg-[#28B463]' : 'bg-gray-300'
+                } ${!vibrationSupported ? 'opacity-50 cursor-not-allowed' : ''}`}
+                aria-label={`${vibrationEnabled ? 'Disable' : 'Enable'} haptic feedback`}
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                    vibrationEnabled ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            </div>
+            <p className="ml-8 text-sm text-gray-600">
+              {vibrationSupported 
+                ? 'Phone vibration on correct/incorrect answers'
+                : 'Not supported on this device'}
             </p>
           </div>
 
@@ -217,7 +267,7 @@ const GamificationSettings = ({ isOpen, onClose }) => {
           {/* Accessibility Note */}
           <div className="bg-[#3498DB]/10 p-4 rounded-lg border border-[#3498DB]/20">
             <p className="text-sm text-gray-700">
-              <strong className="text-[#4169E1]">Accessibility:</strong> Effects can be disabled for users with motion sensitivity or focus preferences. Settings are saved automatically and sync across sessions.
+              <strong className="text-[#4169E1]">Accessibility:</strong> All feedback options can be customized for users with sensory sensitivities. Settings are saved automatically and sync across sessions.
             </p>
           </div>
         </div>

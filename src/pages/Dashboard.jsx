@@ -8,9 +8,12 @@ import { chunkQuestions } from "../utils/chunkQuestions";
 import { questions } from "../data/questions";
 
 const Dashboard = () => {
-  const { quizzes, getQuizState, getAccuracy, resetAllProgress } = useStore();
+  const { quizzes, getQuizState, resetAllProgress } = useStore();
 
-  // Aggregate stats across all quiz segments
+  // ✅ Use the global chunk size from chunkQuestions
+  const globalChunkSize = chunkQuestions.CHUNK_SIZE || 15;
+
+  // Aggregate global stats
   const aggregateStats = Object.values(quizzes).reduce(
     (acc, quiz) => ({
       correct: acc.correct + (quiz.stats?.correct || 0),
@@ -24,19 +27,19 @@ const Dashboard = () => {
       ? Math.round((aggregateStats.correct / aggregateStats.total) * 100)
       : 0;
 
-  // Export progress as JSON file
+  // Export progress as JSON
   const handleExportProgress = () => {
     const data = JSON.stringify(quizzes, null, 2);
     const blob = new Blob([data], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `quiz-progress-${new Date().toISOString().split('T')[0]}.json`;
+    a.download = `quiz-progress-${new Date().toISOString().split("T")[0]}.json`;
     a.click();
     URL.revokeObjectURL(url);
   };
 
-  // Import progress from JSON file
+  // Import progress from JSON
   const handleImportProgress = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -64,7 +67,7 @@ const Dashboard = () => {
     }
   };
 
-  // Build per-module stats with segmentation support
+  // Build per-module stats
   const moduleStats = modules
     .filter((module) => module.isVisible !== false)
     .map((module) => ({
@@ -75,10 +78,9 @@ const Dashboard = () => {
         const weekQuestions = questions.filter(
           (q) => q.moduleId === module.id && q.weekId === week.id
         );
-        const questionChunks = chunkQuestions(weekQuestions, 15);
+        const questionChunks = chunkQuestions(weekQuestions);
         const totalQuizzes = questionChunks.length;
 
-        // Aggregate stats across all quiz segments
         let totalCorrect = 0;
         let totalAnswered = 0;
         let completedQuizzes = 0;
@@ -94,9 +96,10 @@ const Dashboard = () => {
           }
         }
 
-        const accuracy = totalAnswered > 0 
-          ? Math.round((totalCorrect / totalAnswered) * 100) 
-          : 0;
+        const accuracy =
+          totalAnswered > 0
+            ? Math.round((totalCorrect / totalAnswered) * 100)
+            : 0;
 
         return {
           weekId: week.id,
@@ -144,12 +147,12 @@ const Dashboard = () => {
       {/* Motivation message */}
       <div className="text-center text-gray-600 text-sm">
         {overallAccuracy >= 80
-          ? "Excellent performance! Keep it up!"
+          ? "Excellent performance! Keep it up! 🌟"
           : overallAccuracy >= 60
-          ? "Good work — there's room to improve."
+          ? "Good work — there's room to improve. 💪"
           : aggregateStats.total === 0
-          ? "Start taking quizzes to see your stats!"
-          : "Keep practicing to improve your scores!"}
+          ? "Start taking quizzes to see your stats! 🚀"
+          : "Keep practicing to improve your scores! 📚"}
       </div>
 
       {/* Action Buttons */}
@@ -195,17 +198,28 @@ const Dashboard = () => {
               {module.weeks.map((week) => (
                 <div
                   key={week.weekId}
-                  className="p-4 rounded-lg border border-[#3498DB]/30 bg-gradient-to-br from-[#3498DB]/5 to-[#4169E1]/10"
+                  className="p-4 rounded-lg border border-[#3498DB]/30 bg-gradient-to-br from-[#3498DB]/5 to-[#4169E1]/10 hover:shadow-md transition-all"
                 >
                   <h4 className="text-lg font-medium text-[#3498DB] mb-1">
                     {week.weekName}
                   </h4>
                   <p className="text-gray-600 text-sm mb-2">
-                    {week.stats.correct} / {week.stats.total} correct ({week.accuracy}%)
+                    {week.stats.correct} / {week.stats.total} correct (
+                    {week.accuracy}%)
                   </p>
+
+                  {/* ✅ Visual progress bar */}
+                  <div className="h-2 bg-gray-200 rounded-full overflow-hidden mb-2">
+                    <div
+                      className="h-full bg-[#4169E1] transition-all duration-300"
+                      style={{ width: `${week.accuracy}%` }}
+                    />
+                  </div>
+
                   <p className="text-xs text-gray-500 mb-2">
                     {week.completedQuizzes}/{week.totalQuizzes} quizzes completed
                   </p>
+
                   <Link
                     to={`/modules/${module.moduleId}/${week.weekId}`}
                     className="inline-block text-sm text-[#4169E1] hover:text-[#3498DB] transition-colors font-semibold"
@@ -223,7 +237,7 @@ const Dashboard = () => {
   );
 };
 
-// Reusable StatCard Component
+// ✅ Reusable StatCard Component
 const StatCard = ({ icon, value, label, gradient }) => (
   <div
     className={`rounded-xl p-6 text-center border shadow-sm bg-gradient-to-br ${gradient} border-gray-200 hover:shadow-md transition-transform hover:-translate-y-1`}

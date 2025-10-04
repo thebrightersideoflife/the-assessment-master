@@ -2,7 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { questions } from "../data/questions";
-import { chunkQuestions } from "../utils/chunkQuestions";
+import { chunkQuestions, QUIZ_CHUNK_SIZE } from "../utils/chunkQuestions"; // ✅ Import global constant
 import useStore from "../store/useStore";
 
 const WeekQuizzes = ({ moduleId, weekId }) => {
@@ -11,7 +11,9 @@ const WeekQuizzes = ({ moduleId, weekId }) => {
   const weekQuestions = questions.filter(
     (q) => q.moduleId === moduleId && q.weekId === weekId
   );
-  const questionChunks = chunkQuestions(weekQuestions, 15);
+  
+  // ✅ Use global chunk size
+  const questionChunks = chunkQuestions(weekQuestions, QUIZ_CHUNK_SIZE);
 
   if (!questionChunks.length) {
     return (
@@ -65,7 +67,7 @@ const WeekQuizzes = ({ moduleId, weekId }) => {
           const accuracy = quizState.stats.total > 0 
             ? Math.round((quizState.stats.correct / quizState.stats.total) * 100)
             : 0;
-          const isPartial = chunk.length < 15;
+          const isPartial = chunk.length < QUIZ_CHUNK_SIZE; // ✅ Globalized
 
           // Determine badge color
           let badgeColor = 'bg-gray-400';
@@ -156,7 +158,7 @@ const WeekQuizzes = ({ moduleId, weekId }) => {
       {/* Info Banner */}
       <div className="bg-[#FFC300]/10 border border-[#FFC300]/30 rounded-xl p-4">
         <p className="text-sm text-gray-700">
-          💡 <strong>Tip:</strong> Each quiz contains up to 15 questions. 
+          💡 <strong>Tip:</strong> Each quiz contains up to {QUIZ_CHUNK_SIZE} questions. {/* ✅ Globalized */}
           Complete them in order for the best learning experience!
         </p>
       </div>

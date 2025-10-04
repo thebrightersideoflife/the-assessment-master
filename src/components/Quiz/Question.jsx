@@ -2,32 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { InlineMath, BlockMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
 import AnswerInput from './AnswerInput';
+import { renderTextWithMathAndMarkdown as renderMath } from '../../utils/textRenderer';
 
-// Helper function to render text with LaTeX expressions
-const renderMath = (text) => {
-  if (!text) return null;
-  try {
-    // Regex to find all types of LaTeX delimiters
-    const mathRegex = /(\$\$[\s\S]*?\$\$|\$[\s\S]*?\$|\\\([\s\S]*?\\\)|\\\[[\s\S]*?\\])/g;
-    const parts = text.split(mathRegex).filter(Boolean);
-
-    return parts.map((part, index) => {
-      if (part.startsWith('$$') && part.endsWith('$$')) {
-        return <BlockMath key={index} math={part.slice(2, -2)} />;
-      } else if (part.startsWith('$') && part.endsWith('$')) {
-        return <InlineMath key={index} math={part.slice(1, -1)} />;
-      } else if (part.startsWith('\\(') && part.endsWith('\\)')) {
-        return <InlineMath key={index} math={part.slice(2, -2)} />;
-      } else if (part.startsWith('\\[') && part.endsWith('\\]')) {
-        return <BlockMath key={index} math={part.slice(2, -2)} />;
-      }
-      return <span key={index}>{part}</span>;
-    });
-  } catch (error) {
-    console.error('Math rendering error:', error, 'Text:', text);
-    return <span className="text-[#C0392B]">{text} (Math rendering failed)</span>;
-  }
-};
 
 const Question = ({
   question,

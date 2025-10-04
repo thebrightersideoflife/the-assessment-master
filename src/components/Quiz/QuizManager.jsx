@@ -2,46 +2,52 @@ import React, { useEffect, useState, useRef } from "react";
 import { useQuiz } from "../../hooks/useQuiz";
 import Question from "./Question";
 import ProgressBar from "./ProgressBar";
-import { soundManager, createAchievementConfetti } from "../../utils/gamificationUtils";
-import { chunkQuestions } from "../../utils/chunkQuestions";
+import {
+  soundManager,
+  createAchievementConfetti,
+} from "../../utils/gamificationUtils";
+import {
+  chunkQuestions,
+  QUIZ_CHUNK_SIZE, // ✅ global chunk size constant
+} from "../../utils/chunkQuestions";
 import { questions } from "../../data/questions";
 
 const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
-  // Get everything from useQuiz hook
+  // ✅ Pull quiz logic from useQuiz
   const {
     currentQuestionIndex,
     totalQuestions,
     stats,
     accuracy,
-    handleAnswerSubmit, // Use this directly - it handles stat updates
+    handleAnswerSubmit,
     nextQuestion,
     restart,
     loading,
     error,
-    questions: filteredQuestions, // Renamed from the hook
+    questions: filteredQuestions,
   } = useQuiz(moduleId, weekId, quizIndex);
 
   const [isComplete, setIsComplete] = useState(false);
   const [achievementPlayed, setAchievementPlayed] = useState(false);
   const containerRef = useRef(null);
 
-  // Calculate total number of quizzes for this week
+  // ✅ Compute total quizzes based on global chunk size
   const weekQuestions = questions.filter(
     (q) => q.moduleId === moduleId && q.weekId === weekId
   );
-  const questionChunks = chunkQuestions(weekQuestions, 15);
+  const questionChunks = chunkQuestions(weekQuestions, QUIZ_CHUNK_SIZE);
   const totalQuizzes = questionChunks.length;
 
   const currentQuestion = filteredQuestions[currentQuestionIndex];
 
-  // Watch for quiz completion
+  // ✅ Detect quiz completion
   useEffect(() => {
     if (currentQuestionIndex >= totalQuestions && totalQuestions > 0) {
       setIsComplete(true);
     }
   }, [currentQuestionIndex, totalQuestions]);
 
-  // Trigger celebration effects
+  // ✅ Trigger celebration effects when complete
   useEffect(() => {
     if (isComplete && !achievementPlayed && containerRef.current) {
       setAchievementPlayed(true);
@@ -77,12 +83,14 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
     }
   }, [isComplete, achievementPlayed, accuracy]);
 
+  // ✅ Restart quiz
   const handleRestart = () => {
     restart();
     setIsComplete(false);
     setAchievementPlayed(false);
   };
 
+  // ✅ Completion feedback messages
   const getCompletionMessage = (acc) => {
     if (acc >= 100)
       return {
@@ -137,6 +145,9 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
     return null;
   };
 
+  // ------------------------------
+  // Loading & Error States
+  // ------------------------------
   if (loading) {
     return (
       <div className="text-center p-6">
@@ -159,6 +170,9 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
     );
   }
 
+  // ------------------------------
+  // Completion State
+  // ------------------------------
   if (isComplete) {
     const message = getCompletionMessage(accuracy);
     const badge = getAchievementBadge(accuracy);
@@ -245,7 +259,8 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
         {quizIndex + 1 < totalQuizzes && (
           <div className="bg-[#3498DB]/10 border border-[#3498DB]/30 rounded-xl p-4 mt-4">
             <p className="text-sm text-gray-700">
-              🎯 <strong>Next up:</strong> Quiz {quizIndex + 2} of {totalQuizzes}
+              🎯 <strong>Next up:</strong> Quiz {quizIndex + 2} of{" "}
+              {totalQuizzes}
             </p>
           </div>
         )}
@@ -253,7 +268,8 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
         {quizIndex + 1 === totalQuizzes && (
           <div className="bg-[#28B463]/10 border border-[#28B463]/30 rounded-xl p-4 mt-4">
             <p className="text-sm text-gray-700">
-              🎉 <strong>Congratulations!</strong> You've completed all quizzes for this week!
+              🎉 <strong>Congratulations!</strong> You've completed all quizzes
+              for this week!
             </p>
           </div>
         )}
@@ -261,6 +277,9 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
     );
   }
 
+  // ------------------------------
+  // Active Quiz View
+  // ------------------------------
   return (
     <div
       className="bg-white bg-opacity-98 rounded-2xl p-8 shadow-2xl border border-[#3498DB]/30"
@@ -277,7 +296,7 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
             Question {currentQuestionIndex + 1} of {totalQuestions}
           </h2>
         </div>
-        
+
         <div className="bg-[#4169E1]/10 px-4 py-2 rounded-full">
           <span className="text-sm font-semibold text-[#4169E1]">
             {stats.correct}/{stats.total} correct
