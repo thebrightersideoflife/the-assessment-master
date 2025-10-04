@@ -4,12 +4,9 @@ export const createConfetti = (element) => {
   if (
     document.body.classList.contains('disable-effects') ||
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  ) {
-    return;
-  }
-  if (!element) {
-    return;
-  }
+  ) return;
+  if (!element) return;
+
   try {
     const rect = element.getBoundingClientRect();
     const x = (rect.left + rect.width / 2) / window.innerWidth;
@@ -44,12 +41,9 @@ export const createAchievementConfetti = (element, intensity = 'medium') => {
   if (
     document.body.classList.contains('disable-effects') ||
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  ) {
-    return;
-  }
-  if (!element) {
-    return;
-  }
+  ) return;
+  if (!element) return;
+
   const rect = element.getBoundingClientRect();
   const x = (rect.left + rect.width / 2) / window.innerWidth;
   const y = (rect.top + rect.height / 2) / window.innerHeight;
@@ -60,6 +54,7 @@ export const createAchievementConfetti = (element, intensity = 'medium') => {
     high: { bursts: 5, particles: 100, spread: 90, scalar: 1.2, ticks: 300 },
   };
   const config = configs[intensity] || configs.medium;
+
   for (let i = 0; i < config.bursts; i++) {
     setTimeout(() => {
       confetti({
@@ -82,16 +77,14 @@ export const createCSSConfetti = (element, options = { particles: 30, waves: 3 }
   if (
     document.body.classList.contains('disable-effects') ||
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  ) {
-    return;
-  }
-  if (!element) {
-    return;
-  }
+  ) return;
+  if (!element) return;
+
   const colors = ['#FFC300', '#E67E22', '#28B463', '#3498DB', '#4169E1'];
   const rect = element.getBoundingClientRect();
   const centerX = rect.left + rect.width / 2;
   const centerY = rect.top + rect.height / 2;
+
   for (let wave = 0; wave < options.waves; wave++) {
     setTimeout(() => {
       for (let i = 0; i < options.particles; i++) {
@@ -103,6 +96,7 @@ export const createCSSConfetti = (element, options = { particles: 30, waves: 3 }
         const velocity = Math.random() * 200 + 150;
         const deltaX = Math.cos(angle) * velocity;
         const deltaY = Math.sin(angle) * velocity - 100;
+
         particle.style.cssText = `
           position: fixed;
           left: ${centerX}px;
@@ -116,6 +110,7 @@ export const createCSSConfetti = (element, options = { particles: 30, waves: 3 }
           opacity: 1;
           transition: all 1.2s ease-out;
         `;
+
         document.body.appendChild(particle);
         setTimeout(() => {
           particle.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${Math.random() * 720}deg) scale(0.3)`;
@@ -131,16 +126,11 @@ export const createShakeEffect = (element) => {
   if (
     document.body.classList.contains('disable-effects') ||
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  ) {
-    return;
-  }
-  if (!element) {
-    return;
-  }
+  ) return;
+  if (!element) return;
+
   element.style.animation = 'shake 0.5s ease-in-out';
-  setTimeout(() => {
-    element.style.animation = '';
-  }, 500);
+  setTimeout(() => (element.style.animation = ''), 500);
 };
 
 export const vibrateDevice = (pattern = 200) => {
@@ -148,9 +138,7 @@ export const vibrateDevice = (pattern = 200) => {
     document.body.classList.contains('disable-effects') ||
     window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
     !navigator.vibrate
-  ) {
-    return;
-  }
+  ) return;
   try {
     navigator.vibrate(pattern);
   } catch {}
@@ -168,13 +156,19 @@ class SoundManager {
 
   init() {
     this.preloadAudio();
+
+    // ✅ Preload all sounds on page load to avoid delays
+    window.addEventListener('load', () => {
+      Object.values(this.audioCache).forEach(audio => {
+        if (audio && typeof audio.load === 'function') audio.load();
+      });
+    });
+
     try {
       this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
       const resumeAudioContext = () => {
         if (this.audioContext?.state === 'suspended') {
-          this.audioContext.resume().catch(() => {
-            this.useHTML5Audio = true;
-          });
+          this.audioContext.resume().catch(() => (this.useHTML5Audio = true));
         }
         document.removeEventListener('click', resumeAudioContext);
         document.removeEventListener('touchstart', resumeAudioContext);
@@ -194,60 +188,65 @@ class SoundManager {
       excellent: '/sounds/excellent.mp3',
       perfect: '/sounds/perfect.mp3',
     };
+
     Object.entries(soundFiles).forEach(([key, path]) => {
       try {
         const audio = new Audio(path);
         audio.preload = 'auto';
         audio.volume = this.volume;
+
+        // ✅ Handle missing files gracefully
+        audio.onerror = () => {
+          console.warn(`⚠️ Missing sound file: ${path}`);
+          this.audioCache[key] = null;
+        };
+
         this.audioCache[key] = audio;
-      } catch {}
+      } catch {
+        this.audioCache[key] = null;
+      }
     });
   }
 
-    playAchievementSound(accuracy) {
-      if (!this.enabled) return;
-      
-      let soundKey;
-      let fallbackTones;
-      
-      if (accuracy >= 100) {
-        soundKey = 'perfect';
-        fallbackTones = [
-          { freq: 523.25, duration: 0.15, delay: 0 },
-          { freq: 698.46, duration: 0.15, delay: 0.1 },
-          { freq: 880.00, duration: 0.15, delay: 0.2 },
-          { freq: 1046.50, duration: 0.4, delay: 0.3 },
-        ];
-      } else if (accuracy >= 90) {
-        soundKey = 'excellent';
-        fallbackTones = [
-          { freq: 523.25, duration: 0.2, delay: 0 },
-          { freq: 659.25, duration: 0.2, delay: 0.15 },
-          { freq: 783.99, duration: 0.3, delay: 0.3 },
-        ];
-      } else {
-        // Changed: Both 80%+ AND <80% now use goodJob
-        soundKey = 'goodJob';
-        fallbackTones = [
-          { freq: 523.25, duration: 0.2, delay: 0 },
-          { freq: 659.25, duration: 0.3, delay: 0.1 },
-        ];
-      }
+  playAchievementSound(accuracy) {
+    if (!this.enabled) return;
+    let soundKey, fallbackTones;
 
-      const audio = this.audioCache[soundKey];
-      if (audio && audio.readyState >= 2) {
-        try {
-          const audioClone = audio.cloneNode();
-          audioClone.volume = this.volume;
-          audioClone.currentTime = 0;
-          audioClone.play().catch(() => {
-            this.playToneSequence(fallbackTones);
-          });
-          return;
-        } catch {}
-      }
-      this.playToneSequence(fallbackTones);
+    if (accuracy >= 100) {
+      soundKey = 'perfect';
+      fallbackTones = [
+        { freq: 523.25, duration: 0.15, delay: 0 },
+        { freq: 698.46, duration: 0.15, delay: 0.1 },
+        { freq: 880.0, duration: 0.15, delay: 0.2 },
+        { freq: 1046.5, duration: 0.4, delay: 0.3 },
+      ];
+    } else if (accuracy >= 90) {
+      soundKey = 'excellent';
+      fallbackTones = [
+        { freq: 523.25, duration: 0.2, delay: 0 },
+        { freq: 659.25, duration: 0.2, delay: 0.15 },
+        { freq: 783.99, duration: 0.3, delay: 0.3 },
+      ];
+    } else {
+      soundKey = 'goodJob';
+      fallbackTones = [
+        { freq: 523.25, duration: 0.2, delay: 0 },
+        { freq: 659.25, duration: 0.3, delay: 0.1 },
+      ];
     }
+
+    const audio = this.audioCache[soundKey];
+    if (audio && audio.readyState >= 2) {
+      try {
+        const clone = audio.cloneNode();
+        clone.volume = this.volume;
+        clone.currentTime = 0;
+        clone.play().catch(() => this.playToneSequence(fallbackTones));
+        return;
+      } catch {}
+    }
+    this.playToneSequence(fallbackTones);
+  }
 
   playCorrectSound() {
     if (!this.enabled) return;
@@ -255,15 +254,15 @@ class SoundManager {
     const audio = this.audioCache.correct;
     if (audio && audio.readyState >= 2) {
       try {
-        const audioClone = audio.cloneNode();
-        audioClone.volume = this.volume;
-        audioClone.currentTime = 0;
-        audioClone.play().catch(() => {
+        const clone = audio.cloneNode();
+        clone.volume = this.volume;
+        clone.currentTime = 0;
+        clone.play().catch(() =>
           this.playToneSequence([
             { freq: 523.25, duration: 0.2, delay: 0 },
             { freq: 659.25, duration: 0.2, delay: 0.1 },
-          ]);
-        });
+          ])
+        );
         return;
       } catch {}
     }
@@ -279,12 +278,10 @@ class SoundManager {
     const audio = this.audioCache.incorrect;
     if (audio && audio.readyState >= 2) {
       try {
-        const audioClone = audio.cloneNode();
-        audioClone.volume = this.volume;
-        audioClone.currentTime = 0;
-        audioClone.play().catch(() => {
-          this.playTone(220, 0.3, 'sawtooth');
-        });
+        const clone = audio.cloneNode();
+        clone.volume = this.volume;
+        clone.currentTime = 0;
+        clone.play().catch(() => this.playTone(220, 0.3, 'sawtooth'));
         return;
       } catch {}
     }
@@ -294,26 +291,24 @@ class SoundManager {
   playToneSequence(tones) {
     if (!this.audioContext || !this.enabled) return;
     tones.forEach(({ freq, duration, delay }) => {
-      setTimeout(() => {
-        this.playTone(freq, duration);
-      }, delay * 1000);
+      setTimeout(() => this.playTone(freq, duration), delay * 1000);
     });
   }
 
   playTone(frequency, duration, type = 'sine') {
     if (!this.audioContext || !this.enabled) return;
     try {
-      const oscillator = this.audioContext.createOscillator();
-      const gainNode = this.audioContext.createGain();
-      oscillator.connect(gainNode);
-      gainNode.connect(this.audioContext.destination);
-      oscillator.frequency.value = frequency;
-      oscillator.type = type;
-      gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
-      gainNode.gain.linearRampToValueAtTime(this.volume, this.audioContext.currentTime + 0.01);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + duration);
-      oscillator.start(this.audioContext.currentTime);
-      oscillator.stop(this.audioContext.currentTime + duration);
+      const osc = this.audioContext.createOscillator();
+      const gain = this.audioContext.createGain();
+      osc.connect(gain);
+      gain.connect(this.audioContext.destination);
+      osc.frequency.value = frequency;
+      osc.type = type;
+      gain.gain.setValueAtTime(0, this.audioContext.currentTime);
+      gain.gain.linearRampToValueAtTime(this.volume, this.audioContext.currentTime + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + duration);
+      osc.start(this.audioContext.currentTime);
+      osc.stop(this.audioContext.currentTime + duration);
     } catch {}
   }
 

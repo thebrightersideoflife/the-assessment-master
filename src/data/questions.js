@@ -34,7 +34,7 @@ export const questions = [
       "- This results in an **underestimate** of the true area\n\n" +
       "**Visual Interpretation:**\n" +
       "Imagine the curve $$y = \\frac{1}{x}$$ sloping downward from left to right. When we use the right endpoint (the lower point) to determine rectangle height, we're consistently choosing heights that are too short, causing our rectangles to miss the area between their tops and the curve.\n\n" +
-      "**Note:** The exact area is $$\\int_1^2 \\frac{1}{x}\\,dx = \\ln(2) \\approx 0.6931$$, confirming our estimate of $$0.6345$$ is indeed an underestimate.",
+      "**Note:** The exact area is $$\\int_1^2 \\frac{1}{x}\\,dx = \\ln(2) \\approx 0.6931$$, confirming our estimate of $$0.6345$$ is indeed an underestimate."
   },
   {
     id: "q2",
@@ -160,17 +160,19 @@ export const questions = [
       "**Memory Aid:**\n" +
       "For **decreasing** functions: **L**eft endpoint → **L**arger values → **L**arge estimate (overestimate)",
   },
-  {
+    {
     id: "q5",
     moduleId: "ITMTB",
     weekId: "ITMTB_W1",
-    type: "open-ended",
-    text: "Express the area under \\( y = x^3 \\) from 0 to 1 as a limit of Riemann sums. Do not evaluate.",
-    correctAnswers: [
-      "\\( \\lim_{n\\to\\infty} \\sum_{i=1}^n \\left( \\frac{i}{n} \\right)^3 \\frac{1}{n} \\)",
-      "lim_{n→∞} Σ(i/n)³(1/n)",
-      "limit as n approaches infinity of sum (i/n)^3 * (1/n)"
+    type: "multiple-choice",
+    text: "Which of the following correctly expresses the area under \\( y = x^3 \\) from 0 to 1 as a limit of Riemann sums?",
+    options: [
+      "A. \\( \\lim_{n\\to\\infty} \\sum_{i=1}^n \\left( \\frac{i}{n} \\right)^3 \\frac{1}{n} \\)",
+      "B. \\( \\lim_{n\\to\\infty} \\sum_{i=1}^n \\left( \\frac{i}{n} \\right)^2 \\frac{1}{n} \\)",
+      "C. \\( \\lim_{n\\to\\infty} \\sum_{i=1}^n \\frac{i^3}{n^3} \\)",
+      "D. \\( \\lim_{n\\to\\infty} \\sum_{i=0}^{n-1} \\left( \\frac{i}{n} \\right)^3 \\frac{1}{n} \\)"
     ],
+    correctAnswers: ["A"],
     explanation:
       "To express the area under $$y = x^3$$ from $$0$$ to $$1$$ as a limit of Riemann sums:\n\n" +
       "**Step 1: Set up the partition**\n" +
@@ -187,19 +189,28 @@ export const questions = [
       "**Step 5: Express as a limit**\n" +
       "The exact area is obtained by taking the limit as $$n \\to \\infty$$:\n" +
       "$$\\text{Area} = \\lim_{n \\to \\infty} \\sum_{i=1}^{n} \\left(\\frac{i}{n}\\right)^3 \\cdot \\frac{1}{n}$$\n\n" +
-      "**Alternative form (simplified):**\n" +
-      "$$= \\lim_{n \\to \\infty} \\sum_{i=1}^{n} \\frac{i^3}{n^4}$$\n" +
-      "$$= \\lim_{n \\to \\infty} \\frac{1}{n^4} \\sum_{i=1}^{n} i^3$$\n\n" +
-      "**Interpretation:**\n" +
-      "This limit represents:\n" +
-      "- Taking increasingly fine partitions ($$n \\to \\infty$$)\n" +
-      "- Summing rectangles of width $$\\frac{1}{n}$$ and height $$\\left(\\frac{i}{n}\\right)^3$$\n" +
-      "- The sum converges to the exact area under the curve\n\n" +
+      "This is **Option A**, which is correct.\n\n" +
+      "**Why the other options are incorrect:**\n\n" +
+      "**Option B:** $$\\lim_{n\\to\\infty} \\sum_{i=1}^n \\left( \\frac{i}{n} \\right)^2 \\frac{1}{n}$$\n" +
+      "- This uses $$\\left(\\frac{i}{n}\\right)^2$$ instead of $$\\left(\\frac{i}{n}\\right)^3$$\n" +
+      "- This would represent the area under $$y = x^2$$, not $$y = x^3$$\n" +
+      "- The exponent must match the function being integrated\n\n" +
+      "**Option C:** $$\\lim_{n\\to\\infty} \\sum_{i=1}^n \\frac{i^3}{n^3}$$\n" +
+      "- This is missing the width factor $$\\Delta x = \\frac{1}{n}$$\n" +
+      "- The correct form should have $$n^4$$ in the denominator: $$\\frac{i^3}{n^4}$$\n" +
+      "- This simplifies to: $$\\left(\\frac{i}{n}\\right)^3 \\cdot \\frac{1}{n} = \\frac{i^3}{n^4}$$\n" +
+      "- Missing the crucial $$\\frac{1}{n}$$ factor means this isn't a proper Riemann sum\n\n" +
+      "**Option D:** $$\\lim_{n\\to\\infty} \\sum_{i=0}^{n-1} \\left( \\frac{i}{n} \\right)^3 \\frac{1}{n}$$\n" +
+      "- This uses $$i = 0$$ to $$n-1$$ (left endpoints) instead of $$i = 1$$ to $$n$$ (right endpoints)\n" +
+      "- While this would also converge to the correct value as $$n \\to \\infty$$, it represents a **left Riemann sum**\n" +
+      "- The standard convention for expressing this limit uses right endpoints ($$i = 1$$ to $$n$$)\n" +
+      "- Both left and right sums converge to the same value for continuous functions, but Option A is the more standard form\n\n" +
       "**Connection to the definite integral:**\n" +
       "By definition of the definite integral:\n" +
       "$$\\int_0^1 x^3\\,dx = \\lim_{n \\to \\infty} \\sum_{i=1}^{n} \\left(\\frac{i}{n}\\right)^3 \\cdot \\frac{1}{n}$$\n\n" +
-      "**Note:** If we were to evaluate this (which the question doesn't ask), we would get:\n" +
-      "$$\\int_0^1 x^3\\,dx = \\left[\\frac{x^4}{4}\\right]_0^1 = \\frac{1}{4}$$",
+      "**Note:** If we were to evaluate this, we would get:\n" +
+      "$$\\int_0^1 x^3\\,dx = \\left[\\frac{x^4}{4}\\right]_0^1 = \\frac{1}{4}$$\n\n" +
+      "**Answer: A**"
   },
   {
     id: "q6",
@@ -316,37 +327,38 @@ export const questions = [
       "The midpoint of $$[a, b]$$ is $$\\frac{a+b}{2}$$:\n" +
       "$$x_1^* = \\frac{0+2}{2} = 1$$\n" +
       "$$x_2^* = \\frac{2+4}{2} = 3$$\n" +
-      "$x_3^* = \\frac{4+6}{2} = 5$\n" +
-      "$x_4^* = \\frac{6+8}{2} = 7$\n\n" +
-      "**Step 4: Evaluate $f(x) = x^2$ at each midpoint**\n" +
-      "$f(1) = 1^2 = 1$\n" +
-      "$f(3) = 3^2 = 9$\n" +
-      "$f(5) = 5^2 = 25$\n" +
-      "$f(7) = 7^2 = 49$\n\n" +
+      "$$x_3^* = \\frac{4+6}{2} = 5$$\n" +
+      "$$x_4^* = \\frac{6+8}{2} = 7$$\n\n" +
+      "**Step 4: Evaluate $$f(x) = x^2$$ at each midpoint**\n" +
+      "$$f(1) = 1^2 = 1$$\n" +
+      "$$f(3) = 3^2 = 9$$\n" +
+      "$$f(5) = 5^2 = 25$$\n" +
+      "$$f(7) = 7^2 = 49$$\n\n" +
       "**Step 5: Calculate the Midpoint Rule approximation**\n" +
-      "$M_4 = \\Delta x \\sum_{i=1}^{4} f(x_i^*)$\n" +
-      "$= 2 \\times (1 + 9 + 25 + 49)$\n" +
-      "$= 2 \\times 84$\n" +
-      "$= 168$\n\n" +
+      "$$M_4 = \\Delta x \\sum_{i=1}^{4} f(x_i^*)$$\n" +
+      "$$= 2 \\times (1 + 9 + 25 + 49)$$\n" +
+      "$$= 2 \\times 84$$\n" +
+      "$$= 168$$\n\n" +
       "**Step 6: Compare with the exact value**\n" +
       "Using the Fundamental Theorem of Calculus:\n" +
-      "$\\int_0^8 x^2\\,dx = \\left[\\frac{x^3}{3}\\right]_0^8 = \\frac{8^3}{3} - 0 = \\frac{512}{3} \\approx 170.67$\n\n" +
+      "$$\\int_0^8 x^2\\,dx = \\left[\\frac{x^3}{3}\\right]_0^8 = \\frac{8^3}{3} - 0 = \\frac{512}{3} \\approx 170.67$$\n\n" +
       "**Analysis of the approximation:**\n" +
-      "- Our estimate: $168$\n" +
-      "- Exact value: $170.67$\n" +
-      "- Error: $170.67 - 168 = 2.67$\n" +
-      "- Percentage error: $\\frac{2.67}{170.67} \\times 100\\% \\approx 1.56\\%$\n\n" +
+      "- Our estimate: $$168$$\n" +
+      "- Exact value: $$170.67$$\n" +
+      "- Error: $$170.67 - 168 = 2.67$$\n" +
+      "- Percentage error: $$\\frac{2.67}{170.67} \\times 100\\% \\approx 1.56\\%$$\n\n" +
       "**Why is this an underestimate?**\n" +
-      "Since $f(x) = x^2$ is **concave up** ($f''(x) = 2 > 0$):\n" +
+      "Since $$f(x) = x^2$$ is **concave up** ($$f''(x) = 2 > 0$$):\n" +
       "- The curve bends upward\n" +
       "- Midpoint rectangles touch the curve at the middle\n" +
       "- The curve rises above the rectangle tops near the endpoints\n" +
       "- Result: We miss some area, giving an underestimate\n\n" +
       "**Visual Insight:**\n" +
-      "The parabola $y = x^2$ curves upward. When we place rectangles using midpoints, the rectangle tops cut through the middle of each segment, but the parabola curves above the rectangles at the edges of each subinterval.\n\n" +
+      "The parabola $$y = x^2$$ curves upward. When we place rectangles using midpoints, the rectangle tops cut through the middle of each segment, but the parabola curves above the rectangles at the edges of each subinterval.\n\n" +
       "**General Rule:**\n" +
       "- For **concave up** functions: Midpoint Rule gives an **underestimate**\n" +
       "- For **concave down** functions: Midpoint Rule gives an **overestimate**",
+
   },
   {
     id: "q9",
@@ -362,49 +374,50 @@ export const questions = [
     ],
     correctAnswers: ["B"],
     explanation:
-      "To identify which integral corresponds to the limit $\\lim_{n\\to\\infty} \\sum_{i=1}^n \\frac{5}{n} \\left( \\frac{i}{n} \\right)^2$:\n\n" +
-      "**Step 1: Identify the structure of a Riemann sum**\n" +
-      "A Riemann sum has the form:\n" +
-      "$\\sum_{i=1}^{n} f(x_i) \\Delta x$\n\n" +
-      "where $\\Delta x = \\frac{b-a}{n}$ and $x_i = a + i\\Delta x$\n\n" +
-      "**Step 2: Analyze the given expression**\n" +
-      "$\\sum_{i=1}^n \\frac{5}{n} \\left( \\frac{i}{n} \\right)^2$\n\n" +
-      "We can rewrite this as:\n" +
-      "$\\sum_{i=1}^n \\left[5 \\left( \\frac{i}{n} \\right)^2\\right] \\cdot \\frac{1}{n}$\n\n" +
-      "**Step 3: Identify each component**\n\n" +
-      "**The width $\\Delta x$:**\n" +
-      "$\\Delta x = \\frac{1}{n}$\n\n" +
-      "This means $\\frac{b-a}{n} = \\frac{1}{n}$, so $b - a = 1$\n\n" +
-      "**The sample points $x_i$:**\n" +
-      "$x_i = \\frac{i}{n}$\n\n" +
-      "Since $x_i = a + i\\Delta x = a + \\frac{i}{n}$, we must have $a = 0$\n\n" +
-      "Therefore: $a = 0$ and $b = 1$, giving us the interval $[0, 1]$\n\n" +
-      "**The function $f(x)$:**\n" +
-      "$f(x_i) = 5\\left(\\frac{i}{n}\\right)^2 = 5(x_i)^2$\n\n" +
-      "So $f(x) = 5x^2$\n\n" +
-      "**Step 4: Write the integral**\n" +
-      "$\\lim_{n\\to\\infty} \\sum_{i=1}^n \\frac{5}{n} \\left( \\frac{i}{n} \\right)^2 = \\int_0^1 5x^2\\,dx$\n\n" +
-      "**Step 5: Verify by evaluating**\n" +
-      "$\\int_0^1 5x^2\\,dx = 5\\int_0^1 x^2\\,dx = 5\\left[\\frac{x^3}{3}\\right]_0^1 = 5 \\cdot \\frac{1}{3} = \\frac{5}{3}$\n\n" +
-      "**Why the other options are incorrect:**\n\n" +
-      "**Option A: $\\int_0^5 x^2 dx$**\n" +
-      "- This would require $\\Delta x = \\frac{5}{n}$ (not $\\frac{1}{n}$)\n" +
-      "- And $f(x) = x^2$ (not $5x^2$)\n" +
-      "- Wrong on both counts\n\n" +
-      "**Option C: $\\int_0^5 5x^2 dx$**\n" +
-      "- This would require $\\Delta x = \\frac{5}{n}$\n" +
-      "- The coefficient 5 appears in both places, which would give $\\frac{25}{n}$ in the sum\n" +
-      "- Incorrect interval\n\n" +
-      "**Option D: $\\int_0^1 x^2 dx$**\n" +
-      "- Correct interval $[0, 1]$\n" +
-      "- But missing the coefficient 5 in the function\n" +
-      "- This would be $\\sum_{i=1}^n \\frac{1}{n}\\left(\\frac{i}{n}\\right)^2$, not our expression\n\n" +
-      "**Key Pattern Recognition:**\n" +
-      "When you see $\\sum_{i=1}^n \\frac{c}{n} \\left( \\frac{i}{n} \\right)^k$:\n" +
-      "- Interval: $[0, 1]$ (because $x_i = \\frac{i}{n}$ ranges from $\\frac{1}{n}$ to $1$)\n" +
-      "- Function: $f(x) = cx^k$\n" +
-      "- Integral: $\\int_0^1 cx^k\\,dx$\n\n" +
-      "**Answer: B** $\\int_0^1 5x^2 dx$",
+        "To identify which integral corresponds to the limit $$\\lim_{n\\to\\infty} \\sum_{i=1}^n \\frac{5}{n} \\left( \\frac{i}{n} \\right)^2$$:\n\n" +
+        "**Step 1: Identify the structure of a Riemann sum**\n" +
+        "A Riemann sum has the form:\n" +
+        "$$\\sum_{i=1}^{n} f(x_i) \\Delta x$$\n\n" +
+        "where $$\\Delta x = \\frac{b-a}{n}$$ and $$x_i = a + i\\Delta x$$\n\n" +
+        "**Step 2: Analyze the given expression**\n" +
+        "$$\\sum_{i=1}^n \\frac{5}{n} \\left( \\frac{i}{n} \\right)^2$$\n\n" +
+        "We can rewrite this as:\n" +
+        "$$\\sum_{i=1}^n \\left[5 \\left( \\frac{i}{n} \\right)^2\\right] \\cdot \\frac{1}{n}$$\n\n" +
+        "**Step 3: Identify each component**\n\n" +
+        "**The width $$\\Delta x$$:**\n" +
+        "$$\\Delta x = \\frac{1}{n}$$\n\n" +
+        "This means $$\\frac{b-a}{n} = \\frac{1}{n}$$, so $$b - a = 1$$\n\n" +
+        "**The sample points $$x_i$$:**\n" +
+        "$$x_i = \\frac{i}{n}$$\n\n" +
+        "Since $$x_i = a + i\\Delta x = a + \\frac{i}{n}$$, we must have $$a = 0$$\n\n" +
+        "Therefore: $$a = 0$$ and $$b = 1$$, giving us the interval $$[0, 1]$$\n\n" +
+        "**The function $$f(x)$$:**\n" +
+        "$$f(x_i) = 5\\left(\\frac{i}{n}\\right)^2 = 5(x_i)^2$$\n\n" +
+        "So $$f(x) = 5x^2$$\n\n" +
+        "**Step 4: Write the integral**\n" +
+        "$$\\lim_{n\\to\\infty} \\sum_{i=1}^n \\frac{5}{n} \\left( \\frac{i}{n} \\right)^2 = \\int_0^1 5x^2\\,dx$$\n\n" +
+        "**Step 5: Verify by evaluating**\n" +
+        "$$\\int_0^1 5x^2\\,dx = 5\\int_0^1 x^2\\,dx = 5\\left[\\frac{x^3}{3}\\right]_0^1 = 5 \\cdot \\frac{1}{3} = \\frac{5}{3}$$\n\n" +
+        "**Why the other options are incorrect:**\n\n" +
+        "**Option A: $$\\int_0^5 x^2 dx$$**\n" +
+        "- This would require $$\\Delta x = \\frac{5}{n}$$ (not $$\\frac{1}{n}$$)\n" +
+        "- And $$f(x) = x^2$$ (not $$5x^2$$)\n" +
+        "- Wrong on both counts\n\n" +
+        "**Option C: $$\\int_0^5 5x^2 dx$$**\n" +
+        "- This would require $$\\Delta x = \\frac{5}{n}$$\n" +
+        "- The coefficient 5 appears in both places, which would give $$\\frac{25}{n}$$ in the sum\n" +
+        "- Incorrect interval\n\n" +
+        "**Option D: $$\\int_0^1 x^2 dx$$**\n" +
+        "- Correct interval $$[0, 1]$$\n" +
+        "- But missing the coefficient 5 in the function\n" +
+        "- This would be $$\\sum_{i=1}^n \\frac{1}{n}\\left(\\frac{i}{n}\\right)^2$$, not our expression\n\n" +
+        "**Key Pattern Recognition:**\n" +
+        "When you see $$\\sum_{i=1}^n \\frac{c}{n} \\left( \\frac{i}{n} \\right)^k$$:\n" +
+        "- Interval: $$[0, 1]$$ (because $$x_i = \\frac{i}{n}$$ ranges from $$\\frac{1}{n}$$ to $$1$$)\n" +
+        "- Function: $$f(x) = cx^k$$\n" +
+        "- Integral: $$\\int_0^1 cx^k\\,dx$$\n\n" +
+        "**Answer: B** $$\\int_0^1 5x^2 dx$$",
+
   },
   {
     id: "q10",
@@ -414,41 +427,41 @@ export const questions = [
     text: "Use properties of integrals to evaluate \\( \\int_1^3 (2e^x + 1)\\,dx \\).",
     correctAnswers: ["2(e^3 - e) + 2", "2e^3 - 2e + 2", "2e³ - 2e + 2"],
     explanation:
-      "To evaluate $\\int_1^3 (2e^x + 1)\\,dx$ using properties of integrals:\n\n" +
-      "**Step 1: Apply the Sum Rule for integrals**\n" +
-      "The integral of a sum equals the sum of the integrals:\n" +
-      "$\\int_1^3 (2e^x + 1)\\,dx = \\int_1^3 2e^x\\,dx + \\int_1^3 1\\,dx$\n\n" +
-      "**Step 2: Apply the Constant Multiple Rule**\n" +
-      "We can factor out constants:\n" +
-      "$= 2\\int_1^3 e^x\\,dx + \\int_1^3 1\\,dx$\n\n" +
-      "**Step 3: Evaluate the first integral**\n" +
-      "The antiderivative of $e^x$ is $e^x$:\n" +
-      "$2\\int_1^3 e^x\\,dx = 2[e^x]_1^3 = 2(e^3 - e^1) = 2e^3 - 2e$\n\n" +
-      "**Step 4: Evaluate the second integral**\n" +
-      "The antiderivative of 1 is $x$:\n" +
-      "$\\int_1^3 1\\,dx = [x]_1^3 = 3 - 1 = 2$\n\n" +
-      "**Step 5: Combine the results**\n" +
-      "$\\int_1^3 (2e^x + 1)\\,dx = (2e^3 - 2e) + 2 = 2e^3 - 2e + 2$\n\n" +
-      "**Alternative form (factored):**\n" +
-      "$= 2(e^3 - e) + 2 = 2(e^3 - e + 1)$\n\n" +
-      "**Step 6: Numerical approximation**\n" +
-      "Using $e \\approx 2.71828$:\n" +
-      "$e^3 \\approx 20.0855$\n" +
-      "$2(20.0855) - 2(2.71828) + 2$\n" +
-      "$\\approx 40.171 - 5.436 + 2$\n" +
-      "$\\approx 36.735$\n\n" +
-      "**Properties of Integrals Used:**\n\n" +
-      "1. **Sum Rule**: $\\int [f(x) + g(x)]\\,dx = \\int f(x)\\,dx + \\int g(x)\\,dx$\n\n" +
-      "2. **Constant Multiple Rule**: $\\int cf(x)\\,dx = c\\int f(x)\\,dx$\n\n" +
-      "3. **Fundamental Theorem of Calculus**: $\\int_a^b f(x)\\,dx = F(b) - F(a)$\n   where $F'(x) = f(x)$\n\n" +
-      "**Key Antiderivatives Used:**\n" +
-      "- $\\int e^x\\,dx = e^x + C$\n" +
-      "- $\\int 1\\,dx = x + C$\n\n" +
-      "**Verification Strategy:**\n" +
-      "To check our answer, we can differentiate:\n" +
-      "$\\frac{d}{dx}[2e^x + x] = 2e^x + 1$ ✓\n\n" +
-      "This confirms our antiderivative is correct.\n\n" +
-      "**Final Answer:** $2e^3 - 2e + 2$ or equivalently $2(e^3 - e + 1)$",
+        "To evaluate $$\\int_1^3 (2e^x + 1)\\,dx$$ using properties of integrals:\n\n" +
+        "**Step 1: Apply the Sum Rule for integrals**\n" +
+        "The integral of a sum equals the sum of the integrals:\n" +
+        "$$\\int_1^3 (2e^x + 1)\\,dx = \\int_1^3 2e^x\\,dx + \\int_1^3 1\\,dx$$\n\n" +
+        "**Step 2: Apply the Constant Multiple Rule**\n" +
+        "We can factor out constants:\n" +
+        "$$= 2\\int_1^3 e^x\\,dx + \\int_1^3 1\\,dx$$\n\n" +
+        "**Step 3: Evaluate the first integral**\n" +
+        "The antiderivative of $$e^x$$ is $$e^x$$:\n" +
+        "$$2\\int_1^3 e^x\\,dx = 2[e^x]_1^3 = 2(e^3 - e^1) = 2e^3 - 2e$$\n\n" +
+        "**Step 4: Evaluate the second integral**\n" +
+        "The antiderivative of 1 is $$x$$:\n" +
+        "$$\\int_1^3 1\\,dx = [x]_1^3 = 3 - 1 = 2$$\n\n" +
+        "**Step 5: Combine the results**\n" +
+        "$$\\int_1^3 (2e^x + 1)\\,dx = (2e^3 - 2e) + 2 = 2e^3 - 2e + 2$$\n\n" +
+        "**Alternative form (factored):**\n" +
+        "$$= 2(e^3 - e) + 2 = 2(e^3 - e + 1)$$\n\n" +
+        "**Step 6: Numerical approximation**\n" +
+        "Using $$e \\approx 2.71828$$:\n" +
+        "$$e^3 \\approx 20.0855$$\n" +
+        "$$2(20.0855) - 2(2.71828) + 2$$\n" +
+        "$$\\approx 40.171 - 5.436 + 2$$\n" +
+        "$$\\approx 36.735$$\n\n" +
+        "**Properties of Integrals Used:**\n\n" +
+        "1. **Sum Rule**: $$\\int [f(x) + g(x)]\\,dx = \\int f(x)\\,dx + \\int g(x)\\,dx$$\n\n" +
+        "2. **Constant Multiple Rule**: $$\\int cf(x)\\,dx = c\\int f(x)\\,dx$$\n\n" +
+        "3. **Fundamental Theorem of Calculus**: $$\\int_a^b f(x)\\,dx = F(b) - F(a)$$, where $$F'(x) = f(x)$$\n\n" +
+        "**Key Antiderivatives Used:**\n" +
+        "- $$\\int e^x\\,dx = e^x + C$$\n" +
+        "- $$\\int 1\\,dx = x + C$$\n\n" +
+        "**Verification Strategy:**\n" +
+        "To check our answer, we can differentiate:\n" +
+        "$$\\frac{d}{dx}[2e^x + x] = 2e^x + 1$$ ✓\n\n" +
+        "This confirms our antiderivative is correct.\n\n" +
+        "**Final Answer:** $$2e^3 - 2e + 2$$ or equivalently $$2(e^3 - e + 1)$$",
   },
   {
     id: "q11",
@@ -463,7 +476,7 @@ export const questions = [
       "D. The Mean Value Theorem applies",
     ],
     correctAnswers: ["A"],
-    explanation:
+   explanation:
       "To understand why continuous functions are integrable:\n\n" +
       "**The Fundamental Theorem About Continuous Functions:**\n\n" +
       "If $f$ is continuous on the closed interval $[a, b]$, then $f$ is **Riemann integrable** on $[a, b]$.\n\n" +
@@ -475,7 +488,7 @@ export const questions = [
       "- The function is **bounded**\n\n" +
       "**Part 2: Continuous functions are integrable**\n\n" +
       "For a function to be Riemann integrable, the upper and lower Riemann sums must converge to the same value:\n\n" +
-      "$\\lim_{n \\to \\infty} L_n = \\lim_{n \\to \\infty} U_n$\n\n" +
+      "$$\\lim_{n \\to \\infty} L_n = \\lim_{n \\to \\infty} U_n$$\n\n" +
       "where:\n" +
       "- $L_n$ uses the minimum value of $f$ on each subinterval\n" +
       "- $U_n$ uses the maximum value of $f$ on each subinterval\n\n" +
@@ -484,17 +497,17 @@ export const questions = [
       "- As we make partitions finer ($n \\to \\infty$), the difference $U_n - L_n \\to 0$\n" +
       "- This guarantees the integral exists\n\n" +
       "**Why the other options are INCORRECT:**\n\n" +
-      "**Option B: \"Continuous functions have no critical points\"**\n" +
+      "**Option B: 'Continuous functions have no critical points'**\n" +
       "- **False!** Continuous functions can have many critical points\n" +
       "- Example: $f(x) = x^2$ is continuous and has a critical point at $x = 0$\n" +
       "- Example: $f(x) = \\sin(x)$ is continuous with infinitely many critical points\n" +
       "- Critical points are irrelevant to integrability\n\n" +
-      "**Option C: \"All continuous functions are increasing\"**\n" +
+      "**Option C: 'All continuous functions are increasing'**\n" +
       "- **False!** Continuous functions can increase, decrease, or do both\n" +
       "- Example: $f(x) = -x$ is continuous and decreasing\n" +
       "- Example: $f(x) = x^2 - 1$ is continuous and changes from decreasing to increasing\n" +
       "- Monotonicity is not required for integrability\n\n" +
-      "**Option D: \"The Mean Value Theorem applies\"**\n" +
+      "**Option D: 'The Mean Value Theorem applies'**\n" +
       "- While the MVT does apply to continuous, differentiable functions, this is not why they're integrable\n" +
       "- The MVT is about derivatives, not integrals\n" +
       "- You can have continuous functions that aren't differentiable everywhere (e.g., $f(x) = |x|$), and they're still integrable\n" +
@@ -504,8 +517,8 @@ export const questions = [
       "- Example: The Dirichlet function (1 for rationals, 0 for irrationals) is bounded but not Riemann integrable\n" +
       "- **Continuity** is the key property that ensures integrability\n\n" +
       "**Mathematical Rigor:**\n\n" +
-      "The precise statement is:\n" +
-      "> \"Every function that is continuous on a closed, bounded interval $[a, b]$ is Riemann integrable on $[a, b]$.\"\n\n" +
+      "The precise statement is:\n\n" +
+      "> Every function that is continuous on a closed, bounded interval $[a, b]$ is Riemann integrable on $[a, b]$.\n\n" +
       "This is one of the foundational results in real analysis.\n\n" +
       "**Practical Implication:**\n\n" +
       "When you see a continuous function, you can immediately conclude:\n" +
@@ -513,6 +526,6 @@ export const questions = [
       "2. Its integral exists\n" +
       "3. You can approximate it with Riemann sums\n" +
       "4. The Fundamental Theorem of Calculus applies\n\n" +
-      "**Answer: A** - Continuous functions are bounded and integrable",
+      "**Answer: A** — Continuous functions are bounded and integrable",
   },
 ];
