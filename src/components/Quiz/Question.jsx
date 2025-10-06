@@ -61,13 +61,7 @@ const Question = ({
     if (!result.isCorrect) {
       setShowExplanation(true);
     }
-
-    // ✅ Auto-advance after 1s if correct and not last question
-    if (result.isCorrect && !isLastQuestion) {
-      setTimeout(() => {
-        onNext();
-      }, 1000);
-    }
+    
   };
 
   const handleShowExplanation = () => {
