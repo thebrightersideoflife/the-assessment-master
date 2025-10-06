@@ -1,15 +1,42 @@
-import React from 'react';
+import React from "react";
 
-const LoadingSpinner = ({ text = 'Loading...' }) => {
+const LoadingSpinner = ({
+  text = "Loading...",
+  size = "md", // sm | md | lg
+  color = "indigo", // tailwind color name: indigo, blue, emerald, etc.
+  fullScreen = true,
+}) => {
+  const sizeClasses =
+    size === "lg"
+      ? { outer: "h-20 w-20", inner: "h-10 w-10" }
+      : size === "sm"
+      ? { outer: "h-10 w-10", inner: "h-5 w-5" }
+      : { outer: "h-16 w-16", inner: "h-8 w-8" };
+
+  const containerClasses = `
+    flex flex-col items-center justify-center 
+    ${fullScreen ? "h-screen" : "py-12"} 
+    bg-gradient-to-br from-gray-50 to-gray-100
+  `;
+
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div
+      className={containerClasses}
+      role="status"
+      aria-busy="true"
+      aria-label={text}
+    >
       {/* Spinner */}
       <div className="relative flex items-center justify-center">
         {/* Outer ring */}
-        <div className="h-16 w-16 rounded-full border-4 border-transparent border-t-indigo-500 border-r-indigo-500 animate-spin"></div>
+        <div
+          className={`rounded-full border-4 border-transparent border-t-${color}-500 border-r-${color}-500 animate-spin ${sizeClasses.outer}`}
+        ></div>
 
         {/* Inner pulse */}
-        <div className="absolute h-8 w-8 bg-indigo-500 rounded-full animate-pulse shadow-lg"></div>
+        <div
+          className={`absolute bg-${color}-500 rounded-full animate-pulse shadow-lg ${sizeClasses.inner}`}
+        ></div>
       </div>
 
       {/* Text */}

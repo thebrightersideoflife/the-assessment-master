@@ -1,19 +1,20 @@
+// src/components/quiz/QuizManager.jsx
 import React, { useEffect, useState, useRef } from "react";
 import { useQuiz } from "../../hooks/useQuiz";
 import Question from "./Question";
 import ProgressBar from "./ProgressBar";
+import LoadingSpinner from "../UI/LoadingSpinner";
 import {
   soundManager,
   createAchievementConfetti,
 } from "../../utils/gamificationUtils";
 import {
   chunkQuestions,
-  QUIZ_CHUNK_SIZE, // ✅ global chunk size constant
+  QUIZ_CHUNK_SIZE,
 } from "../../utils/chunkQuestions";
 import { questions } from "../../data/questions";
 
 const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
-  // ✅ Pull quiz logic from useQuiz
   const {
     currentQuestionIndex,
     totalQuestions,
@@ -31,7 +32,7 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
   const [achievementPlayed, setAchievementPlayed] = useState(false);
   const containerRef = useRef(null);
 
-  // ✅ Compute total quizzes based on global chunk size
+  // ✅ Determine total quizzes for display
   const weekQuestions = questions.filter(
     (q) => q.moduleId === moduleId && q.weekId === weekId
   );
@@ -40,14 +41,14 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
 
   const currentQuestion = filteredQuestions[currentQuestionIndex];
 
-  // ✅ Detect quiz completion
+  // ✅ Mark quiz completion
   useEffect(() => {
     if (currentQuestionIndex >= totalQuestions && totalQuestions > 0) {
       setIsComplete(true);
     }
   }, [currentQuestionIndex, totalQuestions]);
 
-  // ✅ Trigger celebration effects when complete
+  // ✅ Trigger sound & confetti on completion
   useEffect(() => {
     if (isComplete && !achievementPlayed && containerRef.current) {
       setAchievementPlayed(true);
@@ -83,14 +84,13 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
     }
   }, [isComplete, achievementPlayed, accuracy]);
 
-  // ✅ Restart quiz
   const handleRestart = () => {
     restart();
     setIsComplete(false);
     setAchievementPlayed(false);
   };
 
-  // ✅ Completion feedback messages
+  // ✅ Messages for completion screen
   const getCompletionMessage = (acc) => {
     if (acc >= 100)
       return {
@@ -146,15 +146,10 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
   };
 
   // ------------------------------
-  // Loading & Error States
+  // Loading & Error
   // ------------------------------
   if (loading) {
-    return (
-      <div className="text-center p-6">
-        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#4169E1]"></div>
-        <p className="mt-4 text-gray-600">Loading quiz...</p>
-      </div>
-    );
+    return <LoadingSpinner text="Loading your quiz..." color="blue" size="lg" />;
   }
 
   if (error || filteredQuestions.length === 0) {
@@ -171,7 +166,7 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
   }
 
   // ------------------------------
-  // Completion State
+  // Completion View
   // ------------------------------
   if (isComplete) {
     const message = getCompletionMessage(accuracy);
@@ -188,19 +183,13 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
           Quiz {quizIndex + 1} of {totalQuizzes}
         </div>
 
-        <h2
-          id="quiz-complete-title"
-          className="text-3xl font-bold text-[#4169E1] mb-4"
-        >
+        <h2 id="quiz-complete-title" className="text-3xl font-bold text-[#4169E1] mb-4">
           Quiz Complete!
         </h2>
 
         <div className={`text-6xl font-bold ${message.color}`}>{accuracy}%</div>
 
-        <div
-          className={`text-lg ${message.color} flex items-center justify-center gap-3`}
-          aria-live="polite"
-        >
+        <div className={`text-lg ${message.color} flex items-center justify-center gap-3`}>
           <span>{message.emoji}</span>
           <span>{message.message}</span>
         </div>
@@ -220,9 +209,7 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="stats-card bg-gradient-to-br from-[#28B463]/10 to-[#28B463]/20 p-4 rounded-xl border border-[#28B463]/30">
-            <div className="text-2xl font-bold text-[#28B463]">
-              {stats.correct}
-            </div>
+            <div className="text-2xl font-bold text-[#28B463]">{stats.correct}</div>
             <div className="text-sm text-gray-600">Correct Answers</div>
           </div>
           <div className="stats-card bg-gradient-to-br from-[#E67E22]/10 to-[#E67E22]/20 p-4 rounded-xl border border-[#E67E22]/30">
@@ -232,9 +219,7 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
             <div className="text-sm text-gray-600">To Review</div>
           </div>
           <div className="stats-card bg-gradient-to-br from-[#4169E1]/10 to-[#4169E1]/20 p-4 rounded-xl border border-[#4169E1]/30">
-            <div className="text-2xl font-bold text-[#4169E1]">
-              {stats.total}
-            </div>
+            <div className="text-2xl font-bold text-[#4169E1]">{stats.total}</div>
             <div className="text-sm text-gray-600">Total Questions</div>
           </div>
         </div>
@@ -243,14 +228,12 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
           <button
             onClick={handleRestart}
             className="bg-gradient-to-r from-[#3498DB] to-[#4169E1] text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all"
-            aria-label={`Retry Quiz ${quizIndex + 1}`}
           >
             Retry Quiz {quizIndex + 1}
           </button>
           <button
             onClick={() => window.history.back()}
             className="bg-gradient-to-r from-[#FFC300] to-[#E67E22] text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all"
-            aria-label="Back to quiz selection"
           >
             Back to Quizzes
           </button>
@@ -259,8 +242,7 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
         {quizIndex + 1 < totalQuizzes && (
           <div className="bg-[#3498DB]/10 border border-[#3498DB]/30 rounded-xl p-4 mt-4">
             <p className="text-sm text-gray-700">
-              🎯 <strong>Next up:</strong> Quiz {quizIndex + 2} of{" "}
-              {totalQuizzes}
+              🎯 <strong>Next up:</strong> Quiz {quizIndex + 2} of {totalQuizzes}
             </p>
           </div>
         )}
@@ -268,8 +250,7 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
         {quizIndex + 1 === totalQuizzes && (
           <div className="bg-[#28B463]/10 border border-[#28B463]/30 rounded-xl p-4 mt-4">
             <p className="text-sm text-gray-700">
-              🎉 <strong>Congratulations!</strong> You've completed all quizzes
-              for this week!
+              🎉 <strong>Congratulations!</strong> You've completed all quizzes for this week!
             </p>
           </div>
         )}
@@ -296,14 +277,9 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
             Question {currentQuestionIndex + 1} of {totalQuestions}
           </h2>
         </div>
-
-        <div className="bg-[#4169E1]/10 px-4 py-2 rounded-full">
-          <span className="text-sm font-semibold text-[#4169E1]">
-            {stats.correct}/{stats.total} correct
-          </span>
-        </div>
       </div>
 
+      {/* ✅ Centralized ProgressBar Component */}
       <ProgressBar
         current={currentQuestionIndex + 1}
         total={totalQuestions}
@@ -321,6 +297,9 @@ const QuizManager = ({ moduleId, weekId, quizIndex = 0 }) => {
         onAnswerSubmit={handleAnswerSubmit}
         onNext={nextQuestion}
         totalQuestions={totalQuestions}
+        imageUrl={currentQuestion?.imageUrl || null}
+        imageAlt={currentQuestion?.imageAlt || "Question illustration"}
+        hasImage={!!currentQuestion?.imageUrl}
       />
     </div>
   );

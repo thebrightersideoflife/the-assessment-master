@@ -525,4 +525,43 @@ export const questions = [
       "4. The Fundamental Theorem of Calculus applies\n\n" +
       "**Answer: A** — Continuous functions are bounded and integrable",
   },
+
+  {
+  id: "q12",
+  moduleId: "ITMTB",
+  weekId: "ITMTB_W1",
+  type: "open-ended",
+  text: "The velocity graph of a car accelerating from rest to a speed of 120 km/h over a period of 30 seconds is shown. Estimate the distance traveled during this period.",
+  image: {
+    src: "/images/ITMTB_Week 1_Quiz 3_Question 12.png",
+    alt: "Velocity-time graph of a car accelerating from 0 to 120 km/h over 30 seconds",
+    caption: "The area under the velocity-time curve represents the distance traveled.",
+  },
+  correctAnswers: ["15", "15.0", "15 km", "15 kilometers"],
+  explanation:
+    "To estimate the distance traveled, we use the **area under the velocity–time graph**, which represents displacement.\n\n" +
+    "**Step 1: Identify given values**\n\n" +
+    "- Initial velocity: $u = 0$ km/h\n" +
+    "- Final velocity: $v = 120$ km/h\n" +
+    "- Time: $t = 30$ s\n\n" +
+    "**Step 2: Convert units for consistency**\n\n" +
+    "Since the velocity is in km/h and time is in seconds, convert 30 s to hours:\n\n" +
+    "$$ 30~\\text{s} = \\frac{30}{3600} = 0.00833~\\text{h} $$\n\n" +
+    "**Step 3: Estimate the area (distance)**\n\n" +
+    "For uniform acceleration (a straight line on the velocity–time graph):\n\n" +
+    "$$ \\text{distance} = \\text{average velocity} \\times \\text{time} $$\n\n" +
+    "Average velocity = $(u + v)/2 = (0 + 120)/2 = 60$ km/h\n\n" +
+    "Thus:\n\n" +
+    "$$ \\text{distance} = 60~\\text{km/h} \\times 0.00833~\\text{h} = 0.5~\\text{km} $$\n\n" +
+    "**Step 4: Interpret the result**\n\n" +
+    "The car travels approximately **0.5 km (or 500 m)** during the 30-second acceleration period.\n\n" +
+    "**Why This Works:**\n\n" +
+    "- The area under a velocity–time curve represents displacement.\n" +
+    "- For constant acceleration, this area forms a **trapezium (or triangle)** whose area equals $\\tfrac{1}{2} (u + v)t$.\n" +
+    "- This approach provides an accurate estimate without needing calculus.\n\n" +
+    "**Mathematical Summary:**\n\n" +
+    "$$ s = \\frac{(u + v)}{2} t = \\frac{(0 + 120)}{2} \\times 0.00833 = 0.5~\\text{km} $$\n\n" +
+    "**Final Answer:** The distance traveled ≈ **0.5 km (500 m)** during the 30-second interval.",
+}
+
 ];
