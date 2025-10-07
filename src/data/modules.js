@@ -448,7 +448,7 @@ export const modules = [
             name: "Functions Defined as the Definite Integral of Another Function",
             competency: "Assessment Coverage: 5.3",
             explanation: "5.3 establishes that differentiation and integration are inverse processes. If $g(x) = \\int_{a}^{x} f(t) \\, dt$ where $f$ is continuous, then $g'(x) = f(x)$. The derivative of a definite integral with respect to its upper limit is the integrand evaluated at the upper limit. When the upper limit is a function $u(x)$, apply the Chain Rule: $\\frac{d}{dx} \\int_{a}^{u(x)} f(t) \\, dt = f(u(x)) \\cdot u'(x)$.",
-            example: "For a car with velocity $v(t)$, the position function $s(x) = \\int_{0}^{x} v(t) \\, dt$ represents total displacement. FTC1 gives $s'(x) = v(x)$, confirming that the derivative of position is velocity. For the Fresnel function $S(x) = \\int_{0}^{x} \\sin(\\pi t^2/2) \\, dt$, we get $S'(x) = \\sin(\\pi x^2/2)$ instantly.",
+            example: "For a car with velocity $v(t)$, the position function $s(x) = \\int_{0}^{x} v(t) \\, dt$ represents total displacement. 5.3 gives $s'(x) = v(x)$, confirming that the derivative of position is velocity. For the Fresnel function $S(x) = \\int_{0}^{x} \\sin(\\pi t^2/2) \\, dt$, we get $S'(x) = \\sin(\\pi x^2/2)$ instantly.",
             studyTip: "Verbalize: 'The derivative of the integral from a constant to $x$ is the integrand in terms of $x$.' For composite upper limits like $x^4$, remember the Chain Rule: multiply by the derivative of the upper limit. Sketch $f(t)$ and its area function $g(x)$ to visually confirm that $g'(x)$ matches the sign of $f(x)$.",
             videoUrl: "",
             quizId: "ITMTB_W2_Quiz"
@@ -459,7 +459,7 @@ export const modules = [
             competency: "Assessment Coverage: 5.3",
             explanation: "The Fundamental Theorem of Calculus states that if $f$ is continuous on $[a, b]$ and $F$ is any antiderivative of $f$ (meaning $F'(x) = f(x)$), then $\\int_{a}^{b} f(x) \\, dx = F(b) - F(a)$. This provides a simple method for evaluating definite integrals without computing limits of Riemann sums, connecting the area problem directly to antiderivatives.",
             example: "If $v(t)$ is velocity and $s(t)$ is position (antiderivative of velocity), total distance traveled from $t=a$ to $t=b$ is $\\int_{a}^{b} v(t) \\, dt = s(b) - s(a)$. For water flowing into a tank at rate $r(t)$ with volume $V(t)$, change in volume from $t=3$ to $t=6$ is $\\int_{3}^{6} r(t) \\, dt = V(6) - V(3)$.",
-            studyTip: "Always verify $f(x)$ is continuous on $[a, b]$ before applying FTC2—discontinuities invalidate the theorem. Use three steps: (1) Find any antiderivative $F(x)$, (2) Evaluate $F(b)$ and $F(a)$, (3) Subtract using notation $F(x)]_{a}^{b}$. Master common antiderivatives with flashcards: $x^n$, $\\sin x$, $\\cos x$, $e^x$, $1/x$.",
+            studyTip: "Always verify $f(x)$ is continuous on $[a, b]$ before applying 5.3—discontinuities invalidate the theorem. Use three steps: (1) Find any antiderivative $F(x)$, (2) Evaluate $F(b)$ and $F(a)$, (3) Subtract using notation $F(x)]_{a}^{b}$. Master common antiderivatives with flashcards: $x^n$, $\\sin x$, $\\cos x$, $e^x$, $1/x$.",
             videoUrl: "",
             quizId: "ITMTB_W2_Quiz"
           },

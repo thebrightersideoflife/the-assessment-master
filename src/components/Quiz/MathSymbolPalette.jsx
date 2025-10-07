@@ -5,13 +5,22 @@ import "react-tooltip/dist/react-tooltip.css";
 const MathSymbolPalette = ({ onInsert }) => {
   const symbols = [
     { symbol: "π", desc: "Pi (3.14159...)" },
-    { symbol: "√", desc: "Square root" },
+    { symbol: "√(", desc: "Square root" },
     { symbol: "≠", desc: "Not equal" },
     { symbol: "∞", desc: "Infinity" },
     { symbol: "∑", desc: "Summation" },
     { symbol: "Δ", desc: "Delta (change)" },
     { symbol: "θ", desc: "Theta (angle)" },
     { symbol: "≈", desc: "Approximately equal" },
+
+    // Logarithm functions
+    { symbol: "log(", desc: "Logarithm base 10" },
+    { symbol: "ln(", desc: "Natural logarithm (base e)" },
+
+    // Arc trig functions
+    { symbol: "sin⁻¹(", desc: "Inverse sine (arcsin)" },
+    { symbol: "cos⁻¹(", desc: "Inverse cosine (arccos)" },
+    { symbol: "tan⁻¹(", desc: "Inverse tangent (arctan)" },
   ];
 
   return (
