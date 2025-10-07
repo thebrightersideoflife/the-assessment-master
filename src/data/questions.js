@@ -555,17 +555,17 @@ export const questions = [
     "caption": "Velocities at t = 0, 10, 20, 30 s are approximately 0, 80, 110, 120 km/h respectively. Area under the curve ≈ distance traveled."
   },
   "explanation":
-    "To approximate the distance traveled using the area under a velocity-time graph:\n\n" +
+    "To estimate the distance traveled using a velocity-time graph:\n\n" +
     "**The Fundamental Theorem of Calculus and Riemann Sums:**\n\n" +
-    "We use Riemann sums to estimate the integral of velocity over time, which gives us the total distance traveled.\n\n" +
-    "**Step 1: Convert velocities to consistent units (m/s):**\n\n" +
-    "Since time is in seconds, we convert velocity from km/h to m/s:\n" +
+    "The area under a velocity-time graph represents the total distance traveled. We approximate this area using Riemann sums.\n\n" +
+    "**Step 1: Convert velocity units from km/h to m/s**\n\n" +
+    "Since time is measured in seconds, we convert each velocity:\n" +
     "- $v_0 = 0 \\text{ km/h} = 0 \\text{ m/s}$\n" +
     "- $v_1 = 80 \\text{ km/h} = \\frac{80}{3.6} = 22.22 \\text{ m/s}$\n" +
     "- $v_2 = 110 \\text{ km/h} = \\frac{110}{3.6} = 30.56 \\text{ m/s}$\n" +
     "- $v_3 = 120 \\text{ km/h} = \\frac{120}{3.6} = 33.33 \\text{ m/s}$\n\n" +
-    "**Step 2: Apply Midpoint Riemann Sum over intervals of 10 seconds:**\n\n" +
-    "Divide the interval [0, 30] into three equal parts:\n\n" +
+    "**Step 2: Apply Midpoint Riemann Sum over three intervals of 10 seconds each**\n\n" +
+    "We divide the time interval [0, 30] into three equal parts:\n\n" +
     "**Interval [0, 10]:**\n" +
     "- Midpoint velocity $\\approx \\frac{0 + 22.22}{2} = 11.11 \\text{ m/s}$\n" +
     "- Area $= 11.11 \\times 10 = 111.1 \\text{ m}$\n\n" +
@@ -575,10 +575,11 @@ export const questions = [
     "**Interval [20, 30]:**\n" +
     "- Midpoint velocity $\\approx \\frac{30.56 + 33.33}{2} = 31.95 \\text{ m/s}$\n" +
     "- Area $= 31.95 \\times 10 = 319.5 \\text{ m}$\n\n" +
-    "**Step 3: Total Distance Traveled:**\n" +
+    "**Step 3: Total Distance Traveled:**\n\n" +
+    "Add the areas from each interval:\n" +
     "$$\\text{Total Distance} \\approx 111.1 + 263.9 + 319.5 = \\boxed{694.5 \\text{ meters}}$$\n\n" +
-    "**Conclusion:**\n" +
-    "Using the midpoint Riemann sum and the Fundamental Theorem of Calculus, we estimate the car traveled approximately 694.5 meters in 30 seconds."
-}
+    "**Conclusion:**\n\n" +
+    "Using the midpoint Riemann sum and the Fundamental Theorem of Calculus, we estimate that the car traveled approximately 694.5 meters in 30 seconds."
+  }
 
 ];
