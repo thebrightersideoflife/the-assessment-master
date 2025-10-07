@@ -555,23 +555,30 @@ export const questions = [
     "caption": "Velocities at t = 0, 10, 20, 30 s are approximately 0, 80, 110, 120 km/h respectively. Area under the curve ≈ distance traveled."
   },
   "explanation":
-    "The distance traveled is the area under the velocity–time graph. Use the velocities at the labelled times and a Riemann/trapezoidal estimate over the three 10-second intervals.\n\n" +
-    "**Step 1 — Convert the time step to hours:**\n\n" +
-    "$$\\Delta t = 10\\ \\text{s} = \\frac{10}{3600}\\ \\text{h} = \\frac{1}{360}\\ \\text{h}$$\n\n" +
-    "**Step 2 — Use trapezoidal rule (average velocity per interval):**\n\n" +
-    "Velocities (km/h): $$v_0 = 0,\\ v_1 = 80,\\ v_2 = 110,\\ v_3 = 120$$\n\n" +
-    "\\[\\begin{aligned}\n" +
-    "\\text{distance} &\\approx \\sum_{i=1}^{3} \\frac{v_{i-1} + v_i}{2}\\,\\Delta t \\\\\n" +
-    "&= \\left(\\frac{0+80}{2} + \\frac{80+110}{2} + \\frac{110+120}{2}\\right)\\frac{1}{360} \\\\\n" +
-    "&= \\frac{40 + 95 + 115}{360} = \\frac{250}{360} \\approx 0.694444\\ \\text{km}.\n" +
-    "\\end{aligned}\\]\n\n" +
-    "**Step 3 — Convert to metres (if desired):**\n\n" +
-    "$$0.694444\\ \\text{km} = 694.444\\ \\text{m} \\approx 694.4\\ \\text{m}.$$ \n\n" +
-    "**Notes / alternatives:**\n" +
-    "- A left-endpoint Riemann sum (using 0, 80, 110) gives \\(0.52778\\ \\text{km}\\approx 527.8\\ \\text{m}\\).\n" +
-    "- A right-endpoint Riemann sum (using 80, 110, 120) gives \\(0.86111\\ \\text{km}\\approx 861.1\\ \\text{m}\\).\n" +
-    "The trapezoidal (averaging) estimate above (≈ **0.694 km** ≈ **694 m**) is the most balanced and is the recommended answer.\n\n" +
-    "Acceptable student answers include equivalent numeric forms (e.g. 0.694, 0.6944, 0.69 km, 694 m)."
+    "To approximate the distance traveled using the area under a velocity-time graph:\n\n" +
+    "**The Fundamental Theorem of Calculus and Riemann Sums:**\n\n" +
+    "We use Riemann sums to estimate the integral of velocity over time, which gives us the total distance traveled.\n\n" +
+    "**Step 1: Convert velocities to consistent units (m/s):**\n\n" +
+    "Since time is in seconds, we convert velocity from km/h to m/s:\n" +
+    "- $v_0 = 0 \\text{ km/h} = 0 \\text{ m/s}$\n" +
+    "- $v_1 = 80 \\text{ km/h} = \\frac{80}{3.6} = 22.22 \\text{ m/s}$\n" +
+    "- $v_2 = 110 \\text{ km/h} = \\frac{110}{3.6} = 30.56 \\text{ m/s}$\n" +
+    "- $v_3 = 120 \\text{ km/h} = \\frac{120}{3.6} = 33.33 \\text{ m/s}$\n\n" +
+    "**Step 2: Apply Midpoint Riemann Sum over intervals of 10 seconds:**\n\n" +
+    "Divide the interval [0, 30] into three equal parts:\n\n" +
+    "**Interval [0, 10]:**\n" +
+    "- Midpoint velocity $\\approx \\frac{0 + 22.22}{2} = 11.11 \\text{ m/s}$\n" +
+    "- Area $= 11.11 \\times 10 = 111.1 \\text{ m}$\n\n" +
+    "**Interval [10, 20]:**\n" +
+    "- Midpoint velocity $\\approx \\frac{22.22 + 30.56}{2} = 26.39 \\text{ m/s}$\n" +
+    "- Area $= 26.39 \\times 10 = 263.9 \\text{ m}$\n\n" +
+    "**Interval [20, 30]:**\n" +
+    "- Midpoint velocity $\\approx \\frac{30.56 + 33.33}{2} = 31.95 \\text{ m/s}$\n" +
+    "- Area $= 31.95 \\times 10 = 319.5 \\text{ m}$\n\n" +
+    "**Step 3: Total Distance Traveled:**\n" +
+    "$$\\text{Total Distance} \\approx 111.1 + 263.9 + 319.5 = \\boxed{694.5 \\text{ meters}}$$\n\n" +
+    "**Conclusion:**\n" +
+    "Using the midpoint Riemann sum and the Fundamental Theorem of Calculus, we estimate the car traveled approximately 694.5 meters in 30 seconds."
 }
 
 ];
