@@ -526,42 +526,52 @@ export const questions = [
       "**Answer: A** — Continuous functions are bounded and integrable",
   },
 
-  {
-  id: "q12",
-  moduleId: "ITMTB",
-  weekId: "ITMTB_W1",
-  type: "open-ended",
-  text: "The velocity graph of a car accelerating from rest to a speed of 120 km/h over a period of 30 seconds is shown. Estimate the distance traveled during this period.",
-  image: {
-    src: "/images/ITMTB_Week 1_Quiz 3_Question 12.png",
-    alt: "Velocity-time graph of a car accelerating from 0 to 120 km/h over 30 seconds",
-    caption: "The area under the velocity-time curve represents the distance traveled.",
+{
+  "id": "q14",
+  "moduleId": "ITMTB",
+  "weekId": "ITMTB_W1",
+  "type": "open-ended",
+  "text": "The velocity graph of a car accelerating from rest to a speed of 120 km/h over a period of 30 seconds is shown. Estimate the distance traveled during this period.",
+  "correctAnswers": [
+    "0.694444",
+    "0.69444",
+    "0.6944",
+    "0.694",
+    "0.69",
+    "0.7",
+    "0.694444 km",
+    "0.6944 km",
+    "0.694 km",
+    "0.69 km",
+    "694.444 m",
+    "694.4 m",
+    "694 m",
+    "≈0.694",
+    "≈694 m"
+  ],
+  "image": {
+    "src": "/images/ITMTB_Week 1_Quiz 3_Question 12.png",
+    "alt": "Velocity-time graph of a car accelerating from 0 to 120 km/h over 30 seconds",
+    "caption": "Velocities at t = 0, 10, 20, 30 s are approximately 0, 80, 110, 120 km/h respectively. Area under the curve ≈ distance traveled."
   },
-  correctAnswers: ["15", "15.0", "15 km", "15 kilometers"],
-  explanation:
-    "To estimate the distance traveled, we use the **area under the velocity–time graph**, which represents displacement.\n\n" +
-    "**Step 1: Identify given values**\n\n" +
-    "- Initial velocity: $u = 0$ km/h\n" +
-    "- Final velocity: $v = 120$ km/h\n" +
-    "- Time: $t = 30$ s\n\n" +
-    "**Step 2: Convert units for consistency**\n\n" +
-    "Since the velocity is in km/h and time is in seconds, convert 30 s to hours:\n\n" +
-    "$$ 30~\\text{s} = \\frac{30}{3600} = 0.00833~\\text{h} $$\n\n" +
-    "**Step 3: Estimate the area (distance)**\n\n" +
-    "For uniform acceleration (a straight line on the velocity–time graph):\n\n" +
-    "$$ \\text{distance} = \\text{average velocity} \\times \\text{time} $$\n\n" +
-    "Average velocity = $(u + v)/2 = (0 + 120)/2 = 60$ km/h\n\n" +
-    "Thus:\n\n" +
-    "$$ \\text{distance} = 60~\\text{km/h} \\times 0.00833~\\text{h} = 0.5~\\text{km} $$\n\n" +
-    "**Step 4: Interpret the result**\n\n" +
-    "The car travels approximately **0.5 km (or 500 m)** during the 30-second acceleration period.\n\n" +
-    "**Why This Works:**\n\n" +
-    "- The area under a velocity–time curve represents displacement.\n" +
-    "- For constant acceleration, this area forms a **trapezium (or triangle)** whose area equals $\\tfrac{1}{2} (u + v)t$.\n" +
-    "- This approach provides an accurate estimate without needing calculus.\n\n" +
-    "**Mathematical Summary:**\n\n" +
-    "$$ s = \\frac{(u + v)}{2} t = \\frac{(0 + 120)}{2} \\times 0.00833 = 0.5~\\text{km} $$\n\n" +
-    "**Final Answer:** The distance traveled ≈ **0.5 km (500 m)** during the 30-second interval.",
+  "explanation":
+    "The distance traveled is the area under the velocity–time graph. Use the velocities at the labelled times and a Riemann/trapezoidal estimate over the three 10-second intervals.\n\n" +
+    "**Step 1 — Convert the time step to hours:**\n\n" +
+    "$$\\Delta t = 10\\ \\text{s} = \\frac{10}{3600}\\ \\text{h} = \\frac{1}{360}\\ \\text{h}$$\n\n" +
+    "**Step 2 — Use trapezoidal rule (average velocity per interval):**\n\n" +
+    "Velocities (km/h): $$v_0 = 0,\\ v_1 = 80,\\ v_2 = 110,\\ v_3 = 120$$\n\n" +
+    "\\[\\begin{aligned}\n" +
+    "\\text{distance} &\\approx \\sum_{i=1}^{3} \\frac{v_{i-1} + v_i}{2}\\,\\Delta t \\\\\n" +
+    "&= \\left(\\frac{0+80}{2} + \\frac{80+110}{2} + \\frac{110+120}{2}\\right)\\frac{1}{360} \\\\\n" +
+    "&= \\frac{40 + 95 + 115}{360} = \\frac{250}{360} \\approx 0.694444\\ \\text{km}.\n" +
+    "\\end{aligned}\\]\n\n" +
+    "**Step 3 — Convert to metres (if desired):**\n\n" +
+    "$$0.694444\\ \\text{km} = 694.444\\ \\text{m} \\approx 694.4\\ \\text{m}.$$ \n\n" +
+    "**Notes / alternatives:**\n" +
+    "- A left-endpoint Riemann sum (using 0, 80, 110) gives \\(0.52778\\ \\text{km}\\approx 527.8\\ \\text{m}\\).\n" +
+    "- A right-endpoint Riemann sum (using 80, 110, 120) gives \\(0.86111\\ \\text{km}\\approx 861.1\\ \\text{m}\\).\n" +
+    "The trapezoidal (averaging) estimate above (≈ **0.694 km** ≈ **694 m**) is the most balanced and is the recommended answer.\n\n" +
+    "Acceptable student answers include equivalent numeric forms (e.g. 0.694, 0.6944, 0.69 km, 694 m)."
 }
 
 ];
