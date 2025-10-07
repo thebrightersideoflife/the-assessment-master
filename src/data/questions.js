@@ -473,7 +473,7 @@ export const questions = [
       "D. The Mean Value Theorem applies",
     ],
     correctAnswers: ["A"],
-   explanation:
+    explanation:
       "To understand why continuous functions are integrable:\n\n" +
       "**The Fundamental Theorem About Continuous Functions:**\n\n" +
       "If $f$ is continuous on the closed interval $[a, b]$, then $f$ is **Riemann integrable** on $[a, b]$.\n\n" +
@@ -527,12 +527,12 @@ export const questions = [
   },
 
 {
-  "id": "q14",
-  "moduleId": "ITMTB",
-  "weekId": "ITMTB_W1",
-  "type": "open-ended",
-  "text": "The velocity graph of a car accelerating from rest to a speed of 120 km/h over a period of 30 seconds is shown. Estimate the distance traveled during this period.",
-  "correctAnswers": [
+  id: "q14",
+  moduleId: "ITMTB",
+  weekId: "ITMTB_W1",
+  type: "open-ended",
+  text: "The velocity graph of a car accelerating from rest to a speed of 120 km/h over a period of 30 seconds is shown. Estimate the distance traveled during this period.",
+  correctAnswers: [
     "0.694444",
     "0.69444",
     "0.6944",
@@ -549,12 +549,12 @@ export const questions = [
     "≈0.694",
     "≈694 m"
   ],
-  "image": {
-    "src": "/images/ITMTB_Week 1_Quiz 3_Question 12.png",
-    "alt": "Velocity-time graph of a car accelerating from 0 to 120 km/h over 30 seconds",
-    "caption": "Velocities at t = 0, 10, 20, 30 s are approximately 0, 80, 110, 120 km/h respectively. Area under the curve ≈ distance traveled."
+  image: {
+    src: "/images/ITMTB_Week 1_Quiz 3_Question 12.png",
+    alt: "Velocity-time graph of a car accelerating from 0 to 120 km/h over 30 seconds",
+    caption: "Velocities at t = 0, 10, 20, 30 s are approximately 0, 80, 110, 120 km/h respectively. Area under the curve ≈ distance traveled."
   },
-  "explanation":
+  explanation:
     "To estimate the distance traveled using a velocity-time graph:\n\n" +
     "**The Fundamental Theorem of Calculus and Riemann Sums:**\n\n" +
     "The area under a velocity-time graph represents the total distance traveled. We approximate this area using Riemann sums.\n\n" +
