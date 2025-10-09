@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const Header = ({ sidebarState, setSidebarState, onSettingsClick }) => {
   return (
-    <header className="bg-white shadow-sm py-4 px-6 sticky top-0 z-30">
+    <header className="bg-white shadow-sm py-4 px-6 sticky top-0 z-30 print:hidden no-print">
       <div className="flex items-center justify-between">
         {/* Company Logo and Slogan */}
         <div className="flex items-center flex-wrap max-w-[160px] sm:max-w-none">

@@ -102,7 +102,7 @@ const Week = () => {
       />
       
       <h1 className="text-3xl font-bold text-[#4169E1]">{week.title}</h1>
-      
+     
       {/* Accordion Topics */}
       <div className="space-y-4">
         {week.topics.map((topic) => {
@@ -182,6 +182,17 @@ const Week = () => {
           );
         })}
       </div>
+
+      {module.formulaSheet?.available && (
+        <div className="mt-4">
+          <Link
+            to={module.formulaSheet.path}
+            className="inline-block bg-gradient-to-r from-[#616161] to-[#9E9E9E] text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all"
+          >
+            📘 View {module.formulaSheet.title}
+          </Link>
+        </div>
+      )}
       
       {/* Quiz Section - Now shows WeekQuizzes component */}
       <div className="bg-gradient-to-br from-[#4169E1]/10 to-[#3498DB]/10 rounded-2xl p-6 border border-[#3498DB]/30 mt-8">

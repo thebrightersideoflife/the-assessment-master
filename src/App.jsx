@@ -14,6 +14,7 @@ const Topics = React.lazy(() => import("./pages/Topics"));
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const Week = React.lazy(() => import("./pages/Week"));
 const Modules = React.lazy(() => import("./pages/Modules"));
+const FormulaSheetPage = React.lazy(() => import("./pages/FormulaSheetPage"));
 const Admin = React.lazy(() => import("./pages/Admin"));
 
 const NotFound = () => (
@@ -89,6 +90,12 @@ function App() {
             <Route 
               path="/quizzes/exam/:examId" 
               element={<Quiz />} 
+            />
+            
+            {/* /formula-sheets/:moduleId" - For formula-sheets */}
+            <Route
+              path="/formula-sheets/:moduleId"
+              element={<FormulaSheetPage />}
             />
 
             {/* ========== 404 ========== */}

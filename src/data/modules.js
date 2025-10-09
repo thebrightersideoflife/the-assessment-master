@@ -1,4 +1,6 @@
 // src/data/modules.js
+import { formulaSheets } from "./formulaSheets";
+
 export const modules = [
   {
     id: "ITMTA",
@@ -326,6 +328,11 @@ export const modules = [
     id: "ITMTB",
     name: "ITMTB",
     isVisible: true, // Show ITMTB
+    formulaSheet: {
+      available: true,
+      path: '/formula-sheets/itmtb',
+      title: 'ITMTB Formula Sheet'
+    },
     exams: [
       { id: 'ITMTB_EXAM1', name: 'Midterm Exam', description: 'Covers integration fundamentals and techniques.' },
       { id: 'ITMTB_EXAM2', name: 'Final Exam', description: 'Comprehensive exam covering all ITMTB topics including applications.' }

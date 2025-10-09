@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Footer = ({ sidebarState }) => {
   return (
     <footer
-      className={`fixed bottom-0 left-0 right-0 bg-white border-t border-[#3498DB]/20 px-6 py-4 flex items-center justify-center text-sm text-gray-600 transition-all duration-200 z-30 ${
+      className={`fixed bottom-0 left-0 right-0 bg-white border-t border-[#3498DB]/20 px-6 py-4 flex items-center justify-center text-sm text-gray-600 transition-all duration-200 z-30 print:hidden no-print ${
         sidebarState.collapsed ? "md:ml-20" : "md:ml-64"
       }`}
       role="contentinfo"
