@@ -15,30 +15,36 @@ const Quiz = () => {
   const { resetQuiz, getQuizState } = useStore();
   const navigate = useNavigate();
 
-  // ✅ Parse quiz index safely
+  // State declarations (must be at the top, before any conditions)
+  const [showResetModal, setShowResetModal] = useState(false);
+  const [quizKey, setQuizKey] = useState(0);
+
+  // Parse quiz index safely
   const parsedQuizIndex = quizIndex ? parseInt(quizIndex, 10) : 0;
 
-  // ✅ Prevent invalid or negative quiz indices
+  // Get module and week info
+  const module = moduleId ? modules.find((m) => m.id === moduleId) : null;
+  const week =
+    module?.weeks.find((w) => w.id === weekId) ||
+    module?.exams?.find((e) => e.id === weekId);
+
+  // ✅ CRITICAL: Call useQuiz BEFORE any conditional returns
+  // This ensures hooks are always called in the same order
+  const { loading, error } = useQuiz(moduleId, weekId, parsedQuizIndex);
+
+  // Get stats safely (also before conditional returns)
+  const quizState = getQuizState(moduleId, weekId, parsedQuizIndex) || {};
+  const stats = quizState.stats || { correct: 0, total: 0 };
+
+  // ✅ Effects (after all hooks are declared)
+  // Prevent invalid or negative quiz indices
   useEffect(() => {
     if (isNaN(parsedQuizIndex) || parsedQuizIndex < 0) {
       navigate(`/modules/${moduleId}/${weekId}`, { replace: true });
     }
   }, [parsedQuizIndex, moduleId, weekId, navigate]);
 
-  const { loading, error } = useQuiz(moduleId, weekId, parsedQuizIndex);
-  const module = moduleId ? modules.find((m) => m.id === moduleId) : null;
-  const week =
-    module?.weeks.find((w) => w.id === weekId) ||
-    module?.exams?.find((e) => e.id === weekId);
-
-  const [showResetModal, setShowResetModal] = useState(false);
-  const [quizKey, setQuizKey] = useState(0);
-
-  // ✅ Get stats safely
-  const quizState = getQuizState(moduleId, weekId, parsedQuizIndex) || {};
-  const stats = quizState.stats || { correct: 0, total: 0 };
-
-  // ✅ Visibility guard — if module hidden, redirect
+  // Visibility guard — if module hidden, redirect
   useEffect(() => {
     if (moduleId && (!module || !module.isVisible)) {
       navigate("/modules", { replace: true });
@@ -53,7 +59,8 @@ const Quiz = () => {
     setQuizKey((prev) => prev + 1);
   };
 
-  // ✅ Loading state
+  // ✅ NOW we can do conditional rendering (after all hooks are called)
+  // Loading state
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto p-6 text-center">
@@ -62,7 +69,7 @@ const Quiz = () => {
     );
   }
 
-  // ✅ Invalid route or quiz data
+  // Invalid route or quiz data
   if (error || !module || (!weekId && !examId)) {
     return (
       <div className="max-w-4xl mx-auto p-6 text-center">
@@ -88,7 +95,7 @@ const Quiz = () => {
   return (
     <ErrorBoundary>
       <div className="max-w-4xl mx-auto space-y-6">
-        {/* ✅ Breadcrumb navigation */}
+        {/* Breadcrumb navigation */}
         <Breadcrumb
           items={[
             { label: "Home", path: "/" },
@@ -104,7 +111,7 @@ const Quiz = () => {
           ]}
         />
 
-        {/* ✅ Quiz Header with Stats + Reset */}
+        {/* Quiz Header with Stats + Reset */}
         <div className="bg-gradient-to-r from-[#4169E1] to-[#3498DB] rounded-2xl p-6 text-white shadow-2xl border border-[#FFC300]/30">
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
@@ -117,7 +124,7 @@ const Quiz = () => {
               </p>
             </div>
 
-            {/* ✅ Quick Stats */}
+            {/* Quick Stats */}
             <div className="flex items-center space-x-6">
               <div
                 className="text-center"
@@ -147,7 +154,7 @@ const Quiz = () => {
                 <div className="text-sm text-blue-200">Accuracy</div>
               </div>
 
-              {/* ✅ Back to Quizzes */}
+              {/* Back to Quizzes */}
               <Link
                 to={`/modules/${moduleId}/${weekId}`}
                 className="flex items-center space-x-2 px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-xl transition-all font-semibold border border-[#ffffff]/50"
@@ -156,7 +163,7 @@ const Quiz = () => {
                 ← All Quizzes
               </Link>
 
-              {/* ✅ Reset Button */}
+              {/* Reset Button */}
               <button
                 onClick={() => setShowResetModal(true)}
                 className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-[#ad1457]/20 to-[#E67E22]/20 hover:from-[#880e4f]/30 hover:to-[#E67E22]/30 rounded-xl transition-all font-semibold backdrop-blur-sm border border-[#ffffff]/50"
@@ -169,7 +176,7 @@ const Quiz = () => {
           </div>
         </div>
 
-        {/* ✅ Reset Confirmation Modal */}
+        {/* Reset Confirmation Modal */}
         {showResetModal && (
           <div
             className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
@@ -209,7 +216,7 @@ const Quiz = () => {
           </div>
         )}
 
-        {/* ✅ Quiz Content */}
+        {/* Quiz Content */}
         {weekId ? (
           <QuizManager
             key={quizKey}
@@ -221,7 +228,7 @@ const Quiz = () => {
           <QuizManager key={quizKey} examId={examId} />
         ) : null}
 
-        {/* ✅ Contextual Help */}
+        {/* Contextual Help */}
         <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 text-center">
           <p className="text-sm text-gray-600">
             💡 Need help? Return to{" "}

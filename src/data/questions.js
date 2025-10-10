@@ -423,42 +423,48 @@ export const questions = [
     type: "open-ended",
     text: "Use properties of integrals to evaluate \\( \\int_1^3 (2e^x + 1)\\,dx \\).",
     correctAnswers: ["2(e^3 - e) + 2", "2e^3 - 2e + 2", "2e³ - 2e + 2"],
+    options: {
+      allowSymbolic: true,
+      requireSimplifiedForm: false,
+      tolerance: 0.0001,
+      acceptedUnits: [],
+    },
     explanation:
-        "To evaluate $$\\int_1^3 (2e^x + 1)\\,dx$$ using properties of integrals:\n\n" +
-        "**Step 1: Apply the Sum Rule for integrals**\n" +
-        "The integral of a sum equals the sum of the integrals:\n" +
-        "$$\\int_1^3 (2e^x + 1)\\,dx = \\int_1^3 2e^x\\,dx + \\int_1^3 1\\,dx$$\n\n" +
-        "**Step 2: Apply the Constant Multiple Rule**\n" +
-        "We can factor out constants:\n" +
-        "$$= 2\\int_1^3 e^x\\,dx + \\int_1^3 1\\,dx$$\n\n" +
-        "**Step 3: Evaluate the first integral**\n" +
-        "The antiderivative of $$e^x$$ is $$e^x$$:\n" +
-        "$$2\\int_1^3 e^x\\,dx = 2[e^x]_1^3 = 2(e^3 - e^1) = 2e^3 - 2e$$\n\n" +
-        "**Step 4: Evaluate the second integral**\n" +
-        "The antiderivative of 1 is $$x$$:\n" +
-        "$$\\int_1^3 1\\,dx = [x]_1^3 = 3 - 1 = 2$$\n\n" +
-        "**Step 5: Combine the results**\n" +
-        "$$\\int_1^3 (2e^x + 1)\\,dx = (2e^3 - 2e) + 2 = 2e^3 - 2e + 2$$\n\n" +
-        "**Alternative form (factored):**\n" +
-        "$$= 2(e^3 - e) + 2 = 2(e^3 - e + 1)$$\n\n" +
-        "**Step 6: Numerical approximation**\n" +
-        "Using $$e \\approx 2.71828$$:\n" +
-        "$$e^3 \\approx 20.0855$$\n" +
-        "$$2(20.0855) - 2(2.71828) + 2$$\n" +
-        "$$\\approx 40.171 - 5.436 + 2$$\n" +
-        "$$\\approx 36.735$$\n\n" +
-        "**Properties of Integrals Used:**\n\n" +
-        "1. **Sum Rule**: $$\\int [f(x) + g(x)]\\,dx = \\int f(x)\\,dx + \\int g(x)\\,dx$$\n\n" +
-        "2. **Constant Multiple Rule**: $$\\int cf(x)\\,dx = c\\int f(x)\\,dx$$\n\n" +
-        "3. **Fundamental Theorem of Calculus**: $$\\int_a^b f(x)\\,dx = F(b) - F(a)$$, where $$F'(x) = f(x)$$\n\n" +
-        "**Key Antiderivatives Used:**\n" +
-        "- $$\\int e^x\\,dx = e^x + C$$\n" +
-        "- $$\\int 1\\,dx = x + C$$\n\n" +
-        "**Verification Strategy:**\n" +
-        "To check our answer, we can differentiate:\n" +
-        "$$\\frac{d}{dx}[2e^x + x] = 2e^x + 1$$ ✓\n\n" +
-        "This confirms our antiderivative is correct.\n\n" +
-        "**Final Answer:** $$2e^3 - 2e + 2$$ or equivalently $$2(e^3 - e + 1)$$",
+      "To evaluate $$\\int_1^3 (2e^x + 1)\\,dx$$ using properties of integrals:\n\n" +
+      "**Step 1: Apply the Sum Rule for integrals**\n" +
+      "The integral of a sum equals the sum of the integrals:\n" +
+      "$$\\int_1^3 (2e^x + 1)\\,dx = \\int_1^3 2e^x\\,dx + \\int_1^3 1\\,dx$$\n\n" +
+      "**Step 2: Apply the Constant Multiple Rule**\n" +
+      "We can factor out constants:\n" +
+      "$$= 2\\int_1^3 e^x\\,dx + \\int_1^3 1\\,dx$$\n\n" +
+      "**Step 3: Evaluate the first integral**\n" +
+      "The antiderivative of $$e^x$$ is $$e^x$$:\n" +
+      "$$2\\int_1^3 e^x\\,dx = 2[e^x]_1^3 = 2(e^3 - e^1) = 2e^3 - 2e$$\n\n" +
+      "**Step 4: Evaluate the second integral**\n" +
+      "The antiderivative of 1 is $$x$$:\n" +
+      "$$\\int_1^3 1\\,dx = [x]_1^3 = 3 - 1 = 2$$\n\n" +
+      "**Step 5: Combine the results**\n" +
+      "$$\\int_1^3 (2e^x + 1)\\,dx = (2e^3 - 2e) + 2 = 2e^3 - 2e + 2$$\n\n" +
+      "**Alternative form (factored):**\n" +
+      "$$= 2(e^3 - e) + 2 = 2(e^3 - e + 1)$$\n\n" +
+      "**Step 6: Numerical approximation**\n" +
+      "Using $$e \\approx 2.71828$$:\n" +
+      "$$e^3 \\approx 20.0855$$\n" +
+      "$$2(20.0855) - 2(2.71828) + 2$$\n" +
+      "$$\\approx 40.171 - 5.436 + 2$$\n" +
+      "$$\\approx 36.735$$\n\n" +
+      "**Properties of Integrals Used:**\n\n" +
+      "1. **Sum Rule**: $$\\int [f(x) + g(x)]\\,dx = \\int f(x)\\,dx + \\int g(x)\\,dx$$\n\n" +
+      "2. **Constant Multiple Rule**: $$\\int cf(x)\\,dx = c\\int f(x)\\,dx$$\n\n" +
+      "3. **Fundamental Theorem of Calculus**: $$\\int_a^b f(x)\\,dx = F(b) - F(a)$$, where $$F'(x) = f(x)$$\n\n" +
+      "**Key Antiderivatives Used:**\n" +
+      "- $$\\int e^x\\,dx = e^x + C$$\n" +
+      "- $$\\int 1\\,dx = x + C$$\n\n" +
+      "**Verification Strategy:**\n" +
+      "To check our answer, we can differentiate:\n" +
+      "$$\\frac{d}{dx}[2e^x + x] = 2e^x + 1$$ ✓\n\n" +
+      "This confirms our antiderivative is correct.\n\n" +
+      "**Final Answer:** $$2e^3 - 2e + 2$$ or equivalently $$2(e^3 - e + 1)$$",
   },
   {
     id: "q11",
@@ -477,78 +483,42 @@ export const questions = [
       "To understand why continuous functions are integrable:\n\n" +
       "**The Fundamental Theorem About Continuous Functions:**\n\n" +
       "If $f$ is continuous on the closed interval $[a, b]$, then $f$ is **Riemann integrable** on $[a, b]$.\n\n" +
-      "**Why This Works (Option A is Correct):**\n\n" +
-      "**Part 1: Continuous functions on closed intervals are bounded**\n\n" +
-      "By the **Extreme Value Theorem**:\n" +
-      "- Every continuous function on $[a, b]$ attains a maximum value $M$ and minimum value $m$\n" +
-      "- Therefore: $m \\leq f(x) \\leq M$ for all $x \\in [a, b]$\n" +
-      "- The function is **bounded**\n\n" +
-      "**Part 2: Continuous functions are integrable**\n\n" +
-      "For a function to be Riemann integrable, the upper and lower Riemann sums must converge to the same value:\n\n" +
-      "$$\\lim_{n \\to \\infty} L_n = \\lim_{n \\to \\infty} U_n$$\n\n" +
-      "where:\n" +
-      "- $L_n$ uses the minimum value of $f$ on each subinterval\n" +
-      "- $U_n$ uses the maximum value of $f$ on each subinterval\n\n" +
-      "**For continuous functions:**\n" +
-      "- They have no sudden jumps\n" +
-      "- As we make partitions finer ($n \\to \\infty$), the difference $U_n - L_n \\to 0$\n" +
-      "- This guarantees the integral exists\n\n" +
-      "**Why the other options are INCORRECT:**\n\n" +
-      "**Option B: 'Continuous functions have no critical points'**\n" +
-      "- **False!** Continuous functions can have many critical points\n" +
-      "- Example: $f(x) = x^2$ is continuous and has a critical point at $x = 0$\n" +
-      "- Example: $f(x) = \\sin(x)$ is continuous with infinitely many critical points\n" +
-      "- Critical points are irrelevant to integrability\n\n" +
-      "**Option C: 'All continuous functions are increasing'**\n" +
-      "- **False!** Continuous functions can increase, decrease, or do both\n" +
-      "- Example: $f(x) = -x$ is continuous and decreasing\n" +
-      "- Example: $f(x) = x^2 - 1$ is continuous and changes from decreasing to increasing\n" +
-      "- Monotonicity is not required for integrability\n\n" +
-      "**Option D: 'The Mean Value Theorem applies'**\n" +
-      "- While the MVT does apply to continuous, differentiable functions, this is not why they're integrable\n" +
-      "- The MVT is about derivatives, not integrals\n" +
-      "- You can have continuous functions that aren't differentiable everywhere (e.g., $f(x) = |x|$), and they're still integrable\n" +
-      "- The MVT is relevant for other theorems, but not the reason for integrability\n\n" +
-      "**Important Distinction:**\n\n" +
-      "Not all bounded functions are integrable:\n" +
-      "- Example: The Dirichlet function (1 for rationals, 0 for irrationals) is bounded but not Riemann integrable\n" +
-      "- **Continuity** is the key property that ensures integrability\n\n" +
-      "**Mathematical Rigor:**\n\n" +
-      "The precise statement is:\n\n" +
-      "> Every function that is continuous on a closed, bounded interval $[a, b]$ is Riemann integrable on $[a, b]$.\n\n" +
-      "This is one of the foundational results in real analysis.\n\n" +
-      "**Practical Implication:**\n\n" +
-      "When you see a continuous function, you can immediately conclude:\n" +
-      "1. It's bounded on any closed interval\n" +
-      "2. Its integral exists\n" +
-      "3. You can approximate it with Riemann sums\n" +
-      "4. The Fundamental Theorem of Calculus applies\n\n" +
-      "**Answer: A** — Continuous functions are bounded and integrable",
+      "**Why This Works (Option A is Correct):**\n" +
+      "Continuous functions are bounded (by the Extreme Value Theorem) and the difference between upper and lower Riemann sums tends to 0 as partitions refine.\n\n" +
+      "Thus, $$\\int_a^b f(x) dx$$ exists.\n\n" +
+      "**Answer:** A — Continuous functions are bounded and integrable",
   },
-
   {
-  id: "q12",
-  moduleId: "ITMTB",
-  weekId: "ITMTB_W1",
-  type: "open-ended",
-  text: "The velocity graph of a car accelerating from rest to a speed of 120 km/h over a period of 30 seconds is shown. Estimate the distance traveled during this period.",
-  correctAnswers: [
-    "0.694",
-    "0.7",
-    "0.694 km",
-    "0.69 km",
-    "694.4 m",
-    "694 m",
-    "≈0.694",
-    "≈694 m"
-  ],
-  image: {
-    src: "/images/ITMTB_Week 1_Quiz 3_Question 12.png",
-    alt: "Velocity-time graph of a car accelerating from 0 to 120 km/h over 30 seconds",
-    caption: "Velocities at t = 0, 10, 20, 30 s are approximately 0, 80, 110, 120 km/h respectively. Area under the curve ≈ distance traveled."
-  },
-  explanation:
-    "To estimate the distance traveled using a velocity-time graph:\n\n" +
+    id: "q12",
+    moduleId: "ITMTB",
+    weekId: "ITMTB_W1",
+    type: "open-ended",
+    text: "The velocity graph of a car accelerating from rest to a speed of 120 km/h over a period of 30 seconds is shown. Estimate the distance traveled during this period.",
+    correctAnswers: [
+      "0.694",
+      "0.7",
+      "0.694 km",
+      "0.69 km",
+      "694.4 m",
+      "694 m",
+      "≈0.694",
+      "≈694 m",
+    ],
+    options: {
+      acceptedUnits: ["m", "km"],
+      requireUnit: true,
+      tolerance: 0.001,
+      allowApproximationSymbol: true,
+      convertToCanonicalUnit: true,
+    },
+    image: {
+      src: "/images/ITMTB_Week 1_Quiz 3_Question 12.png",
+      alt: "Velocity-time graph of a car accelerating from 0 to 120 km/h over 30 seconds",
+      caption:
+        "Velocities at t = 0, 10, 20, 30 s are approximately 0, 80, 110, 120 km/h respectively. Area under the curve ≈ distance traveled.",
+    },
+    explanation:
+"To estimate the distance traveled using a velocity-time graph:\n\n" +
     "**The Fundamental Theorem of Calculus and Riemann Sums:**\n\n" +
     "The area under a velocity-time graph represents the total distance traveled. We approximate this area using Riemann sums.\n\n" +
     "**Step 1: Convert velocity units from km/h to m/s**\n\n" +
@@ -574,6 +544,7 @@ export const questions = [
     "**Conclusion:**\n\n" +
     "Using the midpoint Riemann sum and the Fundamental Theorem of Calculus, we estimate that the car traveled approximately 694.5 meters in 30 seconds."
   },
+
 
   // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 

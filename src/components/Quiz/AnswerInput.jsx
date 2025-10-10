@@ -1,76 +1,151 @@
 import React, { useRef } from 'react';
-import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
+import { AiOutlineCheck, AiOutlineClose, AiOutlineInfoCircle } from 'react-icons/ai';
 import { InlineMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
 import MathSymbolPalette from './MathSymbolPalette';
+import { AnswerValidator } from '../../utils/answerValidator';
 
-// Helper to render text with LaTeX
+// Helper to render text with LaTeX or plain fallback
 const renderMath = (text) => {
   if (!text) return null;
- 
   try {
     return text.split(/(\$\$.*?\$\$|\$.*?\$|\\\(.*?\\\)|\\\[.*?\\\])/).map((part, index) => {
       if (part.startsWith('$$') && part.endsWith('$$')) {
-        // Block math
         return <InlineMath key={index} math={part.slice(2, -2)} />;
       } else if (part.startsWith('$') && part.endsWith('$')) {
-        // Inline math
         return <InlineMath key={index} math={part.slice(1, -1)} />;
       } else if (part.startsWith('\\(') && part.endsWith('\\)')) {
-        // LaTeX inline math
         return <InlineMath key={index} math={part.slice(2, -2)} />;
       } else if (part.startsWith('\\[') && part.endsWith('\\]')) {
-        // LaTeX block math
         return <InlineMath key={index} math={part.slice(2, -2)} />;
       }
       return <span key={index}>{part}</span>;
     });
-  } catch (error) {
-    console.error('Error rendering LaTeX:', error);
+  } catch {
     return <span>{text}</span>;
   }
 };
 
-const AnswerInput = ({ value, onChange, onSubmit, disabled, isCorrect, correctAnswer }) => {
+const AnswerInput = ({
+  value,
+  onChange,
+  onSubmit,
+  disabled,
+  isCorrect,
+  correctAnswer,
+  questionOptions = {},
+  feedbackMessage = null,
+}) => {
   const inputRef = useRef(null);
-  const containerRef = useRef(null);
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !disabled) {
-      onSubmit();
+      handleCheckAnswer();
     }
   };
 
   const handleInsertSymbol = (symbol) => {
-    // insert symbol at the end of input value
     onChange(value + symbol);
-    // Optional: focus input so students can continue typing
     inputRef.current?.focus();
   };
 
   const getInputClasses = () => {
-    let classes = "flex-1 min-w-48 p-4 border-2 rounded-xl text-lg transition-all bg-white ";
+    let classes = 'flex-1 min-w-48 p-4 border-2 rounded-xl text-lg transition-all bg-white ';
     if (disabled) {
-      classes += isCorrect ? "border-[#28B463] bg-[#28B463]/10" : "border-[#C0392B] bg-[#C0392B]/10";
+      classes += isCorrect
+        ? 'border-[#28B463] bg-[#28B463]/10'
+        : 'border-[#C0392B] bg-[#C0392B]/10';
     } else {
-      classes += "border-gray-300 focus:border-[#4169E1] focus:shadow-lg focus:shadow-[#4169E1]/20";
+      classes +=
+        'border-gray-300 focus:border-[#4169E1] focus:shadow-lg focus:shadow-[#4169E1]/20';
     }
     return classes;
   };
 
+  const handleCheckAnswer = () => {
+    if (!value.trim()) return;
+
+    const { correctAnswers = [], options = {} } = questionOptions;
+
+    // Use the integrated validator
+    const validationResult = AnswerValidator.validate(value, correctAnswers, options);
+
+    if (validationResult.equivalent) {
+      onSubmit({ 
+        isCorrect: true, 
+        method: validationResult.method,
+        message: validationResult.message 
+      });
+    } else if (validationResult.unitError) {
+      onSubmit({
+        isCorrect: false,
+        message: validationResult.message,
+        unitError: true,
+      });
+    } else {
+      onSubmit({ 
+        isCorrect: false,
+        message: validationResult.message 
+      });
+    }
+  };
+
+  // Unified feedback logic
   const getFeedbackMessage = () => {
+    // External feedbackMessage prop has priority
+    if (feedbackMessage) {
+      return (
+        <div
+          className={`mt-2 font-semibold flex items-center gap-2 ${
+            feedbackMessage.isError ? 'text-red-600' : 'text-green-600'
+          }`}
+        >
+          <AiOutlineInfoCircle className="w-5 h-5" />
+          <span>{feedbackMessage.text}</span>
+        </div>
+      );
+    }
+
+    // If not submitted yet, show nothing
     if (!disabled) return null;
-   
+
+    // Handle unit errors specifically
+    if (questionOptions.unitErrorMessage) {
+      return (
+        <div className="font-semibold mt-4 flex items-center gap-2 text-[#C0392B]">
+          <AiOutlineInfoCircle className="w-5 h-5" />
+          <span>{questionOptions.unitErrorMessage}</span>
+        </div>
+      );
+    }
+
+    // Default feedback
     return (
-      <div className={`font-semibold mt-4 flex items-center gap-2 ${isCorrect ? 'text-[#28B463]' : 'text-[#C0392B]'}`}>
-        {isCorrect ? <AiOutlineCheck className="w-5 h-5" /> : <AiOutlineClose className="w-5 h-5" />}
+      <div
+        className={`font-semibold mt-4 flex items-center gap-2 ${
+          isCorrect ? 'text-[#28B463]' : 'text-[#C0392B]'
+        }`}
+      >
+        {isCorrect ? (
+          <AiOutlineCheck className="w-5 h-5" />
+        ) : (
+          <AiOutlineClose className="w-5 h-5" />
+        )}
         <span>
           {isCorrect ? (
             'Correct! Well done.'
           ) : (
             <span className="flex items-center gap-2 flex-wrap">
               <span>Incorrect. The answer was:</span>
-              <span className="inline-flex items-center">{renderMath(correctAnswer)}</span>
+              <span className="inline-flex items-center">
+                {Array.isArray(correctAnswer)
+                  ? correctAnswer.map((ans, i) => (
+                      <span key={i} className="mx-1">
+                        {renderMath(ans)}
+                      </span>
+                    ))
+                  : renderMath(correctAnswer)}
+              </span>
             </span>
           )}
         </span>
@@ -79,7 +154,7 @@ const AnswerInput = ({ value, onChange, onSubmit, disabled, isCorrect, correctAn
   };
 
   return (
-    <div className="space-y-4" ref={containerRef}>
+    <div className="space-y-4">
       <div className="flex gap-4 flex-wrap">
         <input
           ref={inputRef}
@@ -94,17 +169,17 @@ const AnswerInput = ({ value, onChange, onSubmit, disabled, isCorrect, correctAn
         />
         {!disabled && (
           <button
-            onClick={onSubmit}
+            onClick={handleCheckAnswer}
             className="bg-gradient-to-r from-[#4169E1] to-[#3498DB] text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all min-w-36 hover:from-[#3498DB] hover:to-[#4169E1]"
           >
             Check Answer
           </button>
         )}
       </div>
-      {/* Mini math symbol palette */}
-      {!disabled && (
-        <MathSymbolPalette onInsert={handleInsertSymbol} />
-      )}
+
+      {!disabled && <MathSymbolPalette onInsert={handleInsertSymbol} />}
+
+      {/* Dynamic feedback message section */}
       {getFeedbackMessage()}
     </div>
   );

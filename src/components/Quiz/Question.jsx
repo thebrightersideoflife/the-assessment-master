@@ -5,6 +5,7 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import AnswerInput from "./AnswerInput";
 import { renderTextWithMathAndMarkdown as renderMath } from "../../utils/textRenderer";
+import { AnswerValidator } from "../../utils/answerValidator";
 
 const Question = ({
   question,
@@ -22,7 +23,7 @@ const Question = ({
   const inputRef = useRef(null);
   const containerRef = useRef(null);
 
-  // ✅ Reset state when the question changes
+  // Reset state when the question changes
   useEffect(() => {
     setUserAnswer("");
     setSubmitted(false);
@@ -44,12 +45,45 @@ const Question = ({
     if (!userAnswer.trim()) return;
 
     let answerToSubmit = userAnswer;
-    // For multiple-choice, only submit the letter (e.g., 'A')
+
+    // For multiple-choice, extract just the letter
     if (question.type === "multiple-choice") {
       answerToSubmit = extractOptionLetter(userAnswer);
     }
 
-    const result = onAnswerSubmit(
+    // Use the integrated AnswerValidator
+    const validationResult = AnswerValidator.validate(
+      answerToSubmit,
+      question.correctAnswers || [],
+      question.options || {}
+    );
+
+    let result = {};
+
+    if (validationResult.equivalent) {
+      // Correct answer
+      result = {
+        isCorrect: true,
+        method: validationResult.method,
+        message: validationResult.message,
+      };
+    } else if (validationResult.unitError) {
+      // Unit error - show specific message
+      result = {
+        isCorrect: false,
+        unitError: true,
+        suggestions: [validationResult.message || "Check your units."],
+      };
+    } else {
+      // Incorrect answer
+      result = {
+        isCorrect: false,
+        suggestions: validationResult.message ? [validationResult.message] : [],
+      };
+    }
+
+    // Notify parent component
+    onAnswerSubmit(
       answerToSubmit,
       question.id,
       containerRef.current || document.querySelector(".question-container")
@@ -58,10 +92,10 @@ const Question = ({
     setSubmitted(true);
     setFeedback(result);
 
+    // Show explanation if incorrect
     if (!result.isCorrect) {
       setShowExplanation(true);
     }
-    
   };
 
   const handleShowExplanation = () => {
@@ -70,7 +104,7 @@ const Question = ({
 
   return (
     <div className="space-y-6 question-container" ref={containerRef}>
-      {/* ✅ Optional question image with zoom */}
+      {/* Optional question image with zoom */}
       {question.image?.src && (
         <figure className="w-full flex flex-col items-center my-4">
           <Zoom>
@@ -93,6 +127,32 @@ const Question = ({
       <div className="text-lg font-medium text-gray-800">
         {renderMath(question.text)}
       </div>
+
+      {/* Unit requirement notice */}
+      {question.options?.requiredUnit && (
+        <div className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-lg">
+          <div className="flex items-center gap-2">
+            <span className="text-blue-700 font-semibold">ℹ️ Note:</span>
+            <span className="text-blue-700">
+              Please express your answer in <strong>{question.options.requiredUnit}</strong>
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* Accepted units notice (if no required unit) */}
+      {!question.options?.requiredUnit && 
+       question.options?.acceptedUnits && 
+       question.options.acceptedUnits.length > 0 && (
+        <div className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-lg">
+          <div className="flex items-center gap-2">
+            <span className="text-blue-700 font-semibold">ℹ️ Note:</span>
+            <span className="text-blue-800">
+              Acceptable units: <strong>{question.options.acceptedUnits.join(', ')}</strong>
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* Multiple Choice Options */}
       {question.type === "multiple-choice" && (
@@ -166,8 +226,12 @@ const Question = ({
           onSubmit={handleSubmit}
           disabled={submitted}
           isCorrect={feedback?.isCorrect}
-          correctAnswer={question.correctAnswers.join(" or ")}
-          expectedAnswers={question.correctAnswers.length}
+          correctAnswer={question.correctAnswers}
+          questionOptions={{
+            correctAnswers: question.correctAnswers || [],
+            options: question.options || {},
+            unitErrorMessage: feedback?.unitError ? feedback.suggestions?.[0] : null,
+          }}
           ref={inputRef}
         />
       )}
@@ -179,7 +243,7 @@ const Question = ({
             <button
               onClick={handleSubmit}
               disabled={!userAnswer.trim()}
-              className="px-6 py-3 bg-gradient-to-r from-[#4169E1] to-[#3498DB] text-white rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-6 py-3 bg-gradient-to-r from-[#4169E1] to-[#3498DB] text-white rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
               Submit Answer
             </button>
@@ -228,6 +292,24 @@ const Question = ({
             )}
           </p>
 
+          {/* Show correct answer if incorrect */}
+          {!feedback.isCorrect && !feedback.unitError && (
+            <div className="mt-2 p-3 bg-white/70 rounded-lg border border-gray-200">
+              <p className="font-semibold text-gray-800 mb-1">Correct answer:</p>
+              <div className="text-gray-700 flex flex-wrap gap-2">
+                {question.correctAnswers?.map((ans, i) => (
+                  <span key={i} className="inline-flex items-center">
+                    {renderMath(ans)}
+                    {i < question.correctAnswers.length - 1 && (
+                      <span className="mx-1 text-gray-400">or</span>
+                    )}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Show explanation if available and visible */}
           {showExplanation && question.explanation && (
             <div className="mt-3 p-3 bg-white/70 rounded-lg border border-gray-200">
               <p className="font-semibold text-gray-800 mb-2">Explanation:</p>
@@ -237,9 +319,12 @@ const Question = ({
             </div>
           )}
 
+          {/* Show suggestions/hints for incorrect answers */}
           {!feedback.isCorrect && feedback.suggestions?.length > 0 && (
             <div className="mt-3 p-3 bg-white/70 rounded-lg border border-gray-200">
-              <p className="font-semibold text-gray-800 mb-2">💡 Hints:</p>
+              <p className="font-semibold text-gray-800 mb-2">
+                {feedback.unitError ? "⚠️ Unit Issue:" : "💡 Hints:"}
+              </p>
               <ul className="text-sm list-disc list-inside text-gray-600 space-y-1">
                 {feedback.suggestions.map((s, i) => (
                   <li key={i}>{s}</li>
