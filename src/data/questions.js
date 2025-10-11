@@ -1197,5 +1197,501 @@ export const questions = [
         "- Verify with substitution at the limits.\n\n" +
         "**Final Answer:**\n" +
         "$$\\boxed{\\int_{1}^{3}\\left(\\frac{3x^2+4x+1}{x}\\right)dx = 20 + \\ln(3)}$$"
-  }
+    },
+    {
+    id: "q26",
+    moduleId: "ITMTB",
+    weekId: "ITMTB_W2",
+    type: "multiple-choice",
+    text: "Which statement about the area under a curve is correct?",
+    options: [
+      "A. A left Riemann sum always equals the exact area under any increasing function.",
+      "B. A right Riemann sum always equals the exact area under any decreasing function.",
+      "C. The exact area under \\( y = f(x) \\) on \\([a, b]\\) is given by \\( \\int_a^b f(x)\\,dx \\) when \\( f \\) is integrable.",
+      "D. The midpoint sum is always less accurate than the left sum.",
+      "E. The trapezoidal rule never equals the exact area."
+    ],
+    correctAnswers: ["C"],
+    explanation:
+      "✅ **Correct (C)**: The exact area under \\(y=f(x)\\) on \\([a,b]\\) is given by the definite integral \\(\\int_a^b f(x)\\,dx\\) when \\(f\\) is integrable.\n\n" +
+      "**Explanation of each option:**\n\n" +
+      "- **(A)** Left Riemann sum \\(L_n\\) is an *approximation* and underestimates for increasing functions; only equals the true area as \\(n \\to \\infty\\).\n" +
+      "- **(B)** Right Riemann sum \\(R_n\\) is also approximate; for decreasing functions, it's an *underestimate*, not exact.\n" +
+      "- **(C)** Correct: by definition of the definite integral, \\(\\int_a^b f(x)\\,dx\\) gives the exact (signed) area when \\(f\\) is integrable.\n" +
+      "- **(D)** Midpoint rule is typically *more accurate* than left or right sums, not less.\n" +
+      "- **(E)** The trapezoidal rule *can* be exact if \\(f(x)\\) is linear."
+    },
+    {
+    id: "q27",
+    moduleId: "ITMTB",
+    weekId: "ITMTB_W2",
+    type: "multiple-choice",
+    text: "Which statement about displacement on \\([t_1, t_2]\\) is correct?",
+    options: [
+      "A. Displacement is always nonnegative because distance is nonnegative.",
+      "B. Displacement can be negative; it equals \\( \\int_{t_1}^{t_2} v(t)\\,dt \\).",
+      "C. Displacement equals total distance travelled.",
+      "D. Displacement is the derivative of velocity.",
+      "E. Displacement is the area under \\(|v(t)|\\)."
+    ],
+    correctAnswers: ["B"],
+    explanation:
+      "✅ **Correct (B)**: Displacement can be negative and is given by \\(\\int_{t_1}^{t_2} v(t)\\,dt\\). This integral gives the *signed area* under the velocity–time curve.\n\n" +
+      "**Explanation of each option:**\n\n" +
+      "- **(A)** False — displacement can be negative; distance is always nonnegative.\n" +
+      "- **(B)** Correct — it represents net change in position and can be negative when motion is backward.\n" +
+      "- **(C)** False — displacement equals distance *only* when motion is in one direction.\n" +
+      "- **(D)** False — the derivative of velocity is acceleration.\n" +
+      "- **(E)** False — \\(\\int |v(t)|\\,dt\\) gives total *distance*, not displacement."
+    },
+    {
+    id: "q28",
+    moduleId: "ITMTB",
+    weekId: "ITMTB_W2",
+    type: "multiple-choice",
+    text: "Which statement best distinguishes the two parts of the Fundamental Theorem of Calculus (FTC)?",
+    options: [
+      "A. FTC 1 evaluates definite integrals; FTC 2 differentiates accumulations.",
+      "B. FTC 1 links differentiation and accumulation (\\(\\frac{d}{dx}\\int_a^x f = f\\)); FTC 2 evaluates \\(\\int_a^b f\\) via an antiderivative.",
+      "C. Both theorems provide numerical approximation schemes.",
+      "D. FTC 1 concerns improper integrals; FTC 2 concerns Riemann sums.",
+      "E. They are identical statements."
+    ],
+    correctAnswers: ["B"],
+    explanation:
+      "✅ **Correct (B)**: FTC 1 connects differentiation and integration, stating that \\(\\frac{d}{dx}\\int_a^x f(t)\\,dt = f(x)\\). FTC 2 provides a method for evaluating definite integrals using antiderivatives: \\(\\int_a^b f(x)\\,dx = F(b) - F(a)\\).\n\n" +
+      "**Explanation of each option:**\n\n" +
+      "- **(A)** Reversed — FTC 1 differentiates, FTC 2 evaluates.\n" +
+      "- **(B)** Correct — distinguishes the two roles accurately.\n" +
+      "- **(C)** False — FTCs are exact, not approximations.\n" +
+      "- **(D)** False — both deal with proper definite integrals.\n" +
+      "- **(E)** False — they are distinct but related statements."
+    },
+    {
+    id: "q28",
+    moduleId: "ITMTB",
+    weekId: "ITMTB_W2",
+    type: "multiple-choice",
+    text: "Which statement best distinguishes the two parts of the Fundamental Theorem of Calculus (FTC)?",
+    options: [
+      "A. FTC 1 evaluates definite integrals; FTC 2 differentiates accumulations.",
+      "B. FTC 1 links differentiation and accumulation (\\(\\frac{d}{dx}\\int_a^x f = f\\)); FTC 2 evaluates \\(\\int_a^b f\\) via an antiderivative.",
+      "C. Both theorems provide numerical approximation schemes.",
+      "D. FTC 1 concerns improper integrals; FTC 2 concerns Riemann sums.",
+      "E. They are identical statements."
+    ],
+    correctAnswers: ["B"],
+    explanation:
+      "✅ **Correct (B)**: FTC 1 connects differentiation and integration, stating that \\(\\frac{d}{dx}\\int_a^x f(t)\\,dt = f(x)\\). FTC 2 provides a method for evaluating definite integrals using antiderivatives: \\(\\int_a^b f(x)\\,dx = F(b) - F(a)\\).\n\n" +
+      "**Explanation of each option:**\n\n" +
+      "- **(A)** Reversed — FTC 1 differentiates, FTC 2 evaluates.\n" +
+      "- **(B)** Correct — distinguishes the two roles accurately.\n" +
+      "- **(C)** False — FTCs are exact, not approximations.\n" +
+      "- **(D)** False — both deal with proper definite integrals.\n" +
+      "- **(E)** False — they are distinct but related statements."
+    },
+    {
+    id: "q29",
+    moduleId: "ITMTB",
+    weekId: "ITMTB_W2",
+    type: "multiple-choice",
+    text: "Why do we add '+C' after computing an indefinite integral?",
+    options: [
+      "A. To make the answer look complete.",
+      "B. Because antiderivatives differ by a constant; \\(\\frac{d}{dx}(C) = 0\\).",
+      "C. Because definite integrals need a constant.",
+      "D. Because integrals are always improper.",
+      "E. To cancel units."
+    ],
+    correctAnswers: ["B"],
+    explanation:
+      "✅ **Correct (B)**: All antiderivatives of \\(f(x)\\) differ by a constant, since \\(\\frac{d}{dx}(C)=0\\). The '+C' accounts for this family of functions.\n\n" +
+      "**Explanation of each option:**\n\n" +
+      "- **(A)** False — not aesthetic, it’s mathematical.\n" +
+      "- **(B)** Correct — captures the general solution set.\n" +
+      "- **(C)** False — definite integrals produce a single number, no constant.\n" +
+      "- **(D)** False — many integrals are proper.\n" +
+      "- **(E)** False — constants don’t affect units."
+    },
+    {
+    id: "q30",
+    moduleId: "ITMTB",
+    weekId: "ITMTB_W2",
+    type: "multiple-choice",
+    text: "Which integral gives an exact accumulated value on an interval when \\(f\\) is integrable?",
+    options: [
+      "A. An indefinite integral \\(\\int f(x)\\,dx\\).",
+      "B. A left Riemann sum with \\(n = 4\\).",
+      "C. A right Riemann sum with \\(n = 10\\).",
+      "D. The definite integral \\(\\int_a^b f(x)\\,dx\\).",
+      "E. A midpoint sum with any \\(n\\)."
+    ],
+    correctAnswers: ["D"],
+    explanation:
+      "✅ **Correct (D)**: The definite integral \\(\\int_a^b f(x)\\,dx\\) gives the *exact accumulated value* (net area or change) when \\(f\\) is integrable.\n\n" +
+      "**Explanation of each option:**\n\n" +
+      "- **(A)** Indefinite integrals give a family of antiderivatives, not a numeric value.\n" +
+      "- **(B)** and **(C)** Riemann sums with finite \\(n\\) are approximations.\n" +
+      "- **(D)** Correct — the definite integral equals the limit of Riemann sums as \\(n \\to \\infty\\).\n" +
+      "- **(E)** Midpoint sum approximates, not exact unless \\(f(x)\\) is linear."
+    },
+    {
+      id: "q31",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W2",
+      type: "open-ended",
+      text: "Let \\( f(x) = x^2 + 2 \\). On \\([0, 6]\\), use a **left Riemann sum** with \\( n = 4 \\) subintervals to approximate the area under \\( f \\). Round your answer to two decimal places if needed.",
+      
+      correctAnswers: [
+        "59.25",
+        "59.3",
+        "59",
+        "60"
+      ],
+      
+      options: {
+        allowSymbolic: false,
+        tolerance: 0.02,
+        acceptedUnits: [],
+        requiredUnit: null
+      },
+      
+      explanation: "To approximate the area under \\( f(x) = x^2 + 2 \\) using a left Riemann sum, we follow these steps:\n\n" +
+        "**Step 1: Determine the width of each subinterval (\\( \\Delta x \\))**\n\n" +
+        "The interval is \\([a, b] = [0, 6]\\) and we're dividing it into \\( n = 4 \\) subintervals.\n\n" +
+        "$$\\Delta x = \\frac{b - a}{n} = \\frac{6 - 0}{4} = \\frac{6}{4} = 1.5$$\n\n" +
+        "**Step 2: Identify the subintervals and left endpoints**\n\n" +
+        "Starting at \\( x_0 = 0 \\) and increasing by \\( \\Delta x = 1.5 \\), we get the endpoints:\n\n" +
+        "- \\( x_0 = 0 \\)\n" +
+        "- \\( x_1 = 1.5 \\)\n" +
+        "- \\( x_2 = 3.0 \\)\n" +
+        "- \\( x_3 = 4.5 \\)\n" +
+        "- \\( x_4 = 6.0 \\)\n\n" +
+        "The four subintervals are: \\([0, 1.5]\\), \\([1.5, 3.0]\\), \\([3.0, 4.5]\\), \\([4.5, 6.0]\\).\n\n" +
+        "For a **left Riemann sum**, we use the **left endpoints**: \\( 0, 1.5, 3.0, 4.5 \\).\n\n" +
+        "**Step 3: Calculate the height of each rectangle**\n\n" +
+        "Evaluate \\( f(x) \\) at each left endpoint:\n\n" +
+        "$$f(0) = (0)^2 + 2 = 2$$\n\n" +
+        "$$f(1.5) = (1.5)^2 + 2 = 2.25 + 2 = 4.25$$\n\n" +
+        "$$f(3.0) = (3.0)^2 + 2 = 9 + 2 = 11$$\n\n" +
+        "$$f(4.5) = (4.5)^2 + 2 = 20.25 + 2 = 22.25$$\n\n" +
+        "**Step 4: Compute the left Riemann sum**\n\n" +
+        "The left Riemann sum is the sum of the areas of the four rectangles:\n\n" +
+        "$$L_4 = \\Delta x \\cdot [f(0) + f(1.5) + f(3.0) + f(4.5)]$$\n\n" +
+        "$$L_4 = 1.5 \\cdot [2 + 4.25 + 11 + 22.25]$$\n\n" +
+        "$$L_4 = 1.5 \\cdot [39.5]$$\n\n" +
+        "$$L_4 = 59.25$$\n\n" +
+        "**Answer: 59.25 square units**"
+    },
+
+    {
+      id: "q32",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W2",
+      type: "open-ended",
+      text: "Using the definition \\( \\int_{0}^{1} x^2 dx = \\lim_{n\\to\\infty} \\sum_{i=1}^{n} f(x_{i}^{*}) \\Delta x \\) with right endpoints \\( x_{i}^{*} = \\frac{i}{n} \\) and \\( \\Delta x = \\frac{1}{n} \\), evaluate the integral. Express your answer as a simplified fraction.",
+      
+      correctAnswers: [
+        "1/3",
+        "0.333",
+        "0.33",
+        ".333",
+        ".33"
+      ],
+      
+      options: {
+        allowSymbolic: true,
+        tolerance: 0.01,
+        acceptedUnits: [],
+        requiredUnit: null
+      },
+      
+      explanation: "We'll evaluate this integral using the limit definition of the definite integral with right endpoints.\n\n" +
+        "**Step 1: Set up the Riemann sum**\n\n" +
+        "Given \\( f(x) = x^2 \\) on the interval \\([0, 1]\\), with:\n" +
+        "- Right endpoints: \\( x_i^* = \\frac{i}{n} \\)\n" +
+        "- Width of each subinterval: \\( \\Delta x = \\frac{1}{n} \\)\n\n" +
+        "Evaluate \\( f \\) at each right endpoint:\n\n" +
+        "$$f(x_i^*) = f\\left(\\frac{i}{n}\\right) = \\left(\\frac{i}{n}\\right)^2 = \\frac{i^2}{n^2}$$\n\n" +
+        "The Riemann sum becomes:\n\n" +
+        "$$\\sum_{i=1}^{n} f(x_i^*) \\Delta x = \\sum_{i=1}^{n} \\frac{i^2}{n^2} \\cdot \\frac{1}{n} = \\sum_{i=1}^{n} \\frac{i^2}{n^3}$$\n\n" +
+        "**Step 2: Factor out the constant**\n\n" +
+        "Since \\( \\frac{1}{n^3} \\) is constant with respect to \\( i \\), we can factor it out:\n\n" +
+        "$$\\sum_{i=1}^{n} \\frac{i^2}{n^3} = \\frac{1}{n^3} \\sum_{i=1}^{n} i^2$$\n\n" +
+        "**Step 3: Apply the summation formula**\n\n" +
+        "We use the formula for the sum of the first \\( n \\) squares:\n\n" +
+        "$$\\sum_{i=1}^{n} i^2 = \\frac{n(n+1)(2n+1)}{6}$$\n\n" +
+        "Substituting this:\n\n" +
+        "$$\\frac{1}{n^3} \\cdot \\frac{n(n+1)(2n+1)}{6} = \\frac{n(n+1)(2n+1)}{6n^3}$$\n\n" +
+        "**Step 4: Simplify the expression**\n\n" +
+        "Expand the numerator:\n\n" +
+        "$$n(n+1)(2n+1) = n(2n^2 + 3n + 1) = 2n^3 + 3n^2 + n$$\n\n" +
+        "So:\n\n" +
+        "$$\\frac{2n^3 + 3n^2 + n}{6n^3}$$\n\n" +
+        "**Step 5: Evaluate the limit as \\( n \\to \\infty \\)**\n\n" +
+        "$$\\int_{0}^{1} x^2 dx = \\lim_{n\\to\\infty} \\frac{2n^3 + 3n^2 + n}{6n^3}$$\n\n" +
+        "Divide each term in the numerator by \\( n^3 \\):\n\n" +
+        "$$= \\lim_{n\\to\\infty} \\frac{2n^3}{6n^3} + \\frac{3n^2}{6n^3} + \\frac{n}{6n^3}$$\n\n" +
+        "$$= \\lim_{n\\to\\infty} \\left(\\frac{2}{6} + \\frac{3}{6n} + \\frac{1}{6n^2}\\right)$$\n\n" +
+        "As \\( n \\to \\infty \\), the terms \\( \\frac{3}{6n} \\) and \\( \\frac{1}{6n^2} \\) approach zero:\n\n" +
+        "$$= \\frac{2}{6} = \\frac{1}{3}$$\n\n" +
+        "**Answer: \\( \\frac{1}{3} \\)**"
+    },
+
+    {
+      id: "q33",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W2",
+      type: "open-ended",
+      text: "A particle moves along a line with velocity \\( v(t) = t^2 - 4t \\) (m/s), for \\( t \\in [0, 6] \\) (seconds). Compute the **displacement** over \\([0, 6]\\). Express your answer in meters.",
+      
+      correctAnswers: [
+        "0",
+        "0 m",
+        "0m",
+        "0.0"
+      ],
+      
+      options: {
+        allowSymbolic: false,
+        tolerance: 0.001,
+        acceptedUnits: ["m"],
+        requiredUnit: null
+      },
+      
+      explanation: "**Displacement** is the net change in position, calculated by integrating the velocity function over the time interval.\n\n" +
+        "$$\\text{Displacement} = \\int_{0}^{6} v(t)\\,dt = \\int_{0}^{6} (t^2 - 4t)\\,dt$$\n\n" +
+        "**Step 1: Find the antiderivative**\n\n" +
+        "$$F(t) = \\int (t^2 - 4t)\\,dt = \\frac{t^3}{3} - 4 \\cdot \\frac{t^2}{2} = \\frac{t^3}{3} - 2t^2$$\n\n" +
+        "**Step 2: Apply the Fundamental Theorem of Calculus**\n\n" +
+        "Evaluate \\( F(t) \\) at the boundaries:\n\n" +
+        "$$\\text{Displacement} = F(6) - F(0)$$\n\n" +
+        "Calculate \\( F(6) \\):\n\n" +
+        "$$F(6) = \\frac{6^3}{3} - 2(6^2) = \\frac{216}{3} - 2(36) = 72 - 72 = 0$$\n\n" +
+        "Calculate \\( F(0) \\):\n\n" +
+        "$$F(0) = \\frac{0^3}{3} - 2(0^2) = 0$$\n\n" +
+        "**Step 3: Compute the displacement**\n\n" +
+        "$$\\text{Displacement} = 0 - 0 = 0\\text{ meters}$$\n\n" +
+        "**Interpretation:** A displacement of 0 meters means the particle returned to its starting position after 6 seconds.\n\n" +
+        "**Answer: 0 meters**"
+    },
+
+    {
+      id: "q34",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W2",
+      type: "open-ended",
+      text: "A particle moves along a line with velocity \\( v(t) = t^2 - 4t \\) (m/s), for \\( t \\in [0, 6] \\) (seconds). Compute the **total distance travelled** over \\([0, 6]\\). Express your answer as a simplified fraction or decimal rounded to two decimal places.",
+      
+      correctAnswers: [
+        "64/3",
+        "21.33",
+        "21.3",
+        "21",
+        "≈21.33"
+      ],
+      
+      options: {
+        allowSymbolic: true,
+        tolerance: 0.05,
+        acceptedUnits: ["m"],
+        requiredUnit: null
+      },
+      
+      explanation: "**Total distance travelled** is the accumulation of the particle's speed (absolute value of velocity) over time.\n\n" +
+        "$$\\text{Distance} = \\int_{0}^{6} |v(t)|\\,dt$$\n\n" +
+        "**Step 1: Find where velocity changes sign**\n\n" +
+        "Set \\( v(t) = 0 \\):\n\n" +
+        "$$t^2 - 4t = 0$$\n\n" +
+        "$$t(t - 4) = 0$$\n\n" +
+        "The roots are \\( t = 0 \\) and \\( t = 4 \\).\n\n" +
+        "This divides \\([0, 6]\\) into two intervals: \\([0, 4]\\) and \\([4, 6]\\).\n\n" +
+        "**Step 2: Determine the sign of \\( v(t) \\) on each interval**\n\n" +
+        "- **On \\([0, 4]\\):** Test \\( t = 1 \\): \\( v(1) = 1 - 4 = -3 < 0 \\). Velocity is **negative** (moving backward).\n" +
+        "- **On \\([4, 6]\\):** Test \\( t = 5 \\): \\( v(5) = 25 - 20 = 5 > 0 \\). Velocity is **positive** (moving forward).\n\n" +
+        "**Step 3: Set up the integral with absolute values**\n\n" +
+        "Since \\( v(t) \\) is negative on \\([0, 4]\\), we negate it to get speed:\n\n" +
+        "$$\\text{Distance} = \\int_{0}^{4} -(t^2 - 4t)\\,dt + \\int_{4}^{6} (t^2 - 4t)\\,dt$$\n\n" +
+        "$$= \\int_{0}^{4} (4t - t^2)\\,dt + \\int_{4}^{6} (t^2 - 4t)\\,dt$$\n\n" +
+        "**Step 4: Evaluate the first integral (backward motion on \\([0, 4]\\))**\n\n" +
+        "$$D_1 = \\int_{0}^{4} (4t - t^2)\\,dt = \\left[2t^2 - \\frac{t^3}{3}\\right]_{0}^{4}$$\n\n" +
+        "$$= \\left(2(16) - \\frac{64}{3}\\right) - 0$$\n\n" +
+        "$$= 32 - \\frac{64}{3} = \\frac{96}{3} - \\frac{64}{3} = \\frac{32}{3}$$\n\n" +
+        "**Step 5: Evaluate the second integral (forward motion on \\([4, 6]\\))**\n\n" +
+        "$$D_2 = \\int_{4}^{6} (t^2 - 4t)\\,dt = \\left[\\frac{t^3}{3} - 2t^2\\right]_{4}^{6}$$\n\n" +
+        "$$= \\left(\\frac{216}{3} - 2(36)\\right) - \\left(\\frac{64}{3} - 2(16)\\right)$$\n\n" +
+        "$$= (72 - 72) - \\left(\\frac{64}{3} - 32\\right)$$\n\n" +
+        "$$= 0 - \\left(\\frac{64}{3} - \\frac{96}{3}\\right)$$\n\n" +
+        "$$= 0 - \\left(-\\frac{32}{3}\\right) = \\frac{32}{3}$$\n\n" +
+        "**Step 6: Calculate total distance**\n\n" +
+        "$$\\text{Total Distance} = D_1 + D_2 = \\frac{32}{3} + \\frac{32}{3} = \\frac{64}{3} \\approx 21.33\\text{ meters}$$\n\n" +
+        "**Answer: \\( \\frac{64}{3} \\) meters or approximately 21.33 meters**"
+    },
+
+    {
+      id: "q35",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W2",
+      type: "open-ended",
+      text: "Define \\( G(x) = \\int_{2}^{x^3} \\frac{1}{1+t^2}\\,dt \\). Find \\( G'(x) \\). Express your answer in simplified form.",
+      
+      correctAnswers: [
+        "3x^2/(1+x^6)",
+        "(3x^2)/(1+x^6)",
+        "3x^2/(1 + x^6)",
+        "3*x^2/(1+x^6)"
+      ],
+      
+      options: {
+        allowSymbolic: true,
+        tolerance: 0.0001,
+        acceptedUnits: [],
+        requiredUnit: null
+      },
+      
+      explanation: "This problem requires the **Fundamental Theorem of Calculus (FTC), Part 1**, combined with the **Chain Rule**.\n\n" +
+        "**FTC Part 1 (with Chain Rule):** If \\( G(x) = \\int_{a}^{u(x)} f(t)\\,dt \\), then:\n\n" +
+        "$$G'(x) = f(u(x)) \\cdot u'(x)$$\n\n" +
+        "**Step 1: Identify the components**\n\n" +
+        "- Integrand: \\( f(t) = \\frac{1}{1+t^2} \\)\n" +
+        "- Upper limit: \\( u(x) = x^3 \\)\n" +
+        "- Lower limit: constant (2)\n\n" +
+        "**Step 2: Find the derivative of the upper limit**\n\n" +
+        "$$u'(x) = \\frac{d}{dx}(x^3) = 3x^2$$\n\n" +
+        "**Step 3: Evaluate the integrand at the upper limit**\n\n" +
+        "Substitute \\( t = u(x) = x^3 \\) into \\( f(t) \\):\n\n" +
+        "$$f(u(x)) = f(x^3) = \\frac{1}{1 + (x^3)^2} = \\frac{1}{1 + x^6}$$\n\n" +
+        "**Step 4: Apply the Chain Rule formula**\n\n" +
+        "$$G'(x) = f(u(x)) \\cdot u'(x)$$\n\n" +
+        "$$G'(x) = \\frac{1}{1 + x^6} \\cdot 3x^2$$\n\n" +
+        "$$G'(x) = \\frac{3x^2}{1 + x^6}$$\n\n" +
+        "**Answer: \\( \\frac{3x^2}{1 + x^6} \\)**"
+    },
+
+    {
+      id: "q36",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W2",
+      type: "open-ended",
+      text: "Evaluate the definite integral \\( \\int_{0}^{2} (4x - 1)\\,dx \\) using an antiderivative.",
+      
+      correctAnswers: [
+        "6",
+        "6.0"
+      ],
+      
+      options: {
+        allowSymbolic: false,
+        tolerance: 0.001,
+        acceptedUnits: [],
+        requiredUnit: null
+      },
+      
+      explanation: "We use the **Fundamental Theorem of Calculus (FTC), Part 2**, which states:\n\n" +
+        "$$\\int_{a}^{b} f(x)\\,dx = F(b) - F(a)$$\n\n" +
+        "where \\( F(x) \\) is any antiderivative of \\( f(x) \\).\n\n" +
+        "**Step 1: Find the antiderivative**\n\n" +
+        "For \\( f(x) = 4x - 1 \\), we integrate term by term:\n\n" +
+        "$$F(x) = \\int (4x - 1)\\,dx = 4 \\cdot \\frac{x^2}{2} - x = 2x^2 - x$$\n\n" +
+        "(Note: We don't need the constant \\( +C \\) for definite integrals since it cancels out.)\n\n" +
+        "**Step 2: Evaluate at the limits of integration**\n\n" +
+        "$$\\int_{0}^{2} (4x - 1)\\,dx = [2x^2 - x]_{0}^{2}$$\n\n" +
+        "$$= F(2) - F(0)$$\n\n" +
+        "**Step 3: Calculate \\( F(2) \\)**\n\n" +
+        "$$F(2) = 2(2)^2 - 2 = 2(4) - 2 = 8 - 2 = 6$$\n\n" +
+        "**Step 4: Calculate \\( F(0) \\)**\n\n" +
+        "$$F(0) = 2(0)^2 - 0 = 0$$\n\n" +
+        "**Step 5: Compute the difference**\n\n" +
+        "$$\\int_{0}^{2} (4x - 1)\\,dx = 6 - 0 = 6$$\n\n" +
+        "**Answer: 6**"
+    },
+
+    {
+      id: "q37",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W2",
+      type: "open-ended",
+      text: "Let \\( h(x) = x^2 + 1 \\) and \\( g(x) = x + 1 \\). Evaluate \\( I(x) = \\int_{g(x)}^{h(x)} (6t^2 - 4t + 1)\\,dt \\) as a simplified function of \\( x \\).",
+      
+      correctAnswers: [
+        "2x^6 + 4x^4 - 2x^3 - x^2 - 3x",
+        "2x^6+4x^4-2x^3-x^2-3x",
+        "2*x^6 + 4*x^4 - 2*x^3 - x^2 - 3*x"
+      ],
+      
+      options: {
+        allowSymbolic: true,
+        tolerance: 0.0001,
+        acceptedUnits: [],
+        requiredUnit: null
+      },
+      
+      explanation: "This integral has limits that are functions of \\( x \\). We'll find the antiderivative and then evaluate it at both limits.\n\n" +
+        "**Step 1: Find the antiderivative of the integrand**\n\n" +
+        "For \\( f(t) = 6t^2 - 4t + 1 \\):\n\n" +
+        "$$F(t) = \\int (6t^2 - 4t + 1)\\,dt = 6 \\cdot \\frac{t^3}{3} - 4 \\cdot \\frac{t^2}{2} + t$$\n\n" +
+        "$$F(t) = 2t^3 - 2t^2 + t$$\n\n" +
+        "**Step 2: Apply FTC with function limits**\n\n" +
+        "$$I(x) = [F(t)]_{g(x)}^{h(x)} = F(h(x)) - F(g(x))$$\n\n" +
+        "where \\( h(x) = x^2 + 1 \\) and \\( g(x) = x + 1 \\).\n\n" +
+        "**Step 3: Evaluate \\( F(h(x)) \\)**\n\n" +
+        "Substitute \\( t = x^2 + 1 \\):\n\n" +
+        "$$F(x^2+1) = 2(x^2+1)^3 - 2(x^2+1)^2 + (x^2+1)$$\n\n" +
+        "Expand \\( (x^2+1)^3 = x^6 + 3x^4 + 3x^2 + 1 \\):\n\n" +
+        "$$= 2(x^6 + 3x^4 + 3x^2 + 1) - 2(x^4 + 2x^2 + 1) + x^2 + 1$$\n\n" +
+        "$$= 2x^6 + 6x^4 + 6x^2 + 2 - 2x^4 - 4x^2 - 2 + x^2 + 1$$\n\n" +
+        "$$= 2x^6 + 4x^4 + 3x^2 + 1$$\n\n" +
+        "**Step 4: Evaluate \\( F(g(x)) \\)**\n\n" +
+        "Substitute \\( t = x + 1 \\):\n\n" +
+        "$$F(x+1) = 2(x+1)^3 - 2(x+1)^2 + (x+1)$$\n\n" +
+        "Expand \\( (x+1)^3 = x^3 + 3x^2 + 3x + 1 \\):\n\n" +
+        "$$= 2(x^3 + 3x^2 + 3x + 1) - 2(x^2 + 2x + 1) + x + 1$$\n\n" +
+        "$$= 2x^3 + 6x^2 + 6x + 2 - 2x^2 - 4x - 2 + x + 1$$\n\n" +
+        "$$= 2x^3 + 4x^2 + 3x + 1$$\n\n" +
+        "**Step 5: Compute \\( I(x) = F(h(x)) - F(g(x)) \\)**\n\n" +
+        "$$I(x) = (2x^6 + 4x^4 + 3x^2 + 1) - (2x^3 + 4x^2 + 3x + 1)$$\n\n" +
+        "$$= 2x^6 + 4x^4 + 3x^2 + 1 - 2x^3 - 4x^2 - 3x - 1$$\n\n" +
+        "$$= 2x^6 + 4x^4 - 2x^3 - x^2 - 3x$$\n\n" +
+        "**Answer: \\( 2x^6 + 4x^4 - 2x^3 - x^2 - 3x \\)**"
+    },
+    {
+      id: "q38",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W2",
+      type: "open-ended",
+      text: "Compute \\( \\int (3x^2 - 2x + 5)\\,dx \\). Include the constant of integration in your answer (use C for the constant).",
+      
+      correctAnswers: [
+        "x^3 - x^2 + 5x + C",
+        "x^3-x^2+5x+C",
+        "x^3 - x^2 + 5x + c",
+        "x^3-x^2+5x+c"
+      ],
+      
+      options: {
+        allowSymbolic: true,
+        tolerance: 0.0001,
+        acceptedUnits: [],
+        requiredUnit: null
+      },
+      
+      explanation: "This is an **indefinite integral**, which means we're finding the general antiderivative (a family of functions). We must include the constant of integration \\( +C \\).\n\n" +
+        "**Step 1: Integrate term by term**\n\n" +
+        "We'll use the **Sum Rule** for integration, which allows us to integrate each term separately:\n\n" +
+        "$$\\int (3x^2 - 2x + 5)\\,dx = \\int 3x^2\\,dx - \\int 2x\\,dx + \\int 5\\,dx$$\n\n" +
+        "**Step 2: Apply the Power Rule**\n\n" +
+        "The Power Rule for integration states: \\( \\int x^n\\,dx = \\frac{x^{n+1}}{n+1} + C \\) (for \\( n \\neq -1 \\)).\n\n" +
+        "**First term:** \\( \\int 3x^2\\,dx \\)\n\n" +
+        "$$= 3 \\int x^2\\,dx = 3 \\cdot \\frac{x^{2+1}}{2+1} = 3 \\cdot \\frac{x^3}{3} = x^3$$\n\n" +
+        "**Second term:** \\( \\int 2x\\,dx \\)\n\n" +
+        "$$= 2 \\int x\\,dx = 2 \\cdot \\frac{x^{1+1}}{1+1} = 2 \\cdot \\frac{x^2}{2} = x^2$$\n\n" +
+        "**Third term:** \\( \\int 5\\,dx \\)\n\n" +
+        "$$= 5x$$\n\n" +
+        "(Remember: \\( \\int k\\,dx = kx \\) for any constant \\( k \\))\n\n" +
+        "**Step 3: Combine the terms and add the constant of integration**\n\n" +
+        "$$\\int (3x^2 - 2x + 5)\\,dx = x^3 - x^2 + 5x + C$$\n\n" +
+        "The \\( +C \\) represents the constant of integration, which accounts for the fact that the derivative of any constant is zero.\n\n" +
+        "**Answer: \\( x^3 - x^2 + 5x + C \\)**"
+    },
+
 ]
