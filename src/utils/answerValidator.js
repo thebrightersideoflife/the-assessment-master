@@ -234,7 +234,7 @@ export class AnswerValidator {
     }
     
     // No match found
-    return { equivalent: false, message: 'No match found', method: 'none' };
+    return { equivalent: false, message: 'Sometimes you can check your answer by plugging it back in the original equation.', method: 'none' };
   }
   
   /**

@@ -282,7 +282,7 @@ const Question = ({
             {feedback.isCorrect ? (
               <>
                 <span className="text-2xl">✅</span>
-                <span>Correct!</span>
+                <span>Correct. Well done!</span>
               </>
             ) : (
               <>

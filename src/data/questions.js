@@ -1199,7 +1199,100 @@ export const questions = [
         "$$\\boxed{\\int_{1}^{3}\\left(\\frac{3x^2+4x+1}{x}\\right)dx = 20 + \\ln(3)}$$"
     },
     {
-    id: "q26",
+      id: "q26",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W2",
+      type: "open-ended",
+      text: "The acceleration function (in m/s²) for a particle moving along a line is given by \\( a(t) = t + 4 \\), and the initial velocity is \\( v(0) = 5 \\). Find the **velocity at time \\( t \\)**. Express your answer as a function of \\( t \\).",
+      
+      correctAnswers: [
+        "t^2/2 + 4t + 5",
+        "(1/2)t^2 + 4t + 5",
+        "0.5t^2 + 4t + 5",
+        "t^2/2+4t+5",
+        "(t^2)/2 + 4t + 5"
+      ],
+      
+      options: {
+        allowSymbolic: true,
+        tolerance: 0.0001,
+        acceptedUnits: [],
+        requiredUnit: null
+      },
+      
+      explanation: "To find velocity from acceleration, we need to integrate the acceleration function and use the initial condition.\n\n" +
+        "**Step 1: Understand the relationship between acceleration and velocity**\n\n" +
+        "Velocity \\( v(t) \\) is the antiderivative of acceleration \\( a(t) \\):\n\n" +
+        "$$v(t) = \\int a(t)\\,dt$$\n\n" +
+        "**Step 2: Integrate the acceleration function**\n\n" +
+        "Given \\( a(t) = t + 4 \\):\n\n" +
+        "$$v(t) = \\int (t + 4)\\,dt$$\n\n" +
+        "Apply the Power Rule to each term:\n\n" +
+        "$$v(t) = \\frac{t^2}{2} + 4t + C$$\n\n" +
+        "where \\( C \\) is the constant of integration.\n\n" +
+        "**Step 3: Use the initial condition to find \\( C \\)**\n\n" +
+        "We're given that \\( v(0) = 5 \\). Substitute \\( t = 0 \\) into our velocity function:\n\n" +
+        "$$v(0) = \\frac{(0)^2}{2} + 4(0) + C = 5$$\n\n" +
+        "$$0 + 0 + C = 5$$\n\n" +
+        "$$C = 5$$\n\n" +
+        "**Step 4: Write the complete velocity function**\n\n" +
+        "Substitute \\( C = 5 \\) back into the velocity equation:\n\n" +
+        "$$v(t) = \\frac{t^2}{2} + 4t + 5$$\n\n" +
+        "This can also be written as:\n\n" +
+        "$$v(t) = \\frac{1}{2}t^2 + 4t + 5 \\text{ m/s}$$\n\n" +
+        "**Answer: \\( v(t) = \\frac{t^2}{2} + 4t + 5 \\)**"
+    },
+
+    {
+      id: "q27",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W2",
+      type: "open-ended",
+      text: "The acceleration function (in m/s²) for a particle moving along a line is given by \\( a(t) = t + 4 \\), and the initial velocity is \\( v(0) = 5 \\). Find the **distance traveled** during the time interval \\( 0 \\le t \\le 10 \\). Express your answer as a simplified fraction or decimal rounded to two decimal places.",
+      
+      correctAnswers: [
+        "1250/3",
+        "416.67",
+        "416.7",
+        "417",
+        "≈416.67"
+      ],
+      
+      options: {
+        allowSymbolic: true,
+        tolerance: 0.02,
+        acceptedUnits: ["m"],
+        requiredUnit: null
+      },
+      
+      explanation: "Distance traveled is found by integrating the speed (absolute value of velocity) over the time interval.\n\n" +
+        "**Step 1: Find the velocity function**\n\n" +
+        "From the previous part, we found:\n\n" +
+        "$$v(t) = \\frac{t^2}{2} + 4t + 5$$\n\n" +
+        "**Step 2: Determine if velocity changes sign on \\([0, 10]\\)**\n\n" +
+        "To find distance (not displacement), we need \\( \\int_{0}^{10} |v(t)|\\,dt \\). First, check if \\( v(t) \\) is always positive or if it changes sign.\n\n" +
+        "The velocity function \\( v(t) = \\frac{1}{2}t^2 + 4t + 5 \\) is a parabola opening upward (since the coefficient of \\( t^2 \\) is positive).\n\n" +
+        "At \\( t = 0 \\): \\( v(0) = 5 > 0 \\)\n\n" +
+        "The vertex occurs at \\( t = -\\frac{b}{2a} = -\\frac{4}{2(1/2)} = -\\frac{4}{1} = -4 \\)\n\n" +
+        "Since the vertex is at \\( t = -4 \\) (outside our interval \\([0, 10]\\)) and the parabola opens upward with \\( v(0) = 5 > 0 \\), the velocity is **always positive** on \\([0, 10]\\).\n\n" +
+        "Therefore: \\( |v(t)| = v(t) \\) on this interval.\n\n" +
+        "**Step 3: Calculate the distance**\n\n" +
+        "$$\\text{Distance} = \\int_{0}^{10} v(t)\\,dt = \\int_{0}^{10} \\left(\\frac{t^2}{2} + 4t + 5\\right)dt$$\n\n" +
+        "**Step 4: Find the antiderivative**\n\n" +
+        "$$F(t) = \\frac{1}{2} \\cdot \\frac{t^3}{3} + 4 \\cdot \\frac{t^2}{2} + 5t$$\n\n" +
+        "$$F(t) = \\frac{t^3}{6} + 2t^2 + 5t$$\n\n" +
+        "**Step 5: Evaluate at the limits**\n\n" +
+        "$$\\text{Distance} = \\left[\\frac{t^3}{6} + 2t^2 + 5t\\right]_{0}^{10}$$\n\n" +
+        "$$= \\left(\\frac{1000}{6} + 2(100) + 5(10)\\right) - (0)$$\n\n" +
+        "$$= \\frac{1000}{6} + 200 + 50$$\n\n" +
+        "Convert to a common denominator:\n\n" +
+        "$$= \\frac{1000}{6} + \\frac{1200}{6} + \\frac{300}{6}$$\n\n" +
+        "$$= \\frac{2500}{6} = \\frac{1250}{3}$$\n\n" +
+        "$$\\approx 416.67 \\text{ meters}$$\n\n" +
+        "**Answer: \\( \\frac{1250}{3} \\) meters or approximately 416.67 meters**"
+    },
+    {
+    id: "q28",
     moduleId: "ITMTB",
     weekId: "ITMTB_W2",
     type: "multiple-choice",
@@ -1222,7 +1315,7 @@ export const questions = [
       "- **(E)** The trapezoidal rule *can* be exact if \\(f(x)\\) is linear."
     },
     {
-    id: "q27",
+    id: "q29",
     moduleId: "ITMTB",
     weekId: "ITMTB_W2",
     type: "multiple-choice",
@@ -1245,7 +1338,7 @@ export const questions = [
       "- **(E)** False — \\(\\int |v(t)|\\,dt\\) gives total *distance*, not displacement."
     },
     {
-    id: "q28",
+    id: "q30",
     moduleId: "ITMTB",
     weekId: "ITMTB_W2",
     type: "multiple-choice",
@@ -1267,31 +1360,9 @@ export const questions = [
       "- **(D)** False — both deal with proper definite integrals.\n" +
       "- **(E)** False — they are distinct but related statements."
     },
+
     {
-    id: "q28",
-    moduleId: "ITMTB",
-    weekId: "ITMTB_W2",
-    type: "multiple-choice",
-    text: "Which statement best distinguishes the two parts of the Fundamental Theorem of Calculus (FTC)?",
-    options: [
-      "A. FTC 1 evaluates definite integrals; FTC 2 differentiates accumulations.",
-      "B. FTC 1 links differentiation and accumulation (\\(\\frac{d}{dx}\\int_a^x f = f\\)); FTC 2 evaluates \\(\\int_a^b f\\) via an antiderivative.",
-      "C. Both theorems provide numerical approximation schemes.",
-      "D. FTC 1 concerns improper integrals; FTC 2 concerns Riemann sums.",
-      "E. They are identical statements."
-    ],
-    correctAnswers: ["B"],
-    explanation:
-      "✅ **Correct (B)**: FTC 1 connects differentiation and integration, stating that \\(\\frac{d}{dx}\\int_a^x f(t)\\,dt = f(x)\\). FTC 2 provides a method for evaluating definite integrals using antiderivatives: \\(\\int_a^b f(x)\\,dx = F(b) - F(a)\\).\n\n" +
-      "**Explanation of each option:**\n\n" +
-      "- **(A)** Reversed — FTC 1 differentiates, FTC 2 evaluates.\n" +
-      "- **(B)** Correct — distinguishes the two roles accurately.\n" +
-      "- **(C)** False — FTCs are exact, not approximations.\n" +
-      "- **(D)** False — both deal with proper definite integrals.\n" +
-      "- **(E)** False — they are distinct but related statements."
-    },
-    {
-    id: "q29",
+    id: "q31",
     moduleId: "ITMTB",
     weekId: "ITMTB_W2",
     type: "multiple-choice",
@@ -1314,7 +1385,7 @@ export const questions = [
       "- **(E)** False — constants don’t affect units."
     },
     {
-    id: "q30",
+    id: "q32",
     moduleId: "ITMTB",
     weekId: "ITMTB_W2",
     type: "multiple-choice",
@@ -1336,7 +1407,7 @@ export const questions = [
       "- **(E)** Midpoint sum approximates, not exact unless \\(f(x)\\) is linear."
     },
     {
-      id: "q31",
+      id: "q33",
       moduleId: "ITMTB",
       weekId: "ITMTB_W2",
       type: "open-ended",
@@ -1385,7 +1456,7 @@ export const questions = [
     },
 
     {
-      id: "q32",
+      id: "q34",
       moduleId: "ITMTB",
       weekId: "ITMTB_W2",
       type: "open-ended",
@@ -1439,7 +1510,7 @@ export const questions = [
     },
 
     {
-      id: "q33",
+      id: "q35",
       moduleId: "ITMTB",
       weekId: "ITMTB_W2",
       type: "open-ended",
@@ -1477,7 +1548,7 @@ export const questions = [
     },
 
     {
-      id: "q34",
+      id: "q36",
       moduleId: "ITMTB",
       weekId: "ITMTB_W2",
       type: "open-ended",
@@ -1529,7 +1600,7 @@ export const questions = [
     },
 
     {
-      id: "q35",
+      id: "q37",
       moduleId: "ITMTB",
       weekId: "ITMTB_W2",
       type: "open-ended",
@@ -1569,7 +1640,7 @@ export const questions = [
     },
 
     {
-      id: "q36",
+      id: "q38",
       moduleId: "ITMTB",
       weekId: "ITMTB_W2",
       type: "open-ended",
@@ -1607,7 +1678,7 @@ export const questions = [
     },
 
     {
-      id: "q37",
+      id: "q39",
       moduleId: "ITMTB",
       weekId: "ITMTB_W2",
       type: "open-ended",
@@ -1655,7 +1726,7 @@ export const questions = [
         "**Answer: \\( 2x^6 + 4x^4 - 2x^3 - x^2 - 3x \\)**"
     },
     {
-      id: "q38",
+      id: "q40",
       moduleId: "ITMTB",
       weekId: "ITMTB_W2",
       type: "open-ended",
