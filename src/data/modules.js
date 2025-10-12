@@ -420,7 +420,7 @@ export const modules = [
           explanation: "The Midpoint Rule approximates $\\int_a^b f(x)\\,dx$ by sampling at midpoints of subintervals instead of left or right endpoints. This usually gives a better estimate with fewer rectangles because it balances over- and underestimation.",
           example: "To approximate $\\int_1^2 \\frac{1}{x}\\,dx$ with $n=5$ subintervals, use midpoints $1.1, 1.3, 1.5, 1.7, 1.9$ and width $\\Delta x=0.2$. The Midpoint Rule gives approximately $0.692$, close to the exact $\\ln(2) \\approx 0.6931$.",
           studyTip: "For numeric integration without antiderivatives, midpoints usually outperform left or right sums. Use this method for faster, more accurate approximations.",
-          videoUrl: "https://www.youtube.com/watch?v=AkUa9Fkz2rw",
+          videoUrl: "",
           quizId: "ITMTB_W2_Quiz"
         },
         {
@@ -454,10 +454,10 @@ export const modules = [
             id: "ITMTB_W2_T1",
             name: "Functions Defined as the Definite Integral of Another Function",
             competency: "Assessment Coverage: 5.3",
-            explanation: "5.3 establishes that differentiation and integration are inverse processes. If $g(x) = \\int_{a}^{x} f(t) \\, dt$ where $f$ is continuous, then $g'(x) = f(x)$. The derivative of a definite integral with respect to its upper limit is the integrand evaluated at the upper limit. When the upper limit is a function $u(x)$, apply the Chain Rule: $\\frac{d}{dx} \\int_{a}^{u(x)} f(t) \\, dt = f(u(x)) \\cdot u'(x)$.",
+            explanation: "FTC1 establishes that differentiation and integration are inverse processes. If $g(x) = \\int_{a}^{x} f(t) \\, dt$ where $f$ is continuous, then $g'(x) = f(x)$. The derivative of a definite integral with respect to its upper limit is the integrand evaluated at the upper limit. When the upper limit is a function $u(x)$, apply the Chain Rule: $\\frac{d}{dx} \\int_{a}^{u(x)} f(t) \\, dt = f(u(x)) \\cdot u'(x)$.",
             example: "For a car with velocity $v(t)$, the position function $s(x) = \\int_{0}^{x} v(t) \\, dt$ represents total displacement. 5.3 gives $s'(x) = v(x)$, confirming that the derivative of position is velocity. For the Fresnel function $S(x) = \\int_{0}^{x} \\sin(\\pi t^2/2) \\, dt$, we get $S'(x) = \\sin(\\pi x^2/2)$ instantly.",
             studyTip: "Verbalize: 'The derivative of the integral from a constant to $x$ is the integrand in terms of $x$.' For composite upper limits like $x^4$, remember the Chain Rule: multiply by the derivative of the upper limit. Sketch $f(t)$ and its area function $g(x)$ to visually confirm that $g'(x)$ matches the sign of $f(x)$.",
-            videoUrl: "",
+            videoUrl: "https://youtu.be/aeB5BWY0RlE",
             quizId: "ITMTB_W2_Quiz"
           },
           {
@@ -467,7 +467,7 @@ export const modules = [
             explanation: "The Fundamental Theorem of Calculus states that if $f$ is continuous on $[a, b]$ and $F$ is any antiderivative of $f$ (meaning $F'(x) = f(x)$), then $\\int_{a}^{b} f(x) \\, dx = F(b) - F(a)$. This provides a simple method for evaluating definite integrals without computing limits of Riemann sums, connecting the area problem directly to antiderivatives.",
             example: "If $v(t)$ is velocity and $s(t)$ is position (antiderivative of velocity), total distance traveled from $t=a$ to $t=b$ is $\\int_{a}^{b} v(t) \\, dt = s(b) - s(a)$. For water flowing into a tank at rate $r(t)$ with volume $V(t)$, change in volume from $t=3$ to $t=6$ is $\\int_{3}^{6} r(t) \\, dt = V(6) - V(3)$.",
             studyTip: "Always verify $f(x)$ is continuous on $[a, b]$ before applying 5.3—discontinuities invalidate the theorem. Use three steps: (1) Find any antiderivative $F(x)$, (2) Evaluate $F(b)$ and $F(a)$, (3) Subtract using notation $F(x)]_{a}^{b}$. Master common antiderivatives with flashcards: $x^n$, $\\sin x$, $\\cos x$, $e^x$, $1/x$.",
-            videoUrl: "",
+            videoUrl: "https://youtu.be/rfG8ce4nNh0",
             quizId: "ITMTB_W2_Quiz"
           },
           {
@@ -477,7 +477,7 @@ export const modules = [
             explanation: "The indefinite integral $\\int f(x) \\, dx$ represents the family of all antiderivatives of $f(x)$. If $\\int f(x) \\, dx = F(x)$, then $F'(x) = f(x)$. The general antiderivative includes an arbitrary constant $C$ (constant of integration) since the derivative of a constant is zero. The indefinite integral is a function (or family of functions), distinguished from the definite integral $\\int_{a}^{b} f(x) \\, dx$, which is a number.",
             example: "Velocity to Position: If $v(t)$ is a car's velocity, then $\\int v(t) \\, dt$ gives the position $s(t)$, where $C$ represents initial position. Marginal Cost to Total Cost: If $C'(x)$ is marginal cost, then $\\int C'(x) \\, dx$ gives total cost $C(x)$, where $C$ represents fixed costs. Common formulas: $\\int x^n \\, dx = \\frac{x^{n+1}}{n+1} + C$ (for $n \\neq -1$), $\\int e^x \\, dx = e^x + C$.",
             studyTip: "Memorize the table of core indefinite integral formulas using flashcards—they're the reverse of derivatives. Practice rewriting complex integrands into simpler forms that match table formulas. Always check your answer by differentiating the result to verify you get the original integrand.",
-            videoUrl: "",
+            videoUrl: "https://youtu.be/xaCPDMEkbig",
             quizId: "ITMTB_W2_Quiz"
           },
           {
@@ -487,7 +487,7 @@ export const modules = [
             explanation: "FTC2 provides a method for evaluating definite integrals: if $F(x)$ is any antiderivative of continuous function $f(x)$ on $[a,b]$, then $\\int_{a}^{b} f(x) \\, dx = F(b) - F(a)$. The definite integral represents the net area bounded by the graph of $f(x)$, the x-axis, and vertical lines $x=a$ and $x=b$. Areas above the x-axis contribute positively, areas below contribute negatively.",
             example: "Calculating Area: FTC2 allows exact calculation of area under curves. Energy Consumption: If $P(t)$ is power consumption (megawatts) over time, then $\\int_{0}^{24} P(t) \\, dt$ calculates total energy consumed (megawatt-hours) during 24 hours. The integral of power (rate of energy use) is total energy used.",
             studyTip: "Practice the evaluation process: (1) Find antiderivative $F(x)$ (no $C$ needed—it cancels), (2) Evaluate $F(b)$, (3) Evaluate $F(a)$, (4) Subtract $F(b) - F(a)$. Understand net area vs. total area: sketch functions that cross the x-axis. Example: $\\int_{-1}^{1} x^3 \\, dx = 0$ (net area), but total area is positive.",
-            videoUrl: "",
+            videoUrl: "https://youtu.be/ns8N1UuXl4w",
             quizId: "ITMTB_W2_Quiz"          
           },
           {
@@ -497,7 +497,7 @@ export const modules = [
             explanation: "The Net Change Theorem is a restatement of FTC2 for rates of change: $\\int_{a}^{b} F'(x) \\, dx = F(b) - F(a)$. The integral of a rate of change $F'(x)$ over $[a,b]$ gives the net change in the original function $F(x)$ between $x=a$ and $x=b$. Net change accounts for both increases and decreases in the quantity $F(x)$.",
             example: "Displacement vs. Distance: If $v(t)$ is velocity, $\\int_{t_1}^{t_2} v(t) \\, dt$ is displacement (net change in position), while $\\int_{t_1}^{t_2} |v(t)| \\, dt$ is total distance traveled. Volume Flow: If $V'(t)$ is water flow rate into a reservoir, $\\int_{t_1}^{t_2} V'(t) \\, dt$ is change in water volume. Population: If $dn/dt$ is population growth rate, $\\int_{t_1}^{t_2} \\frac{dn}{dt} \\, dt$ is net population change.",
             studyTip: "Understand Rate → Net Change: if the integrand is a rate, the integral's value is accumulated amount (net change). Distinguish displacement ($\\int v(t) \\, dt$) from total distance ($\\int |v(t)| \\, dt$)—identify where the rate is negative and split the integral. Always verify units: integral result units = (integrand units) × (variable units). Example: (megawatts) × (hours) = megawatt-hours.",
-            videoUrl: "",
+            videoUrl: "https://youtu.be/GOjde4xOarw",
             quizId: "ITMTB_W2_Quiz"
           }
         ]
