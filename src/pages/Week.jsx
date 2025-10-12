@@ -91,7 +91,7 @@ const Week = () => {
   }
   
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 pb-20">
       <Breadcrumb
         items={[
           { label: 'Home', path: '/' },
@@ -111,7 +111,7 @@ const Week = () => {
           return (
             <div
               key={topic.id}
-              className="bg-white bg-opacity-98 rounded-lg shadow-md border border-[#FFC300]/20 overflow-hidden transition-all"
+              className="bg-white bg-opacity-98 rounded-lg shadow-md border border-[#FFC300]/20 overflow-visible transition-all"
               role="region"
               aria-labelledby={`topic-header-${topic.id}`}
             >
@@ -131,60 +131,62 @@ const Week = () => {
                   </p>
                 </div>
                 <div className="ml-4 flex-shrink-0">
-                  <AiOutlineRight className={`w-6 h-6 transform transition-transform duration-200 ${isOpen ? 'rotate-90 text-[#4169E1]' : 'rotate-0 text-gray-400'}`} />
+                  <AiOutlineRight 
+                    className={`w-6 h-6 transform transition-transform duration-200 ${
+                      isOpen ? 'rotate-90 text-[#4169E1]' : 'rotate-0 text-gray-400'
+                    }`} 
+                  />
                 </div>
               </button>
               
-              <div
-                id={`topic-content-${topic.id}`}
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                  isOpen
-                    ? 'max-h-screen opacity-100 translate-y-0'
-                    : 'max-h-0 opacity-0 -translate-y-2'
-                }`}
-                role="region"
-                aria-hidden={!isOpen}
-              >
-                <div className="px-6 pb-6 pt-2 space-y-4">
-                  <div className="prose text-gray-700">
-                    {renderMath(topic.explanation)}
-                  </div>
-                  
-                  {topic.example && (
-                    <div className="bg-[#4169E1]/5 rounded-lg p-4 border-l-4 border-[#4169E1]">
-                      <strong className="text-[#4169E1] block mb-2">Example:</strong>
-                      <div className="prose text-gray-700">
-                        {renderMath(topic.example)}
+              {/* Changed: Removed max-h restriction and improved transitions */}
+              {isOpen && (
+                <div
+                  id={`topic-content-${topic.id}`}
+                  className="animate-slideDown"
+                  role="region"
+                >
+                  <div className="px-6 pb-6 pt-2 space-y-4">
+                    <div className="prose text-gray-700">
+                      {renderMath(topic.explanation)}
+                    </div>
+                    
+                    {topic.example && (
+                      <div className="bg-[#4169E1]/5 rounded-lg p-4 border-l-4 border-[#4169E1]">
+                        <strong className="text-[#4169E1] block mb-2">Example:</strong>
+                        <div className="prose text-gray-700">
+                          {renderMath(topic.example)}
+                        </div>
                       </div>
-                    </div>
-                  )}
-                  
-                  {topic.studyTip && (
-                    <div className="bg-[#FFC300]/10 rounded-lg p-4 border-l-4 border-[#FFC300]">
-                      <strong className="text-[#E67E22] block mb-2">💡 Study Tip:</strong>
-                      <p className="text-gray-700">
-                        {renderMath(topic.studyTip)}
-                      </p>
-                    </div>
-                  )}
-                  
-                  {topic.videoUrl && (
-                    <div className="mt-4">
-                      <VideoEmbed 
-                        videoUrl={topic.videoUrl} 
-                        title={`Video: ${topic.name}`} 
-                      />
-                    </div>
-                  )}
+                    )}
+                    
+                    {topic.studyTip && (
+                      <div className="bg-[#FFC300]/10 rounded-lg p-4 border-l-4 border-[#FFC300]">
+                        <strong className="text-[#E67E22] block mb-2">💡 Study Tip:</strong>
+                        <p className="text-gray-700">
+                          {renderMath(topic.studyTip)}
+                        </p>
+                      </div>
+                    )}
+                    
+                    {topic.videoUrl && (
+                      <div className="mt-6">
+                        <VideoEmbed 
+                          videoUrl={topic.videoUrl} 
+                          title={`Video: ${topic.name}`} 
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           );
         })}
       </div>
 
       {module.formulaSheet?.available && (
-        <div className="mt-4">
+        <div className="mt-8">
           <Link
             to={module.formulaSheet.path}
             className="inline-block bg-gradient-to-r from-[#616161] to-[#9E9E9E] text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all"
@@ -194,7 +196,7 @@ const Week = () => {
         </div>
       )}
       
-      {/* Quiz Section - Now shows WeekQuizzes component */}
+      {/* Quiz Section */}
       <div className="bg-gradient-to-br from-[#4169E1]/10 to-[#3498DB]/10 rounded-2xl p-6 border border-[#3498DB]/30 mt-8">
         <WeekQuizzes moduleId={moduleId} weekId={weekId} />
       </div>
