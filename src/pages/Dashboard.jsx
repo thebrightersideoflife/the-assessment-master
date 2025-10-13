@@ -10,9 +10,6 @@ import { questions } from "../data/questions";
 const Dashboard = () => {
   const { quizzes, getQuizState, resetAllProgress } = useStore();
 
-  // ✅ Use the global chunk size from chunkQuestions
-  const globalChunkSize = chunkQuestions.CHUNK_SIZE || 15;
-
   // Aggregate global stats
   const aggregateStats = Object.values(quizzes).reduce(
     (acc, quiz) => ({
@@ -74,7 +71,6 @@ const Dashboard = () => {
       moduleId: module.id,
       moduleName: module.name,
       weeks: module.weeks.map((week) => {
-        // Get all questions for this week
         const weekQuestions = questions.filter(
           (q) => q.moduleId === module.id && q.weekId === week.id
         );
@@ -113,139 +109,212 @@ const Dashboard = () => {
     }));
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-12 space-y-12">
-      {/* Title */}
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-[#4169E1] mb-2">Dashboard</h1>
-        <p className="text-gray-600">
-          Track your quiz progress and performance over time.
-        </p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30">
+      <div className="max-w-6xl mx-auto px-4 py-12 space-y-12">
+        {/* Hero Section */}
+        <div className="text-center space-y-3">
+          <h1 className="text-5xl font-extrabold bg-gradient-to-r from-[#4169E1] to-[#3498DB] bg-clip-text text-transparent">
+            Your Dashboard
+          </h1>
+          <p className="text-gray-600 text-lg">
+            Track your journey to mastery, one quiz at a time.
+          </p>
+        </div>
 
-      {/* Top Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <StatCard
-          icon={<AiOutlineStar className="w-6 h-6 text-[#28B463]" />}
-          value={aggregateStats.correct}
-          label="Questions Correct"
-          gradient="from-[#28B463]/10 to-[#28B463]/20"
-        />
-        <StatCard
-          icon={<AiOutlineBook className="w-6 h-6 text-[#3498DB]" />}
-          value={aggregateStats.total}
-          label="Total Attempted"
-          gradient="from-[#3498DB]/10 to-[#3498DB]/20"
-        />
-        <StatCard
-          icon={<AiOutlineTrophy className="w-6 h-6 text-[#4169E1]" />}
-          value={`${overallAccuracy}%`}
-          label="Accuracy Rate"
-          gradient="from-[#4169E1]/10 to-[#7b1fa2]/20"
-        />
-      </div>
+        {/* Top Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <StatCard
+            icon={<AiOutlineStar className="w-6 h-6 text-[#28B463]" />}
+            value={aggregateStats.correct}
+            label="Questions Correct"
+            iconBg="bg-[#28B463]/10"
+          />
+          <StatCard
+            icon={<AiOutlineBook className="w-6 h-6 text-[#3498DB]" />}
+            value={aggregateStats.total}
+            label="Total Attempted"
+            iconBg="bg-[#3498DB]/10"
+          />
+          <StatCard
+            icon={<AiOutlineTrophy className="w-6 h-6 text-[#4169E1]" />}
+            value={`${overallAccuracy}%`}
+            label="Accuracy Rate"
+            iconBg="bg-[#4169E1]/10"
+          />
+        </div>
 
-      {/* Motivation message */}
-      <div className="text-center text-gray-600 text-sm">
-        {overallAccuracy >= 80
-          ? "Excellent performance! Keep it up! 🌟"
-          : overallAccuracy >= 60
-          ? "Good work — there's room to improve. 💪"
-          : aggregateStats.total === 0
-          ? "Start taking quizzes to see your stats! 🚀"
-          : "Keep practicing to improve your scores! 📚"}
-      </div>
+        {/* Motivation Banner */}
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#4169E1] to-[#28B463] p-6 text-center shadow-lg">
+          <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
+          <p className="relative text-white text-lg font-semibold">
+            {overallAccuracy >= 80
+              ? "🌟 Outstanding! You're crushing it!"
+              : overallAccuracy >= 60
+              ? "💪 Great progress! Keep pushing forward!"
+              : aggregateStats.total === 0
+              ? "🚀 Ready to start your learning journey?"
+              : "📚 Practice makes perfect. You've got this!"}
+          </p>
+        </div>
 
-      {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
-        <button
-          onClick={handleResetProgress}
-          className="px-6 py-2 rounded-lg font-semibold border border-[#C0392B]/30 text-[#C0392B] bg-[#C0392B]/5 hover:bg-[#C0392B]/10 transition-all"
-        >
-          Reset All Progress
-        </button>
-        <button
-          onClick={handleExportProgress}
-          className="px-6 py-2 rounded-lg font-semibold border border-[#3498DB]/30 text-[#3498DB] bg-[#3498DB]/5 hover:bg-[#3498DB]/10 transition-all"
-        >
-          Export Progress
-        </button>
-        <button
-          onClick={() => document.getElementById("importProgressInput").click()}
-          className="px-6 py-2 rounded-lg font-semibold border border-[#28B463]/30 text-[#28B463] bg-[#28B463]/5 hover:bg-[#28B463]/10 transition-all"
-        >
-          Import Progress
-        </button>
-        <input
-          id="importProgressInput"
-          type="file"
-          accept=".json"
-          onChange={handleImportProgress}
-          className="hidden"
-        />
-      </div>
+        {/* Action Buttons */}
+        <div className="flex flex-wrap justify-center gap-4">
+          <ActionButton
+            onClick={handleResetProgress}
+            color="red"
+            icon="🗑️"
+            label="Reset All Progress"
+          />
+          <ActionButton
+            onClick={handleExportProgress}
+            color="blue"
+            icon="📥"
+            label="Export Progress"
+          />
+          <ActionButton
+            onClick={() => document.getElementById("importProgressInput").click()}
+            color="green"
+            icon="📤"
+            label="Import Progress"
+          />
+          <input
+            id="importProgressInput"
+            type="file"
+            accept=".json"
+            onChange={handleImportProgress}
+            className="hidden"
+          />
+        </div>
 
-      {/* Progress by Module */}
-      <div className="space-y-8">
-        <h2 className="text-2xl font-semibold text-[#3498DB]">
-          Progress by Module
-        </h2>
-        {moduleStats.map((module) => (
-          <div key={module.moduleId} className="space-y-4">
-            <h3 className="text-xl font-semibold text-[#4169E1]">
-              {module.moduleName}
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {module.weeks.map((week) => (
-                <div
-                  key={week.weekId}
-                  className="p-4 rounded-lg border border-[#3498DB]/30 bg-gradient-to-br from-[#3498DB]/5 to-[#4169E1]/10 hover:shadow-md transition-all"
-                >
-                  <h4 className="text-lg font-medium text-[#3498DB] mb-1">
-                    {week.weekName}
-                  </h4>
-                  <p className="text-gray-600 text-sm mb-2">
-                    {week.stats.correct} / {week.stats.total} correct (
-                    {week.accuracy}%)
-                  </p>
-
-                  {/* ✅ Visual progress bar */}
-                  <div className="h-2 bg-gray-200 rounded-full overflow-hidden mb-2">
-                    <div
-                      className="h-full bg-[#4169E1] transition-all duration-300"
-                      style={{ width: `${week.accuracy}%` }}
-                    />
-                  </div>
-
-                  <p className="text-xs text-gray-500 mb-2">
-                    {week.completedQuizzes}/{week.totalQuizzes} quizzes completed
-                  </p>
-
-                  <Link
-                    to={`/modules/${module.moduleId}/${week.weekId}`}
-                    className="inline-block text-sm text-[#4169E1] hover:text-[#3498DB] transition-colors font-semibold"
-                    aria-label={`Go to ${week.weekName} quizzes`}
-                  >
-                    {week.stats.total > 0 ? "Continue" : "Start"} →
-                  </Link>
-                </div>
-              ))}
-            </div>
+        {/* Progress by Module */}
+        <div className="space-y-10">
+          <div className="flex items-center space-x-3">
+            <div className="h-1 flex-1 bg-gradient-to-r from-[#4169E1] to-transparent rounded-full"></div>
+            <h2 className="text-3xl font-bold text-[#3498DB]">Your Progress</h2>
+            <div className="h-1 flex-1 bg-gradient-to-l from-[#4169E1] to-transparent rounded-full"></div>
           </div>
-        ))}
+
+          {moduleStats.map((module, moduleIndex) => (
+            <div
+              key={module.moduleId}
+              className="space-y-6 animate-fadeIn"
+              style={{ animationDelay: `${moduleIndex * 100}ms` }}
+            >
+              <h3 className="text-2xl font-bold text-[#4169E1] flex items-center space-x-2">
+                <span className="w-2 h-8 bg-gradient-to-b from-[#4169E1] to-[#3498DB] rounded-full"></span>
+                <span>{module.moduleName}</span>
+              </h3>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {module.weeks.map((week, weekIndex) => (
+                  <WeekCard
+                    key={week.weekId}
+                    week={week}
+                    moduleId={module.moduleId}
+                    delay={weekIndex * 50}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
-// ✅ Reusable StatCard Component
-const StatCard = ({ icon, value, label, gradient }) => (
-  <div
-    className={`rounded-xl p-6 text-center border shadow-sm bg-gradient-to-br ${gradient} border-gray-200 hover:shadow-md transition-transform hover:-translate-y-1`}
-  >
-    <div className="flex justify-center mb-2">{icon}</div>
-    <div className="text-2xl font-bold">{value}</div>
-    <div className="text-gray-600 text-sm">{label}</div>
+const StatCard = ({ icon, value, label, iconBg }) => (
+  <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+    <div className="flex items-center space-x-4">
+      <div className={`${iconBg} p-3 rounded-lg`}>{icon}</div>
+      <div className="flex-1">
+        <div className="text-3xl font-bold text-gray-800">{value}</div>
+        <div className="text-sm text-gray-500 font-medium">{label}</div>
+      </div>
+    </div>
   </div>
 );
+
+const ActionButton = ({ onClick, color, icon, label }) => {
+  const colors = {
+    red: "border-[#C0392B]/30 text-[#C0392B] bg-[#C0392B]/5 hover:bg-[#C0392B]/15",
+    blue: "border-[#3498DB]/30 text-[#3498DB] bg-[#3498DB]/5 hover:bg-[#3498DB]/15",
+    green: "border-[#28B463]/30 text-[#28B463] bg-[#28B463]/5 hover:bg-[#28B463]/15",
+  };
+
+  return (
+    <button
+      onClick={onClick}
+      className={`px-6 py-3 rounded-xl font-semibold border-2 transition-all duration-300 
+        hover:scale-105 hover:shadow-lg flex items-center space-x-2 ${colors[color]}`}
+    >
+      <span className="text-xl">{icon}</span>
+      <span>{label}</span>
+    </button>
+  );
+};
+
+const WeekCard = ({ week, moduleId, delay }) => {
+  const getProgressColor = (accuracy) => {
+    if (accuracy >= 80) return "bg-gradient-to-r from-[#28B463] to-[#28B463]/80";
+    if (accuracy >= 60) return "bg-gradient-to-r from-[#3498DB] to-[#4169E1]";
+    if (accuracy >= 40) return "bg-gradient-to-r from-[#FFC300] to-[#E67E22]";
+    return "bg-gradient-to-r from-[#C0392B] to-[#C0392B]/80";
+  };
+
+  const getBadgeColor = (accuracy) => {
+    if (accuracy >= 80) return "bg-[#28B463]/20 text-[#28B463]";
+    if (accuracy >= 60) return "bg-[#3498DB]/20 text-[#3498DB]";
+    if (accuracy >= 40) return "bg-[#FFC300]/20 text-[#E67E22]";
+    return "bg-[#C0392B]/20 text-[#C0392B]";
+  };
+
+  return (
+    <div
+      className="group relative p-6 rounded-2xl border-2 border-gray-200 bg-white 
+        hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 animate-fadeInUp overflow-hidden"
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-[#4169E1]/5 to-[#3498DB]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      
+      <div className="relative z-10 space-y-4">
+        <div className="flex justify-between items-start">
+          <h4 className="text-xl font-bold text-[#3498DB] group-hover:text-[#4169E1] transition-colors">
+            {week.weekName}
+          </h4>
+          <span className={`px-3 py-1 rounded-full text-xs font-bold ${getBadgeColor(week.accuracy)}`}>
+            {week.accuracy}%
+          </span>
+        </div>
+
+        <div className="space-y-2">
+          <div className="flex justify-between text-sm text-gray-600">
+            <span>{week.stats.correct} / {week.stats.total} correct</span>
+            <span>{week.completedQuizzes}/{week.totalQuizzes} quizzes</span>
+          </div>
+
+          <div className="relative h-3 bg-gray-200 rounded-full overflow-hidden">
+            <div
+              className={`h-full ${getProgressColor(week.accuracy)} progress-bar-animated shadow-lg transition-all duration-1000 ease-out`}
+              style={{ width: `${week.accuracy}%`, animationDelay: `${delay}ms` }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shine"></div>
+            </div>
+          </div>
+        </div>
+
+        <Link
+          to={`/modules/${moduleId}/${week.weekId}`}
+          className="inline-flex items-center space-x-2 text-[#4169E1] hover:text-[#3498DB] 
+            font-semibold transition-all group-hover:translate-x-1"
+          aria-label={`Go to ${week.weekName} quizzes`}
+        >
+          <span>{week.stats.total > 0 ? "Continue" : "Start"}</span>
+          <span className="text-xl">→</span>
+        </Link>
+      </div>
+    </div>
+  );
+};
 
 export default Dashboard;
