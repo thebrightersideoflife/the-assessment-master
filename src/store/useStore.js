@@ -13,6 +13,9 @@ const useStore = create(
       // Exam state per examId
       exams: {},
       
+      // Exam attempt counter
+      examAttempts: {}, // { examId: attemptCount }
+      
       // Streak tracking
       streaks: {
         lastActivityDate: null,
@@ -64,6 +67,11 @@ const useStore = create(
         );
       },
 
+      // Get exam attempt count
+      getExamAttemptCount: (examId) => {
+        return get().examAttempts[examId] || 0;
+      },
+
       // Initialize exam (called when exam starts)
       initializeExam: (examId) =>
         set((state) => {
@@ -71,6 +79,10 @@ const useStore = create(
           if (state.exams[examId]?.submitted) {
             return state;
           }
+
+          // Increment attempt counter
+          const currentAttempts = state.examAttempts[examId] || 0;
+          const newAttemptNumber = currentAttempts + 1;
 
           return {
             exams: {
@@ -81,6 +93,10 @@ const useStore = create(
                 submitted: false,
                 results: null,
               },
+            },
+            examAttempts: {
+              ...state.examAttempts,
+              [examId]: newAttemptNumber,
             },
           };
         }),
@@ -94,7 +110,6 @@ const useStore = create(
             submitted: false,
             results: null,
           };
-
           return {
             exams: {
               ...state.exams,
@@ -118,7 +133,6 @@ const useStore = create(
             submitted: false,
             results: null,
           };
-
           return {
             exams: {
               ...state.exams,
@@ -128,6 +142,7 @@ const useStore = create(
                 results: {
                   ...results,
                   submittedAt: Date.now(),
+                  attemptNumber: state.examAttempts[examId] || 1,
                 },
               },
             },
@@ -145,6 +160,7 @@ const useStore = create(
         set((state) => {
           const newExams = { ...state.exams };
           delete newExams[examId];
+          // Note: We DON'T reset the attempt counter - it keeps incrementing
           return { exams: newExams };
         }),
 
@@ -312,6 +328,7 @@ const useStore = create(
         set(() => ({
           quizzes: {},
           exams: {},
+          examAttempts: {},
           streaks: { lastActivityDate: null, currentStreak: 0, longestStreak: 0 },
           moduleVisibility: modules.reduce((acc, mod) => ({
             ...acc,
@@ -331,10 +348,11 @@ const useStore = create(
     }),
     {
       name: 'quiz-storage',
-      version: 4, // Incremented for exam support
+      version: 5, // Incremented for attempt tracking
       partialize: (state) => ({
         quizzes: state.quizzes,
         exams: state.exams,
+        examAttempts: state.examAttempts,
         streaks: state.streaks,
         moduleVisibility: state.moduleVisibility,
       }),
@@ -367,10 +385,16 @@ const useStore = create(
         }
         
         if (version < 4) {
-          // Add exams object for version 4
           return {
             ...persistedState,
             exams: persistedState.exams || {},
+          };
+        }
+
+        if (version < 5) {
+          return {
+            ...persistedState,
+            examAttempts: persistedState.examAttempts || {},
           };
         }
         

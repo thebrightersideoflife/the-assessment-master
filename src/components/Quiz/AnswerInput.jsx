@@ -38,9 +38,9 @@ const AnswerInput = ({
   const inputRef = useRef(null);
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !disabled && value.trim()) {
-      // ✅ FIXED: Just pass the value, let Question.jsx handle validation
-      onSubmit(value);
+    const safeValue = value || '';
+    if (e.key === 'Enter' && !disabled && safeValue.trim()) {
+      onSubmit(safeValue);
     }
   };
 
@@ -62,10 +62,64 @@ const AnswerInput = ({
     return classes;
   };
 
-  // ✅ FIXED: Simple handler - no validation, just pass value up
   const handleCheckAnswer = () => {
-    if (!value.trim() || disabled) return;
-    onSubmit(value);
+    const safeValue = value || '';
+    if (!safeValue.trim() || disabled) return;
+    onSubmit(safeValue);
+  };
+
+  // Generate helpful hints based on user's incorrect answer
+  const generateHint = () => {
+    if (!value || isCorrect) return null;
+    
+    const userVal = value.trim().toLowerCase();
+    const hasNumber = /\d/.test(userVal);
+    const hasUnit = /[a-z]/i.test(userVal.replace(/[0-9.,\s]/g, ''));
+    
+    // Common mistake hints
+    const hints = [];
+    
+    // Check if answer is close numerically
+    const userNum = parseFloat(userVal.replace(/[^0-9.-]/g, ''));
+    if (!isNaN(userNum) && Array.isArray(correctAnswer)) {
+      const correctNums = correctAnswer
+        .map(ans => parseFloat(String(ans).replace(/[^0-9.-]/g, '')))
+        .filter(n => !isNaN(n));
+      
+      const closest = correctNums.reduce((prev, curr) => 
+        Math.abs(curr - userNum) < Math.abs(prev - userNum) ? curr : prev
+      , Infinity);
+      
+      if (Math.abs(closest - userNum) / Math.abs(closest) < 0.1) {
+        hints.push("You're close! Double-check your calculation or rounding.");
+      }
+    }
+    
+    // Unit-related hints
+    if (questionOptions.options?.requiredUnit && !hasUnit) {
+      hints.push(`Don't forget to include the unit: ${questionOptions.options.requiredUnit}`);
+    }
+    
+    if (questionOptions.options?.acceptedUnits?.length > 0 && hasUnit) {
+      hints.push(`Make sure you're using an accepted unit: ${questionOptions.options.acceptedUnits.join(', ')}`);
+    }
+    
+    // Symbolic answer hints
+    if (!hasNumber && questionOptions.options?.allowSymbolic) {
+      hints.push("Check your algebraic simplification. Remember to use ^ for exponents (e.g., x^2).");
+    }
+    
+    // Fraction vs decimal
+    if (userVal.includes('/') && correctAnswer.some(ans => String(ans).includes('.'))) {
+      hints.push("Try converting your fraction to a decimal, or vice versa.");
+    }
+    
+    // Sign errors
+    if (hasNumber && userNum < 0 && correctNums && correctNums.every(n => n > 0)) {
+      hints.push("Check the sign of your answer. Should it be positive or negative?");
+    }
+    
+    return hints.length > 0 ? hints : ["Review the question carefully and check your work step by step."];
   };
 
   // Unified feedback logic
@@ -98,35 +152,54 @@ const AnswerInput = ({
     }
 
     // Default feedback
+    const hints = generateHint();
+    
     return (
-      <div
-        className={`font-semibold mt-4 flex items-center gap-2 ${
-          isCorrect ? 'text-[#28B463]' : 'text-[#C0392B]'
-        }`}
-      >
-        {isCorrect ? (
-          <AiOutlineCheck className="w-5 h-5" />
-        ) : (
-          <AiOutlineClose className="w-5 h-5" />
-        )}
-        <span>
+      <div className="mt-4 space-y-3">
+        <div
+          className={`font-semibold flex items-center gap-2 ${
+            isCorrect ? 'text-[#28B463]' : 'text-[#C0392B]'
+          }`}
+        >
           {isCorrect ? (
-            'Correct! Well done.'
+            <AiOutlineCheck className="w-5 h-5" />
           ) : (
-            <span className="flex items-center gap-2 flex-wrap">
-              <span>Incorrect. The answer was:</span>
-              <span className="inline-flex items-center">
-                {Array.isArray(correctAnswer)
-                  ? correctAnswer.map((ans, i) => (
-                      <span key={i} className="mx-1">
-                        {renderMath(ans)}
-                      </span>
-                    ))
-                  : renderMath(correctAnswer)}
-              </span>
-            </span>
+            <AiOutlineClose className="w-5 h-5" />
           )}
-        </span>
+          <span>
+            {isCorrect ? (
+              'Correct! Well done.'
+            ) : (
+              <span className="flex items-center gap-2 flex-wrap">
+                <span>Incorrect. The answer was:</span>
+                <span className="inline-flex items-center">
+                  {Array.isArray(correctAnswer)
+                    ? correctAnswer.map((ans, i) => (
+                        <span key={i} className="mx-1">
+                          {renderMath(ans)}
+                          {i < correctAnswer.length - 1 && (
+                            <span className="text-gray-500 mx-1">or</span>
+                          )}
+                        </span>
+                      ))
+                    : renderMath(correctAnswer)}
+                </span>
+              </span>
+            )}
+          </span>
+        </div>
+        
+        {/* Show helpful hints for incorrect answers */}
+        {!isCorrect && hints && hints.length > 0 && (
+          <div className="bg-blue-50 border-l-4 border-blue-400 p-3 rounded">
+            <p className="text-sm font-semibold text-blue-800 mb-1">💡 Hint:</p>
+            <ul className="text-sm text-blue-700 space-y-1">
+              {hints.map((hint, i) => (
+                <li key={i}>{hint}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     );
   };
@@ -148,8 +221,8 @@ const AnswerInput = ({
         {!disabled && (
           <button
             onClick={handleCheckAnswer}
-            disabled={!value.trim()}
-            className="bg-gradient-to-r from-[#4169E1] to-[#3498DB] text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all min-w-36 hover:from-[#3498DB] hover:to-[#4169E1] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            disabled={!(value || '').trim()}
+            className="px-6 py-3 bg-gradient-to-r from-[#4169E1] to-[#3498DB] text-white rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:hover:shadow-none"
           >
             Check Answer
           </button>

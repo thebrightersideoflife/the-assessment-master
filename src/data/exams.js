@@ -799,7 +799,7 @@ export const exams = [
       },
       
       {
-        id: "exam1_q30",
+        id: "exam2_q30",
         sectionId: "section_3",
         questionNumber: 30,
         type: "open-ended",
@@ -824,7 +824,31 @@ export const exams = [
           "**Answer: 3**"
       }
     ]
+  },
+
+  //************************************************************************************************************************** */
+
+{
+    id: "ITMTB_EXAM2",
+    moduleId: "ITMTB",
+    title: "ITMTB Final Exam",
+    description: "Not yet set",
+    timeLimit: 120, // minutes (optional, set to null for no limit)
+    passingScore: 70, // percentage
+    
+    // Sections organize the exam
+    sections: [
+      {
+        id: "section_1",
+        title: "Section A: Not yet set",
+        description: "Coming soon...",
+        instructions: "Contact the founder for more info.",
+      },
+    ],
+    
+    // Questions for the exam
   }
+
 ];
 
 // Export utility functions for working with exams

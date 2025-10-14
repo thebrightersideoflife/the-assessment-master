@@ -51,16 +51,23 @@ code {
   animation: slideDown 0.3s ease-out;
 }
 
-/* Dashboard animations */
+/* Fade-in animation for confirmation message */
 @keyframes fadeIn {
   from {
     opacity: 0;
+    transform: translateY(-10px);
   }
   to {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Fade-in-up animation for dashboard */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -72,6 +79,12 @@ code {
   }
 }
 
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+/* Shine animation */
 @keyframes shine {
   0% {
     transform: translateX(-100%);
@@ -81,27 +94,33 @@ code {
   }
 }
 
+.animate-shine {
+  animation: shine 2s infinite;
+}
+
+/* Progress bar animation */
 @keyframes progressGrow {
   from {
     width: 0;
   }
 }
 
-.animate-fadeIn {
-  animation: fadeIn 0.6s ease-out forwards;
-}
-
-.animate-fadeInUp {
-  animation: fadeInUp 0.6s ease-out forwards;
-  opacity: 0;
-}
-
-.animate-shine {
-  animation: shine 2s infinite;
-}
-
 .progress-bar-animated {
   animation: progressGrow 1s ease-out forwards;
+}
+
+/* Pulse animation for timer warning */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 /* Reduced motion preference */
