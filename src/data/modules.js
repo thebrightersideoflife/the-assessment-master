@@ -1,6 +1,4 @@
 // src/data/modules.js
-import { formulaSheets } from "./formulaSheets";
-
 export const modules = [
   {
     id: "ITMTA",

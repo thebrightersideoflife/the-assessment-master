@@ -3,7 +3,6 @@ import { AiOutlineCheck, AiOutlineClose, AiOutlineInfoCircle } from 'react-icons
 import { InlineMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
 import MathSymbolPalette from './MathSymbolPalette';
-import { AnswerValidator } from '../../utils/answerValidator';
 
 // Helper to render text with LaTeX or plain fallback
 const renderMath = (text) => {
@@ -39,8 +38,9 @@ const AnswerInput = ({
   const inputRef = useRef(null);
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !disabled) {
-      handleCheckAnswer();
+    if (e.key === 'Enter' && !disabled && value.trim()) {
+      // ✅ FIXED: Just pass the value, let Question.jsx handle validation
+      onSubmit(value);
     }
   };
 
@@ -62,32 +62,10 @@ const AnswerInput = ({
     return classes;
   };
 
+  // ✅ FIXED: Simple handler - no validation, just pass value up
   const handleCheckAnswer = () => {
-    if (!value.trim()) return;
-
-    const { correctAnswers = [], options = {} } = questionOptions;
-
-    // Use the integrated validator
-    const validationResult = AnswerValidator.validate(value, correctAnswers, options);
-
-    if (validationResult.equivalent) {
-      onSubmit({ 
-        isCorrect: true, 
-        method: validationResult.method,
-        message: validationResult.message 
-      });
-    } else if (validationResult.unitError) {
-      onSubmit({
-        isCorrect: false,
-        message: validationResult.message,
-        unitError: true,
-      });
-    } else {
-      onSubmit({ 
-        isCorrect: false,
-        message: validationResult.message 
-      });
-    }
+    if (!value.trim() || disabled) return;
+    onSubmit(value);
   };
 
   // Unified feedback logic
@@ -170,7 +148,8 @@ const AnswerInput = ({
         {!disabled && (
           <button
             onClick={handleCheckAnswer}
-            className="bg-gradient-to-r from-[#4169E1] to-[#3498DB] text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all min-w-36 hover:from-[#3498DB] hover:to-[#4169E1]"
+            disabled={!value.trim()}
+            className="bg-gradient-to-r from-[#4169E1] to-[#3498DB] text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all min-w-36 hover:from-[#3498DB] hover:to-[#4169E1] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
           >
             Check Answer
           </button>

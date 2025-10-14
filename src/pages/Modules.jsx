@@ -1,128 +1,145 @@
-import React from 'react';
-import { Link, useParams } from 'react-router-dom';
-import Breadcrumb from '../components/UI/Breadcrumb';
-import { modules } from '../data/modules';
-import useStore from '../store/useStore';
+import React, { useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import Breadcrumb from "../components/UI/Breadcrumb";
+import { modules } from "../data/modules";
+import ExamCard from "../components/Quiz/ExamCard";
+import { renderMath } from "../utils/mathRenderer";
+import useStore from "../store/useStore";
 
 const Modules = () => {
   const { moduleId } = useParams();
   const { isModuleVisible } = useStore();
 
-  const selectedModule = moduleId ? modules.find((m) => m.id === moduleId && isModuleVisible(m.id)) : null;
+  const selectedModule = moduleId
+    ? modules.find((m) => m.id === moduleId && isModuleVisible(m.id))
+    : null;
 
-  // Redirect if module is hidden or not found
+  useEffect(() => {
+    renderMath();
+  }, [moduleId]);
+
+  // ──────────────────────────────────────────────
+  // Case 1: Module not found or hidden
+  // ──────────────────────────────────────────────
   if (moduleId && !selectedModule) {
     return (
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 animate-fade-in">
         <Breadcrumb
           items={[
-            { label: 'Home', path: '/' },
-            { label: 'Modules', path: '/modules' },
+            { label: "Home", path: "/" },
+            { label: "Modules", path: "/modules" },
           ]}
         />
-        <div className="rounded-2xl border border-[#C0392B]/20 bg-white p-8 shadow-sm text-center">
-          <div className="mx-auto max-w-md space-y-4">
-            <div className="flex justify-center">
-              <svg
-                className="h-16 w-16 text-[#C0392B]"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                />
-              </svg>
-            </div>
-            <h2 className="text-xl font-semibold text-gray-800">Module Not Available</h2>
-            <p className="text-gray-600">
-              This module is currently not accessible. It may be hidden or does not exist.
-            </p>
-            <Link
-              to="/modules"
-              className="inline-block mt-4 bg-gradient-to-r from-[#4169E1] to-[#3498DB] text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-[#4169E1] focus:ring-offset-2"
-              aria-label="Back to modules"
+        <div className="rounded-2xl border border-brand-red/20 bg-white p-10 text-center shadow-sm">
+          <div className="flex justify-center mb-6">
+            <svg
+              className="h-16 w-16 text-brand-red"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              Back to Modules
-            </Link>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 9v2m0 4h.01m-6.938 4h13.856
+                   c1.54 0 2.502-1.667 1.732-3L13.732 4
+                   c-.77-1.333-2.694-1.333-3.464 0L3.34 16
+                   c-.77 1.333.192 3 1.732 3z"
+              />
+            </svg>
           </div>
+
+          <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+            Module Not Available
+          </h2>
+          <p className="text-gray-600 mb-6">
+            This module is currently hidden or does not exist.
+          </p>
+
+          <Link
+            to="/modules"
+            aria-label="Back to modules"
+            className="inline-block bg-gradient-to-r from-brand-darkBlue 
+                       to-brand-blue text-white px-6 py-3 rounded-xl font-semibold
+                       shadow hover:shadow-lg transition-all focus:outline-none
+                       focus:ring-2 focus:ring-brand-darkBlue focus:ring-offset-2"
+          >
+            Back to Modules
+          </Link>
         </div>
       </div>
     );
   }
 
-  // Show weeks/exams for a visible module
+  // ──────────────────────────────────────────────
+  // Case 2: Single visible module (Weeks → Exams)
+  // ──────────────────────────────────────────────
   if (selectedModule) {
     return (
-      <div className="min-h-screen">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          {/* Fixed position breadcrumb and header */}
-          <div className="mb-8">
-            <Breadcrumb
-              items={[
-                { label: 'Home', path: '/' },
-                { label: 'Modules', path: '/modules' },
-                { label: selectedModule.name },
-              ]}
-            />
-            
-            <header className="mt-8 space-y-2">
-              <h1 className="text-3xl font-bold text-gray-800 tracking-tight">
-                {selectedModule.name}
-              </h1>
-              <p className="text-gray-500">
-                Choose a week or exam from the {selectedModule.name} module.
-              </p>
-            </header>
-          </div>
+      <div className="min-h-screen bg-gray-50 animate-fade-in">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+          <Breadcrumb
+            items={[
+              { label: "Home", path: "/" },
+              { label: "Modules", path: "/modules" },
+              { label: selectedModule.name },
+            ]}
+          />
 
-          {/* Flexible content container that expands */}
-          <div className="space-y-12 pb-20">
-            {selectedModule.weeks.length > 0 && (
-              <section>
-                <h2 className="text-lg font-semibold text-gray-700 mb-6">Weeks</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {selectedModule.weeks.map((week, index) => (
-                    <div key={week.id} className="relative">
-                      <Link
-                        to={`/modules/${selectedModule.id}/${week.id}`}
-                        className="group block rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md hover:border-[#4169E1]/40 transition-all"
-                        aria-label={`Go to ${week.name}`}
-                      >
-                        <div className="flex flex-col">
-                          <span className="text-sm text-gray-400 mb-2">{week.name}</span>
-                          <h3 className="text-lg font-medium text-gray-800 group-hover:text-[#4169E1] transition-colors">
-                            {week.title}
-                          </h3>
-                        </div>
-                      </Link>
-                    </div>
-                  ))}
-                </div>
-              </section>
+          <header className="mt-10 mb-12 text-center">
+            <h1 className="text-4xl font-bold text-gray-800 mb-2 tracking-tight">
+              {selectedModule.name}
+            </h1>
+            <p className="text-gray-500 text-lg">
+              Choose a week or exam from this module.
+            </p>
+
+            {selectedModule.formulaSheet?.available && (
+              <Link
+                to={selectedModule.formulaSheet.path}
+                className="inline-block mt-5 bg-blue-100 text-blue-700
+                           px-5 py-2 rounded-lg font-semibold hover:bg-blue-200
+                           transition-all"
+              >
+                📋 View Formula Sheet
+              </Link>
             )}
+          </header>
 
-            {selectedModule.exams?.length > 0 && (
-              <section className="mt-16">
-                <h2 className="text-lg font-semibold text-gray-700 mb-6">Exams</h2>
+          <div className="space-y-16">
+            {/* Weeks Section */}
+            {selectedModule.weeks?.length > 0 && (
+              <section>
+                <h2 className="text-xl font-semibold text-gray-700 mb-8">
+                  📅 Weeks
+                </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {selectedModule.exams.map((exam) => (
+                  {selectedModule.weeks.map((week) => (
                     <Link
-                      key={exam.id}
-                      to={`/quizzes/module/${selectedModule.id}/${exam.id}`}
-                      className="group block rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md hover:border-[#28B463]/40 transition-all"
-                      aria-label={`Start ${exam.name}`}
+                      key={week.id}
+                      to={`/modules/${selectedModule.id}/${week.id}`}
+                      aria-label={`Go to ${week.name}`}
+                      className="group block rounded-2xl border border-gray-200
+                                 bg-white p-6 shadow-sm hover:shadow-md
+                                 hover:border-brand-darkBlue/40 transition-all
+                                 animate-fade-in"
                     >
                       <div className="flex flex-col">
-                        <span className="text-sm text-gray-400 mb-2">Exam</span>
-                        <h3 className="text-lg font-medium text-gray-800 group-hover:text-[#28B463] transition-colors">
-                          {exam.name}
+                        <span className="text-sm text-gray-400 mb-1">
+                          {week.name}
+                        </span>
+                        <h3
+                          className="text-lg font-medium text-gray-800
+                                     group-hover:text-brand-darkBlue transition-colors"
+                        >
+                          {week.title}
                         </h3>
-                        {exam.description && (
-                          <p className="mt-2 text-sm text-gray-500">{exam.description}</p>
+                        {week.topics?.length > 0 && (
+                          <p className="mt-2 text-xs text-gray-500">
+                            {week.topics.length}{" "}
+                            {week.topics.length === 1 ? "topic" : "topics"}
+                          </p>
                         )}
                       </div>
                     </Link>
@@ -130,47 +147,86 @@ const Modules = () => {
                 </div>
               </section>
             )}
+
+            {/* Exams Section — placed at bottom */}
+            {selectedModule.exams?.length > 0 && (
+              <section>
+                <h2 className="text-xl font-semibold text-gray-700 mb-8">
+                  📝 Exams
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {selectedModule.exams.map((exam) => (
+                    <ExamCard
+                      key={exam.id}
+                      exam={exam}
+                      moduleId={selectedModule.id}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
         </div>
       </div>
     );
   }
 
-  // Show all visible modules
+  // ──────────────────────────────────────────────
+  // Case 3: All modules view
+  // ──────────────────────────────────────────────
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 animate-fade-in">
       <Breadcrumb
         items={[
-          { label: 'Home', path: '/' },
-          { label: 'Modules' },
+          { label: "Home", path: "/" },
+          { label: "Modules" },
         ]}
       />
-      
-      <header className="space-y-2 mb-8">
-        <h1 className="text-3xl font-bold text-gray-800 tracking-tight">Modules</h1>
-        <p className="text-gray-500">Browse all available modules below.</p>
+
+      <header className="text-center mb-12">
+        <h1 className="text-4xl font-bold text-gray-800 mb-2 tracking-tight">
+          📚 Modules
+        </h1>
+        <p className="text-gray-500 text-lg">
+          Browse all available modules below.
+        </p>
       </header>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {modules
           .filter((mod) => isModuleVisible(mod.id))
           .map((m) => (
             <Link
               key={m.id}
               to={`/modules/${m.id}`}
-              className="group block rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md hover:border-[#4169E1]/40 transition-all"
               aria-label={`Explore ${m.name}`}
+              className="group block rounded-2xl border border-gray-200
+                         bg-white p-8 shadow-sm hover:shadow-md
+                         hover:border-brand-darkBlue/40 transition-all
+                         animate-fade-in"
             >
-              <div className="flex flex-col">
-                <h2 className="text-lg font-semibold text-gray-800 group-hover:text-[#4169E1] transition-colors">
-                  {m.name}
-                </h2>
-                {m.weeks?.length > 0 && (
-                  <p className="mt-3 text-sm text-gray-500">
-                    {m.weeks.length} {m.weeks.length === 1 ? 'week' : 'weeks'}
-                    {m.exams?.length > 0 && ` • ${m.exams.length} ${m.exams.length === 1 ? 'exam' : 'exams'}`}
-                  </p>
-                )}
+              <div className="flex flex-col justify-between h-full">
+                <div>
+                  <h2
+                    className="text-xl font-semibold text-gray-800 mb-2
+                               group-hover:text-brand-darkBlue transition-colors"
+                  >
+                    {m.name}
+                  </h2>
+                  {(m.weeks?.length > 0 || m.exams?.length > 0) && (
+                    <p className="text-sm text-gray-500">
+                      {m.weeks?.length ?? 0}{" "}
+                      {m.weeks?.length === 1 ? "week" : "weeks"}
+                      {m.exams?.length > 0 &&
+                        ` • ${m.exams.length} ${
+                          m.exams.length === 1 ? "exam" : "exams"
+                        }`}
+                    </p>
+                  )}
+                </div>
+                <div className="mt-4 text-brand-darkBlue font-medium text-sm">
+                  Explore →
+                </div>
               </div>
             </Link>
           ))}

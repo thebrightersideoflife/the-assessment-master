@@ -20,8 +20,13 @@ const Question = ({
   const [submitted, setSubmitted] = useState(false);
   const [feedback, setFeedback] = useState(null);
   const [showExplanation, setShowExplanation] = useState(false);
-  const inputRef = useRef(null);
+  const hasSubmittedRef = useRef(false);
   const containerRef = useRef(null);
+
+  // ✅ Safely handle missing correctAnswers
+  const correctAnswers = Array.isArray(question?.correctAnswers)
+    ? question.correctAnswers
+    : [];
 
   // Reset state when the question changes
   useEffect(() => {
@@ -29,7 +34,15 @@ const Question = ({
     setSubmitted(false);
     setFeedback(null);
     setShowExplanation(false);
+    hasSubmittedRef.current = false;
   }, [question?.id, questionIndex]);
+
+  // ✅ Smooth scroll to question feedback after submission
+  useEffect(() => {
+    if (submitted && containerRef.current) {
+      containerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [submitted]);
 
   if (!question) return null;
 
@@ -41,54 +54,59 @@ const Question = ({
     return match ? match[1] : option;
   };
 
-  const handleSubmit = () => {
-    if (!userAnswer.trim()) return;
-
-    let answerToSubmit = userAnswer;
-
-    // For multiple-choice, extract just the letter
-    if (question.type === "multiple-choice") {
-      answerToSubmit = extractOptionLetter(userAnswer);
+  // ✅ FIXED: Single submission handler for BOTH multiple-choice and open-ended
+  const handleSubmit = (answerToSubmit) => {
+    // Prevent duplicate submissions
+    if (hasSubmittedRef.current || submitted) {
+      console.log('[Question] Submit blocked - already submitted');
+      return;
     }
 
-    // Use the integrated AnswerValidator
+    console.log('[Question] Processing submission:', answerToSubmit);
+    hasSubmittedRef.current = true;
+
+    // For multiple-choice, extract just the letter
+    let finalAnswer = answerToSubmit;
+    if (question.type === "multiple-choice") {
+      finalAnswer = extractOptionLetter(answerToSubmit);
+    }
+
+    // ✅ Validate the answer
     const validationResult = AnswerValidator.validate(
-      answerToSubmit,
+      finalAnswer,
       question.correctAnswers || [],
       question.options || {}
     );
 
+    // ✅ Build feedback result
     let result = {};
-
     if (validationResult.equivalent) {
-      // Correct answer
       result = {
         isCorrect: true,
         method: validationResult.method,
         message: validationResult.message,
       };
     } else if (validationResult.unitError) {
-      // Unit error - show specific message
       result = {
         isCorrect: false,
         unitError: true,
         suggestions: [validationResult.message || "Check your units."],
       };
     } else {
-      // Incorrect answer
       result = {
         isCorrect: false,
         suggestions: validationResult.message ? [validationResult.message] : [],
       };
     }
 
-    // Notify parent component
+    // ✅ Call parent's handler ONCE - it handles stats update
     onAnswerSubmit(
-      answerToSubmit,
+      finalAnswer,
       question.id,
       containerRef.current || document.querySelector(".question-container")
     );
 
+    // Update local state
     setSubmitted(true);
     setFeedback(result);
 
@@ -96,6 +114,8 @@ const Question = ({
     if (!result.isCorrect) {
       setShowExplanation(true);
     }
+
+    console.log('[Question] Submission complete');
   };
 
   const handleShowExplanation = () => {
@@ -134,25 +154,27 @@ const Question = ({
           <div className="flex items-center gap-2">
             <span className="text-blue-700 font-semibold">ℹ️ Note:</span>
             <span className="text-blue-700">
-              Please express your answer in <strong>{question.options.requiredUnit}</strong>
+              Please express your answer in{" "}
+              <strong>{question.options.requiredUnit}</strong>
             </span>
           </div>
         </div>
       )}
 
-      {/* Accepted units notice (if no required unit) */}
-      {!question.options?.requiredUnit && 
-       question.options?.acceptedUnits && 
-       question.options.acceptedUnits.length > 0 && (
-        <div className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-lg">
-          <div className="flex items-center gap-2">
-            <span className="text-blue-700 font-semibold">ℹ️ Note:</span>
-            <span className="text-blue-800">
-              Acceptable units: <strong>{question.options.acceptedUnits.join(', ')}</strong>
-            </span>
+      {/* Accepted units notice */}
+      {!question.options?.requiredUnit &&
+        question.options?.acceptedUnits &&
+        question.options.acceptedUnits.length > 0 && (
+          <div className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-lg">
+            <div className="flex items-center gap-2">
+              <span className="text-blue-700 font-semibold">ℹ️ Note:</span>
+              <span className="text-blue-800">
+                Acceptable units:{" "}
+                <strong>{question.options.acceptedUnits.join(", ")}</strong>
+              </span>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
       {/* Multiple Choice Options */}
       {question.type === "multiple-choice" && (
@@ -161,15 +183,15 @@ const Question = ({
             const optionLetter = extractOptionLetter(opt);
             const isSelected = userAnswer === opt;
             const isCorrectOption =
-              submitted && question.correctAnswers.includes(optionLetter);
+              submitted && correctAnswers.includes(optionLetter);
             const isIncorrectSelection =
               submitted && isSelected && !feedback?.isCorrect;
 
             return (
               <button
                 key={idx}
-                disabled={submitted}
-                onClick={() => setUserAnswer(opt)}
+                disabled={submitted || hasSubmittedRef.current}
+                onClick={() => !submitted && !hasSubmittedRef.current && setUserAnswer(opt)}
                 className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
                   submitted
                     ? isCorrectOption
@@ -181,7 +203,7 @@ const Question = ({
                     ? "bg-[#3498DB]/10 border-[#3498DB] text-[#3498DB] shadow-md"
                     : "bg-white hover:bg-gray-50 border-gray-300 hover:border-[#3498DB]/50"
                 } ${
-                  submitted
+                  submitted || hasSubmittedRef.current
                     ? "cursor-not-allowed"
                     : "hover:shadow-md cursor-pointer"
                 }`}
@@ -224,15 +246,14 @@ const Question = ({
           value={userAnswer}
           onChange={setUserAnswer}
           onSubmit={handleSubmit}
-          disabled={submitted}
+          disabled={submitted || hasSubmittedRef.current}
           isCorrect={feedback?.isCorrect}
-          correctAnswer={question.correctAnswers}
+          correctAnswer={correctAnswers}
           questionOptions={{
-            correctAnswers: question.correctAnswers || [],
+            correctAnswers,
             options: question.options || {},
             unitErrorMessage: feedback?.unitError ? feedback.suggestions?.[0] : null,
           }}
-          ref={inputRef}
         />
       )}
 
@@ -241,8 +262,8 @@ const Question = ({
         {!submitted ? (
           question.type === "multiple-choice" && (
             <button
-              onClick={handleSubmit}
-              disabled={!userAnswer.trim()}
+              onClick={() => handleSubmit(userAnswer)}
+              disabled={!userAnswer.trim() || hasSubmittedRef.current}
               className="px-6 py-3 bg-gradient-to-r from-[#4169E1] to-[#3498DB] text-white rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
               Submit Answer
@@ -297,10 +318,10 @@ const Question = ({
             <div className="mt-2 p-3 bg-white/70 rounded-lg border border-gray-200">
               <p className="font-semibold text-gray-800 mb-1">Correct answer:</p>
               <div className="text-gray-700 flex flex-wrap gap-2">
-                {question.correctAnswers?.map((ans, i) => (
+                {correctAnswers.map((ans, i) => (
                   <span key={i} className="inline-flex items-center">
                     {renderMath(ans)}
-                    {i < question.correctAnswers.length - 1 && (
+                    {i < correctAnswers.length - 1 && (
                       <span className="mx-1 text-gray-400">or</span>
                     )}
                   </span>
@@ -313,9 +334,7 @@ const Question = ({
           {showExplanation && question.explanation && (
             <div className="mt-3 p-3 bg-white/70 rounded-lg border border-gray-200">
               <p className="font-semibold text-gray-800 mb-2">Explanation:</p>
-              <div className="text-gray-700">
-                {renderMath(question.explanation)}
-              </div>
+              <div className="text-gray-700">{renderMath(question.explanation)}</div>
             </div>
           )}
 

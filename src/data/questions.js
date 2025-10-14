@@ -77,7 +77,7 @@ export const questions = [
     weekId: "ITMTB_W1",
     type: "open-ended",
     text: "Use six rectangles with midpoints to estimate the area under \\( f(x) = \\frac{1}{1+x^2} \\) on \\([-1,2]\\).",
-    correctAnswers: ["1.901", "2.21", "approximately 1.9", "≈ 1.9"],
+    correctAnswers: ["1.901", "≈1.893", "approximately 1.9", "≈ 1.9"],
     explanation:
       "To estimate the area under $$f(x) = \\frac{1}{1 + x^2}$$ on $$[-1, 2]$$ using the **Midpoint Rule** with six rectangles:\n\n" +
       "**Step 1: Calculate the width of each rectangle**\n" +

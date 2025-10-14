@@ -20,31 +20,40 @@ const UNIT_CONVERSIONS = {
 
 function parseValueAndUnit(input) {
   if (!input || typeof input !== 'string') return { value: null, unit: null, raw: input };
-  
+ 
   let s = input.trim().toLowerCase();
-  s = s.replace(/≈/g, '').replace(/,/g, '.').replace(/\s+/g, '');
   
+  // ✅ NEW: Remove approximation words and symbols FIRST
+  s = s.replace(/approximately|about|roughly|around/gi, '');
+  s = s.replace(/≈/g, '');
+  
+  // ✅ Replace comma with period BEFORE regex matching
+  s = s.replace(/,/g, '.');
+  
+  // Remove extra spaces
+  s = s.replace(/\s+/g, '');
+ 
   // Match number (including scientific notation) followed by optional unit
   const m = s.match(/^([-+]?\d*\.?\d+(?:e[-+]?\d+)?)([a-zµμ^0-9°%]*)$/i);
   if (!m) return { value: null, unit: null, raw: input };
-  
+ 
   const val = parseFloat(m[1]);
   let u = m[2] || null;
-  
+ 
   if (u) {
     u = u.replace(/²/g, '^2').replace(/³/g, '^3').replace('µ', 'u').replace('μ', 'u');
   }
-  
+ 
   return { value: isNaN(val) ? null : val, unit: u, raw: input };
 }
 
 function toSI(value, unit) {
   if (value == null) return null;
   if (!unit) return null;
-  
+ 
   const lookup = UNIT_CONVERSIONS[unit] ?? UNIT_CONVERSIONS[unit.toLowerCase()];
   if (lookup == null) return null;
-  
+ 
   return value * lookup;
 }
 
@@ -54,57 +63,64 @@ function toSI(value, unit) {
 function normalizeSymbolic(raw) {
   if (raw == null) return '';
   let s = String(raw).trim();
-  
+ 
   // Clean LaTeX delimiters
   s = s.replace(/\\\(/g, '').replace(/\\\)/g, '').replace(/\$\$/g, '').replace(/\$/g, '');
+ 
+  // ✅ Remove approximation indicators
+  s = s.replace(/approximately|about|roughly|around/gi, '');
+  s = s.replace(/≈/g, '');
   
+  // ✅ Normalize commas to periods
+  s = s.replace(/,/g, '.');
+ 
   // Replace unicode characters
   s = s.replace(/½/g, '(1/2)').replace(/¼/g, '(1/4)').replace(/¾/g, '(3/4)')
        .replace(/²/g, '^2').replace(/³/g, '^3');
-  
+ 
   // Normalize sqrt
   s = s.replace(/√\s*/g, 'sqrt').replace(/\\sqrt\s*\(?/g, 'sqrt(');
   s = s.replace(/\s+/g, '');
   s = s.replace(/\*\*/g, '^');
-  
+ 
   // Add parentheses for sqrt if missing
   s = s.replace(/sqrt([a-z0-9(])/gi, (_, a) => {
     if (a === '(') return 'sqrt(';
     return 'sqrt(' + a;
   });
   s = s.replace(/sqrt([^\(][^+\-*/^)]*)/g, 'sqrt($1)');
-  
+ 
   // Canonicalize exponent forms
   s = s.replace(/\^\(0?\.5\)/g, '^(1/2)').replace(/\^0\.5/g, '^(1/2)');
   s = s.replace(/\^\(1\/2\)/g, '^(1/2)');
-  
+ 
   // Convert sqrt to exponent form
   s = s.replace(/sqrt\(([^)]+)\)/g, '($1)^(1/2)');
-  
+ 
   // Detect invalid forms like x3 (should be x^3)
   if (/[a-zA-Z][0-9]/.test(s) && !/([a-zA-Z]\^|\^[0-9]|e[+-]?\d)/.test(s)) {
     return null; // Invalid symbolic form
   }
-  
+ 
   // Remove outer parentheses
   while (/^\(([^()]+)\)$/.test(s)) {
     s = s.replace(/^\(([^()]+)\)$/, '$1');
   }
-  
+ 
   // Canonicalize addition order
   const topTerms = splitTopLevel(s, '+');
   if (topTerms.length > 1) {
     topTerms.sort();
     s = topTerms.join('+');
   }
-  
+ 
   return s;
 }
 
 function splitTopLevel(str, sep) {
   const parts = [];
   let depth = 0, buf = '';
-  
+ 
   for (let i = 0; i < str.length; i++) {
     const ch = str[i];
     if (ch === '(') { depth++; buf += ch; continue; }
@@ -112,7 +128,7 @@ function splitTopLevel(str, sep) {
     if (depth === 0 && ch === sep) { parts.push(buf); buf = ''; continue; }
     buf += ch;
   }
-  
+ 
   if (buf) parts.push(buf);
   return parts;
 }
@@ -136,15 +152,38 @@ export class AnswerValidator {
       tolerance: 1e-3,
       ...options
     };
-    
+   
     if (!userAnswer || !Array.isArray(correctAnswers) || correctAnswers.length === 0) {
       return { equivalent: false, message: 'Invalid input', method: 'error' };
+    }
+   
+    // ✅ NEW: Try pure numeric comparison first (for answers like "1.901" vs "approximately 1.9")
+    const userNumeric = this.extractNumericValue(userAnswer);
+    
+    if (userNumeric !== null) {
+      for (const corr of correctAnswers) {
+        const corrNumeric = this.extractNumericValue(corr);
+        
+        if (corrNumeric !== null) {
+          const diff = Math.abs(userNumeric - corrNumeric);
+          const isClose = diff <= Math.abs(corrNumeric) * opts.tolerance || diff <= opts.tolerance;
+          
+          if (isClose) {
+            return {
+              equivalent: true,
+              message: 'Numerically equivalent',
+              method: 'numeric',
+              details: { user: userNumeric, correct: corrNumeric, diff }
+            };
+          }
+        }
+      }
     }
     
     // Strategy 1: Unit-based comparison (numeric with units)
     const userParsed = parseValueAndUnit(userAnswer);
     const anyCorrectHasUnit = correctAnswers.some(a => parseValueAndUnit(a).unit != null);
-    
+   
     if (userParsed.value != null && (userParsed.unit || anyCorrectHasUnit)) {
       // Check required unit
       if (opts.requiredUnit && userParsed.unit !== opts.requiredUnit) {
@@ -155,9 +194,9 @@ export class AnswerValidator {
           method: 'unit'
         };
       }
-      
+     
       // Check accepted units
-      if (opts.acceptedUnits && opts.acceptedUnits.length > 0 && userParsed.unit && 
+      if (opts.acceptedUnits && opts.acceptedUnits.length > 0 && userParsed.unit &&
           !opts.acceptedUnits.includes(userParsed.unit)) {
         return {
           equivalent: false,
@@ -166,20 +205,20 @@ export class AnswerValidator {
           method: 'unit'
         };
       }
-      
+     
       // Compare with each correct answer
       for (const corr of correctAnswers) {
         const cp = parseValueAndUnit(corr);
         if (cp.value == null) continue;
-        
+       
         const userSI = toSI(userParsed.value, userParsed.unit || cp.unit);
         const corrSI = toSI(cp.value, cp.unit || userParsed.unit);
-        
+       
         if (userSI == null || corrSI == null) continue;
-        
+       
         const diff = Math.abs(userSI - corrSI);
         const ok = diff <= Math.abs(corrSI) * opts.tolerance || diff <= opts.tolerance;
-        
+       
         if (ok) {
           return {
             equivalent: true,
@@ -189,7 +228,7 @@ export class AnswerValidator {
           };
         }
       }
-      
+     
       return {
         equivalent: false,
         unitError: false,
@@ -197,11 +236,11 @@ export class AnswerValidator {
         method: 'unit'
       };
     }
-    
+   
     // Strategy 2: Symbolic comparison
     if (opts.allowSymbolic) {
       const nUser = normalizeSymbolic(userAnswer);
-      
+     
       if (nUser === null) {
         return {
           equivalent: false,
@@ -209,11 +248,11 @@ export class AnswerValidator {
           method: 'symbolic'
         };
       }
-      
+     
       for (const corr of correctAnswers) {
         const nCorr = normalizeSymbolic(corr);
         if (nCorr === null) continue;
-        
+       
         if (nUser === nCorr) {
           return {
             equivalent: true,
@@ -224,7 +263,7 @@ export class AnswerValidator {
         }
       }
     }
-    
+   
     // Strategy 3: Fallback text comparison
     const userText = this.basicTextNormalize(userAnswer);
     for (const corr of correctAnswers) {
@@ -232,11 +271,36 @@ export class AnswerValidator {
         return { equivalent: true, message: 'Text match', method: 'text' };
       }
     }
-    
+   
     // No match found
-    return { equivalent: false, message: 'Sometimes you can check your answer by plugging it back in the original equation.', method: 'none' };
+    return { 
+      equivalent: false, 
+      message: 'Answer does not match. Check your calculation or try a different form.',
+      method: 'none' 
+    };
   }
   
+  /**
+   * ✅ NEW: Extract pure numeric value from text (handles "approximately 1.9", "≈1.893", etc.)
+   */
+  static extractNumericValue(input) {
+    if (!input || typeof input !== 'string') return null;
+    
+    // Remove approximation words and symbols
+    let s = input.toLowerCase()
+      .replace(/approximately|about|roughly|around/gi, '')
+      .replace(/≈/g, '')
+      .replace(/,/g, '.') // Handle European decimals
+      .trim();
+    
+    // Extract first number found
+    const match = s.match(/([-+]?\d*\.?\d+(?:e[-+]?\d+)?)/);
+    if (!match) return null;
+    
+    const val = parseFloat(match[1]);
+    return isNaN(val) ? null : val;
+  }
+ 
   /**
    * Basic text normalization for fallback comparison
    */
@@ -244,13 +308,16 @@ export class AnswerValidator {
     if (!s) return '';
     return String(s)
       .toLowerCase()
+      .replace(/approximately|about|roughly|around/gi, '')
+      .replace(/≈/g, '')
+      .replace(/,/g, '.')
       .replace(/\s+/g, ' ')
       .replace(/\$/g, '')
       .replace(/\\left|\\right/g, '')
       .replace(/[{}]/g, '')
       .trim();
   }
-  
+ 
   /**
    * Legacy method for backward compatibility
    */

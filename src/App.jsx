@@ -1,6 +1,6 @@
 // src/App.jsx
 import React, { Suspense, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import { renderMath } from "./utils/mathRenderer";
 import { injectAnimations } from "./utils/gamificationUtils";
@@ -16,6 +16,7 @@ const Week = React.lazy(() => import("./pages/Week"));
 const Modules = React.lazy(() => import("./pages/Modules"));
 const FormulaSheetPage = React.lazy(() => import("./pages/FormulaSheetPage"));
 const Admin = React.lazy(() => import("./pages/Admin"));
+const Exam = React.lazy(() => import("./pages/Exam"));
 
 const NotFound = () => (
   <div className="max-w-4xl mx-auto text-center p-6">
@@ -45,7 +46,6 @@ const Profile = () => (
 function App() {
   injectAnimations();
 
-  // Render math formulas globally on mount
   useEffect(() => {
     renderMath();
   }, []);
@@ -79,20 +79,27 @@ function App() {
               element={<Quiz />} 
             />
 
-            {/* ========== LEGACY QUIZ ROUTES (backward compatibility) ========== */}
-            {/* /quizzes/module/:moduleId/:weekId - Old route, redirects to first quiz */}
+            {/* ========== EXAM ROUTES ========== */}
+            {/* /exam/:examId - Take an exam (e.g., /exam/ITMTB_EXAM1) */}
+            <Route 
+              path="/exam/:examId" 
+              element={<Exam />} 
+            />
+
+            {/* ========== LEGACY/REDIRECT ROUTES ========== */}
+            {/* Old quiz route format - redirect to new format */}
             <Route
               path="/quizzes/module/:moduleId/:weekId"
-              element={<Quiz />}
+              element={<Navigate to="/quiz/:moduleId/:weekId/0" replace />}
             />
             
-            {/* /quizzes/exam/:examId - For standalone exams */}
-            <Route 
-              path="/quizzes/exam/:examId" 
-              element={<Quiz />} 
+            {/* Old exam route - redirect to new format */}
+            <Route
+              path="/quizzes/exam/:examId"
+              element={<Navigate to="/exam/:examId" replace />}
             />
-            
-            {/* /formula-sheets/:moduleId" - For formula-sheets */}
+
+            {/* Formula sheets */}
             <Route
               path="/formula-sheets/:moduleId"
               element={<FormulaSheetPage />}

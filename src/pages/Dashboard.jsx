@@ -8,9 +8,9 @@ import { chunkQuestions } from "../utils/chunkQuestions";
 import { questions } from "../data/questions";
 
 const Dashboard = () => {
-  const { quizzes, getQuizState, resetAllProgress } = useStore();
+  const { quizzes, exams, getQuizState, getExamState, resetAllProgress } = useStore();
 
-  // Aggregate global stats
+  // Aggregate global stats (quizzes + exams)
   const aggregateStats = Object.values(quizzes).reduce(
     (acc, quiz) => ({
       correct: acc.correct + (quiz.stats?.correct || 0),
@@ -19,14 +19,34 @@ const Dashboard = () => {
     { correct: 0, total: 0 }
   );
 
+  // Add exam stats
+  const examStats = Object.values(exams).reduce(
+    (acc, exam) => {
+      if (exam.results) {
+        return {
+          correct: acc.correct + (exam.results.earnedPoints || 0),
+          total: acc.total + (exam.results.totalPoints || 0),
+        };
+      }
+      return acc;
+    },
+    { correct: 0, total: 0 }
+  );
+
+  const totalCorrect = aggregateStats.correct + examStats.correct;
+  const totalAttempted = aggregateStats.total + examStats.total;
   const overallAccuracy =
-    aggregateStats.total > 0
-      ? Math.round((aggregateStats.correct / aggregateStats.total) * 100)
+    totalAttempted > 0
+      ? Math.round((totalCorrect / totalAttempted) * 100)
       : 0;
+
+  // Count completed exams
+  const completedExams = Object.values(exams).filter(e => e.submitted).length;
+  const totalExams = modules.reduce((sum, m) => sum + (m.exams?.length || 0), 0);
 
   // Export progress as JSON
   const handleExportProgress = () => {
-    const data = JSON.stringify(quizzes, null, 2);
+    const data = JSON.stringify({ quizzes, exams }, null, 2);
     const blob = new Blob([data], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -40,12 +60,14 @@ const Dashboard = () => {
   const handleImportProgress = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
     const reader = new FileReader();
     reader.onload = (event) => {
       try {
         const data = JSON.parse(event.target.result);
-        useStore.setState({ quizzes: data });
+        useStore.setState({ 
+          quizzes: data.quizzes || {}, 
+          exams: data.exams || {} 
+        });
         alert("✅ Progress imported successfully!");
         window.location.reload();
       } catch (err) {
@@ -56,15 +78,15 @@ const Dashboard = () => {
     reader.readAsText(file);
   };
 
-  // Reset all quizzes
+  // Reset all quizzes and exams
   const handleResetProgress = () => {
-    if (window.confirm("⚠️ This will delete ALL quiz progress. Are you sure?")) {
+    if (window.confirm("⚠️ This will delete ALL quiz and exam progress. Are you sure?")) {
       resetAllProgress();
       window.location.reload();
     }
   };
 
-  // Build per-module stats
+  // Build per-module stats (weeks + exams)
   const moduleStats = modules
     .filter((module) => module.isVisible !== false)
     .map((module) => ({
@@ -76,7 +98,6 @@ const Dashboard = () => {
         );
         const questionChunks = chunkQuestions(weekQuestions);
         const totalQuizzes = questionChunks.length;
-
         let totalCorrect = 0;
         let totalAnswered = 0;
         let completedQuizzes = 0;
@@ -106,6 +127,21 @@ const Dashboard = () => {
           completedQuizzes,
         };
       }),
+      exams: (module.exams || []).map((exam) => {
+        const examState = getExamState(exam.id);
+        const isCompleted = examState.submitted || false;
+        const results = examState.results || null;
+        
+        return {
+          examId: exam.id,
+          examName: exam.name,
+          isCompleted,
+          percentage: results?.percentage || 0,
+          passed: results?.passed || false,
+          earnedPoints: results?.earnedPoints || 0,
+          totalPoints: results?.totalPoints || exam.questions?.length || 0,
+        };
+      }),
     }));
 
   return (
@@ -125,13 +161,13 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <StatCard
             icon={<AiOutlineStar className="w-6 h-6 text-[#28B463]" />}
-            value={aggregateStats.correct}
-            label="Questions Correct"
+            value={totalCorrect}
+            label="Points Earned"
             iconBg="bg-[#28B463]/10"
           />
           <StatCard
             icon={<AiOutlineBook className="w-6 h-6 text-[#3498DB]" />}
-            value={aggregateStats.total}
+            value={totalAttempted}
             label="Total Attempted"
             iconBg="bg-[#3498DB]/10"
           />
@@ -143,6 +179,28 @@ const Dashboard = () => {
           />
         </div>
 
+        {/* Exam Progress Summary */}
+        {totalExams > 0 && (
+          <div className="bg-white rounded-xl p-6 border-2 border-gray-200 shadow-sm">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+                📝 Exam Progress
+              </h3>
+              <span className="text-sm text-gray-600">
+                {completedExams} / {totalExams} completed
+              </span>
+            </div>
+            <div className="relative h-4 bg-gray-200 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-[#28B463] to-[#3498DB] transition-all duration-1000 ease-out"
+                style={{ width: `${totalExams > 0 ? (completedExams / totalExams) * 100 : 0}%` }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shine"></div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Motivation Banner */}
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#4169E1] to-[#28B463] p-6 text-center shadow-lg">
           <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
@@ -151,7 +209,7 @@ const Dashboard = () => {
               ? "🌟 Outstanding! You're crushing it!"
               : overallAccuracy >= 60
               ? "💪 Great progress! Keep pushing forward!"
-              : aggregateStats.total === 0
+              : totalAttempted === 0
               ? "🚀 Ready to start your learning journey?"
               : "📚 Practice makes perfect. You've got this!"}
           </p>
@@ -205,15 +263,40 @@ const Dashboard = () => {
                 <span>{module.moduleName}</span>
               </h3>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {module.weeks.map((week, weekIndex) => (
-                  <WeekCard
-                    key={week.weekId}
-                    week={week}
-                    moduleId={module.moduleId}
-                    delay={weekIndex * 50}
-                  />
-                ))}
+              {/* Exams Section */}
+              {module.exams.length > 0 && (
+                <div className="mb-8">
+                  <h4 className="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
+                    📝 Exams
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {module.exams.map((exam, examIndex) => (
+                      <ExamCard
+                        key={exam.examId}
+                        exam={exam}
+                        moduleId={module.moduleId}
+                        delay={examIndex * 50}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Weeks Section */}
+              <div>
+                <h4 className="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
+                  📅 Weekly Quizzes
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {module.weeks.map((week, weekIndex) => (
+                    <WeekCard
+                      key={week.weekId}
+                      week={week}
+                      moduleId={module.moduleId}
+                      delay={weekIndex * 50}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           ))}
@@ -241,7 +324,6 @@ const ActionButton = ({ onClick, color, icon, label }) => {
     blue: "border-[#3498DB]/30 text-[#3498DB] bg-[#3498DB]/5 hover:bg-[#3498DB]/15",
     green: "border-[#28B463]/30 text-[#28B463] bg-[#28B463]/5 hover:bg-[#28B463]/15",
   };
-
   return (
     <button
       onClick={onClick}
@@ -251,6 +333,66 @@ const ActionButton = ({ onClick, color, icon, label }) => {
       <span className="text-xl">{icon}</span>
       <span>{label}</span>
     </button>
+  );
+};
+
+const ExamCard = ({ exam, moduleId, delay }) => {
+  const getStatusColor = () => {
+    if (!exam.isCompleted) return "border-gray-300 bg-gray-50";
+    if (exam.passed) return "border-[#28B463]/40 bg-[#28B463]/5";
+    return "border-[#E67E22]/40 bg-[#E67E22]/5";
+  };
+  const getStatusBadge = () => {
+    if (!exam.isCompleted) {
+      return <span className="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700">Not Started</span>;
+    }
+    if (exam.passed) {
+      return <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#28B463]/20 text-[#28B463]">✓ Passed</span>;
+    }
+    return <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#E67E22]/20 text-[#E67E22]">Review</span>;
+  };
+  return (
+    <div
+      className={`group relative p-5 rounded-xl border-2 ${getStatusColor()}
+        hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 animate-fadeInUp`}
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      <div className="space-y-3">
+        <div className="flex justify-between items-start">
+          <h5 className="text-lg font-bold text-gray-800 group-hover:text-[#4169E1] transition-colors">
+            {exam.examName}
+          </h5>
+          {getStatusBadge()}
+        </div>
+        {exam.isCompleted && (
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm text-gray-600">
+              <span>Score:</span>
+              <span className="font-semibold">{exam.percentage}%</span>
+            </div>
+            <div className="relative h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div
+                className={`h-full ${
+                  exam.passed
+                    ? 'bg-gradient-to-r from-[#28B463] to-[#28B463]/80'
+                    : 'bg-gradient-to-r from-[#E67E22] to-[#E67E22]/80'
+                } transition-all duration-1000 ease-out`}
+                style={{ width: `${exam.percentage}%` }}
+              />
+            </div>
+          </div>
+        )}
+        <Link
+          to={`/exam/${exam.examId}`} // Changed from /quizzes/module/:moduleId/:examId
+          className="inline-flex items-center space-x-2 text-[#4169E1] hover:text-[#3498DB]
+            font-semibold transition-all group-hover:translate-x-1 text-sm"
+          aria-label={`${exam.isCompleted ? 'Review' : 'Start'} ${exam.examName}`}
+        >
+          <span>{exam.isCompleted ? "Review" : "Start Exam"}</span>
+          <span className="text-lg">→</span>
+        </Link>
+      </div>
+    </div>
   );
 };
 
@@ -286,13 +428,11 @@ const WeekCard = ({ week, moduleId, delay }) => {
             {week.accuracy}%
           </span>
         </div>
-
         <div className="space-y-2">
           <div className="flex justify-between text-sm text-gray-600">
             <span>{week.stats.correct} / {week.stats.total} correct</span>
             <span>{week.completedQuizzes}/{week.totalQuizzes} quizzes</span>
           </div>
-
           <div className="relative h-3 bg-gray-200 rounded-full overflow-hidden">
             <div
               className={`h-full ${getProgressColor(week.accuracy)} progress-bar-animated shadow-lg transition-all duration-1000 ease-out`}
@@ -302,7 +442,6 @@ const WeekCard = ({ week, moduleId, delay }) => {
             </div>
           </div>
         </div>
-
         <Link
           to={`/modules/${moduleId}/${week.weekId}`}
           className="inline-flex items-center space-x-2 text-[#4169E1] hover:text-[#3498DB] 

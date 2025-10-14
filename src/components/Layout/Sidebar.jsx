@@ -212,21 +212,21 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
                               {week.name}
                             </NavLink>
                           ))}
-                          {module.exams?.map((exam) => (
-                            <NavLink
-                              key={exam.id}
-                              to={`/quizzes/module/${module.id}/${exam.id}`}
-                              onClick={handleMobileClose}
-                              className={({ isActive }) =>
-                                `block py-1 px-4 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors ${
-                                  isActive ? "bg-gray-100 text-gray-600 font-medium" : ""
-                                }`
-                              }
-                              aria-current={({ isActive }) => (isActive ? "page" : undefined)}
-                            >
-                              {exam.name}
-                            </NavLink>
-                          ))}
+                            {module.exams?.map((exam) => (
+                              <NavLink
+                                key={exam.id}
+                                to={`/exam/${exam.id}`} // Changed from /quizzes/module/:moduleId/:examId
+                                onClick={handleMobileClose}
+                                className={({ isActive }) =>
+                                  `block py-1 px-4 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors ${
+                                    isActive ? "bg-gray-100 text-gray-600 font-medium" : ""
+                                  }`
+                                }
+                                aria-current={({ isActive }) => (isActive ? "page" : undefined)}
+                              >
+                                {exam.name}
+                              </NavLink>
+                            ))}
                         </div>
                       </Collapsible>
                     </div>
@@ -315,21 +315,21 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
                               {week.name}
                             </NavLink>
                           ))}
-                          {module.exams?.map((exam) => (
-                            <NavLink
-                              key={exam.id}
-                              to={`/quizzes/module/${module.id}/${exam.id}`}
-                              onClick={handleMobileClose}
-                              className={({ isActive }) =>
-                                `block py-1 px-4 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors ${
-                                  isActive ? "bg-gray-100 text-gray-600 font-medium" : ""
-                                }`
-                              }
-                              aria-current={({ isActive }) => (isActive ? "page" : undefined)}
-                            >
-                              {exam.name}
-                            </NavLink>
-                          ))}
+                            {module.exams?.map((exam) => (
+                              <NavLink
+                                key={exam.id}
+                                to={`/exam/${exam.id}`} // Changed from /quizzes/module/:moduleId/:examId
+                                onClick={handleMobileClose}
+                                className={({ isActive }) =>
+                                  `block py-1 px-4 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors ${
+                                    isActive ? "bg-gray-100 text-gray-600 font-medium" : ""
+                                  }`
+                                }
+                                aria-current={({ isActive }) => (isActive ? "page" : undefined)}
+                              >
+                                {exam.name}
+                              </NavLink>
+                            ))}
                         </div>
                       </Collapsible>
                     </div>

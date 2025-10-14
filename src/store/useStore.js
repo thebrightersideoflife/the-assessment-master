@@ -10,6 +10,9 @@ const useStore = create(
       // Quiz state per moduleId-weekId-quizIndex
       quizzes: {},
       
+      // Exam state per examId
+      exams: {},
+      
       // Streak tracking
       streaks: {
         lastActivityDate: null,
@@ -40,14 +43,115 @@ const useStore = create(
             currentQuestionIndex: 0,
             stats: { correct: 0, total: 0 },
             completed: false,
-            lastAnsweredQuestion: -1, // Track last answered question index
+            lastAnsweredQuestion: -1,
           }
         );
       },
 
       // ============================================================================
-      // ACTIONS: Quiz management
+      // EXAM STATE MANAGEMENT
       // ============================================================================
+      
+      // Get exam state
+      getExamState: (examId) => {
+        return (
+          get().exams[examId] || {
+            startTime: null,
+            answers: {},
+            submitted: false,
+            results: null,
+          }
+        );
+      },
+
+      // Initialize exam (called when exam starts)
+      initializeExam: (examId) =>
+        set((state) => {
+          // Don't reinitialize if already submitted
+          if (state.exams[examId]?.submitted) {
+            return state;
+          }
+
+          return {
+            exams: {
+              ...state.exams,
+              [examId]: {
+                startTime: Date.now(),
+                answers: {},
+                submitted: false,
+                results: null,
+              },
+            },
+          };
+        }),
+
+      // Update a single answer
+      updateExamAnswer: (examId, questionId, answer) =>
+        set((state) => {
+          const examState = state.exams[examId] || {
+            startTime: Date.now(),
+            answers: {},
+            submitted: false,
+            results: null,
+          };
+
+          return {
+            exams: {
+              ...state.exams,
+              [examId]: {
+                ...examState,
+                answers: {
+                  ...examState.answers,
+                  [questionId]: answer,
+                },
+              },
+            },
+          };
+        }),
+
+      // Submit exam with results
+      submitExam: (examId, results) =>
+        set((state) => {
+          const examState = state.exams[examId] || {
+            startTime: Date.now(),
+            answers: {},
+            submitted: false,
+            results: null,
+          };
+
+          return {
+            exams: {
+              ...state.exams,
+              [examId]: {
+                ...examState,
+                submitted: true,
+                results: {
+                  ...results,
+                  submittedAt: Date.now(),
+                },
+              },
+            },
+          };
+        }),
+
+      // Check if exam is submitted
+      isExamSubmitted: (examId) => {
+        const examState = get().exams[examId];
+        return examState?.submitted === true;
+      },
+
+      // Reset exam (for retakes)
+      resetExam: (examId) =>
+        set((state) => {
+          const newExams = { ...state.exams };
+          delete newExams[examId];
+          return { exams: newExams };
+        }),
+
+      // ============================================================================
+      // QUIZ ACTIONS
+      // ============================================================================
+      
       incrementQuestionIndex: (moduleId, weekId, quizIndex = 0) =>
         set((state) => {
           const quizKey = state.getQuizKey(moduleId, weekId, quizIndex);
@@ -63,7 +167,6 @@ const useStore = create(
               [quizKey]: {
                 ...quizState,
                 currentQuestionIndex: quizState.currentQuestionIndex + 1,
-                // Keep lastAnsweredQuestion - it will be updated on next submission
               },
             },
           };
@@ -84,7 +187,7 @@ const useStore = create(
             console.warn(
               `[useStore] Duplicate submission blocked for question ${quizState.currentQuestionIndex} in ${quizKey}`
             );
-            return state; // Return unchanged state
+            return state;
           }
           
           const today = format(new Date(), 'yyyy-MM-dd');
@@ -112,7 +215,7 @@ const useStore = create(
                   correct: quizState.stats.correct + (isCorrect ? 1 : 0),
                   total: quizState.stats.total + 1,
                 },
-                lastAnsweredQuestion: quizState.currentQuestionIndex, // Mark this question as answered
+                lastAnsweredQuestion: quizState.currentQuestionIndex,
               },
             },
             streaks: {
@@ -123,7 +226,6 @@ const useStore = create(
           };
         }),
 
-      // Mark quiz as completed
       completeQuiz: (moduleId, weekId, quizIndex = 0) =>
         set((state) => {
           const quizKey = state.getQuizKey(moduleId, weekId, quizIndex);
@@ -152,7 +254,6 @@ const useStore = create(
           return { quizzes: newQuizzes };
         }),
 
-      // Reset all quizzes for a week
       resetWeekQuizzes: (moduleId, weekId) =>
         set((state) => {
           const newQuizzes = { ...state.quizzes };
@@ -173,7 +274,6 @@ const useStore = create(
         return stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
       },
 
-      // Get week progress (all quizzes in a week)
       getWeekProgress: (moduleId, weekId, totalQuizzes) => {
         const quizzes = get().quizzes;
         let completedCount = 0;
@@ -211,6 +311,7 @@ const useStore = create(
       resetAllProgress: () =>
         set(() => ({
           quizzes: {},
+          exams: {},
           streaks: { lastActivityDate: null, currentStreak: 0, longestStreak: 0 },
           moduleVisibility: modules.reduce((acc, mod) => ({
             ...acc,
@@ -230,9 +331,10 @@ const useStore = create(
     }),
     {
       name: 'quiz-storage',
-      version: 3, // Incremented for new lastAnsweredQuestion field
+      version: 4, // Incremented for exam support
       partialize: (state) => ({
         quizzes: state.quizzes,
+        exams: state.exams,
         streaks: state.streaks,
         moduleVisibility: state.moduleVisibility,
       }),
@@ -244,15 +346,12 @@ const useStore = create(
           Object.keys(oldQuizzes).forEach((key) => {
             const quiz = oldQuizzes[key];
             
-            // Add lastAnsweredQuestion field to existing quizzes
             if (key.split("-").length === 2) {
-              // Old format without quizIndex
               newQuizzes[`${key}-0`] = {
                 ...quiz,
                 lastAnsweredQuestion: -1,
               };
             } else {
-              // New format with quizIndex
               newQuizzes[key] = {
                 ...quiz,
                 lastAnsweredQuestion: quiz.lastAnsweredQuestion ?? -1,
@@ -263,6 +362,15 @@ const useStore = create(
           return {
             ...persistedState,
             quizzes: newQuizzes,
+            exams: {},
+          };
+        }
+        
+        if (version < 4) {
+          // Add exams object for version 4
+          return {
+            ...persistedState,
+            exams: persistedState.exams || {},
           };
         }
         
