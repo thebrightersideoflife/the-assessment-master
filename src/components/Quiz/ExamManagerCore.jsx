@@ -8,9 +8,16 @@ import { renderMath } from "../../utils/mathRenderer";
  * ExamManagerCore
  * Handles exam logic, timer, state, and transitions between modes.
  */
-const ExamManagerCore = ({ examData }) => {
-  const { exam } = examData || {};
-  const questions = exam?.questions || [];
+const ExamManagerCore = ({ exam }) => {
+  if (!exam) {
+    return (
+      <div className="text-center py-10 text-gray-500">
+        Loading exam data...
+      </div>
+    );
+  }
+
+  const questions = exam.questions || [];
 
   // ===== State Management =====
   const [mode, setMode] = useState("start"); // "start" | "exam" | "results"
@@ -18,7 +25,7 @@ const ExamManagerCore = ({ examData }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState({ correct: 0, total: 0, percentage: 0 });
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(exam?.duration * 60 || 0);
+  const [timeLeft, setTimeLeft] = useState((exam.duration || exam.timeLimit || 0) * 60);
   const [timerActive, setTimerActive] = useState(false);
   const [hasConfirmedLastAnswer, setHasConfirmedLastAnswer] = useState(false);
 
@@ -42,7 +49,7 @@ const ExamManagerCore = ({ examData }) => {
   const handleStart = () => {
     setMode("exam");
     setTimerActive(true);
-    setTimeLeft(exam.duration * 60);
+    setTimeLeft((exam.duration || exam.timeLimit || 0) * 60);
     setCurrentQuestionIndex(0);
     setUserAnswers({});
     setScore({ correct: 0, total: 0, percentage: 0 });
@@ -89,7 +96,7 @@ const ExamManagerCore = ({ examData }) => {
     setUserAnswers({});
     setScore({ correct: 0, total: 0, percentage: 0 });
     setIsSubmitted(false);
-    setTimeLeft(exam?.duration * 60 || 0);
+    setTimeLeft((exam.duration || exam.timeLimit || 0) * 60);
     setTimerActive(false);
     setHasConfirmedLastAnswer(false);
   };

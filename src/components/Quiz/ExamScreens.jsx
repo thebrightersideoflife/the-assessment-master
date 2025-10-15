@@ -32,7 +32,7 @@ const ExamScreens = ({
 
   const isLastQuestion = currentQuestionIndex === questions.length - 1;
 
-  // ✅ Render math on every mode/question change
+  // Ensure math renders on every mode/question change
   useEffect(() => {
     renderMath();
   }, [currentQuestionIndex, mode]);
@@ -68,7 +68,7 @@ const ExamScreens = ({
 
     return (
       <div className="space-y-6">
-        <ExamQuestion question={currentQuestion} index={currentQuestionIndex} />
+        <ExamQuestion question={currentQuestion} questionNumber={currentQuestion?.questionNumber || currentQuestionIndex + 1} showPoints={true} />
         <ExamAnswerInput
           question={currentQuestion}
           value={userAnswer}
@@ -77,7 +77,7 @@ const ExamScreens = ({
 
         {/* Navigation and Control Buttons */}
         <div className="flex justify-between items-center pt-4">
-          {currentQuestionIndex > 0 && (
+          {currentQuestionIndex > 0 ? (
             <button
               onClick={() => {
                 onPrev();
@@ -87,7 +87,7 @@ const ExamScreens = ({
             >
               ← Previous
             </button>
-          )}
+          ) : <div />}
 
           <button
             onClick={() => {
@@ -118,22 +118,21 @@ const ExamScreens = ({
   /** ---------- RESULTS / REVIEW SCREEN ---------- */
   if (mode === "results") {
     const isMidterm =
-      exam.title?.toLowerCase().includes("midterm") ||
-      exam.title?.toLowerCase().includes("exam");
+      exam?.title?.toLowerCase().includes("midterm") ||
+      exam?.title?.toLowerCase().includes("exam");
 
     return (
       <div className="relative">
-        {/* Page Title */}
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-[#4169E1]">
-            {exam.title} - Results
-          </h2>
-        </div>
+        <h2 className="text-2xl font-bold text-[#4169E1] mb-6">
+          {exam.title} - Results
+        </h2>
 
         {/* Score Summary */}
         <div className="bg-gray-100 border border-gray-300 rounded-xl p-4 mb-6">
           <p className="text-lg font-semibold text-gray-800">
-            Score: {score.correct}/{score.total} ({score.percentage}%)
+            {score && typeof score.correct !== "undefined"
+              ? `Score: ${score.correct}/${score.total} (${score.percentage}%)`
+              : "Score: N/A"}
           </p>
         </div>
 
@@ -141,19 +140,35 @@ const ExamScreens = ({
         <div className="space-y-6">
           {questions.map((question, index) => {
             const userAnswer = userAnswers[question.id] || "";
-            const isCorrect = question.correctAnswers?.includes(userAnswer);
+            const isCorrect = Array.isArray(question.correctAnswers)
+              ? question.correctAnswers.includes(userAnswer)
+              : question.correctAnswers === userAnswer;
             return (
-              <div key={index}>
-                <ExamQuestion question={question} index={index} />
+              <div key={question.id || index} className="bg-white rounded-lg p-4 shadow-sm">
+                <ExamQuestion question={question} questionNumber={question.questionNumber || index + 1} showPoints={false} />
                 <ExamExplanation
                   question={question}
                   userAnswer={userAnswer}
-                  isCorrect={isCorrect}
+                  isCorrect={!!isCorrect}
                 />
               </div>
             );
           })}
         </div>
+
+        {/* Floating scroll-to-bottom button: FIXED, HIGH Z-INDEX, ALWAYS visible in results when midterm/exam */}
+        {isMidterm && (
+          <button
+            onClick={() => {
+              const el = document.getElementById("student-credentials-form");
+              if (el) el.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="fixed bottom-6 right-6 bg-[#4169E1] hover:bg-blue-600 text-white rounded-full p-4 shadow-lg transition-all flex items-center justify-center print:hidden z-50"
+            aria-label="Scroll to bottom of results page"
+          >
+            <ChevronDown className="w-6 h-6" />
+          </button>
+        )}
 
         {/* Student Details Section */}
         <div

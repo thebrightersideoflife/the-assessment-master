@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getExamById } from '../data/exams';
-import ExamManagerCore from '../components/Quiz/ExamManagerCore'; // ✅ new import
-import LoadingSpinner from '../components/UI/LoadingSpinner';
+import ExamManagerCore from '../components/Quiz/ExamManagerCore';
 import { renderMath } from '../utils/mathRenderer';
 
 const Exam = () => {
@@ -13,7 +12,7 @@ const Exam = () => {
 
   useEffect(() => {
     const examData = getExamById(examId);
-    
+
     if (!examData) {
       console.error(`Exam not found: ${examId}`);
       return;
@@ -48,9 +47,13 @@ const Exam = () => {
     );
   }
 
+  // 🧭 Pre-exam screen
   if (!isStarted) {
-    const totalPoints = exam.questions.reduce((sum, q) => sum + (q.points || 0), 0);
-    
+    const totalPoints = exam.questions.reduce(
+      (sum, q) => sum + (q.points || 0),
+      0
+    );
+
     return (
       <div className="max-w-4xl mx-auto p-6">
         {/* Header */}
@@ -61,11 +64,13 @@ const Exam = () => {
           >
             ← Back to {exam.moduleId}
           </Link>
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">{exam.title}</h1>
+          <h1 className="text-4xl font-bold text-gray-800 mb-2">
+            {exam.title}
+          </h1>
           <p className="text-lg text-gray-600">{exam.description}</p>
         </div>
 
-        {/* Exam Info Card */}
+        {/* Exam Info */}
         <div className="bg-white border border-gray-200 rounded-xl p-8 shadow-sm mb-6">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">
             📋 Exam Information
@@ -86,7 +91,9 @@ const Exam = () => {
               <span className="text-3xl">⭐</span>
               <div>
                 <p className="font-semibold text-gray-700">Total Points</p>
-                <p className="text-2xl font-bold text-[#4169E1]">{totalPoints}</p>
+                <p className="text-2xl font-bold text-[#4169E1]">
+                  {totalPoints}
+                </p>
               </div>
             </div>
 
@@ -115,7 +122,9 @@ const Exam = () => {
 
           {/* Sections Overview */}
           <div className="mb-8">
-            <h3 className="text-xl font-bold text-gray-800 mb-4">Exam Sections</h3>
+            <h3 className="text-xl font-bold text-gray-800 mb-4">
+              Exam Sections
+            </h3>
             <div className="space-y-3">
               {exam.sections.map((section) => {
                 const sectionQuestions = exam.questions.filter(
@@ -185,7 +194,7 @@ const Exam = () => {
     );
   }
 
-  // ✅ Updated to use ExamManagerCore
+  // ✅ Updated to pass "exam" directly
   return (
     <ExamManagerCore
       exam={exam}
