@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import ExamScreens from "./ExamScreens";
 import { calculateScore } from "../../utils/examUtils";
 import { renderMath } from "../../utils/mathRenderer";
-import { ChevronDown } from "lucide-react";
 
 /**
  * ExamManagerCore
