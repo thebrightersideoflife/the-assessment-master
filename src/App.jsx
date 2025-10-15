@@ -16,6 +16,7 @@ const Week = React.lazy(() => import("./pages/Week"));
 const Modules = React.lazy(() => import("./pages/Modules"));
 const FormulaSheetPage = React.lazy(() => import("./pages/FormulaSheetPage"));
 const Admin = React.lazy(() => import("./pages/Admin"));
+// ⬇️ The Exam page now internally uses ExamManagerCore
 const Exam = React.lazy(() => import("./pages/Exam"));
 
 const NotFound = () => (
@@ -63,43 +64,33 @@ function App() {
             <Route path="/admin" element={<Admin />} />
 
             {/* ========== MODULE NAVIGATION ========== */}
-            {/* /modules - List all modules */}
             <Route path="/modules" element={<Modules />} />
-            
-            {/* /modules/:moduleId - List weeks within a module */}
             <Route path="/modules/:moduleId" element={<Modules />} />
-            
-            {/* /modules/:moduleId/:weekId - View week content with quiz grid */}
             <Route path="/modules/:moduleId/:weekId" element={<Week />} />
 
-            {/* ========== QUIZ SEGMENTATION ROUTES ========== */}
-            {/* /quiz/:moduleId/:weekId/:quizIndex - Individual quiz segment */}
-            <Route 
-              path="/quiz/:moduleId/:weekId/:quizIndex" 
-              element={<Quiz />} 
+            {/* ========== QUIZ ROUTES ========== */}
+            <Route
+              path="/quiz/:moduleId/:weekId/:quizIndex"
+              element={<Quiz />}
             />
 
-            {/* ========== EXAM ROUTES ========== */}
-            {/* /exam/:examId - Take an exam (e.g., /exam/ITMTB_EXAM1) */}
-            <Route 
-              path="/exam/:examId" 
-              element={<Exam />} 
+            {/* ========== EXAM ROUTE (uses ExamManagerCore internally) ========== */}
+            <Route
+              path="/exam/:examId"
+              element={<Exam />}
             />
 
-            {/* ========== LEGACY/REDIRECT ROUTES ========== */}
-            {/* Old quiz route format - redirect to new format */}
+            {/* ========== LEGACY REDIRECTS ========== */}
             <Route
               path="/quizzes/module/:moduleId/:weekId"
               element={<Navigate to="/quiz/:moduleId/:weekId/0" replace />}
             />
-            
-            {/* Old exam route - redirect to new format */}
             <Route
               path="/quizzes/exam/:examId"
               element={<Navigate to="/exam/:examId" replace />}
             />
 
-            {/* Formula sheets */}
+            {/* ========== FORMULA SHEETS ========== */}
             <Route
               path="/formula-sheets/:moduleId"
               element={<FormulaSheetPage />}

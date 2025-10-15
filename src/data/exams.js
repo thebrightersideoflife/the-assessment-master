@@ -833,7 +833,7 @@ export const exams = [
     moduleId: "ITMTB",
     title: "ITMTB Final Exam",
     description: "Not yet set",
-    timeLimit: 120, // minutes (optional, set to null for no limit)
+    timeLimit: null, // minutes (optional, set to null for no limit)
     passingScore: 70, // percentage
     
     // Sections organize the exam
@@ -846,7 +846,64 @@ export const exams = [
       },
     ],
     
-    // Questions for the exam
+        questions: [
+      {
+        id: "exam2_q1",
+        sectionId: "section_1",
+        questionNumber: 1,
+        type: "multiple-choice",
+        text: "Coming soon...",
+        options: [
+          "Coming soon...",
+        ],
+        correctAnswers: ["B"],
+        points: 2,
+        explanation: "The definite integral represents the **signed area** between the curve and the x-axis:\n\n" +
+          "- Area **above** the x-axis is positive\n" +
+          "- Area **below** the x-axis is negative\n\n" +
+          "$$\\int_{a}^{b} f(x) \\, dx = \\text{(Signed Area)}$$\n\n" +
+          "**Answer: B**"
+      },
+    ]
+  },
+
+  {
+    id: "ITMTB_EXAM3",
+    moduleId: "ITMTB",
+    title: "ITMTB Practice Questions (Unlimited)",
+    description: "Not yet set",
+    timeLimit: null, // minutes (optional, set to null for no limit)
+    passingScore: 70, // percentage
+    
+    // Sections organize the exam
+    sections: [
+      {
+        id: "section_1",
+        title: "Section A: Not yet set",
+        description: "Coming soon...",
+        instructions: "Contact the founder for more info.",
+      },
+    ],
+    
+        questions: [
+      {
+        id: "exam3_q1",
+        sectionId: "section_1",
+        questionNumber: 1,
+        type: "multiple-choice",
+        text: "Coming soon...",
+        options: [
+          "Coming soon...",
+        ],
+        correctAnswers: ["B"],
+        points: 2,
+        explanation: "The definite integral represents the **signed area** between the curve and the x-axis:\n\n" +
+          "- Area **above** the x-axis is positive\n" +
+          "- Area **below** the x-axis is negative\n\n" +
+          "$$\\int_{a}^{b} f(x) \\, dx = \\text{(Signed Area)}$$\n\n" +
+          "**Answer: B**"
+      },
+    ]
   }
 
 ];

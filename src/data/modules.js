@@ -333,7 +333,8 @@ export const modules = [
     },
     exams: [
       { id: 'ITMTB_EXAM1', name: 'Midterm Exam', description: 'Covers integration fundamentals and techniques.' },
-      { id: 'ITMTB_EXAM2', name: 'Final Exam', description: 'Not yet set. Contact founder for more info.' }
+      { id: 'ITMTB_EXAM2', name: 'Final Exam', description: 'Not yet set. Contact founder for more info.' },
+      { id: 'ITMTB_EXAM3', name: 'Practice Exam', description: 'Untimed practice' }
     ],
     weeks: [
       {
