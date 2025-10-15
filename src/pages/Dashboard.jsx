@@ -1,14 +1,23 @@
-// src/pages/Dashboard.jsx
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import useStore from "../store/useStore";
-import { AiOutlineStar, AiOutlineBook, AiOutlineTrophy } from "react-icons/ai";
+import { AiOutlineStar, AiOutlineBook, AiOutlineTrophy, AiOutlineFire } from "react-icons/ai";
 import { modules } from "../data/modules";
+import { exams } from "../data/exams";
 import { chunkQuestions } from "../utils/chunkQuestions";
 import { questions } from "../data/questions";
 
 const Dashboard = () => {
-  const { quizzes, exams, getQuizState, getExamState, resetAllProgress } = useStore();
+  const {
+    quizzes,
+    exams: examStates,
+    getExamState,
+    getExamAttemptCount,
+    resetExam,
+    resetAllProgress,
+    streaks,
+    getWeekProgress,
+  } = useStore();
 
   // Aggregate global stats (quizzes + exams)
   const aggregateStats = Object.values(quizzes).reduce(
@@ -19,8 +28,7 @@ const Dashboard = () => {
     { correct: 0, total: 0 }
   );
 
-  // Add exam stats
-  const examStats = Object.values(exams).reduce(
+  const examStats = Object.values(examStates).reduce(
     (acc, exam) => {
       if (exam.results) {
         return {
@@ -41,17 +49,34 @@ const Dashboard = () => {
       : 0;
 
   // Count completed exams
-  const completedExams = Object.values(exams).filter(e => e.submitted).length;
-  const totalExams = modules.reduce((sum, m) => sum + (m.exams?.length || 0), 0);
+  const completedExams = Object.values(examStates).filter((e) => e.submitted).length;
+  const totalExams = exams.length; // Use exams from data/exams.js
+
+  // Get recent exam results (last 3 submitted exams)
+  const recentExams = Object.entries(examStates)
+    .filter(([_, exam]) => exam.submitted && exam.results)
+    .sort((a, b) => b[1].results.submittedAt - a[1].results.submittedAt)
+    .slice(0, 3)
+    .map(([examId, exam]) => {
+      const examData = exams.find((e) => e.id === examId);
+      return {
+        examId,
+        examName: examData?.title || "Unknown Exam",
+        percentage: exam.results.percentage,
+        passed: exam.results.passed,
+        attemptNumber: exam.results.attemptNumber,
+        submittedAt: exam.results.submittedAt,
+      };
+    });
 
   // Export progress as JSON
   const handleExportProgress = () => {
-    const data = JSON.stringify({ quizzes, exams }, null, 2);
+    const data = JSON.stringify({ quizzes, exams: examStates }, null, 2);
     const blob = new Blob([data], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `quiz-progress-${new Date().toISOString().split("T")[0]}.json`;
+    a.download = `progress-${new Date().toISOString().split("T")[0]}.json`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -64,9 +89,9 @@ const Dashboard = () => {
     reader.onload = (event) => {
       try {
         const data = JSON.parse(event.target.result);
-        useStore.setState({ 
-          quizzes: data.quizzes || {}, 
-          exams: data.exams || {} 
+        useStore.setState({
+          quizzes: data.quizzes || {},
+          exams: data.exams || {},
         });
         alert("✅ Progress imported successfully!");
         window.location.reload();
@@ -78,7 +103,7 @@ const Dashboard = () => {
     reader.readAsText(file);
   };
 
-  // Reset all quizzes and exams
+  // Reset all progress
   const handleResetProgress = () => {
     if (window.confirm("⚠️ This will delete ALL quiz and exam progress. Are you sure?")) {
       resetAllProgress();
@@ -98,51 +123,40 @@ const Dashboard = () => {
         );
         const questionChunks = chunkQuestions(weekQuestions);
         const totalQuizzes = questionChunks.length;
-        let totalCorrect = 0;
-        let totalAnswered = 0;
-        let completedQuizzes = 0;
-
-        for (let i = 0; i < totalQuizzes; i++) {
-          const quizState = getQuizState(module.id, week.id, i);
-          if (quizState.stats) {
-            totalCorrect += quizState.stats.correct;
-            totalAnswered += quizState.stats.total;
-          }
-          if (quizState.completed) {
-            completedQuizzes++;
-          }
-        }
-
-        const accuracy =
-          totalAnswered > 0
-            ? Math.round((totalCorrect / totalAnswered) * 100)
-            : 0;
-
+        const progress = getWeekProgress(module.id, week.id, totalQuizzes);
         return {
           weekId: week.id,
           weekName: week.name,
-          stats: { correct: totalCorrect, total: totalAnswered },
-          accuracy,
+          stats: { correct: progress.totalCorrect, total: progress.totalQuestions },
+          accuracy: progress.overallAccuracy,
           totalQuizzes,
-          completedQuizzes,
+          completedQuizzes: progress.completedQuizzes,
         };
       }),
-      exams: (module.exams || []).map((exam) => {
+      exams: (exams.filter((e) => e.moduleId === module.id) || []).map((exam) => {
         const examState = getExamState(exam.id);
-        const isCompleted = examState.submitted || false;
-        const results = examState.results || null;
-        
+        const attemptCount = getExamAttemptCount(exam.id);
         return {
           examId: exam.id,
-          examName: exam.name,
-          isCompleted,
-          percentage: results?.percentage || 0,
-          passed: results?.passed || false,
-          earnedPoints: results?.earnedPoints || 0,
-          totalPoints: results?.totalPoints || exam.questions?.length || 0,
+          examName: exam.title,
+          duration: exam.duration,
+          isCompleted: examState.submitted || false,
+          percentage: examState.results?.percentage || 0,
+          passed: examState.results?.passed || false,
+          earnedPoints: examState.results?.earnedPoints || 0,
+          totalPoints: examState.results?.totalPoints || exam.questions?.length || 0,
+          attemptCount,
+          inProgress: examState.startTime && !examState.submitted,
         };
       }),
     }));
+
+  // Render math for any formulas
+  useEffect(() => {
+    import("../utils/mathRenderer").then(({ renderMath }) => {
+      renderMath();
+    });
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30">
@@ -153,12 +167,12 @@ const Dashboard = () => {
             Your Dashboard
           </h1>
           <p className="text-gray-600 text-lg">
-            Track your journey to mastery, one quiz at a time.
+            Track your journey to mastery, one quiz and exam at a time.
           </p>
         </div>
 
         {/* Top Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <StatCard
             icon={<AiOutlineStar className="w-6 h-6 text-[#28B463]" />}
             value={totalCorrect}
@@ -177,7 +191,47 @@ const Dashboard = () => {
             label="Accuracy Rate"
             iconBg="bg-[#4169E1]/10"
           />
+          <StatCard
+            icon={<AiOutlineFire className="w-6 h-6 text-[#E67E22]" />}
+            value={`${streaks.currentStreak} days`}
+            label="Current Streak"
+            iconBg="bg-[#E67E22]/10"
+            subLabel={`Longest: ${streaks.longestStreak} days`}
+          />
         </div>
+
+        {/* Recent Exam Results */}
+        {recentExams.length > 0 && (
+          <div className="bg-white rounded-xl p-6 border-2 border-gray-200 shadow-sm">
+            <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+              🏆 Recent Exam Results
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {recentExams.map((exam, index) => (
+                <div
+                  key={exam.examId}
+                  className="p-4 rounded-lg border border-gray-200 bg-gray-50 animate-fadeIn"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <h4 className="text-lg font-semibold text-gray-800">{exam.examName}</h4>
+                  <p className="text-sm text-gray-600">
+                    Score: {exam.percentage}% ({exam.passed ? "Passed" : "Not Passed"})
+                  </p>
+                  <p className="text-sm text-gray-600">Attempt: {exam.attemptNumber}</p>
+                  <p className="text-sm text-gray-500">
+                    Submitted: {new Date(exam.submittedAt).toLocaleDateString()}
+                  </p>
+                  <Link
+                    to={`/exam/${exam.examId}`}
+                    className="mt-2 inline-flex items-center text-[#4169E1] hover:text-[#3498DB] font-semibold"
+                  >
+                    Review <span className="ml-1 text-lg">→</span>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Exam Progress Summary */}
         {totalExams > 0 && (
@@ -276,6 +330,12 @@ const Dashboard = () => {
                         exam={exam}
                         moduleId={module.moduleId}
                         delay={examIndex * 50}
+                        onRetake={() => {
+                          if (window.confirm(`Retake ${exam.examName}? This will reset your current progress for this exam.`)) {
+                            resetExam(exam.examId);
+                            window.location.reload();
+                          }
+                        }}
                       />
                     ))}
                   </div>
@@ -306,13 +366,14 @@ const Dashboard = () => {
   );
 };
 
-const StatCard = ({ icon, value, label, iconBg }) => (
+const StatCard = ({ icon, value, label, iconBg, subLabel }) => (
   <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
     <div className="flex items-center space-x-4">
       <div className={`${iconBg} p-3 rounded-lg`}>{icon}</div>
       <div className="flex-1">
         <div className="text-3xl font-bold text-gray-800">{value}</div>
         <div className="text-sm text-gray-500 font-medium">{label}</div>
+        {subLabel && <div className="text-xs text-gray-400">{subLabel}</div>}
       </div>
     </div>
   </div>
@@ -336,13 +397,17 @@ const ActionButton = ({ onClick, color, icon, label }) => {
   );
 };
 
-const ExamCard = ({ exam, moduleId, delay }) => {
+const ExamCard = ({ exam, moduleId, delay, onRetake }) => {
   const getStatusColor = () => {
+    if (exam.inProgress) return "border-[#3498DB]/40 bg-[#3498DB]/5";
     if (!exam.isCompleted) return "border-gray-300 bg-gray-50";
     if (exam.passed) return "border-[#28B463]/40 bg-[#28B463]/5";
     return "border-[#E67E22]/40 bg-[#E67E22]/5";
   };
   const getStatusBadge = () => {
+    if (exam.inProgress) {
+      return <span className="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700">In Progress</span>;
+    }
     if (!exam.isCompleted) {
       return <span className="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700">Not Started</span>;
     }
@@ -364,6 +429,9 @@ const ExamCard = ({ exam, moduleId, delay }) => {
           </h5>
           {getStatusBadge()}
         </div>
+        <div className="text-sm text-gray-600">
+          <p>Attempts: {exam.attemptCount}</p>
+        </div>
         {exam.isCompleted && (
           <div className="space-y-2">
             <div className="flex justify-between text-sm text-gray-600">
@@ -374,23 +442,34 @@ const ExamCard = ({ exam, moduleId, delay }) => {
               <div
                 className={`h-full ${
                   exam.passed
-                    ? 'bg-gradient-to-r from-[#28B463] to-[#28B463]/80'
-                    : 'bg-gradient-to-r from-[#E67E22] to-[#E67E22]/80'
+                    ? "bg-gradient-to-r from-[#28B463] to-[#28B463]/80"
+                    : "bg-gradient-to-r from-[#E67E22] to-[#E67E22]/80"
                 } transition-all duration-1000 ease-out`}
                 style={{ width: `${exam.percentage}%` }}
               />
             </div>
           </div>
         )}
-        <Link
-          to={`/exam/${exam.examId}`} // Changed from /quizzes/module/:moduleId/:examId
-          className="inline-flex items-center space-x-2 text-[#4169E1] hover:text-[#3498DB]
-            font-semibold transition-all group-hover:translate-x-1 text-sm"
-          aria-label={`${exam.isCompleted ? 'Review' : 'Start'} ${exam.examName}`}
-        >
-          <span>{exam.isCompleted ? "Review" : "Start Exam"}</span>
-          <span className="text-lg">→</span>
-        </Link>
+        <div className="flex items-center space-x-3">
+          <Link
+            to={`/exam/${exam.examId}`}
+            className="inline-flex items-center space-x-2 text-[#4169E1] hover:text-[#3498DB]
+              font-semibold transition-all group-hover:translate-x-1 text-sm"
+            aria-label={`${exam.inProgress ? "Continue" : exam.isCompleted ? "Review" : "Start"} ${exam.examName}`}
+          >
+            <span>{exam.inProgress ? "Continue" : exam.isCompleted ? "Review" : "Start Exam"}</span>
+            <span className="text-lg">→</span>
+          </Link>
+          {exam.isCompleted && (
+            <button
+              onClick={onRetake}
+              className="text-[#C0392B] hover:text-[#C0392B]/80 font-semibold text-sm"
+              aria-label={`Retake ${exam.examName}`}
+            >
+              Retake
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -418,7 +497,6 @@ const WeekCard = ({ week, moduleId, delay }) => {
       style={{ animationDelay: `${delay}ms` }}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-[#4169E1]/5 to-[#3498DB]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-      
       <div className="relative z-10 space-y-4">
         <div className="flex justify-between items-start">
           <h4 className="text-xl font-bold text-[#3498DB] group-hover:text-[#4169E1] transition-colors">
