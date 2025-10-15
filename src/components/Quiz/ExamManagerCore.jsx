@@ -1,171 +1,43 @@
 // src/components/Quiz/ExamManagerCore.jsx
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import ExamScreens from "./ExamScreens";
-import { gradeExam } from "../../utils/examUtils";
+import useExamManager from "../../hooks/useExamManager";
 import { renderMath } from "../../utils/mathRenderer";
 
 /**
  * ExamManagerCore
- * Handles exam logic, timer, state, and transitions between modes.
+ * 
+ * Simplified orchestrator component that uses the useExamManager hook
+ * and renders the appropriate screen based on the current mode.
+ * 
+ * @param {Object} exam - The exam object
+ * @param {Function} onExit - Callback for exiting the exam (optional)
  */
-const ExamManagerCore = ({ exam }) => {
-  if (!exam) {
+const ExamManagerCore = ({ exam, onExit }) => {
+  // Get all exam state and handlers from the hook
+  const examState = useExamManager(exam);
+
+  // Ensure math renders whenever the mode or question changes
+  useEffect(() => {
+    renderMath();
+  }, [examState.mode, examState.currentQuestionIndex]);
+
+  // Handle loading state
+  if (!exam || examState.mode === "loading") {
     return (
-      <div className="text-center py-10 text-gray-500">
-        Loading exam data...
+      <div className="max-w-4xl mx-auto p-6 text-center">
+        <div className="bg-gray-50 border border-gray-200 rounded-xl p-8">
+          <div className="animate-spin inline-block w-12 h-12 border-4 border-[#4169E1] border-t-transparent rounded-full mb-4"></div>
+          <p className="text-gray-600 text-lg">Loading exam data...</p>
+        </div>
       </div>
     );
   }
 
-  const questions = exam.questions || [];
-
-  // ===== State Management =====
-  const [mode, setMode] = useState("start"); // "start" | "exam" | "results"
-  const [userAnswers, setUserAnswers] = useState({});
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [score, setScore] = useState({ correct: 0, total: 0, percentage: 0 });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [timeLeft, setTimeLeft] = useState((exam.duration || exam.timeLimit || 0) * 60);
-  const [timerActive, setTimerActive] = useState(false);
-  const [hasConfirmedLastAnswer, setHasConfirmedLastAnswer] = useState(false);
-
-  // ===== Timer Logic =====
-  useEffect(() => {
-    let timer = null;
-    if (timerActive && timeLeft > 0 && mode === "exam") {
-      timer = setInterval(() => setTimeLeft((t) => t - 1), 1000);
-    } else if (timeLeft === 0 && mode === "exam") {
-      handleSubmit();
-    }
-    return () => clearInterval(timer);
-  }, [timerActive, timeLeft, mode]);
-
-  // Render math every time the question or mode changes
-  useEffect(() => {
-    renderMath();
-  }, [mode, currentQuestionIndex]);
-
-  // ===== Event Handlers =====
-  const handleStart = () => {
-    setMode("exam");
-    setTimerActive(true);
-    setTimeLeft((exam.duration || exam.timeLimit || 0) * 60);
-    setCurrentQuestionIndex(0);
-    setUserAnswers({});
-    setScore({ correct: 0, total: 0, percentage: 0 });
-    setIsSubmitted(false);
-    setHasConfirmedLastAnswer(false);
-  };
-
-  const handleAnswerChange = (questionId, answer) => {
-    setUserAnswers((prev) => ({ ...prev, [questionId]: answer }));
-  };
-
-  const handleNext = () => {
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex((prev) => prev + 1);
-      setHasConfirmedLastAnswer(false);
-    }
-  };
-
-  const handlePrev = () => {
-    if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex((prev) => prev - 1);
-      setHasConfirmedLastAnswer(false);
-    }
-  };
-
-  const handleSubmit = () => {
-    const result = gradeExam(exam, userAnswers);
-    setScore(result);
-    setIsSubmitted(true);
-    setMode("results");
-    setTimerActive(false);
-  };
-
-  const handleShowResults = () => {
-    if (!hasConfirmedLastAnswer) {
-      setHasConfirmedLastAnswer(true);
-    } else {
-      handleSubmit();
-    }
-  };
-
-  const handleReset = () => {
-    setMode("start");
-    setUserAnswers({});
-    setScore({ correct: 0, total: 0, percentage: 0 });
-    setIsSubmitted(false);
-    setTimeLeft((exam.duration || exam.timeLimit || 0) * 60);
-    setTimerActive(false);
-    setHasConfirmedLastAnswer(false);
-  };
-
-  const formatTime = (seconds) => {
-    const m = Math.floor(seconds / 60)
-      .toString()
-      .padStart(2, "0");
-    const s = (seconds % 60).toString().padStart(2, "0");
-    return `${m}:${s}`;
-  };
-
-  // ===== Render =====
-  const isMidterm =
-    exam.title?.toLowerCase().includes("midterm") ||
-    exam.title?.toLowerCase().includes("exam");
-
+  // Render the appropriate screen based on mode
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 relative">
-      {/* Header */}
-      {mode === "exam" && (
-        <div className="flex justify-between items-center mb-6 bg-blue-50 border border-blue-200 rounded-xl p-3">
-          <p className="text-[#4169E1] font-semibold">
-            Question {currentQuestionIndex + 1} of {questions.length}
-          </p>
-          <p className="font-semibold text-gray-800">⏱️ {formatTime(timeLeft)}</p>
-        </div>
-      )}
-
-      {/* Main Content */}
-      <ExamScreens
-        mode={mode}
-        exam={exam}
-        questions={questions}
-        currentQuestionIndex={currentQuestionIndex}
-        userAnswers={userAnswers}
-        isSubmitted={isSubmitted}
-        score={score}
-        onAnswerChange={handleAnswerChange}
-        onNext={handleNext}
-        onPrev={handlePrev}
-        onSubmit={handleSubmit}
-        onStart={handleStart}
-        onShowResults={handleShowResults}
-      />
-
-      {/* 📜 Footer for Results Page */}
-      {mode === "results" && (
-        <div className="mt-10 text-center space-x-4" id="results-bottom">
-          <button
-            onClick={() => window.print()}
-            className="bg-gradient-to-r from-[#FFC300] to-[#E67E22] text-white font-semibold px-6 py-3 rounded-xl shadow hover:shadow-lg transition-all"
-          >
-            🖨️ Print Results
-          </button>
-          <button
-            onClick={handleReset}
-            className="bg-gray-200 text-gray-800 font-semibold px-6 py-3 rounded-xl shadow hover:bg-gray-300 transition-all"
-          >
-            🔄 Restart Exam
-          </button>
-          <a
-            href={`/modules/${exam.moduleId || ""}`}
-            className="bg-[#4169E1] text-white font-semibold px-6 py-3 rounded-xl shadow hover:bg-blue-600 transition-all"
-          >
-            ← Back to Module
-          </a>
-        </div>
-      )}
+    <div className="max-w-6xl mx-auto px-4 py-8 relative print:p-0">
+      <ExamScreens {...examState} />
     </div>
   );
 };

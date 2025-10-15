@@ -1,31 +1,53 @@
+// src/pages/Exam.jsx
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getExamById } from '../data/exams';
 import ExamManagerCore from '../components/Quiz/ExamManagerCore';
 import { renderMath } from '../utils/mathRenderer';
 
+/**
+ * Exam Page
+ * 
+ * Entry point for taking exams. Loads exam data and displays
+ * pre-exam information before starting ExamManagerCore.
+ */
 const Exam = () => {
   const { examId } = useParams();
-  const navigate = useNavigate();
   const [exam, setExam] = useState(null);
   const [isStarted, setIsStarted] = useState(false);
+  const [loading, setLoading] = useState(true);
 
+  // Load exam data
   useEffect(() => {
     const examData = getExamById(examId);
-
     if (!examData) {
       console.error(`Exam not found: ${examId}`);
+      setLoading(false);
       return;
     }
-
     setExam(examData);
+    setLoading(false);
     renderMath();
   }, [examId]);
 
+  // Render math when exam loads
   useEffect(() => {
     if (exam) renderMath();
   }, [exam]);
 
+  // Loading state
+  if (loading) {
+    return (
+      <div className="max-w-4xl mx-auto p-6 text-center">
+        <div className="bg-gray-50 border border-gray-200 rounded-xl p-8">
+          <div className="animate-spin inline-block w-12 h-12 border-4 border-[#4169E1] border-t-transparent rounded-full mb-4"></div>
+          <p className="text-gray-600 text-lg">Loading exam...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state - exam not found
   if (!exam) {
     return (
       <div className="max-w-4xl mx-auto p-6 text-center">
@@ -47,7 +69,7 @@ const Exam = () => {
     );
   }
 
-  // 🧭 Pre-exam screen
+  // Pre-exam information screen (before starting)
   if (!isStarted) {
     const totalPoints = exam.questions.reduce(
       (sum, q) => sum + (q.points || 0),
@@ -70,12 +92,13 @@ const Exam = () => {
           <p className="text-lg text-gray-600">{exam.description}</p>
         </div>
 
-        {/* Exam Info */}
+        {/* Exam Info Card */}
         <div className="bg-white border border-gray-200 rounded-xl p-8 shadow-sm mb-6">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">
             📋 Exam Information
           </h2>
 
+          {/* Info Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="flex items-start space-x-3">
               <span className="text-3xl">📝</span>
@@ -86,7 +109,6 @@ const Exam = () => {
                 </p>
               </div>
             </div>
-
             <div className="flex items-start space-x-3">
               <span className="text-3xl">⭐</span>
               <div>
@@ -96,7 +118,6 @@ const Exam = () => {
                 </p>
               </div>
             </div>
-
             {exam.timeLimit && (
               <div className="flex items-start space-x-3">
                 <span className="text-3xl">⏱️</span>
@@ -108,7 +129,6 @@ const Exam = () => {
                 </div>
               </div>
             )}
-
             <div className="flex items-start space-x-3">
               <span className="text-3xl">🎯</span>
               <div>
@@ -121,44 +141,46 @@ const Exam = () => {
           </div>
 
           {/* Sections Overview */}
-          <div className="mb-8">
-            <h3 className="text-xl font-bold text-gray-800 mb-4">
-              Exam Sections
-            </h3>
-            <div className="space-y-3">
-              {exam.sections.map((section) => {
-                const sectionQuestions = exam.questions.filter(
-                  (q) => q.sectionId === section.id
-                );
-                return (
-                  <div
-                    key={section.id}
-                    className="bg-gray-50 border border-gray-200 rounded-lg p-4"
-                  >
-                    <h4 className="font-bold text-gray-800 mb-1">
-                      {section.title}
-                    </h4>
-                    <p className="text-sm text-gray-600 mb-2">
-                      {section.description}
-                    </p>
-                    {section.instructions && (
-                      <p className="text-sm text-gray-500 italic">
-                        📌 {section.instructions}
+          {exam.sections && exam.sections.length > 0 && (
+            <div className="mb-8">
+              <h3 className="text-xl font-bold text-gray-800 mb-4">
+                Exam Sections
+              </h3>
+              <div className="space-y-3">
+                {exam.sections.map((section) => {
+                  const sectionQuestions = exam.questions.filter(
+                    (q) => q.sectionId === section.id
+                  );
+                  return (
+                    <div
+                      key={section.id}
+                      className="bg-gray-50 border border-gray-200 rounded-lg p-4"
+                    >
+                      <h4 className="font-bold text-gray-800 mb-1">
+                        {section.title}
+                      </h4>
+                      <p className="text-sm text-gray-600 mb-2">
+                        {section.description}
                       </p>
-                    )}
-                    <p className="text-xs text-gray-500 mt-2">
-                      {sectionQuestions.length} questions •{" "}
-                      {sectionQuestions.reduce(
-                        (sum, q) => sum + (q.points || 0),
-                        0
-                      )}{" "}
-                      points
-                    </p>
-                  </div>
-                );
-              })}
+                      {section.instructions && (
+                        <p className="text-sm text-gray-500 italic">
+                          📌 {section.instructions}
+                        </p>
+                      )}
+                      <p className="text-xs text-gray-500 mt-2">
+                        {sectionQuestions.length} questions •{" "}
+                        {sectionQuestions.reduce(
+                          (sum, q) => sum + (q.points || 0),
+                          0
+                        )}{" "}
+                        points
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Instructions */}
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-6">
@@ -167,7 +189,7 @@ const Exam = () => {
             </h3>
             <ul className="space-y-2 text-sm text-yellow-900">
               <li>✓ You must complete all questions before submitting</li>
-              <li>✓ You can navigate between sections freely</li>
+              <li>✓ You can navigate between questions freely</li>
               <li>✓ Review your answers before final submission</li>
               {exam.timeLimit && (
                 <li>✓ The timer will start when you begin the exam</li>
@@ -194,13 +216,8 @@ const Exam = () => {
     );
   }
 
-  // ✅ Updated to pass "exam" directly
-  return (
-    <ExamManagerCore
-      exam={exam}
-      onExit={() => navigate(`/modules/${exam.moduleId}`)}
-    />
-  );
+  // Once started, render the exam manager
+  return <ExamManagerCore exam={exam} />;
 };
 
 export default Exam;
