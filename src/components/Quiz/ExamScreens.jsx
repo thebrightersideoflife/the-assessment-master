@@ -1,6 +1,5 @@
 // src/components/Quiz/ExamScreens.jsx
 import React, { useEffect, useState } from "react";
-import { ChevronDown } from "lucide-react";
 import ExamQuestion from "./ExamQuestion";
 import ExamAnswerInput from "./ExamAnswerInput";
 import ExamExplanation from "./ExamExplanation";
