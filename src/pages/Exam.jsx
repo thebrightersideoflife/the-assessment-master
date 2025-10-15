@@ -1,8 +1,7 @@
-// src/pages/Exam.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getExamById } from '../data/exams';
-import ExamManager from '../components/Quiz/ExamManager';
+import ExamManagerCore from '../components/Quiz/ExamManagerCore'; // ✅ new import
 import LoadingSpinner from '../components/UI/LoadingSpinner';
 import { renderMath } from '../utils/mathRenderer';
 
@@ -25,9 +24,7 @@ const Exam = () => {
   }, [examId]);
 
   useEffect(() => {
-    if (exam) {
-      renderMath();
-    }
+    if (exam) renderMath();
   }, [exam]);
 
   if (!exam) {
@@ -51,7 +48,6 @@ const Exam = () => {
     );
   }
 
-  // Pre-exam instructions screen
   if (!isStarted) {
     const totalPoints = exam.questions.reduce((sum, q) => sum + (q.points || 0), 0);
     
@@ -65,9 +61,7 @@ const Exam = () => {
           >
             ← Back to {exam.moduleId}
           </Link>
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">
-            {exam.title}
-          </h1>
+          <h1 className="text-4xl font-bold text-gray-800 mb-2">{exam.title}</h1>
           <p className="text-lg text-gray-600">{exam.description}</p>
         </div>
 
@@ -92,9 +86,7 @@ const Exam = () => {
               <span className="text-3xl">⭐</span>
               <div>
                 <p className="font-semibold text-gray-700">Total Points</p>
-                <p className="text-2xl font-bold text-[#4169E1]">
-                  {totalPoints}
-                </p>
+                <p className="text-2xl font-bold text-[#4169E1]">{totalPoints}</p>
               </div>
             </div>
 
@@ -123,13 +115,11 @@ const Exam = () => {
 
           {/* Sections Overview */}
           <div className="mb-8">
-            <h3 className="text-xl font-bold text-gray-800 mb-4">
-              Exam Sections
-            </h3>
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Exam Sections</h3>
             <div className="space-y-3">
-              {exam.sections.map((section, index) => {
+              {exam.sections.map((section) => {
                 const sectionQuestions = exam.questions.filter(
-                  q => q.sectionId === section.id
+                  (q) => q.sectionId === section.id
                 );
                 return (
                   <div
@@ -148,7 +138,12 @@ const Exam = () => {
                       </p>
                     )}
                     <p className="text-xs text-gray-500 mt-2">
-                      {sectionQuestions.length} questions • {sectionQuestions.reduce((sum, q) => sum + (q.points || 0), 0)} points
+                      {sectionQuestions.length} questions •{" "}
+                      {sectionQuestions.reduce(
+                        (sum, q) => sum + (q.points || 0),
+                        0
+                      )}{" "}
+                      points
                     </p>
                   </div>
                 );
@@ -190,10 +185,10 @@ const Exam = () => {
     );
   }
 
-  // Exam started - render ExamManager
+  // ✅ Updated to use ExamManagerCore
   return (
-    <ExamManager 
-      exam={exam} 
+    <ExamManagerCore
+      exam={exam}
       onExit={() => navigate(`/modules/${exam.moduleId}`)}
     />
   );
