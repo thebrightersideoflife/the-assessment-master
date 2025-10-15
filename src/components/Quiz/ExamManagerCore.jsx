@@ -1,7 +1,7 @@
 // src/components/Quiz/ExamManagerCore.jsx
 import React, { useState, useEffect } from "react";
 import ExamScreens from "./ExamScreens";
-import { calculateScore } from "../../utils/examUtils";
+import { gradeExam } from "../../utils/examUtils";
 import { renderMath } from "../../utils/mathRenderer";
 
 /**
@@ -69,7 +69,7 @@ const ExamManagerCore = ({ examData }) => {
   };
 
   const handleSubmit = () => {
-    const result = calculateScore(questions, userAnswers);
+    const result = gradeExam(exam, userAnswers);
     setScore(result);
     setIsSubmitted(true);
     setMode("results");
