@@ -833,7 +833,7 @@ export const exams = [
     moduleId: "ITMTB",
     title: "ITMTB Final Exam",
     description: "Not yet set",
-    timeLimit: null, // minutes (optional, set to null for no limit)
+    timeLimit: 1, // minutes (optional, set to null for no limit)
     passingScore: 70, // percentage
     
     // Sections organize the exam
@@ -872,7 +872,7 @@ export const exams = [
     moduleId: "ITMTB",
     title: "ITMTB Practice Questions (Unlimited)",
     description: "Not yet set",
-    timeLimit: null, // minutes (optional, set to null for no limit)
+    timeLimit: 1, // minutes (optional, set to null for no limit)
     passingScore: 70, // percentage
     
     // Sections organize the exam
