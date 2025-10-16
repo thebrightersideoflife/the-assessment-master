@@ -13,11 +13,11 @@ const Layout = ({ children }) => {
   });
   const [showGamificationSettings, setShowGamificationSettings] = useState(false);
   const [showJumpButton, setShowJumpButton] = useState(false);
+  const [isBottomButton, setIsBottomButton] = useState(true); // 👈 track mode (top/bottom)
   const location = useLocation();
   const navigate = useNavigate();
   const { resetQuiz } = useStore();
 
-  // Load sidebar collapsed state
   useEffect(() => {
     const collapsed = localStorage.getItem("sidebarCollapsed") === "true";
     setSidebarState((prev) => ({ ...prev, collapsed }));
@@ -27,21 +27,33 @@ const Layout = ({ children }) => {
     localStorage.setItem("sidebarCollapsed", sidebarState.collapsed.toString());
   }, [sidebarState.collapsed]);
 
-  // Show the jump button after scrolling down
+  // 👇 Handle showing the button and toggling between top/bottom modes
   useEffect(() => {
     const handleScroll = () => {
       const y = window.scrollY || document.documentElement.scrollTop;
-      setShowJumpButton(y > 300);
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const halfway = scrollHeight / 2;
+
+      setShowJumpButton(y > 300); // show button after some scroll
+      setIsBottomButton(y < halfway); // toggle: top button if past halfway
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleJumpToBottom = () => {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: "smooth",
-    });
+  const handleJump = () => {
+    if (isBottomButton) {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: "smooth",
+      });
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
   };
 
   const handleResetQuiz = () => {
@@ -75,7 +87,6 @@ const Layout = ({ children }) => {
         isOpen={showGamificationSettings}
         onClose={() => setShowGamificationSettings(false)}
       />
-      {/* Mobile overlay */}
       {sidebarState.open && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden"
@@ -85,10 +96,11 @@ const Layout = ({ children }) => {
           aria-hidden="true"
         />
       )}
-      {/* 🧭 Elegant Minimal Jump to Bottom Button */}
+
+      {/* 🧭 Jump to Top/Bottom Button */}
       {showJumpButton && (
         <button
-          onClick={handleJumpToBottom}
+          onClick={handleJump}
           className="
             fixed bottom-6 right-6 z-50 print:hidden
             flex items-center justify-center
@@ -99,9 +111,11 @@ const Layout = ({ children }) => {
             transition-all duration-300 ease-out
             hover:scale-105
           "
-          aria-label='Jump to bottom'
+          aria-label={isBottomButton ? "Jump to bottom" : "Jump to top"}
         >
-          <span style={{ color: 'white', textShadow: '0 0 2px white' }}>🠟</span>
+          <span style={{ color: "white", textShadow: "0 0 2px white" }}>
+            {isBottomButton ? "🠟" : "🠝"}
+          </span>
         </button>
       )}
     </div>

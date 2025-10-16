@@ -70,18 +70,19 @@ export const gradeExam = (exam, confirmedAnswers = {}) => {
  * @returns {boolean} True if all required fields are filled
  */
 export const validateStudentDetails = (studentDetails = {}) => {
-  // Support both legacy and new field sets
+  // Support multiple field sets
   const requiredSets = [
-    ["fullName", "studentId", "moduleCode"], // New version
-    ["studentNumber", "studentName", "studentSurname", "institute", "campus"], // Legacy
+    ["studentNumber", "studentName", "studentSurname", "institute", "campus"], // Original format
+    ["fullName", "studentId", "moduleCode"], // Alternative format
   ];
 
   // Determine which set applies
-  const usingNewFields =
-    studentDetails.fullName !== undefined || 
-    studentDetails.studentId !== undefined;
+  const usingOriginalFields =
+    studentDetails.studentNumber !== undefined || 
+    studentDetails.studentName !== undefined ||
+    studentDetails.studentSurname !== undefined;
   
-  const required = usingNewFields ? requiredSets[0] : requiredSets[1];
+  const required = usingOriginalFields ? requiredSets[0] : requiredSets[1];
   
   // Check if all required fields are filled
   const missing = required.filter((field) => !studentDetails[field]);

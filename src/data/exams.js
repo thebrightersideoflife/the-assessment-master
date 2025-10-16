@@ -15,7 +15,7 @@ export const exams = [
     moduleId: "ITMTB",
     title: "ITMTB Midterm Exam",
     description: "Covers integration fundamentals and techniques (Weeks 1-2)",
-    timeLimit: 120, // minutes (optional, set to null for no limit)
+    timeLimit: 5.1, // minutes (optional, set to null for no limit)
     passingScore: 70, // percentage
     
     // Sections organize the exam

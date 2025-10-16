@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getExamById } from '../data/exams';
-import ExamManagerCore from '../components/Quiz/ExamManagerCore';
+import ExamManagerCore from '../components/Quiz/Exam/ExamManagerCore';
 import { renderMath } from '../utils/mathRenderer';
 
 /**
