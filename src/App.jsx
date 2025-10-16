@@ -6,6 +6,7 @@ import { renderMath } from "./utils/mathRenderer";
 import { injectAnimations } from "./utils/gamificationUtils";
 import "./styles/tailwind.css";
 import LoadingSpinner from "./components/UI/LoadingSpinner";
+import ScrollToTop from './components/UI/ScrollToTop';
 
 // Lazy-loaded pages
 const Home = React.lazy(() => import("./pages/Home"));
@@ -53,6 +54,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <Layout>
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>

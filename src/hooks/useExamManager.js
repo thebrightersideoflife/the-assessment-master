@@ -495,7 +495,7 @@ const useExamManager = (exam) => {
     if (onExit && typeof onExit === 'function') {
       onExit();
     } else {
-      window.location.href = `/modules/${exam.moduleId}`;
+      window.location.href = `/modules/${moduleId}`;
     }
   }, [exam.moduleId]);
 
