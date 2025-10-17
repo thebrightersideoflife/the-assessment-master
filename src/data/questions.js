@@ -1764,5 +1764,1020 @@ export const questions = [
         "The \\( +C \\) represents the constant of integration, which accounts for the fact that the derivative of any constant is zero.\n\n" +
         "**Answer: \\( x^3 - x^2 + 5x + C \\)**"
     },
+    {
+        id: "q41",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "multiple-choice",
+        text: "What is the formula for finding the average value of a continuous function \\( f(x) \\) over a closed interval \\( [a, b] \\)?",
+        
+        options: [
+          "A. \\( f_{\\text{avg}} = \\frac{1}{b-a}\\int_{a}^{b}f(x)\\,dx \\)",
+          "B. \\( f_{\\text{avg}} = (b-a)\\int_{a}^{b}f(x)\\,dx \\)",
+          "C. \\( f_{\\text{avg}} = \\int_{a}^{b}f(x)\\,dx \\)",
+          "D. \\( f_{\\text{avg}} = \\frac{1}{2}\\int_{a}^{b}f(x)\\,dx \\)"
+        ],
+        
+        correctAnswers: ["A"],
+        
+        explanation: "The correct formula for the average value of a function \\( f(x) \\) on the closed interval \\( [a, b] \\) is:\n\n" +
+          "$f_{\\text{avg}} = \\frac{1}{b-a}\\int_{a}^{b}f(x)\\,dx$\n\n" +
+          "**Understanding the Formula:**\n\n" +
+          "This formula is analogous to finding the average of a list of numbers. When you find the average of numbers like 3, 5, 7, you add them up and divide by how many numbers you have: \\( \\frac{3+5+7}{3} = 5 \\).\n\n" +
+          "For a continuous function:\n" +
+          "- The **integral** \\( \\int_{a}^{b}f(x)\\,dx \\) adds up all the function values (like summing the numbers)\n" +
+          "- The **length of the interval** \\( (b-a) \\) represents how many values we're averaging over (like the count of numbers)\n" +
+          "- **Dividing** the integral by \\( (b-a) \\) gives us the average\n\n" +
+          "**Geometric Interpretation:**\n\n" +
+          "Imagine the area under the curve of \\( f(x) \\) from \\( a \\) to \\( b \\). If you were to \"flatten\" this area into a rectangle with the same base \\( (b-a) \\), the height of that rectangle would be \\( f_{\\text{avg}} \\).\n\n" +
+          "In other words, \\( f_{\\text{avg}} \\) is the **constant height** that produces the **same total area** as the original function over that interval.\n\n" +
+          "**Why the other options are wrong:**\n" +
+          "- **Option B** multiplies by \\( (b-a) \\) instead of dividing, which would give you the total area, not the average\n" +
+          "- **Option C** is just the integral (total area), not the average\n" +
+          "- **Option D** divides by 2, which has no mathematical basis for finding averages\n\n" +
+          "**Answer: A**"
+      },
+
+      {
+        id: "q42",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "open-ended",
+        text: "Calculate the average value of the function \\( f(x) = \\ln x \\) over the interval \\( [1, e] \\). Express your answer as a fraction.",
+        
+        correctAnswers: [
+          "1/(e-1)",
+          "1/(e - 1)",
+          "(e-1)^(-1)",
+          "(e-1)^-1"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**Step 1: Apply the Average Value Formula**\n\n" +
+          "We start with the formula for average value:\n\n" +
+          "$f_{\\text{avg}} = \\frac{1}{b-a}\\int_{a}^{b}f(x)\\,dx$\n\n" +
+          "In this problem:\n" +
+          "- \\( f(x) = \\ln x \\)\n" +
+          "- \\( a = 1 \\) (lower limit)\n" +
+          "- \\( b = e \\) (upper limit)\n\n" +
+          "Substituting these values:\n\n" +
+          "$f_{\\text{avg}} = \\frac{1}{e-1}\\int_{1}^{e}\\ln x\\,dx$\n\n" +
+          "**Step 2: Integrate \\( \\int \\ln x\\,dx \\) using Integration by Parts**\n\n" +
+          "The integral of \\( \\ln x \\) requires integration by parts. Recall the formula:\n\n" +
+          "$\\int u\\,dv = uv - \\int v\\,du$\n\n" +
+          "We choose:\n" +
+          "- \\( u = \\ln x \\) → then \\( du = \\frac{1}{x}dx \\) (derivative of \\( \\ln x \\))\n" +
+          "- \\( dv = dx \\) → then \\( v = x \\) (integral of 1)\n\n" +
+          "Applying the formula:\n\n" +
+          "$\\int \\ln x\\,dx = (\\ln x)(x) - \\int x \\cdot \\frac{1}{x}dx$\n\n" +
+          "Notice that \\( x \\cdot \\frac{1}{x} = 1 \\), so:\n\n" +
+          "$\\int \\ln x\\,dx = x \\ln x - \\int 1\\,dx$\n\n" +
+          "$\\int \\ln x\\,dx = x \\ln x - x + C$\n\n" +
+          "**Step 3: Evaluate the Definite Integral**\n\n" +
+          "Now we evaluate from 1 to \\( e \\):\n\n" +
+          "$f_{\\text{avg}} = \\frac{1}{e-1}[x \\ln x - x]_{1}^{e}$\n\n" +
+          "**Upper limit** (\\( x = e \\)):\n\n" +
+          "$e \\ln e - e = e(1) - e = e - e = 0$\n\n" +
+          "(Remember: \\( \\ln e = 1 \\) because \\( e \\) is the natural logarithm base)\n\n" +
+          "**Lower limit** (\\( x = 1 \\)):\n\n" +
+          "$1 \\ln 1 - 1 = 1(0) - 1 = 0 - 1 = -1$\n\n" +
+          "(Remember: \\( \\ln 1 = 0 \\) because \\( e^0 = 1 \\))\n\n" +
+          "**Subtract lower from upper:**\n\n" +
+          "$f_{\\text{avg}} = \\frac{1}{e-1}[0 - (-1)] = \\frac{1}{e-1}(1) = \\frac{1}{e-1}$\n\n" +
+          "**Final Answer:** \\( \\displaystyle\\frac{1}{e-1} \\approx 0.582 \\)"
+      },
+
+      {
+        id: "q43",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "open-ended",
+        text: "Set up the integral expression to find the average value of \\( f(x) = \\sin x \\) over the interval \\( [0, \\pi] \\). (Write the complete expression with limits)",
+        
+        correctAnswers: [
+          "f_avg = (1/pi) * integral from 0 to pi of sin(x) dx",
+          "favg = (1/pi) * int(sin x, 0, pi)",
+          "(1/pi) * integral(sin(x), 0, pi)",
+          "1/pi * int_0^pi sin(x) dx",
+          "(1/(pi-0)) * integral from 0 to pi of sin x dx",
+          "integral(sin x, 0, pi) / pi",
+          "int(sin(x), 0, pi) / pi"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.0001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**Understanding the Setup:**\n\n" +
+          "To find the average value of a function, we use the formula:\n\n" +
+          "$f_{\\text{avg}} = \\frac{1}{b-a}\\int_{a}^{b}f(x)\\,dx$\n\n" +
+          "This question asks us to **set up** the expression, not evaluate it yet.\n\n" +
+          "**Identifying the Components:**\n\n" +
+          "For \\( f(x) = \\sin x \\) on the interval \\( [0, \\pi] \\):\n\n" +
+          "- **Function:** \\( f(x) = \\sin x \\)\n" +
+          "- **Lower limit:** \\( a = 0 \\)\n" +
+          "- **Upper limit:** \\( b = \\pi \\)\n" +
+          "- **Interval length:** \\( b - a = \\pi - 0 = \\pi \\)\n\n" +
+          "**Substituting into the Formula:**\n\n" +
+          "Replace each part of the general formula with our specific values:\n\n" +
+          "$f_{\\text{avg}} = \\frac{1}{\\pi - 0}\\int_{0}^{\\pi}\\sin x\\,dx$\n\n" +
+          "This simplifies to:\n\n" +
+          "$f_{\\text{avg}} = \\frac{1}{\\pi}\\int_{0}^{\\pi}\\sin x\\,dx$\n\n" +
+          "**What this means:**\n\n" +
+          "- The \\( \\frac{1}{\\pi} \\) outside the integral is the reciprocal of the interval length\n" +
+          "- The integral \\( \\int_{0}^{\\pi}\\sin x\\,dx \\) calculates the total area under the sine curve from 0 to \\( \\pi \\)\n" +
+          "- Multiplying these gives the average height of the sine function over this interval\n\n" +
+          "**Note:** If we were to evaluate this integral, we would get \\( f_{\\text{avg}} = \\frac{2}{\\pi} \\), but the question only asks for the setup."
+      },
+
+      {
+        id: "q44",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "multiple-choice",
+        text: "What is the primary purpose of using the Integration by Parts technique?",
+        
+        options: [
+          "A. To integrate rational functions with polynomial denominators",
+          "B. To integrate products of functions, especially when one becomes simpler when differentiated",
+          "C. To find the average value of a function over an interval",
+          "D. To evaluate definite integrals with infinite limits"
+        ],
+        
+        correctAnswers: ["B"],
+        
+        explanation: "**Integration by Parts** is a technique used to **integrate products of functions**.\n\n" +
+          "It's particularly useful when the integrand is a product of two functions, one of which **becomes simpler when differentiated**.\n\n" +
+          "**The Formula:**\n\n" +
+          "$\\int u\\,dv = uv - \\int v\\,du$\n\n" +
+          "**Why do we need this technique?**\n\n" +
+          "Some integrals cannot be solved using basic integration rules. For example, \\( \\int x \\sin x\\,dx \\) or \\( \\int x e^x\\,dx \\) are products of two functions, and no simple rule exists to integrate them directly.\n\n" +
+          "Integration by Parts transforms a difficult integral into (hopefully) an easier one.\n\n" +
+          "**Connection to the Product Rule:**\n\n" +
+          "Integration by Parts is actually the **reverse of the product rule** for differentiation. The product rule states:\n\n" +
+          "$\\frac{d}{dx}[u \\cdot v] = u\\frac{dv}{dx} + v\\frac{du}{dx}$\n\n" +
+          "When we integrate both sides and rearrange, we get the Integration by Parts formula.\n\n" +
+          "**Choosing \\( u \\) and \\( dv \\) (The LIATE Rule):**\n\n" +
+          "Success depends on choosing the right function for \\( u \\). A helpful guideline is **LIATE**:\n\n" +
+          "- **L**ogarithmic (\\( \\ln x \\))\n" +
+          "- **I**nverse trig (\\( \\arcsin x \\), \\( \\arctan x \\))\n" +
+          "- **A**lgebraic (\\( x \\), \\( x^2 \\))\n" +
+          "- **T**rigonometric (\\( \\sin x \\), \\( \\cos x \\))\n" +
+          "- **E**xponential (\\( e^x \\))\n\n" +
+          "Choose \\( u \\) as the function that appears **earliest** in this list, and \\( dv \\) as what remains.\n\n" +
+          "**Why Option B is correct:**\n\n" +
+          "Integration by Parts specifically handles **products of functions** where one becomes simpler through differentiation. This distinguishes it from:\n" +
+          "- Partial fractions (for rational functions)\n" +
+          "- Average value formulas (for finding averages over intervals)\n" +
+          "- Improper integrals (for infinite limits)\n\n" +
+          "**Answer: B**"
+      },
+
+      {
+        id: "q45",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "open-ended",
+        text: "Integrate \\( \\int x e^{-x}\\,dx \\) using integration by parts. Express your answer in simplest form.",
+        
+        correctAnswers: [
+          "-x*e^(-x) - e^(-x) + C",
+          "-xe^(-x) - e^(-x) + C",
+          "-x*exp(-x) - exp(-x) + C",
+          "-(x+1)*e^(-x) + C",
+          "-(x+1)e^(-x) + C",
+          "-e^(-x)*(x+1) + C",
+          "-e^(-x)(x+1) + C"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.0001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**Step 1: Choose \\( u \\) and \\( dv \\)**\n\n" +
+          "- Let \\( u = x \\) (simplifies when differentiated)\n" +
+          "- Let \\( dv = e^{-x}dx \\)\n\n" +
+          "**Step 2: Calculate \\( du \\) and \\( v \\)**\n\n" +
+          "- \\( du = dx \\)\n" +
+          "- \\( v = \\int e^{-x}dx = -e^{-x} \\)\n\n" +
+          "**Step 3: Apply Integration by Parts Formula**\n\n" +
+          "$$\\int u\\,dv = uv - \\int v\\,du$$\n\n" +
+          "$$\\int x e^{-x}dx = (x)(-e^{-x}) - \\int (-e^{-x})(dx)$$\n\n" +
+          "$$= -xe^{-x} + \\int e^{-x}dx$$\n\n" +
+          "**Step 4: Evaluate the Remaining Integral**\n\n" +
+          "$$\\int e^{-x}dx = -e^{-x}$$\n\n" +
+          "**Final Answer:**\n\n" +
+          "$$\\int x e^{-x}dx = -xe^{-x} - e^{-x} + C$$\n\n" +
+          "This can also be factored as: \\( -(x+1)e^{-x} + C \\)"
+      },
+
+      {
+        id: "q46",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "multiple-choice",
+        text: "What type of functions is the Integration by Partial Fractions method primarily used for?",
+        
+        options: [
+          "A. Trigonometric functions involving products of sine and cosine",
+          "B. Rational functions (where numerator and denominator are polynomials)",
+          "C. Exponential functions with polynomial exponents",
+          "D. Logarithmic functions with polynomial arguments"
+        ],
+        
+        correctAnswers: ["B"],
+        
+        explanation: "**Integration by Partial Fractions** is a method used to evaluate integrals of **rational functions**.\n\n" +
+          "**What is a Rational Function?**\n\n" +
+          "A rational function is a fraction where both the numerator and denominator are polynomials:\n\n" +
+          "$\\frac{P(x)}{Q(x)} = \\frac{\\text{polynomial}}{\\text{polynomial}}$\n\n" +
+          "For example: \\( \\displaystyle\\frac{x+1}{x^2-4} \\), \\( \\displaystyle\\frac{3x-5}{(x-1)(x+2)} \\)\n\n" +
+          "**Why Do We Need This Method?**\n\n" +
+          "Rational functions with complex denominators are often difficult or impossible to integrate directly. For example, try integrating \\( \\displaystyle\\int\\frac{4x-3}{x^2+x-2}dx \\) using basic rules—you can't!\n\n" +
+          "**The Main Idea:**\n\n" +
+          "Break apart (decompose) the complicated fraction into a **sum of simpler fractions** that we can integrate easily.\n\n" +
+          "For example:\n" +
+          "$\\frac{4x-3}{(x-1)(x+2)} = \\frac{A}{x-1} + \\frac{B}{x+2}$\n\n" +
+          "Each simpler fraction on the right can be integrated using the formula:\n" +
+          "$\\int\\frac{1}{x-a}dx = \\ln|x-a| + C$\n\n" +
+          "**The Process (Overview):**\n\n" +
+          "1. **Check if proper:** Degree of numerator < degree of denominator (if not, do long division first)\n" +
+          "2. **Factor the denominator:** Break \\( Q(x) \\) into simpler factors like \\( (x-1)(x+2) \\)\n" +
+          "3. **Set up partial fractions:** Write as a sum with unknown constants \\( A, B, C, \\ldots \\)\n" +
+          "4. **Solve for constants:** Use algebra to find the values of \\( A, B, C, \\ldots \\)\n" +
+          "5. **Integrate:** Each simple fraction integrates to a logarithm\n\n" +
+          "**Why Other Options Are Wrong:**\n\n" +
+          "- **Option A:** Trigonometric products use different techniques (like trig identities)\n" +
+          "- **Option C:** Exponential functions with polynomial exponents don't require partial fractions\n" +
+          "- **Option D:** Logarithmic functions with polynomial arguments use substitution or other methods\n\n" +
+          "**Answer: B** - Partial fractions specifically handles rational functions (polynomial over polynomial)."
+      },
+
+      {
+        id: "q47",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "open-ended",
+        text: "For the rational function \\( \\frac{4x-3}{(x-1)(x+2)} \\), what is the initial setup for its partial fraction decomposition? (Express as an equation with constants A and B)",
+        
+        correctAnswers: [
+          "(4x-3)/((x-1)(x+2)) = A/(x-1) + B/(x+2)",
+          "(4x-3)/[(x-1)(x+2)] = A/(x-1) + B/(x+2)",
+          "A/(x-1) + B/(x+2)",
+          "A/(x-1) + B/(x+2) = (4x-3)/((x-1)(x+2))"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.0001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**Partial Fraction Decomposition Setup:**\n\n" +
+          "The function \\( \\frac{4x-3}{(x-1)(x+2)} \\) has a denominator already factored into **two distinct linear factors**:\n" +
+          "- \\( (x-1) \\)\n" +
+          "- \\( (x+2) \\)\n\n" +
+          "**Rule for Distinct Linear Factors:**\n" +
+          "Each distinct linear factor gets its own fraction with a constant numerator.\n\n" +
+          "**Setup:**\n\n" +
+          "$$\\frac{4x-3}{(x-1)(x+2)} = \\frac{A}{x-1} + \\frac{B}{x+2}$$\n\n" +
+          "Where:\n" +
+          "- \\( A \\) is the constant for factor \\( (x-1) \\)\n" +
+          "- \\( B \\) is the constant for factor \\( (x+2) \\)\n\n" +
+          "The next step would be to solve for \\( A \\) and \\( B \\) by clearing fractions and equating coefficients."
+      },
+
+      {
+        id: "q48",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "multiple-choice",
+        text: "When integrating \\( \\int\\frac{4x-3}{(x-1)(x+2)}dx \\) with decomposition \\( \\frac{A}{x-1}+\\frac{B}{x+2} \\), after multiplying both sides by \\( (x-1)(x+2) \\) and expanding, what are the two equations used to solve for \\( A \\) and \\( B \\)?",
+        
+        options: [
+          "A. \\( A+B=4 \\) and \\( A-B=-3 \\)",
+          "B. \\( A+B=4 \\) and \\( 2A-B=-3 \\)",
+          "C. \\( A-B=4 \\) and \\( 2A+B=-3 \\)",
+          "D. \\( 2A+2B=4 \\) and \\( A-B=-3 \\)"
+        ],
+        
+        correctAnswers: ["B"],
+        
+        explanation: "**Step-by-Step Solution:**\n\n" +
+          "**Step 1: Start with the decomposition**\n\n" +
+          "$$\\frac{4x-3}{(x-1)(x+2)} = \\frac{A}{x-1} + \\frac{B}{x+2}$$\n\n" +
+          "**Step 2: Clear fractions** by multiplying both sides by \\( (x-1)(x+2) \\):\n\n" +
+          "$$4x-3 = A(x+2) + B(x-1)$$\n\n" +
+          "**Step 3: Expand the right side**\n\n" +
+          "$$4x-3 = Ax + 2A + Bx - B$$\n\n" +
+          "**Step 4: Group by powers of \\( x \\)**\n\n" +
+          "$$4x-3 = (A+B)x + (2A-B)$$\n\n" +
+          "**Step 5: Equate coefficients**\n\n" +
+          "For the polynomials to be equal for all \\( x \\):\n\n" +
+          "- **Coefficient of \\( x \\):** \\( A + B = 4 \\)\n" +
+          "- **Constant term:** \\( 2A - B = -3 \\)\n\n" +
+          "Solving this system gives \\( A = \\frac{1}{3} \\) and \\( B = \\frac{11}{3} \\)\n\n" +
+          "**Answer: B**"
+      },
+
+      {
+        id: "q49",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "open-ended",
+        text: "Given the decomposition \\( \\frac{4x-3}{(x-1)(x+2)} = \\frac{1/3}{x-1} + \\frac{11/3}{x+2} \\), what is the final result of the integral \\( \\int\\frac{4x-3}{(x-1)(x+2)}dx \\)? (Include the constant of integration)",
+        
+        correctAnswers: [
+          "(1/3)*ln|x-1| + (11/3)*ln|x+2| + C",
+          "1/3*ln|x-1| + 11/3*ln|x+2| + C",
+          "(1/3)ln|x-1| + (11/3)ln|x+2| + C",
+          "ln|x-1|/3 + 11*ln|x+2|/3 + C",
+          "ln|x-1|/3 + (11/3)ln|x+2| + C"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.0001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**Step 1: Substitute the Partial Fractions**\n\n" +
+          "$$I = \\int\\left(\\frac{1/3}{x-1} + \\frac{11/3}{x+2}\\right)dx$$\n\n" +
+          "**Step 2: Split and Factor Constants**\n\n" +
+          "$$I = \\frac{1}{3}\\int\\frac{dx}{x-1} + \\frac{11}{3}\\int\\frac{dx}{x+2}$$\n\n" +
+          "**Step 3: Integrate**\n\n" +
+          "Recall that \\( \\int\\frac{1}{u}du = \\ln|u| + C \\)\n\n" +
+          "$$\\int\\frac{dx}{x-1} = \\ln|x-1|$$\n\n" +
+          "$$\\int\\frac{dx}{x+2} = \\ln|x+2|$$\n\n" +
+          "**Final Result:**\n\n" +
+          "$$I = \\frac{1}{3}\\ln|x-1| + \\frac{11}{3}\\ln|x+2| + C$$\n\n" +
+          "This can also be written as:\n\n" +
+          "$$I = \\frac{1}{3}\\left[\\ln|x-1| + 11\\ln|x+2|\\right] + C$$"
+      },
+
+      {
+        id: "q50",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "multiple-choice",
+        text: "Before applying Integration by Partial Fractions, what condition must a rational function satisfy, and what must be done if it doesn't meet this condition?",
+        
+        options: [
+          "A. The numerator must be linear; if not, factor it completely",
+          "B. The fraction must be proper (degree of numerator < degree of denominator); if not, perform polynomial long division first",
+          "C. The denominator must be completely factored; if not, use the quadratic formula",
+          "D. Both numerator and denominator must have the same degree; if not, multiply by a constant"
+        ],
+        
+        correctAnswers: ["B"],
+        
+        explanation: "**Critical Requirement for Partial Fractions:**\n\n" +
+          "The fraction must be **proper**, meaning:\n" +
+          "- **Degree of numerator < Degree of denominator**\n\n" +
+          "**If the fraction is NOT proper** (degree of numerator ≥ degree of denominator):\n\n" +
+          "**Step 1: Perform Polynomial Long Division**\n\n" +
+          "This rewrites the improper fraction as:\n\n" +
+          "$$\\frac{P(x)}{Q(x)} = \\text{Polynomial}(x) + \\frac{\\text{Remainder}(x)}{Q(x)}$$\n\n" +
+          "**Step 2: Split the Integration**\n\n" +
+          "- Integrate the polynomial part using the power rule\n" +
+          "- Apply partial fractions to the proper fraction \\( \\frac{\\text{Remainder}(x)}{Q(x)} \\)\n\n" +
+          "**Why This Matters:**\n" +
+          "The partial fractions decomposition technique only works for proper rational functions. Polynomial long division converts improper fractions into a form where partial fractions can be applied.\n\n" +
+          "**Answer: B**"
+      },
+      {
+        id: "q51",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "open-ended",
+        text: "Find the average value of the function \\( f(x) = 3x + 2 \\) over the interval \\( [0, 5] \\).",
+        
+        correctAnswers: [
+          "9.5",
+          "9.50",
+          "19/2",
+          "9 1/2"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**1. Formula:** We use the average value formula: \\( f_{\\text{avg}} = \\frac{1}{b-a}\\int_{a}^{b}f(x)\\,dx \\)\n\n" +
+          "**2. Setup:** Substitute \\( f(x) = 3x + 2 \\), \\( a = 0 \\), and \\( b = 5 \\):\n\n" +
+          "$f_{\\text{avg}} = \\frac{1}{5-0}\\int_{0}^{5}(3x+2)\\,dx = \\frac{1}{5}\\int_{0}^{5}(3x+2)\\,dx$\n\n" +
+          "**3. Integration:** Find the antiderivative of \\( 3x+2 \\):\n\n" +
+          "$\\int(3x+2)\\,dx = 3\\frac{x^2}{2} + 2x = \\frac{3x^2}{2} + 2x$\n\n" +
+          "**4. Evaluate Definite Integral (Fundamental Theorem of Calculus):**\n\n" +
+          "$\\int_{0}^{5}(3x+2)\\,dx = \\left[\\frac{3}{2}x^2 + 2x\\right]_{0}^{5}$\n\n" +
+          "$= \\left(\\frac{3}{2}(5)^2 + 2(5)\\right) - \\left(\\frac{3}{2}(0)^2 + 2(0)\\right)$\n\n" +
+          "$= \\left(\\frac{3}{2}(25) + 10\\right) - (0) = \\frac{75}{2} + 10 = 37.5 + 10 = 47.5$\n\n" +
+          "**5. Final Average Value:** Divide the integral result by the interval length \\( (b-a) = 5 \\):\n\n" +
+          "$f_{\\text{avg}} = \\frac{1}{5} \\times 47.5 = 9.5$"
+      },
+
+      {
+        id: "q52",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "open-ended",
+        text: "Calculate the average value of \\( f(x) = \\sin x \\) over the interval \\( [0, \\pi] \\).",
+        
+        correctAnswers: [
+          "2/pi",
+          "2/π",
+          "2 / pi",
+          "0.6366",
+          "0.637"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.01,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**1. Formula Setup:** Using \\( f_{\\text{avg}} = \\frac{1}{b-a}\\int_{a}^{b}f(x)\\,dx \\) with \\( f(x) = \\sin x \\), \\( a = 0 \\), and \\( b = \\pi \\):\n\n" +
+          "$f_{\\text{avg}} = \\frac{1}{\\pi-0}\\int_{0}^{\\pi}\\sin x\\,dx$\n\n" +
+          "**2. Integration:** The integral of \\( \\sin x \\) is \\( -\\cos x \\):\n\n" +
+          "$f_{\\text{avg}} = \\frac{1}{\\pi}[-\\cos x]_{0}^{\\pi}$\n\n" +
+          "**3. Evaluate Limits:**\n\n" +
+          "$f_{\\text{avg}} = \\frac{1}{\\pi}\\left((-\\cos \\pi) - (-\\cos 0)\\right)$\n\n" +
+          "Since \\( \\cos \\pi = -1 \\) and \\( \\cos 0 = 1 \\):\n\n" +
+          "$f_{\\text{avg}} = \\frac{1}{\\pi}\\left((-(-1)) - (-(1))\\right)$\n\n" +
+          "$f_{\\text{avg}} = \\frac{1}{\\pi}(1 + 1) = \\frac{2}{\\pi}$\n\n" +
+          "This is approximately \\( 0.6366 \\)."
+      },
+
+      {
+        id: "q53",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "multiple-choice",
+        text: "When integrating \\( \\int x \\ln x\\,dx \\) using integration by parts (\\( \\int u\\,dv = uv - \\int v\\,du \\)), which functions should be chosen for \\( u \\) and \\( dv \\), and why?",
+        
+        options: [
+          "A. \\( u = x \\) and \\( dv = \\ln x\\,dx \\), because \\( x \\) is easier to differentiate",
+          "B. \\( u = \\ln x \\) and \\( dv = x\\,dx \\), because \\( \\ln x \\) simplifies when differentiated",
+          "C. \\( u = x \\ln x \\) and \\( dv = dx \\), to keep the product together",
+          "D. Either choice works equally well"
+        ],
+        
+        correctAnswers: ["B"],
+        
+        explanation: "The strategy for Integration by Parts is to choose \\( u \\) and \\( dv \\) such that \\( \\int v\\,du \\) is simpler to integrate than the original \\( \\int u\\,dv \\). The **LIATE** mnemonic (Logarithmic, Inverse trig, Algebraic, Trigonometric, Exponential) helps prioritize the choice for \\( u \\):\n\n" +
+          "**\\( u \\) (function to differentiate):** We choose \\( u = \\ln x \\) because the derivative of \\( \\ln x \\) is \\( du = \\frac{1}{x}dx \\), which is an algebraic function that simplifies the product in the next integral, \\( \\int v\\,du \\). Logarithmic functions are usually the top priority for \\( u \\) because they simplify upon differentiation.\n\n" +
+          "**\\( dv \\) (function to integrate):** We choose \\( dv = x\\,dx \\) because it's the remaining part, and its integral \\( v = \\frac{x^2}{2} \\) is easy to find.\n\n" +
+          "**Why other options are wrong:**\n" +
+          "- **Option A:** While \\( x \\) is easy to differentiate, \\( \\ln x \\) is extremely difficult to integrate directly\n" +
+          "- **Option C:** This doesn't separate the product properly for the integration by parts formula\n" +
+          "- **Option D:** The choices are not equivalent; option B leads to a solvable integral while option A does not\n\n" +
+          "**Answer: B**"
+      },
+
+      {
+        id: "q54",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "open-ended",
+        text: "Apply the integration by parts formula to set up the problem \\( \\int x \\ln x\\,dx \\). Express the result after applying the formula once (you don't need to evaluate the remaining integral).",
+        
+        correctAnswers: [
+          "(x^2/2)*ln(x) - integral of (x^2/2)*(1/x) dx",
+          "(x^2/2)*ln x - int((x^2/2)*(1/x), x)",
+          "x^2*ln(x)/2 - integral(x/2, x)",
+          "(1/2)*x^2*ln(x) - int(x/2 dx)"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.0001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**1. Selections:**\n" +
+          "- \\( u = \\ln x \\)\n" +
+          "- \\( dv = x\\,dx \\)\n\n" +
+          "**2. Derivatives/Integrals:**\n" +
+          "- \\( du = \\frac{1}{x}dx \\)\n" +
+          "- \\( v = \\int x\\,dx = \\frac{x^2}{2} \\)\n\n" +
+          "**3. Formula Application:** Apply \\( \\int u\\,dv = uv - \\int v\\,du \\):\n\n" +
+          "$\\int x \\ln x\\,dx = (\\ln x)\\left(\\frac{x^2}{2}\\right) - \\int \\left(\\frac{x^2}{2}\\right)\\left(\\frac{1}{x}dx\\right)$\n\n" +
+          "**4. Simplification:**\n\n" +
+          "$\\int x \\ln x\\,dx = \\frac{x^2}{2}\\ln x - \\int \\frac{x}{2}dx$\n\n" +
+          "The final result (after evaluating the remaining integral) is \\( \\frac{x^2}{2}\\ln x - \\frac{x^2}{4} + C \\)."
+      },
+
+      {
+        id: "q55",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "multiple-choice",
+        text: "If you are asked to integrate \\( \\int x^2 e^x\\,dx \\), explain why you would likely need to apply the integration by parts formula more than once.",
+        
+        options: [
+          "A. Because \\( e^x \\) doesn't have a simple antiderivative",
+          "B. Because \\( x^2 \\) is a polynomial of degree 2, requiring two differentiations to reduce it to a constant",
+          "C. Because the formula only works for linear terms",
+          "D. Because integration by parts always requires multiple applications"
+        ],
+        
+        correctAnswers: ["B"],
+        
+        explanation: "You would need to apply the formula multiple times because the chosen \\( u \\) is a polynomial (\\( u = x^2 \\)), and its derivative only reduces the power by one degree with each application. Since \\( x^2 \\) is a second-degree polynomial, it takes **two successive differentiations** for it to become a constant (\\( du = 2x\\,dx \\), then the next \\( du \\) is \\( 2\\,dx \\)), which is when the second integral (\\( \\int v\\,du \\)) becomes trivial to solve.\n\n" +
+          "**Explanation:**\n\n" +
+          "**1. First Application:** Choose \\( u = x^2 \\) and \\( dv = e^x dx \\). The formula yields:\n\n" +
+          "$\\int x^2 e^x dx = x^2 e^x - \\int 2x e^x dx$\n\n" +
+          "The new integral, \\( \\int 2x e^x dx \\), is still a product of two functions (a linear polynomial and an exponential), so it still requires integration by parts.\n\n" +
+          "**2. Second Application:** For \\( \\int 2x e^x dx \\), choose \\( u = 2x \\) and \\( dv = e^x dx \\). This application will simplify the integral down to \\( \\int 2e^x dx \\), which can be solved directly.\n\n" +
+          "The final result involves terms corresponding to the original function, its first derivative, and its second derivative, multiplied by \\( e^x \\): \\( e^x(x^2 - 2x + 2) + C \\).\n\n" +
+          "**Answer: B**"
+      },
+
+      {
+        id: "q56",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "multiple-choice",
+        text: "In the method of Integration by Partial Fractions, what is the crucial second step, and why is it necessary?",
+        
+        options: [
+          "A. Integrate the numerator first to simplify the fraction",
+          "B. Completely factor the denominator into linear or quadratic factors",
+          "C. Set all coefficients equal to zero and solve",
+          "D. Convert the fraction to a decimal approximation"
+        ],
+        
+        correctAnswers: ["B"],
+        
+        explanation: "The crucial second step is to **completely factor the denominator** into linear or quadratic factors. This is necessary because the partial fraction decomposition is set up based on the **specific factors** of the denominator. If the denominator is not fully factored, you cannot correctly determine the form of the simpler fractions (the partial fractions).\n\n" +
+          "**Explanation:**\n\n" +
+          "The partial fraction technique relies entirely on decomposing the rational expression back into the simpler terms that would have been combined to form it.\n\n" +
+          "- For example, if the denominator is \\( x^2 + 3x + 2 \\), you must factor it as \\( (x+1)(x+2) \\).\n" +
+          "- If you don't factor it, you won't know to set up the decomposition as \\( \\frac{A}{x+1} + \\frac{B}{x+2} \\).\n\n" +
+          "Different factor types (distinct linear, repeated linear, irreducible quadratic) lead to different forms for the numerators in the decomposition.\n\n" +
+          "**Answer: B**"
+      },
+
+      {
+        id: "q57",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "multiple-choice",
+        text: "Why is it necessary to check if a rational function is \"proper\" before proceeding with Partial Fractions, and what defines a proper fraction?",
+        
+        options: [
+          "A. A fraction is proper if the numerator has no constants; division is needed to remove them",
+          "B. A fraction is proper if the degree of the numerator is less than the degree of the denominator; if not, perform polynomial long division first",
+          "C. A fraction is proper if both numerator and denominator are prime; factoring is needed otherwise",
+          "D. A fraction is proper if it evaluates to a number less than 1; scaling is needed otherwise"
+        ],
+        
+        correctAnswers: ["B"],
+        
+        explanation: "It's necessary because the algebraic method of setting up the partial fraction decomposition only works for **proper fractions**. A rational function is defined as **proper** if the **degree of the numerator is less than the degree of the denominator**. If it's not proper, you must perform polynomial long division first.\n\n" +
+          "**Explanation:**\n\n" +
+          "If a fraction is improper (degree of numerator ≥ degree of denominator), it contains an inherent polynomial part that must be extracted before the remaining rational part can be decomposed.\n\n" +
+          "For example, for \\( \\int\\frac{x^2+4x+7}{x^2+3x+2}dx \\), the degrees are equal (both 2). This is improper. Although it's sometimes possible to attempt a direct decomposition, it is best practice to first divide. If we were to divide, we would get a quotient of 1 and a remainder, which would simplify the setup.\n\n" +
+          "**Answer: B**"
+      },
+
+      {
+        id: "q58",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "open-ended",
+        text: "Consider the setup for the integral \\( \\int\\frac{5x+7}{(x-2)(x+3)}dx \\):\n$5x+7 = A(x+3) + B(x-2)$\nSolve for \\( A \\) and \\( B \\) using strategic substitution (the \"cover-up\" method). Enter your answer as: A=value, B=value",
+        
+        correctAnswers: [
+          "A=17/5, B=8/5",
+          "A = 17/5, B = 8/5",
+          "A=3.4, B=1.6",
+          "A = 3.4, B = 1.6"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.01,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "The strategy of strategic substitution, often called the Heaviside Cover-Up Method, allows us to quickly find coefficients when the factors are distinct linear terms:\n\n" +
+          "**1. To find A, set \\( x \\) equal to the root that makes the \\( B \\) term zero:** \\( x = 2 \\).\n\n" +
+          "Substitute \\( x = 2 \\) into the equation \\( 5x+7 = A(x+3) + B(x-2) \\):\n\n" +
+          "$5(2)+7 = A(2+3) + B(2-2)$\n" +
+          "$10+7 = 5A + 0$\n" +
+          "$17 = 5A \\Rightarrow A = \\frac{17}{5} = 3.4$\n\n" +
+          "**2. To find B, set \\( x \\) equal to the root that makes the \\( A \\) term zero:** \\( x = -3 \\).\n\n" +
+          "Substitute \\( x = -3 \\) into the equation:\n\n" +
+          "$5(-3)+7 = A(-3+3) + B(-3-2)$\n" +
+          "$-15+7 = 0 + B(-5)$\n" +
+          "$-8 = -5B \\Rightarrow B = \\frac{8}{5} = 1.6$\n\n" +
+          "This results in the final integral form: \\( \\frac{17}{5}\\ln|x-2| + \\frac{8}{5}\\ln|x+3| + C \\)."
+      },
+
+      {
+        id: "q59",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "multiple-choice",
+        text: "Once the partial fraction decomposition for \\( \\int\\frac{4x-3}{(x-1)(x+2)}dx \\) is solved as \\( I = \\int\\left(\\frac{1/3}{x-1} + \\frac{11/3}{x+2}\\right)dx \\), what is the fundamental integration rule used to evaluate these simpler terms?",
+        
+        options: [
+          "A. \\( \\int u\\,du = \\frac{u^2}{2} + C \\)",
+          "B. \\( \\int e^u\\,du = e^u + C \\)",
+          "C. \\( \\int \\frac{1}{u}\\,du = \\ln|u| + C \\)",
+          "D. \\( \\int \\sin u\\,du = -\\cos u + C \\)"
+        ],
+        
+        correctAnswers: ["C"],
+        
+        explanation: "The fundamental integration rule used is \\( \\int \\frac{1}{u}\\,du = \\ln|u| + C \\).\n\n" +
+          "**Explanation:**\n\n" +
+          "The whole purpose of the partial fraction decomposition is to break down a complex rational function into a sum of terms that fit this simple integration pattern.\n\n" +
+          "**1. For the first term, \\( \\frac{1}{3}\\int\\frac{dx}{x-1} \\):**\n\n" +
+          "Let \\( u = x-1 \\), then \\( du = dx \\). The integral is:\n\n" +
+          "$\\frac{1}{3}\\int\\frac{1}{u}du = \\frac{1}{3}\\ln|u| = \\frac{1}{3}\\ln|x-1|$\n\n" +
+          "**2. For the second term, \\( \\frac{11}{3}\\int\\frac{dx}{x+2} \\):**\n\n" +
+          "Let \\( u = x+2 \\), then \\( du = dx \\). The integral is:\n\n" +
+          "$\\frac{11}{3}\\int\\frac{1}{u}du = \\frac{11}{3}\\ln|u| = \\frac{11}{3}\\ln|x+2|$\n\n" +
+          "Combining these gives the final result:\n\n" +
+          "$I = \\frac{1}{3}\\ln|x-1| + \\frac{11}{3}\\ln|x+2| + C$\n\n" +
+          "**Answer: C**"
+      },
+
+      {
+        id: "q60",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "multiple-choice",
+        text: "Describe the general relationship between \\( f_{\\text{avg}} \\) and the integral \\( \\int_{a}^{b}f(x)\\,dx \\).",
+        
+        options: [
+          "A. \\( f_{\\text{avg}} \\) is always larger than the integral value",
+          "B. The integral represents the total area, and \\( f_{\\text{avg}} \\) is this area distributed evenly across the interval width",
+          "C. \\( f_{\\text{avg}} \\) is the derivative of the integral",
+          "D. They are unrelated quantities"
+        ],
+        
+        correctAnswers: ["B"],
+        
+        explanation: "The integral \\( \\int_{a}^{b}f(x)\\,dx \\) represents the **total accumulated quantity** or the **net area** under the curve \\( f(x) \\) over the interval \\( [a, b] \\). The average value, \\( f_{\\text{avg}} \\), is this total net area **distributed evenly** across the width of the interval \\( (b-a) \\), effectively giving the **mean height** of the function over that span.\n\n" +
+          "**Explanation:**\n\n" +
+          "The definition of the average value is:\n\n" +
+          "$f_{\\text{avg}} \\times (b-a) = \\int_{a}^{b}f(x)\\,dx$\n\n" +
+          "**Integral (Right Side):** The product of all function values \\( f(x) \\) and the infinitesimal change \\( dx \\), summed up. This is the **total area**.\n\n" +
+          "**Average Value (Left Side):** \\( f_{\\text{avg}} \\) is a constant height. Multiplying it by the base \\( (b-a) \\) also gives an area (a rectangle's area).\n\n" +
+          "The equation shows that the area of the rectangle with height \\( f_{\\text{avg}} \\) is **exactly equal** to the area under the curve \\( f(x) \\). Therefore, \\( f_{\\text{avg}} \\) is the constant height required to achieve the same total accumulated change over the interval.\n\n" +
+          "**Answer: B**"
+      },
+
+      {
+        id: "q61",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "multiple-choice",
+        text: "The average value of a function \\( f_{\\text{avg}} \\) is closely related to the Mean Value Theorem for Integrals. If \\( f(x) \\) is continuous on \\( [a, b] \\), what does this theorem state about the existence of a value \\( c \\)?",
+        
+        options: [
+          "A. There exists a value \\( c \\) where \\( f(c) = 0 \\)",
+          "B. There exists a value \\( c \\) where \\( f(c) = f_{\\text{avg}} \\), meaning the function's height equals its average height",
+          "C. There exists a value \\( c \\) where \\( f'(c) = f_{\\text{avg}} \\)",
+          "D. There exists a value \\( c \\) where \\( f(c) \\) is maximum"
+        ],
+        
+        correctAnswers: ["B"],
+        
+        explanation: "The Mean Value Theorem for Integrals states that if \\( f(x) \\) is continuous on a closed interval \\( [a, b] \\), then there exists at least one number \\( c \\) in that interval \\( (a < c < b) \\) such that:\n\n" +
+          "$$f(c) = f_{\\text{avg}}$$\n\n" +
+          "Geometrically, this means there is a point \\( c \\) in the interval where the function's height, \\( f(c) \\), is **exactly equal** to the average height of the function, \\( f_{\\text{avg}} \\), over that interval.\n\n" +
+          "**Explanation:**\n\n" +
+          "The theorem guarantees that the constant function of height \\( f_{\\text{avg}} \\) (which has the same area as \\( f(x) \\)) must intersect the original function \\( f(x) \\) at least once. Since \\( f(x) \\) is continuous, it must take on every value between its minimum and maximum on the interval, including its own average value.\n\n" +
+          "**Formulaically:** Since \\( f_{\\text{avg}} = \\frac{1}{b-a}\\int_{a}^{b}f(x)\\,dx \\), the theorem is often written as:\n\n" +
+          "$$\\int_{a}^{b}f(x)\\,dx = f(c)(b-a)$$\n\n" +
+          "This shows that the **area under the curve** (\\( \\int f(x)\\,dx \\)) equals the **area of the average rectangle** (\\( f(c) \\cdot (b-a) \\)).\n\n" +
+          "**Answer: B**"
+      },
+
+      {
+        id: "q62",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "open-ended",
+        text: "Calculate the average value of the function \\( f(x) = 3x + 2 \\) over the interval \\( [0, 5] \\).",
+        
+        correctAnswers: [
+          "9.5",
+          "9.50",
+          "19/2",
+          "9 1/2"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**1. Set up the Average Value Formula:** We use \\( f_{\\text{avg}} = \\frac{1}{b-a}\\int_{a}^{b}f(x)\\,dx \\).\n\n" +
+          "$$f_{\\text{avg}} = \\frac{1}{5-0}\\int_{0}^{5}(3x+2)\\,dx = \\frac{1}{5}\\int_{0}^{5}(3x+2)\\,dx$$\n\n" +
+          "**2. Integrate the Function:** Find the antiderivative:\n\n" +
+          "$$\\int(3x+2)\\,dx = \\frac{3x^2}{2} + 2x$$\n\n" +
+          "**3. Apply Limits of Integration:** Evaluate the definite integral:\n\n" +
+          "$$\\int_{0}^{5}(3x+2)\\,dx = \\left[\\frac{3}{2}x^2 + 2x\\right]_{0}^{5}$$\n\n" +
+          "$$= \\left(\\frac{3}{2}(5)^2 + 2(5)\\right) - \\left(\\frac{3}{2}(0)^2 + 2(0)\\right)$$\n\n" +
+          "$$= \\left(\\frac{75}{2} + 10\\right) - 0 = 37.5 + 10 = 47.5$$\n\n" +
+          "**4. Final Average Value:** Divide by the interval length:\n\n" +
+          "$$f_{\\text{avg}} = \\frac{1}{5} \\times 47.5 = 9.5$$"
+      },
+
+      {
+        id: "q63",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "multiple-choice",
+        text: "Explain the relationship between the Product Rule for Differentiation and the Integration by Parts formula. What is the widely used mnemonic for choosing the function \\( u \\) to differentiate?",
+        
+        options: [
+          "A. They are unrelated; the mnemonic is PEMDAS",
+          "B. Integration by Parts is the integral form of the Product Rule; the mnemonic is LIATE",
+          "C. Integration by Parts is the derivative of the Product Rule; the mnemonic is BODMAS",
+          "D. They use the same formula; the mnemonic is FOIL"
+        ],
+        
+        correctAnswers: ["B"],
+        
+        explanation: "Integration by Parts is the **integral form** of the Product Rule for Differentiation. It allows us to integrate a product of functions by reversing the differentiation process.\n\n" +
+          "**The Product Rule states:**\n\n" +
+          "$$\\frac{d}{dx}(uv) = u\\frac{dv}{dx} + v\\frac{du}{dx}$$\n\n" +
+          "**Integrating both sides** with respect to \\( x \\) gives:\n\n" +
+          "$$uv = \\int u\\,dv + \\int v\\,du$$\n\n" +
+          "**Rearranging this formula** yields the Integration by Parts formula:\n\n" +
+          "$$\\int u\\,dv = uv - \\int v\\,du$$\n\n" +
+          "**The LIATE Mnemonic:**\n\n" +
+          "The mnemonic used for choosing \\( u \\) is **LIATE**, which prioritizes the function types in this order for \\( u \\):\n\n" +
+          "1. **L**ogarithmic (\\( \\ln x \\))\n" +
+          "2. **I**nverse Trigonometric (\\( \\arctan x \\), \\( \\arcsin x \\))\n" +
+          "3. **A**lgebraic (Polynomials like \\( x^2 \\), \\( x^3 \\))\n" +
+          "4. **T**rigonometric (\\( \\sin x \\), \\( \\cos x \\))\n" +
+          "5. **E**xponential (\\( e^x \\))\n\n" +
+          "Choose \\( u \\) as the function that appears **earliest** in this list, and \\( dv \\) as what remains.\n\n" +
+          "**Answer: B**"
+      },
+
+      {
+        id: "q64",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "open-ended",
+        text: "Use the method of Integration by Parts to evaluate the integral \\( \\int x^2 e^x\\,dx \\). Express in factored form.",
+        
+        correctAnswers: [
+          "e^x(x^2 - 2x + 2) + C",
+          "e^x*(x^2 - 2x + 2) + C",
+          "exp(x)*(x^2 - 2x + 2) + C",
+          "(x^2 - 2x + 2)*e^x + C",
+          "e^x(x^2-2x+2) + C"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.0001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "Since \\( u = x^2 \\) is a polynomial of degree 2, we must apply Integration by Parts twice.\n\n" +
+          "**Application 1:** \\( \\int x^2 e^x\\,dx \\)\n\n" +
+          "- Choose \\( u = x^2 \\) and \\( dv = e^x dx \\)\n" +
+          "- \\( du = 2x\\,dx \\) and \\( v = e^x \\)\n\n" +
+          "$$\\int x^2 e^x\\,dx = uv - \\int v\\,du = x^2 e^x - \\int e^x (2x)\\,dx = x^2 e^x - 2\\int x e^x\\,dx$$\n\n" +
+          "**Application 2:** Evaluate the new integral, \\( -2\\int x e^x\\,dx \\)\n\n" +
+          "- Choose \\( u = x \\) and \\( dv = e^x dx \\)\n" +
+          "- \\( du = dx \\) and \\( v = e^x \\)\n\n" +
+          "$$-2\\int x e^x\\,dx = -2\\left[xe^x - \\int e^x\\,dx\\right] = -2\\left[xe^x - e^x\\right] = -2xe^x + 2e^x$$\n\n" +
+          "**Final Result:** Substitute the result of Application 2 back into Application 1:\n\n" +
+          "$$\\int x^2 e^x\\,dx = x^2 e^x + (-2xe^x + 2e^x) + C$$\n\n" +
+          "$$= x^2 e^x - 2xe^x + 2e^x + C$$\n\n" +
+          "**Factoring out \\( e^x \\):**\n\n" +
+          "$$= e^x(x^2 - 2x + 2) + C$$"
+      },
+
+      {
+        id: "q65",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "multiple-choice",
+        text: "In Integration by Partial Fractions, the first step is to ensure the fraction is proper. If you are asked to integrate an improper rational function, such as \\( \\int\\frac{P(x)}{Q(x)}dx \\) where \\( \\text{deg}(P(x)) \\geq \\text{deg}(Q(x)) \\), what specific preliminary step must you take, and why?",
+        
+        options: [
+          "A. Factor the numerator first to simplify the expression",
+          "B. Perform polynomial long division to obtain a proper fraction remainder",
+          "C. Multiply numerator and denominator by the leading coefficient",
+          "D. Use substitution to change the variable"
+        ],
+        
+        correctAnswers: ["B"],
+        
+        explanation: "The necessary preliminary step is to perform **polynomial long division**.\n\n" +
+          "**Explanation:**\n\n" +
+          "Polynomial long division is essential because the partial fraction decomposition method is only valid for **proper fractions** (where the degree of the numerator is less than the degree of the denominator).\n\n" +
+          "- If the fraction is improper, division must be performed until a remainder, \\( R(x) \\), is obtained such that \\( \\text{deg}(R(x)) < \\text{deg}(Q(x)) \\).\n\n" +
+          "- The original integral is then split into two parts:\n\n" +
+          "$$\\int\\frac{P(x)}{Q(x)}dx = \\int\\left(\\text{Quotient}(x) + \\frac{R(x)}{Q(x)}\\right)dx$$\n\n" +
+          "- The integral of the \\( \\text{Quotient}(x) \\) (a polynomial) is straightforward using the power rule.\n\n" +
+          "- The integral of the **remainder term** \\( \\frac{R(x)}{Q(x)} \\) is now a proper rational function and can be solved using the Partial Fractions method.\n\n" +
+          "**Example:**\n\n" +
+          "For \\( \\frac{x^3 + 2x}{x^2 - 1} \\), the numerator degree (3) ≥ denominator degree (2), so it's improper. After polynomial division:\n\n" +
+          "$$\\frac{x^3 + 2x}{x^2 - 1} = x + \\frac{3x}{x^2 - 1}$$\n\n" +
+          "Now we can integrate \\( x \\) directly and apply partial fractions to \\( \\frac{3x}{x^2 - 1} \\).\n\n" +
+          "**Answer: B**"
+      },
+
+      {
+        id: "q66",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "open-ended",
+        text: "For a proper rational function \\( \\frac{P(x)}{Q(x)} \\) where the denominator \\( Q(x) \\) can be factored into \\( n \\) distinct linear factors \\( (x-a_1)(x-a_2)\\dots(x-a_n) \\), write the general form of the partial fraction decomposition. (Use A1, A2, ..., An for coefficients)",
+        
+        correctAnswers: [
+          "A1/(x-a1) + A2/(x-a2) + ... + An/(x-an)",
+          "A1/(x-a1) + A2/(x-a2) + An/(x-an)",
+          "sum of Ai/(x-ai) for i=1 to n"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.0001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "The general form of the decomposition is a sum of \\( n \\) simpler fractions, where each distinct linear factor gets a constant numerator:\n\n" +
+          "$$\\frac{P(x)}{(x-a_1)(x-a_2)\\dots(x-a_n)} = \\frac{A_1}{x-a_1} + \\frac{A_2}{x-a_2} + \\dots + \\frac{A_n}{x-a_n}$$\n\n" +
+          "Where \\( A_1, A_2, \\dots, A_n \\) are the unknown constant coefficients to be solved for.\n\n" +
+          "**Explanation:**\n\n" +
+          "This setup is based on the principle that the simplest forms of rational functions whose integrals we know are those with linear denominators (since \\( \\int \\frac{A}{x-a}\\,dx = A \\ln|x-a| + C \\)).\n\n" +
+          "By decomposing the original complex fraction into this sum, we transform one difficult integral into a sum of several easy ones.\n\n" +
+          "**Example:**\n\n" +
+          "For \\( \\frac{5x+7}{(x-2)(x+3)} \\), the decomposition would be:\n\n" +
+          "$$\\frac{5x+7}{(x-2)(x+3)} = \\frac{A_1}{x-2} + \\frac{A_2}{x+3}$$"
+      },
+
+      {
+        id: "q67",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "open-ended",
+        text: "For the integral \\( \\int\\frac{4x-3}{(x-1)(x+2)}dx \\), the decomposition leads to the equation \\( 4x-3 = (A+B)x + (2A-B) \\). Solve for the coefficients \\( A \\) and \\( B \\) by equating coefficients. Enter your answer as: A=value, B=value",
+        
+        correctAnswers: [
+          "A=1/3, B=11/3",
+          "A = 1/3, B = 11/3",
+          "A=0.333, B=3.667",
+          "A = 0.333, B = 3.667"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.01,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "We equate the coefficients of the terms on both sides of the identity:\n\n" +
+          "**1. Coefficients of \\( x \\):** \\( A + B = 4 \\)\n\n" +
+          "**2. Constant terms:** \\( 2A - B = -3 \\)\n\n" +
+          "**Step 1: Eliminate \\( B \\) (by adding equations):**\n\n" +
+          "$$(A+B) + (2A-B) = 4 + (-3)$$\n\n" +
+          "$$3A = 1 \\Rightarrow A = \\frac{1}{3}$$\n\n" +
+          "**Step 2: Solve for \\( B \\) (by substituting \\( A \\) into Eq. 1):**\n\n" +
+          "$$A + B = 4$$\n\n" +
+          "$$\\frac{1}{3} + B = 4$$\n\n" +
+          "$$B = 4 - \\frac{1}{3} = \\frac{12}{3} - \\frac{1}{3} = \\frac{11}{3}$$\n\n" +
+          "**Verification:**\n\n" +
+          "Check with the second equation:\n\n" +
+          "$$2A - B = 2\\left(\\frac{1}{3}\\right) - \\frac{11}{3} = \\frac{2}{3} - \\frac{11}{3} = -\\frac{9}{3} = -3$$ ✓"
+      },
+
+      {
+        id: "q68",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "multiple-choice",
+        text: "What is the general antiderivative formula for the rational function \\( \\frac{1}{ax+b} \\), and how does this relate to the final step in Integration by Partial Fractions?",
+        
+        options: [
+          "A. \\( \\int \\frac{1}{ax+b}dx = \\ln(ax+b) + C \\); it's used occasionally",
+          "B. \\( \\int \\frac{1}{ax+b}dx = \\frac{1}{a}\\ln|ax+b| + C \\); every decomposed partial fraction term uses this formula",
+          "C. \\( \\int \\frac{1}{ax+b}dx = \\frac{(ax+b)^2}{2a} + C \\); it's unrelated to partial fractions",
+          "D. \\( \\int \\frac{1}{ax+b}dx = \\arctan(ax+b) + C \\); it's used for quadratic factors"
+        ],
+        
+        correctAnswers: ["B"],
+        
+        explanation: "The general antiderivative formula is:\n\n" +
+          "$$\\int \\frac{1}{ax+b}dx = \\frac{1}{a}\\ln|ax+b| + C$$\n\n" +
+          "**Explanation:**\n\n" +
+          "This formula is derived using a simple u-substitution where \\( u = ax+b \\), so \\( du = a\\,dx \\), which means \\( dx = \\frac{1}{a}du \\).\n\n" +
+          "$$\\int \\frac{1}{u}\\left(\\frac{1}{a}du\\right) = \\frac{1}{a}\\int \\frac{1}{u}du = \\frac{1}{a}\\ln|u| + C$$\n\n" +
+          "**Connection to Partial Fractions:**\n\n" +
+          "This formula is the fundamental reason why Partial Fractions works: every decomposed term, \\( \\frac{A}{x-a} \\), is a special case of \\( \\frac{1}{ax+b} \\) (where \\( a=1 \\) and \\( b=-a \\)), making the final integration step for all partial fractions trivial and always resulting in a \\( \\ln|...| \\) term.\n\n" +
+          "**Example:**\n\n" +
+          "For \\( \\frac{5}{x-2} \\):\n\n" +
+          "$$\\int \\frac{5}{x-2}dx = 5\\ln|x-2| + C$$\n\n" +
+          "(Here \\( a=1 \\), so the \\( \\frac{1}{a} \\) factor is just 1)\n\n" +
+          "**Answer: B**"
+      },
+
+      {
+        id: "q69",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "multiple-choice",
+        text: "When the denominator of a rational function has a repeated linear factor, such as \\( (x-a)^2 \\), how is the partial fraction decomposition set up according to the rules, and why?",
+        
+        options: [
+          "A. \\( \\frac{A}{(x-a)^2} \\) only, because it covers all cases",
+          "B. \\( \\frac{A}{x-a} + \\frac{B}{(x-a)^2} \\), to account for all possible rational functions with this denominator",
+          "C. \\( \\frac{A+B}{(x-a)^2} \\), combining the constants",
+          "D. \\( \\frac{A}{x-a} \\) only, ignoring the square"
+        ],
+        
+        correctAnswers: ["B"],
+        
+        explanation: "When a linear factor \\( (x-a) \\) is repeated \\( k \\) times (e.g., \\( (x-a)^k \\)), the decomposition requires \\( k \\) separate partial fractions. For a repeated factor squared, \\( (x-a)^2 \\), the setup is:\n\n" +
+          "$$\\frac{P(x)}{(x-a)^2} = \\frac{A}{x-a} + \\frac{B}{(x-a)^2}$$\n\n" +
+          "**Explanation:**\n\n" +
+          "This setup is necessary because the common denominator of the two fractions on the right is \\( (x-a)^2 \\).\n\n" +
+          "- If we only used \\( \\frac{B}{(x-a)^2} \\), we could only represent numerators that resulted *directly* from that single factor.\n\n" +
+          "- By including the fraction \\( \\frac{A}{x-a} \\), we account for any original rational function that resulted from combining two fractions where one had a denominator of \\( (x-a) \\) and the other had \\( (x-a)^2 \\).\n\n" +
+          "This ensures that **all possible** rational functions with a denominator of \\( (x-a)^2 \\) can be represented.\n\n" +
+          "**Example:**\n\n" +
+          "For \\( \\frac{3x+5}{(x-1)^2} \\), we write:\n\n" +
+          "$$\\frac{3x+5}{(x-1)^2} = \\frac{A}{x-1} + \\frac{B}{(x-1)^2}$$\n\n" +
+          "**General Rule:**\n\n" +
+          "For \\( (x-a)^3 \\): \\( \\frac{A}{x-a} + \\frac{B}{(x-a)^2} + \\frac{C}{(x-a)^3} \\)\n\n" +
+          "**Answer: B**"
+      },
+
+      {
+        id: "q70",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W3",
+        type: "open-ended",
+        text: "Briefly state the final result for the integral \\( \\int x^3 \\sin x\\,dx \\) using Integration by Parts.",
+        
+        correctAnswers: [
+          "-x^3*cos(x) + 3x^2*sin(x) + 6x*cos(x) - 6*sin(x) + C",
+          "-x^3*cos x + 3x^2*sin x + 6x*cos x - 6*sin x + C",
+          "-cos(x)*x^3 + sin(x)*3x^2 + cos(x)*6x - sin(x)*6 + C"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.0001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "The integral \\( \\int x^3 \\sin x\\,dx \\) must be solved by applying Integration by Parts **three times** consecutively, as the polynomial \\( x^3 \\) only reduces its degree by one with each application.\n\n" +
+          "**The final result is:**\n\n" +
+          "$$I = -x^3\\cos x + 3x^2\\sin x + 6x\\cos x - 6\\sin x + C$$\n\n" +
+          "**Explanation:**\n\n" +
+          "The general approach uses the Tabular Method (DI method) due to the multiple repetitions:\n\n" +
+          "**1. Differentiate (\\( u \\)):**\n" +
+          "$$x^3 \\rightarrow 3x^2 \\rightarrow 6x \\rightarrow 6 \\rightarrow 0$$\n\n" +
+          "**2. Integrate (\\( dv \\)):**\n" +
+          "$$\\sin x \\rightarrow -\\cos x \\rightarrow -\\sin x \\rightarrow \\cos x \\rightarrow \\sin x$$\n\n" +
+          "**3. Combine:** The terms are multiplied diagonally, alternating signs (\\( +, -, +, -, \\dots \\)):\n\n" +
+          "- \\( +(x^3)(-\\cos x) = -x^3\\cos x \\)\n" +
+          "- \\( -(3x^2)(-\\sin x) = +3x^2\\sin x \\)\n" +
+          "- \\( +(6x)(\\cos x) = +6x\\cos x \\)\n" +
+          "- \\( -(6)(\\sin x) = -6\\sin x \\)\n\n" +
+          "Summing these products yields the final answer, plus the constant of integration \\( C \\)."
+      },
 
 ]

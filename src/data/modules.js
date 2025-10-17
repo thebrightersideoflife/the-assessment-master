@@ -504,9 +504,94 @@ export const modules = [
       {
         id: "ITMTB_W3",
         name: "Week 3",
-        title: "Substitution Rule, Techniques of Integration, Average Value",
-        title: "Not Yet Assigned 🙂‍↔️",
-        topics: []
+        title: "Average Value of a Function, Integration by Parts, and Integration by Partial Fractions",
+        topics: [
+
+          {
+            id: "ITMTB_W3_T1",
+            name: "Average Value of a Function on an Interval",
+            competency: "Assessment Coverage: 6",
+            explanation: "",
+            example: "",
+            studyTip: "",
+            videoUrl: "http://www.youtube.com/watch?v=K-H86pxiBlk",
+            quizId: "ITMTB_W3_Quiz"
+          },
+          {
+            id: "ITMTB_W3_T1",
+            name: "The Mean Value Theorem For Integrals: Average Value of a Function",
+            competency: "Assessment Coverage: 6",
+            explanation: "",
+            example: "",
+            studyTip: "",
+            videoUrl: "http://www.youtube.com/watch?v=56-JCZIkDVU",
+            quizId: "ITMTB_W3_Quiz"
+          },
+          {
+            id: "ITMTB_W3_T1",
+            name: "Integration By Parts",
+            competency: "Assessment Coverage: 6",
+            explanation: "",
+            example: "",
+            studyTip: "",
+            videoUrl: "http://www.youtube.com/watch?v=sWSLLO3DS1I",
+            quizId: "ITMTB_W3_Quiz"
+          },
+          {
+            id: "ITMTB_W3_T1",
+            name: "Integration By Parts (continued)",
+            competency: "Assessment Coverage: 6",
+            explanation: "",
+            example: "",
+            studyTip: "",
+            videoUrl: "http://www.youtube.com/watch?v=zNU8iK8sGD0",
+            quizId: "ITMTB_W3_Quiz"
+          },
+          {
+            id: "ITMTB_W3_T1",
+            name: "Integration by parts, DI method.",
+            competency: "Assessment Coverage: 6",
+            explanation: "",
+            example: "",
+            studyTip: "",
+            videoUrl: "http://www.youtube.com/watch?v=2I-_SV8cwsw",
+            quizId: "ITMTB_W3_Quiz"
+          },
+
+          {
+            id: "ITMTB_W3_T1",
+            name: "Integration By Partial Fractions",
+            competency: "Assessment Coverage: 6",
+            explanation: "",
+            example: "",
+            studyTip: "",
+            videoUrl: "http://www.youtube.com/watch?v=6rXByMcuAyI",
+            quizId: "ITMTB_W3_Quiz"
+          },
+
+          {
+            id: "ITMTB_W3_T1",
+            name: "Integration By Partial Fractions (Heaviside Cover-Up Method)",
+            competency: "Assessment Coverage: 6",
+            explanation: "",
+            example: "",
+            studyTip: "",
+            videoUrl: "http://www.youtube.com/watch?v=aF4o_c46VnI",
+            quizId: "ITMTB_W3_Quiz"
+          },
+
+          {
+            id: "ITMTB_W3_T1",
+            name: "Process of Setting Up and Solving Integrals Using Partial Fractions.",
+            competency: "Assessment Coverage: 6",
+            explanation: "",
+            example: "",
+            studyTip: "",
+            videoUrl: "http://www.youtube.com/watch?v=Mt92Ozs7aJg",
+            quizId: "ITMTB_W3_Quiz"
+          },
+
+        ]
       },
       {
         id: "ITMTB_W4",
