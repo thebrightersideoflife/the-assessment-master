@@ -1764,8 +1764,362 @@ export const questions = [
         "The \\( +C \\) represents the constant of integration, which accounts for the fact that the derivative of any constant is zero.\n\n" +
         "**Answer: \\( x^3 - x^2 + 5x + C \\)**"
     },
+
     {
-        id: "q41",
+      id: "q41",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W3",
+      type: "open-ended",
+      text: "Evaluate the indefinite integral \\( \\int (3x^2 + 1)^4 (6x)\\,dx \\).",
+      
+      correctAnswers: [
+        "(1/5)*(3x^2 + 1)^5 + C",
+        "(3x^2 + 1)^5/5 + C",
+        "0.2*(3x^2 + 1)^5 + C",
+        "(1/5)(3x^2 + 1)^5 + C"
+      ],
+      
+      options: {
+        allowSymbolic: true,
+        tolerance: 0.0001,
+        acceptedUnits: [],
+        requiredUnit: null
+      },
+      
+      explanation: "**1. Identify \\( u \\) and \\( du \\):** The integrand contains a composite function, \\( (3x^2 + 1)^4 \\). We choose the inner function as \\( u \\).\n\n" +
+        "- Let **\\( u = 3x^2 + 1 \\)**\n\n" +
+        "**2. Differentiate \\( u \\) to find \\( du \\):** Take the derivative of \\( u \\) with respect to \\( x \\) and attach \\( dx \\).\n\n" +
+        "- \\( \\frac{du}{dx} = 6x \\)\n" +
+        "- **\\( du = 6x\\,dx \\)**\n\n" +
+        "**3. Substitute:** Notice that the term \\( 6x\\,dx \\) is perfectly matched by \\( du \\). The integral simplifies completely.\n\n" +
+        "$$\\int (3x^2 + 1)^4 (6x)\\,dx = \\int u^4\\,du$$\n\n" +
+        "**4. Integrate:** Use the simple power rule: \\( \\int u^n\\,du = \\frac{u^{n+1}}{n+1} \\).\n\n" +
+        "$$\\int u^4\\,du = \\frac{u^5}{5} + C$$\n\n" +
+        "**5. Re-substitute \\( x \\):** Replace \\( u \\) with the original expression \\( 3x^2 + 1 \\) to get the final answer.\n\n" +
+        "$$\\frac{1}{5}(3x^2 + 1)^5 + C$$"
+    },
+
+    {
+      id: "q42",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W3",
+      type: "open-ended",
+      text: "Evaluate the indefinite integral \\( \\int x \\cos(4x^2)\\,dx \\).",
+      
+      correctAnswers: [
+        "(1/8)*sin(4x^2) + C",
+        "sin(4x^2)/8 + C",
+        "0.125*sin(4x^2) + C",
+        "(1/8)sin(4x^2) + C"
+      ],
+      
+      options: {
+        allowSymbolic: true,
+        tolerance: 0.0001,
+        acceptedUnits: [],
+        requiredUnit: null
+      },
+      
+      explanation: "**1. Identify \\( u \\) and \\( du \\):** The cosine function is acting on \\( 4x^2 \\), making it the inner function.\n\n" +
+        "- Let **\\( u = 4x^2 \\)**\n\n" +
+        "**2. Differentiate \\( u \\) to find \\( du \\):**\n\n" +
+        "- \\( \\frac{du}{dx} = 8x \\)\n" +
+        "- \\( du = 8x\\,dx \\)\n\n" +
+        "**3. Adjust for the Missing Constant:** The original integral has \\( x\\,dx \\), but we need \\( 8x\\,dx \\). We can solve the \\( du \\) equation for the term we actually have:\n\n" +
+        "- \\( x\\,dx = \\frac{1}{8}du \\)\n\n" +
+        "**4. Substitute:** Replace \\( 4x^2 \\) with \\( u \\) and \\( x\\,dx \\) with \\( \\frac{1}{8}du \\).\n\n" +
+        "$$\\int \\cos(4x^2)(x\\,dx) = \\int \\cos(u)\\left(\\frac{1}{8}du\\right) = \\frac{1}{8}\\int \\cos(u)\\,du$$\n\n" +
+        "**5. Integrate:** The integral of \\( \\cos(u) \\) is \\( \\sin(u) \\).\n\n" +
+        "$$\\frac{1}{8}\\int \\cos(u)\\,du = \\frac{1}{8}\\sin(u) + C$$\n\n" +
+        "**6. Re-substitute \\( x \\):**\n\n" +
+        "$$\\frac{1}{8}\\sin(4x^2) + C$$"
+    },
+
+    {
+      id: "q43",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W3",
+      type: "open-ended",
+      text: "Evaluate the definite integral \\( \\int_{0}^{1} x e^{-x^2}\\,dx \\).",
+      
+      correctAnswers: [
+        "(1/2)*(1 - e^(-1))",
+        "0.5*(1 - e^(-1))",
+        "(1/2)*(1 - 1/e)",
+        "0.5*(1 - 1/e)",
+        "0.316",
+        "0.3161"
+      ],
+      
+      options: {
+        allowSymbolic: true,
+        tolerance: 0.01,
+        acceptedUnits: [],
+        requiredUnit: null
+      },
+      
+      explanation: "**1. Identify \\( u \\) and \\( du \\):** Let \\( u \\) be the exponent.\n\n" +
+        "- Let **\\( u = -x^2 \\)**\n\n" +
+        "**2. Differentiate \\( u \\) and Adjust:**\n\n" +
+        "- \\( du = -2x\\,dx \\)\n" +
+        "- Since we only have \\( x\\,dx \\), we solve for it: **\\( x\\,dx = -\\frac{1}{2}du \\)**\n\n" +
+        "**3. Change the Limits of Integration:** When dealing with definite integrals, you **must** change the limits from \\( x \\) values to \\( u \\) values.\n\n" +
+        "- **Lower Limit (\\( x=0 \\)):** \\( u = -(0)^2 = 0 \\)\n" +
+        "- **Upper Limit (\\( x=1 \\)):** \\( u = -(1)^2 = -1 \\)\n\n" +
+        "**4. Substitute and Integrate:** Substitute \\( u \\), \\( du \\), and the new limits.\n\n" +
+        "$$\\int_{0}^{1} x e^{-x^2}\\,dx = \\int_{0}^{-1} e^u\\left(-\\frac{1}{2}du\\right) = -\\frac{1}{2}\\int_{0}^{-1} e^u\\,du$$\n\n" +
+        "The integral of \\( e^u \\) is \\( e^u \\).\n\n" +
+        "$$-\\frac{1}{2}[e^u]_{0}^{-1}$$\n\n" +
+        "**5. Evaluate:**\n\n" +
+        "$$-\\frac{1}{2}(e^{-1} - e^0) = -\\frac{1}{2}(e^{-1} - 1) = -\\frac{1}{2}\\left(\\frac{1}{e} - 1\\right)$$\n\n" +
+        "$$= -\\frac{1}{2e} + \\frac{1}{2} = \\frac{1}{2}\\left(1 - \\frac{1}{e}\\right) = \\frac{1}{2}(1 - e^{-1})$$\n\n" +
+        "This equals approximately **0.316**."
+    },
+
+    {
+      id: "q44",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W3",
+      type: "open-ended",
+      text: "Evaluate the indefinite integral \\( \\int \\frac{\\sec^2(\\ln x)}{x}\\,dx \\).",
+      
+      correctAnswers: [
+        "tan(ln(x)) + C",
+        "tan(ln x) + C",
+        "tan(log(x)) + C"
+      ],
+      
+      options: {
+        allowSymbolic: true,
+        tolerance: 0.0001,
+        acceptedUnits: [],
+        requiredUnit: null
+      },
+      
+      explanation: "**1. Identify \\( u \\) and \\( du \\):** The secant squared function is operating on \\( \\ln x \\).\n\n" +
+        "- Let **\\( u = \\ln x \\)**\n\n" +
+        "**2. Differentiate \\( u \\) and find \\( du \\):**\n\n" +
+        "- \\( \\frac{du}{dx} = \\frac{1}{x} \\)\n" +
+        "- \\( du = \\frac{1}{x}dx \\)\n\n" +
+        "**3. Substitute:** The term \\( \\frac{1}{x}dx \\) is perfectly matched by \\( du \\).\n\n" +
+        "$$\\int \\sec^2(\\ln x)\\left(\\frac{1}{x}dx\\right) = \\int \\sec^2(u)\\,du$$\n\n" +
+        "**4. Integrate:** The integral of \\( \\sec^2(u) \\) is \\( \\tan(u) \\) (since \\( \\frac{d}{du}[\\tan u] = \\sec^2 u \\)).\n\n" +
+        "$$\\int \\sec^2(u)\\,du = \\tan(u) + C$$\n\n" +
+        "**5. Re-substitute \\( x \\):**\n\n" +
+        "$$\\tan(\\ln x) + C$$"
+    },
+
+    {
+      id: "q45",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W3",
+      type: "open-ended",
+      text: "Evaluate the indefinite integral \\( \\int \\frac{e^x - e^{-x}}{e^x + e^{-x}}\\,dx \\). (Hint: This function is \\( \\tanh(x) \\))",
+      
+      correctAnswers: [
+        "ln|e^x + e^(-x)| + C",
+        "ln(e^x + e^(-x)) + C",
+        "ln|exp(x) + exp(-x)| + C"
+      ],
+      
+      options: {
+        allowSymbolic: true,
+        tolerance: 0.0001,
+        acceptedUnits: [],
+        requiredUnit: null
+      },
+      
+      explanation: "**1. Identify \\( u \\) and \\( du \\):** This is a quotient where the derivative of the denominator looks suspiciously like the numerator. We choose the entire denominator as \\( u \\).\n\n" +
+        "- Let **\\( u = e^x + e^{-x} \\)**\n\n" +
+        "**2. Differentiate \\( u \\) and find \\( du \\):**\n\n" +
+        "- \\( \\frac{d}{dx}[e^x] = e^x \\)\n" +
+        "- \\( \\frac{d}{dx}[e^{-x}] = -e^{-x} \\) (using the chain rule with \\( v=-x \\))\n" +
+        "- \\( du = (e^x - e^{-x})dx \\)\n\n" +
+        "**3. Substitute:** The term \\( (e^x - e^{-x})dx \\) is an **exact match** for \\( du \\).\n\n" +
+        "$$\\int \\frac{(e^x - e^{-x})dx}{e^x + e^{-x}} = \\int \\frac{du}{u}$$\n\n" +
+        "**4. Integrate:** The integral of \\( \\frac{1}{u} \\) is \\( \\ln|u| \\).\n\n" +
+        "$$\\int \\frac{1}{u}\\,du = \\ln|u| + C$$\n\n" +
+        "**5. Re-substitute \\( x \\):**\n\n" +
+        "$$\\ln|e^x + e^{-x}| + C$$\n\n" +
+        "**Note:** Since \\( e^x + e^{-x} \\) is always positive for all real \\( x \\), the absolute value bars can technically be dropped, but it's good practice to include them."
+    },
+
+    {
+      id: "q46",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W3",
+      type: "open-ended",
+      text: "Find the value of \\( c \\) guaranteed by the Mean Value Theorem for Integrals for the function \\( f(x) = 2x + 1 \\) over the interval \\( [0, 4] \\).",
+      
+      correctAnswers: [
+        "2",
+        "2.0"
+      ],
+      
+      options: {
+        allowSymbolic: false,
+        tolerance: 0.001,
+        acceptedUnits: [],
+        requiredUnit: null
+      },
+      
+      explanation: "**1. Calculate the Average Value (\\( f_{\\text{avg}} \\)):**\n\n" +
+        "$$f_{\\text{avg}} = \\frac{1}{b-a}\\int_{a}^{b}f(x)\\,dx$$\n\n" +
+        "$$f_{\\text{avg}} = \\frac{1}{4-0}\\int_{0}^{4}(2x+1)\\,dx = \\frac{1}{4}[x^2 + x]_{0}^{4}$$\n\n" +
+        "$$f_{\\text{avg}} = \\frac{1}{4}\\left((4^2 + 4) - (0)\\right) = \\frac{1}{4}(16 + 4) = \\frac{20}{4} = 5$$\n\n" +
+        "**2. Apply MVT-I:** The theorem states that \\( f(c) = f_{\\text{avg}} \\).\n\n" +
+        "Set the original function equal to the average value: \\( f(c) = 5 \\)\n\n" +
+        "$$2c + 1 = 5$$\n\n" +
+        "**3. Solve for \\( c \\):**\n\n" +
+        "$$2c = 4$$\n\n" +
+        "$$c = 2$$\n\n" +
+        "Since \\( 2 \\) is within the interval \\( [0, 4] \\), the solution is valid and satisfies the theorem.\n\n" +
+        "**Verification:** \\( f(2) = 2(2) + 1 = 5 = f_{\\text{avg}} \\) ✓"
+    },
+
+    {
+      id: "q47",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W3",
+      type: "open-ended",
+      text: "The integral \\( I = \\int e^x \\sin x\\,dx \\) is a cyclic integral. State the final result after applying integration by parts twice and solving algebraically.",
+      
+      correctAnswers: [
+        "(1/2)*e^x*(sin(x) - cos(x)) + C",
+        "0.5*e^x*(sin x - cos x) + C",
+        "(e^x/2)*(sin(x) - cos(x)) + C",
+        "e^x*(sin(x) - cos(x))/2 + C"
+      ],
+      
+      options: {
+        allowSymbolic: true,
+        tolerance: 0.0001,
+        acceptedUnits: [],
+        requiredUnit: null
+      },
+      
+      explanation: "**1. Application 1:** Let \\( u = \\sin x \\) and \\( dv = e^x dx \\).\n\n" +
+        "- \\( du = \\cos x\\,dx \\) and \\( v = e^x \\)\n" +
+        "- \\( I = e^x \\sin x - \\int e^x \\cos x\\,dx \\)\n\n" +
+        "**2. Application 2 (on \\( \\int e^x \\cos x\\,dx \\)):** Let \\( u = \\cos x \\) and \\( dv = e^x dx \\).\n\n" +
+        "- \\( du = -\\sin x\\,dx \\) and \\( v = e^x \\)\n" +
+        "- \\( \\int e^x \\cos x\\,dx = e^x \\cos x - \\int e^x(-\\sin x)\\,dx = e^x \\cos x + \\int e^x \\sin x\\,dx \\)\n\n" +
+        "**3. Substitution and Algebraic Solution:** Substitute the result of Application 2 back into the result of Application 1. Note that the original integral \\( I \\) reappears on the right side.\n\n" +
+        "$$I = e^x \\sin x - (e^x \\cos x + I)$$\n\n" +
+        "$$I = e^x \\sin x - e^x \\cos x - I$$\n\n" +
+        "**4. Solve for \\( I \\):** Move the \\( I \\) term from the right to the left.\n\n" +
+        "$$2I = e^x(\\sin x - \\cos x)$$\n\n" +
+        "$$I = \\frac{1}{2}e^x(\\sin x - \\cos x) + C$$\n\n" +
+        "**Key Insight:** This is called a \"cyclic\" integral because the original integral reappears after two applications of integration by parts, allowing us to solve for it algebraically."
+    },
+
+    {
+      id: "q48",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W3",
+      type: "multiple-choice",
+      text: "For the integral \\( \\int \\frac{x^3 + x}{x^2 - 4}\\,dx \\), what is the necessary algebraic preparation before setting up the partial fraction decomposition?",
+      
+      options: [
+        "A. Factor both numerator and denominator completely",
+        "B. Perform polynomial long division because the fraction is improper (degree of numerator ≥ degree of denominator)",
+        "C. Use u-substitution with \\( u = x^2 - 4 \\)",
+        "D. Multiply numerator and denominator by \\( (x^2 - 4) \\)"
+      ],
+      
+      correctAnswers: ["B"],
+      
+      explanation: "The integral is an **improper rational function** because the degree of the numerator (3) is greater than the degree of the denominator (2). Therefore, the necessary preliminary step is to perform **Polynomial Long Division** to rewrite the fraction as a quotient plus a proper remainder.\n\n" +
+        "**1. Long Division:** Divide \\( x^3 + x \\) by \\( x^2 - 4 \\).\n\n" +
+        "$$\\frac{x^3 + x}{x^2 - 4} = x + \\frac{5x}{x^2 - 4}$$\n\n" +
+        "(The quotient is \\( x \\), and the remainder is \\( 5x \\))\n\n" +
+        "**2. Rewrite the Integral:**\n\n" +
+        "$$\\int \\frac{x^3 + x}{x^2 - 4}\\,dx = \\int\\left(x + \\frac{5x}{x^2 - 4}\\right)dx$$\n\n" +
+        "**3. Decomposition:** The integral is split into two parts:\n" +
+        "- \\( \\int x\\,dx \\) (a simple integral using power rule)\n" +
+        "- \\( \\int \\frac{5x}{x^2 - 4}\\,dx \\) (now a **proper fraction** that can use partial fractions)\n\n" +
+        "The second part can be solved by factoring the denominator: \\( x^2 - 4 = (x-2)(x+2) \\).\n\n" +
+        "This ensures the Partial Fraction rules are applied correctly only to the rational part.\n\n" +
+        "**Answer: B**"
+    },
+
+    {
+      id: "q49",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W3",
+      type: "open-ended",
+      text: "Use the partial fraction method to evaluate the integral \\( \\int \\frac{5x-1}{(x+1)(x-2)}\\,dx \\).",
+      
+      correctAnswers: [
+        "2*ln|x+1| + 3*ln|x-2| + C",
+        "2ln|x+1| + 3ln|x-2| + C",
+        "ln|x+1|^2 + ln|x-2|^3 + C",
+        "ln|(x+1)^2*(x-2)^3| + C"
+      ],
+      
+      options: {
+        allowSymbolic: true,
+        tolerance: 0.0001,
+        acceptedUnits: [],
+        requiredUnit: null
+      },
+      
+      explanation: "**1. Decomposition Setup:** The denominator has distinct linear factors:\n\n" +
+        "$$\\frac{5x-1}{(x+1)(x-2)} = \\frac{A}{x+1} + \\frac{B}{x-2}$$\n\n" +
+        "**2. Clear Fractions:** \\( 5x-1 = A(x-2) + B(x+1) \\)\n\n" +
+        "**3. Solve for Coefficients (using Substitution/Cover-Up Method):**\n\n" +
+        "**To find \\( A \\):** Set \\( x = -1 \\) (the root of the \\( A \\)'s denominator)\n\n" +
+        "$$5(-1)-1 = A(-1-2) + B(0)$$\n" +
+        "$$-6 = -3A \\Rightarrow A = 2$$\n\n" +
+        "**To find \\( B \\):** Set \\( x = 2 \\) (the root of the \\( B \\)'s denominator)\n\n" +
+        "$$5(2)-1 = A(0) + B(2+1)$$\n" +
+        "$$9 = 3B \\Rightarrow B = 3$$\n\n" +
+        "**4. Integrate:** Substitute \\( A=2 \\) and \\( B=3 \\) back into the integral.\n\n" +
+        "$$\\int\\left(\\frac{2}{x+1} + \\frac{3}{x-2}\\right)dx$$\n\n" +
+        "$$= 2\\int\\frac{1}{x+1}dx + 3\\int\\frac{1}{x-2}dx$$\n\n" +
+        "**5. Final Result (using \\( \\int \\frac{1}{u}\\,du = \\ln|u| \\)):**\n\n" +
+        "$$2\\ln|x+1| + 3\\ln|x-2| + C$$\n\n" +
+        "**Alternative form using log properties:**\n\n" +
+        "$$\\ln|(x+1)^2(x-2)^3| + C$$"
+    },
+
+    {
+      id: "q50",
+      moduleId: "ITMTB",
+      weekId: "ITMTB_W3",
+      type: "open-ended",
+      text: "Evaluate the definite integral \\( \\int_{1}^{e} \\ln(x^2)\\,dx \\).",
+      
+      correctAnswers: [
+        "2",
+        "2.0"
+      ],
+      
+      options: {
+        allowSymbolic: false,
+        tolerance: 0.001,
+        acceptedUnits: [],
+        requiredUnit: null
+      },
+      
+      explanation: "**1. Simplify First (Log Property):** Use the logarithmic property \\( \\ln(x^a) = a\\ln x \\) to simplify the integral:\n\n" +
+        "$$\\int_{1}^{e} \\ln(x^2)\\,dx = 2\\int_{1}^{e} \\ln x\\,dx$$\n\n" +
+        "**2. Integration by Parts (on \\( \\int \\ln x\\,dx \\)):**\n\n" +
+        "- Choose \\( u = \\ln x \\) and \\( dv = dx \\)\n" +
+        "- \\( du = \\frac{1}{x}dx \\) and \\( v = x \\)\n\n" +
+        "$$\\int \\ln x\\,dx = uv - \\int v\\,du = x\\ln x - \\int x\\left(\\frac{1}{x}dx\\right) = x\\ln x - \\int 1\\,dx$$\n\n" +
+        "$$\\int \\ln x\\,dx = x\\ln x - x$$\n\n" +
+        "**3. Evaluate the Definite Integral:**\n\n" +
+        "$$2\\int_{1}^{e} \\ln x\\,dx = 2[x\\ln x - x]_{1}^{e}$$\n\n" +
+        "$$= 2\\left[(e\\ln e - e) - (1\\ln 1 - 1)\\right]$$\n\n" +
+        "**4. Final Calculation:** Since \\( \\ln e = 1 \\) and \\( \\ln 1 = 0 \\):\n\n" +
+        "$$= 2\\left[(e(1) - e) - (1(0) - 1)\\right]$$\n\n" +
+        "$$= 2\\left[(e - e) - (-1)\\right]$$\n\n" +
+        "$$= 2[0 - (-1)] = 2(1) = 2$$"
+    },
+
+    {
+        id: "q51",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "multiple-choice",
@@ -1799,7 +2153,7 @@ export const questions = [
       },
 
       {
-        id: "q42",
+        id: "q52",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "open-ended",
@@ -1854,7 +2208,7 @@ export const questions = [
       },
 
       {
-        id: "q43",
+        id: "q53",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "open-ended",
@@ -1900,7 +2254,7 @@ export const questions = [
       },
 
       {
-        id: "q44",
+        id: "q54",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "multiple-choice",
@@ -1943,7 +2297,7 @@ export const questions = [
       },
 
       {
-        id: "q45",
+        id: "q55",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "open-ended",
@@ -1984,7 +2338,7 @@ export const questions = [
       },
 
       {
-        id: "q46",
+        id: "q56",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "multiple-choice",
@@ -2026,7 +2380,7 @@ export const questions = [
       },
 
       {
-        id: "q47",
+        id: "q57",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "open-ended",
@@ -2061,7 +2415,7 @@ export const questions = [
       },
 
       {
-        id: "q48",
+        id: "q58",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "multiple-choice",
@@ -2094,7 +2448,7 @@ export const questions = [
       },
 
       {
-        id: "q49",
+        id: "q59",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "open-ended",
@@ -2130,7 +2484,7 @@ export const questions = [
       },
 
       {
-        id: "q50",
+        id: "q60",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "multiple-choice",
@@ -2160,7 +2514,7 @@ export const questions = [
           "**Answer: B**"
       },
       {
-        id: "q51",
+        id: "q61",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "open-ended",
@@ -2194,7 +2548,7 @@ export const questions = [
       },
 
       {
-        id: "q52",
+        id: "q62",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "open-ended",
@@ -2228,7 +2582,7 @@ export const questions = [
       },
 
       {
-        id: "q53",
+        id: "q63",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "multiple-choice",
@@ -2254,7 +2608,7 @@ export const questions = [
       },
 
       {
-        id: "q54",
+        id: "q64",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "open-ended",
@@ -2288,7 +2642,7 @@ export const questions = [
       },
 
       {
-        id: "q55",
+        id: "q65",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "multiple-choice",
@@ -2314,7 +2668,7 @@ export const questions = [
       },
 
       {
-        id: "q56",
+        id: "q66",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "multiple-choice",
@@ -2339,7 +2693,7 @@ export const questions = [
       },
 
       {
-        id: "q57",
+        id: "q67",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "multiple-choice",
@@ -2362,7 +2716,7 @@ export const questions = [
       },
 
       {
-        id: "q58",
+        id: "q68",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "open-ended",
@@ -2397,7 +2751,7 @@ export const questions = [
       },
 
       {
-        id: "q59",
+        id: "q69",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "multiple-choice",
@@ -2427,7 +2781,7 @@ export const questions = [
       },
 
       {
-        id: "q60",
+        id: "q70",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "multiple-choice",
@@ -2453,7 +2807,7 @@ export const questions = [
       },
 
       {
-        id: "q61",
+        id: "q71",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "multiple-choice",
@@ -2480,7 +2834,7 @@ export const questions = [
       },
 
       {
-        id: "q62",
+        id: "q72",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "open-ended",
@@ -2513,7 +2867,7 @@ export const questions = [
       },
 
       {
-        id: "q63",
+        id: "q73",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "multiple-choice",
@@ -2547,7 +2901,7 @@ export const questions = [
       },
 
       {
-        id: "q64",
+        id: "q74",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "open-ended",
@@ -2585,7 +2939,7 @@ export const questions = [
       },
 
       {
-        id: "q65",
+        id: "q75",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "multiple-choice",
@@ -2616,7 +2970,7 @@ export const questions = [
       },
 
       {
-        id: "q66",
+        id: "q76",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "open-ended",
@@ -2647,7 +3001,7 @@ export const questions = [
       },
 
       {
-        id: "q67",
+        id: "q77",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "open-ended",
@@ -2683,7 +3037,7 @@ export const questions = [
       },
 
       {
-        id: "q68",
+        id: "q78",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "multiple-choice",
@@ -2713,7 +3067,7 @@ export const questions = [
       },
 
       {
-        id: "q69",
+        id: "q79",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "multiple-choice",
@@ -2744,7 +3098,7 @@ export const questions = [
       },
 
       {
-        id: "q70",
+        id: "q80",
         moduleId: "ITMTB",
         weekId: "ITMTB_W3",
         type: "open-ended",

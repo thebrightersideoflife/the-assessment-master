@@ -509,6 +509,28 @@ export const modules = [
 
           {
             id: "ITMTB_W3_T1",
+            name: "U-Substitution: The Complete Guide",
+            competency: "Assessment Coverage: 6",
+            explanation: "When to Use U-Substitution: Look for an integrand that fits one of these patterns: $\\mathbf{(1) A Composite Function:}$ $\\int f(g(x))g'(x)\\,dx$. $\\mathbf{(2) A Quotient}$: Where the numerator is the derivative of the denominator (e.g., $\\int \\frac{g'(x)}{g(x)}\\,dx$). In both cases, you let $\\mathbf{u} = g(x)$, which simplifies the entire integral into a basic power rule or logarithmic form.",
+            example: "For example: $\\lim_{x \\to 0^+} \\frac{1}{x} = +\\infty$, $\\lim_{x \\to 0^-} \\frac{1}{x} = -\\infty$. A two-sided limit requires both to match.",
+            studyTip: "When identifying $u$, look for a function nested inside another or one whose derivative appears elsewhere in the integrand.",
+            videoUrl: "https://www.youtube.com/watch?v=sdYdnpYn-1o&t=891s",
+            quizId: "ITMTB_W3_Quiz"
+          },
+
+          {
+            id: "ITMTB_W3_T1",
+            name: "U-Substitution Explained",
+            competency: "Assessment Coverage: 6",
+            explanation: "When to Use U-Substitution: \n",
+            example: "",
+            studyTip: "",
+            videoUrl: "https://www.youtube.com/watch?v=sci1pls4Lc8",
+            quizId: "ITMTB_W3_Quiz"
+          },
+
+          {
+            id: "ITMTB_W3_T1",
             name: "Average Value of a Function on an Interval",
             competency: "Assessment Coverage: 6",
             explanation: "",
