@@ -1,600 +1,452 @@
-// src/data/exams.js
-
-/**
- * Exam Data Structure
- * 
- * Each exam contains:
- * - Metadata (id, title, sections)
- * - ALL questions inline (not in questions.js)
- * - Section organization for navigation
- */
-
 export const exams = [
-  {
+{
     id: "ITMTB_EXAM1",
     moduleId: "ITMTB",
-    title: "ITMTB Midterm Exam",
-    description: "Covers integration fundamentals and techniques (Weeks 1-2)",
-    timeLimit: 5.1, // minutes (optional, set to null for no limit)
-    passingScore: 70, // percentage
+    title: "ITMTB Midterm Exam: Calculus of Integration (Hardest Subset)",
+    description: "Week 1-3. Covers the most challenging problems from Riemann Sums, Advanced Integration Techniques (IBP, Partial Fractions), and Velocity Applications. Total Score: 100 Points.",
+    timeLimit: 120,
+    passingScore: 70,
     
-    // Sections organize the exam
     sections: [
       {
-        id: "section_1",
-        title: "Section A: Riemann Sums & Definite Integrals",
-        description: "Questions 1-10 | Area interpretation and approximation",
-        instructions: "Show all work. Round decimals to 2 places unless specified.",
+        id: "section_A",
+        title: "Section A: Riemann Sums & Definite Integrals (4 Questions, 40 Points)",
+        description: "Focuses on complex approximations (Midpoint/Left Sums with logs/trig/exponentials) and finding exact areas, including one requiring Integration by Parts.",
+        instructions: "For exact areas, provide the answer in simplest exact form (e.g., fraction or in terms of \\( e \\)). For approximations, use the specified number of rectangles and round your final answer to two decimal places.",
       },
       {
-        id: "section_2",
-        title: "Section B: Fundamental Theorem of Calculus",
-        description: "Questions 11-20 | Antiderivatives and evaluation",
-        instructions: "Express answers in exact form unless otherwise stated.",
+        id: "section_B",
+        title: "Section B: Indefinite Integrals: Techniques (5 Questions, 50 Points)",
+        description: "Covers complex u-substitution (nested functions), double and cyclic Integration by Parts, and Partial Fraction Decomposition with repeated linear factors.",
+        instructions: "Show all substitution or integration by parts steps. For indefinite integrals, include the constant of integration, \\( +C \\). Express answers in exact form.",
       },
       {
-        id: "section_3",
-        title: "Section C: Applications & Net Change",
-        description: "Questions 21-30 | Real-world applications",
-        instructions: "Include units in your final answers where applicable.",
+        id: "section_C",
+        title: "Section C: Applications: Velocity & Distance (2 Questions, 10 Points)",
+        description: "Application problems requiring the calculation of both Displacement and Total Distance Traveled. One problem involves sign change, and one involves u-substitution.",
+        instructions: "Clearly distinguish between Distance and Displacement. Show the process of finding roots if necessary. Include appropriate units in your final answers.",
       }
     ],
     
-    // ALL QUESTIONS INLINE
     questions: [
       // ============================================================
-      // SECTION A: RIEMANN SUMS & DEFINITE INTEGRALS (Q1-Q10)
+      // SECTION A: RIEMANN SUMS & DEFINITE INTEGRALS (Q1-Q8)
       // ============================================================
+      
+      // Question A1.1
       {
         id: "exam1_q1",
-        sectionId: "section_1",
+        sectionId: "section_A",
         questionNumber: 1,
-        type: "multiple-choice",
-        text: "What does the definite integral \\( \\int_{a}^{b} f(x) \\, dx \\) geometrically represent?",
-        options: [
-          "A. The slope of the function \\( f(x) \\)",
-          "B. The signed area between \\( f(x) \\) and the x-axis from \\( x = a \\) to \\( x = b \\)",
-          "C. The average value of \\( f(x) \\) on \\([a, b]\\)",
-          "D. The maximum value of \\( f(x) \\) on \\([a, b]\\)"
+        type: "open-ended",
+        text: "Find the area for the function \\( f(x) = 27 - x^3 \\) over the interval \\( [-1, 1] \\) using the **Left Riemann Sum** \\( (L_n) \\) with \\( n = 4 \\) rectangles.",
+        correctAnswers: [
+          "54.5",
+          "54.50"
         ],
-        correctAnswers: ["B"],
-        points: 2,
-        explanation: "The definite integral represents the **signed area** between the curve and the x-axis:\n\n" +
-          "- Area **above** the x-axis is positive\n" +
-          "- Area **below** the x-axis is negative\n\n" +
-          "$$\\int_{a}^{b} f(x) \\, dx = \\text{(Signed Area)}$$\n\n" +
-          "**Answer: B**"
+        options: {
+          allowSymbolic: false,
+          tolerance: 0.01,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 5,
+        explanation: "**Left Riemann Sum with \\( n = 4 \\):**\n\n" +
+          "**Step 1:** Calculate width \\( \\Delta x \\)\n" +
+          "$$\\Delta x = \\frac{b-a}{n} = \\frac{1-(-1)}{4} = \\frac{2}{4} = 0.5$$\n\n" +
+          "**Step 2:** Determine partition points\n" +
+          "The interval \\( [-1, 1] \\) is divided into 4 sub-intervals:\n" +
+          "$$[-1, -0.5], [-0.5, 0], [0, 0.5], [0.5, 1]$$\n\n" +
+          "**Step 3:** Left endpoints (sample points)\n" +
+          "$$c_1 = -1, \\quad c_2 = -0.5, \\quad c_3 = 0, \\quad c_4 = 0.5$$\n\n" +
+          "**Step 4:** Calculate \\( f(c_i) \\)\n" +
+          "- \\( f(-1) = 27 - (-1)^3 = 27 + 1 = 28 \\)\n" +
+          "- \\( f(-0.5) = 27 - (-0.5)^3 = 27 + 0.125 = 27.125 \\)\n" +
+          "- \\( f(0) = 27 - 0^3 = 27 \\)\n" +
+          "- \\( f(0.5) = 27 - (0.5)^3 = 27 - 0.125 = 26.875 \\)\n\n" +
+          "**Step 5:** Calculate \\( L_4 \\)\n" +
+          "$$L_4 = \\Delta x [f(-1) + f(-0.5) + f(0) + f(0.5)]$$\n" +
+          "$$L_4 = 0.5 [28 + 27.125 + 27 + 26.875]$$\n" +
+          "$$L_4 = 0.5 \\times 109 = 54.5$$\n\n" +
+          "**Answer: 54.5**"
       },
       
+      // Question A1.2
       {
         id: "exam1_q2",
-        sectionId: "section_1",
+        sectionId: "section_A",
         questionNumber: 2,
         type: "open-ended",
-        text: "Approximate \\( \\int_{0}^{4} x^2 \\, dx \\) using a **left Riemann sum** with \\( n = 4 \\) rectangles.",
+        text: "**Question 1 continued:** Now find the **exact area** for \\( f(x) = 27 - x^3 \\) over \\( [-1, 1] \\) using definite integration.",
         correctAnswers: [
-          "14",
-          "14.0",
-          "14 square units"
+          "54",
+          "54.0",
+          "54.00"
         ],
         options: {
           allowSymbolic: false,
           tolerance: 0.01,
-          acceptedUnits: ["square units", "units^2"],
+          acceptedUnits: [],
           requiredUnit: null
         },
-        points: 4,
-        explanation: "**Left Riemann Sum Formula:**\n\n" +
-          "$$L_n = \\Delta x \\sum_{i=0}^{n-1} f(x_i)$$\n\n" +
-          "**Step 1:** Find \\( \\Delta x \\)\n" +
-          "$$\\Delta x = \\frac{b - a}{n} = \\frac{4 - 0}{4} = 1$$\n\n" +
-          "**Step 2:** Evaluate at left endpoints \\( x_0 = 0, x_1 = 1, x_2 = 2, x_3 = 3 \\)\n" +
-          "- \\( f(0) = 0^2 = 0 \\)\n" +
-          "- \\( f(1) = 1^2 = 1 \\)\n" +
-          "- \\( f(2) = 2^2 = 4 \\)\n" +
-          "- \\( f(3) = 3^2 = 9 \\)\n\n" +
-          "**Step 3:** Calculate sum\n" +
-          "$$L_4 = 1 \\times (0 + 1 + 4 + 9) = 14$$\n\n" +
-          "**Answer: 14**"
+        points: 5,
+        explanation: "**Exact Area using Definite Integration:**\n\n" +
+          "$$\\text{Area} = \\int_{-1}^{1} (27 - x^3) \\, dx$$\n\n" +
+          "**Step 1:** Find the antiderivative\n" +
+          "$$F(x) = 27x - \\frac{x^4}{4}$$\n\n" +
+          "**Step 2:** Apply the Fundamental Theorem of Calculus\n" +
+          "$$\\text{Area} = F(1) - F(-1)$$\n" +
+          "$$= \\left(27(1) - \\frac{1^4}{4}\\right) - \\left(27(-1) - \\frac{(-1)^4}{4}\\right)$$\n" +
+          "$$= \\left(27 - \\frac{1}{4}\\right) - \\left(-27 - \\frac{1}{4}\\right)$$\n" +
+          "$$= 27 - \\frac{1}{4} + 27 + \\frac{1}{4}$$\n" +
+          "$$= 54$$\n\n" +
+          "**Answer: 54**"
       },
       
+      // Question A2.1
       {
         id: "exam1_q3",
-        sectionId: "section_1",
+        sectionId: "section_A",
         questionNumber: 3,
         type: "open-ended",
-        text: "Now approximate \\( \\int_{0}^{4} x^2 \\, dx \\) using a **right Riemann sum** with \\( n = 4 \\) rectangles.",
+        text: "Approximate the area for the function \\( f(x) = x^2 \\ln(x) \\) over the interval \\( [1, e] \\) using the **Midpoint Riemann Sum** \\( (M_n) \\) with \\( n = 2 \\) rectangles.",
         correctAnswers: [
-          "30",
-          "30.0",
-          "30 square units"
+          "4.35",
+          "4.3529",
+          "4.353"
         ],
         options: {
           allowSymbolic: false,
-          tolerance: 0.01,
-          acceptedUnits: ["square units", "units^2"],
+          tolerance: 0.02,
+          acceptedUnits: [],
           requiredUnit: null
         },
-        points: 4,
-        explanation: "**Right Riemann Sum Formula:**\n\n" +
-          "$$R_n = \\Delta x \\sum_{i=1}^{n} f(x_i)$$\n\n" +
-          "**Step 1:** \\( \\Delta x = 1 \\) (same as before)\n\n" +
-          "**Step 2:** Evaluate at right endpoints \\( x_1 = 1, x_2 = 2, x_3 = 3, x_4 = 4 \\)\n" +
-          "- \\( f(1) = 1 \\)\n" +
-          "- \\( f(2) = 4 \\)\n" +
-          "- \\( f(3) = 9 \\)\n" +
-          "- \\( f(4) = 16 \\)\n\n" +
-          "**Step 3:** Calculate sum\n" +
-          "$$R_4 = 1 \\times (1 + 4 + 9 + 16) = 30$$\n\n" +
-          "**Answer: 30**"
+        points: 5,
+        explanation: "**Midpoint Riemann Sum with \\( n = 2 \\):**\n\n" +
+          "**Step 1:** Calculate width \\( \\Delta x \\)\n" +
+          "$$\\Delta x = \\frac{e - 1}{2} \\approx \\frac{2.718 - 1}{2} = 0.859$$\n\n" +
+          "**Step 2:** Determine partition points\n" +
+          "$$[1, 1.859] \\text{ and } [1.859, 2.718]$$\n\n" +
+          "**Step 3:** Find midpoints\n" +
+          "- \\( c_1 = 1 + \\frac{\\Delta x}{2} \\approx 1.4295 \\)\n" +
+          "- \\( c_2 = e - \\frac{\\Delta x}{2} \\approx 2.2885 \\)\n\n" +
+          "**Step 4:** Calculate \\( f(c_i) \\)\n" +
+          "- \\( f(c_1) = (1.4295)^2 \\ln(1.4295) \\approx 2.0434 \\times 0.3573 \\approx 0.7303 \\)\n" +
+          "- \\( f(c_2) = (2.2885)^2 \\ln(2.2885) \\approx 5.2372 \\times 0.8278 \\approx 4.3359 \\)\n\n" +
+          "**Step 5:** Calculate \\( M_2 \\)\n" +
+          "$$M_2 = \\Delta x [f(c_1) + f(c_2)]$$\n" +
+          "$$M_2 \\approx 0.859 [0.7303 + 4.3359]$$\n" +
+          "$$M_2 \\approx 0.859 \\times 5.0662 \\approx 4.35$$\n\n" +
+          "**Answer: 4.35**"
       },
       
+      // Question A2.2
       {
         id: "exam1_q4",
-        sectionId: "section_1",
+        sectionId: "section_A",
         questionNumber: 4,
         type: "multiple-choice",
-        text: "The exact value of \\( \\int_{0}^{4} x^2 \\, dx \\) is closest to:",
+        text: "**Question 3 continued:** Find the **exact area** for \\( f(x) = x^2 \\ln(x) \\) over \\( [1, e] \\) using definite integration with Integration by Parts.",
         options: [
-          "A. 14",
-          "B. 21.33",
-          "C. 22",
-          "D. 30"
+          "A. \\( \\frac{e^3 + 1}{9} \\)",
+          "B. \\( \\frac{2e^3 + 1}{9} \\)",
+          "C. \\( \\frac{e^3 - 1}{3} \\)",
+          "D. \\( \\frac{2e^3}{9} \\)"
         ],
         correctAnswers: ["B"],
-        points: 3,
-        explanation: "Using the antiderivative:\n\n" +
-          "$$\\int_{0}^{4} x^2 \\, dx = \\left[ \\frac{x^3}{3} \\right]_0^4$$\n\n" +
-          "$$= \\frac{4^3}{3} - \\frac{0^3}{3} = \\frac{64}{3} \\approx 21.33$$\n\n" +
-          "Notice:\n" +
-          "- Left sum (14) **underestimates** (increasing function)\n" +
-          "- Right sum (30) **overestimates**\n" +
-          "- Exact value (21.33) is **between** them\n\n" +
-          "**Answer: B. 21.33**"
+        points: 5,
+        explanation: "**Exact Area using Integration by Parts:**\n\n" +
+          "$$\\text{Area} = \\int_{1}^{e} x^2 \\ln(x) \\, dx$$\n\n" +
+          "**Step 1:** Choose \\( u \\) and \\( dv \\) (LIATE rule)\n" +
+          "$$u = \\ln(x) \\implies du = \\frac{1}{x} dx$$\n" +
+          "$$dv = x^2 dx \\implies v = \\frac{x^3}{3}$$\n\n" +
+          "**Step 2:** Apply Integration by Parts formula\n" +
+          "$$\\int u \\, dv = uv - \\int v \\, du$$\n" +
+          "$$\\int x^2 \\ln(x) \\, dx = \\frac{x^3}{3} \\ln(x) - \\int \\frac{x^3}{3} \\cdot \\frac{1}{x} dx$$\n" +
+          "$$= \\frac{x^3}{3} \\ln(x) - \\frac{1}{3} \\int x^2 dx$$\n" +
+          "$$= \\frac{x^3}{3} \\ln(x) - \\frac{x^3}{9}$$\n\n" +
+          "**Step 3:** Evaluate from 1 to \\( e \\)\n" +
+          "$$\\text{Area} = \\left[\\frac{x^3}{3} \\ln(x) - \\frac{x^3}{9}\\right]_1^e$$\n" +
+          "$$= \\left(\\frac{e^3}{3} \\ln(e) - \\frac{e^3}{9}\\right) - \\left(\\frac{1}{3} \\ln(1) - \\frac{1}{9}\\right)$$\n\n" +
+          "Since \\( \\ln(e) = 1 \\) and \\( \\ln(1) = 0 \\):\n" +
+          "$$= \\left(\\frac{e^3}{3} - \\frac{e^3}{9}\\right) - \\left(0 - \\frac{1}{9}\\right)$$\n" +
+          "$$= \\frac{3e^3 - e^3}{9} + \\frac{1}{9} = \\frac{2e^3}{9} + \\frac{1}{9}$$\n" +
+          "$$= \\frac{2e^3 + 1}{9}$$\n\n" +
+          "**Answer: B. \\( \\frac{2e^3 + 1}{9} \\)**"
       },
       
+      // Question A3
       {
         id: "exam1_q5",
-        sectionId: "section_1",
+        sectionId: "section_A",
         questionNumber: 5,
         type: "open-ended",
-        text: "Evaluate \\( \\int_{1}^{3} (2x + 5) \\, dx \\) using the definition of the definite integral.",
+        text: "Approximate the area for the function \\( f(x) = 4\\cos(2x) \\) over the interval \\( [\\frac{\\pi}{4}, \\frac{\\pi}{2}] \\) using the **Midpoint Riemann Sum** \\( (M_n) \\) with \\( n = 5 \\) rectangles.",
         correctAnswers: [
-          "18",
-          "18.0"
+          "-2.23",
+          "-2.2335",
+          "-2.234"
         ],
         options: {
           allowSymbolic: false,
-          tolerance: 0.01,
+          tolerance: 0.02,
           acceptedUnits: [],
           requiredUnit: null
         },
-        points: 5,
-        explanation: "**Method 1: Using Properties**\n\n" +
-          "$$\\int_{1}^{3} (2x + 5) \\, dx = \\int_{1}^{3} 2x \\, dx + \\int_{1}^{3} 5 \\, dx$$\n\n" +
-          "$$= 2 \\int_{1}^{3} x \\, dx + 5 \\int_{1}^{3} 1 \\, dx$$\n\n" +
-          "$$= 2 \\left[ \\frac{x^2}{2} \\right]_1^3 + 5[x]_1^3$$\n\n" +
-          "$$= 2 \\left( \\frac{9}{2} - \\frac{1}{2} \\right) + 5(3 - 1)$$\n\n" +
-          "$$= 2(4) + 5(2) = 8 + 10 = 18$$\n\n" +
-          "**Answer: 18**"
+        points: 10,
+        explanation: "**Midpoint Riemann Sum with \\( n = 5 \\):**\n\n" +
+          "**Step 1:** Calculate width \\( \\Delta x \\)\n" +
+          "$$\\Delta x = \\frac{\\frac{\\pi}{2} - \\frac{\\pi}{4}}{5} = \\frac{\\frac{\\pi}{4}}{5} = \\frac{\\pi}{20} \\approx 0.1571$$\n\n" +
+          "**Step 2:** Find midpoints \\( c_i = a + (i - \\frac{1}{2})\\Delta x \\)\n" +
+          "- \\( c_1 = \\frac{\\pi}{4} + \\frac{\\pi}{40} = \\frac{11\\pi}{40} \\approx 0.8639 \\)\n" +
+          "- \\( c_2 = \\frac{13\\pi}{40} \\approx 1.0210 \\)\n" +
+          "- \\( c_3 = \\frac{3\\pi}{8} \\approx 1.1781 \\)\n" +
+          "- \\( c_4 = \\frac{17\\pi}{40} \\approx 1.3352 \\)\n" +
+          "- \\( c_5 = \\frac{19\\pi}{40} \\approx 1.4923 \\)\n\n" +
+          "**Step 3:** Calculate \\( f(c_i) = 4\\cos(2c_i) \\)\n" +
+          "- \\( f(c_1) = 4\\cos(\\frac{11\\pi}{20}) \\approx -1.0964 \\)\n" +
+          "- \\( f(c_2) = 4\\cos(\\frac{13\\pi}{20}) \\approx -2.5976 \\)\n" +
+          "- \\( f(c_3) = 4\\cos(\\frac{3\\pi}{4}) = 4(-\\frac{\\sqrt{2}}{2}) \\approx -2.8284 \\)\n" +
+          "- \\( f(c_4) = 4\\cos(\\frac{17\\pi}{20}) \\approx -3.7588 \\)\n" +
+          "- \\( f(c_5) = 4\\cos(\\frac{19\\pi}{20}) \\approx -3.9508 \\)\n\n" +
+          "**Step 4:** Calculate \\( M_5 \\)\n" +
+          "$$M_5 = \\frac{\\pi}{20}[f(c_1) + f(c_2) + f(c_3) + f(c_4) + f(c_5)]$$\n" +
+          "$$M_5 \\approx 0.1571[-1.0964 - 2.5976 - 2.8284 - 3.7588 - 3.9508]$$\n" +
+          "$$M_5 \\approx 0.1571 \\times (-14.232) \\approx -2.23$$\n\n" +
+          "**Answer: -2.23**"
       },
       
+      // Question A4
       {
         id: "exam1_q6",
-        sectionId: "section_1",
+        sectionId: "section_A",
         questionNumber: 6,
-        type: "multiple-choice",
-        text: "If \\( f(x) \\) is continuous and \\( \\int_{2}^{5} f(x) \\, dx = 10 \\), what is \\( \\int_{5}^{2} f(x) \\, dx \\)?",
-        options: [
-          "A. 10",
-          "B. -10",
-          "C. 0",
-          "D. Cannot be determined"
+        type: "open-ended",
+        text: "Approximate the area for the function \\( f(x) = 1 - e^{-x} \\) over the interval \\( [0, 10] \\) using the **Left Riemann Sum** \\( (L_n) \\) with \\( n = 10 \\) rectangles.",
+        correctAnswers: [
+          "7.42",
+          "7.4182",
+          "7.418"
         ],
-        correctAnswers: ["B"],
-        points: 2,
-        explanation: "**Property of Definite Integrals:**\n\n" +
-          "$$\\int_{a}^{b} f(x) \\, dx = -\\int_{b}^{a} f(x) \\, dx$$\n\n" +
-          "Therefore:\n" +
-          "$$\\int_{5}^{2} f(x) \\, dx = -\\int_{2}^{5} f(x) \\, dx = -10$$\n\n" +
-          "**Answer: B. -10**"
+        options: {
+          allowSymbolic: false,
+          tolerance: 0.02,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 10,
+        explanation: "**Left Riemann Sum with \\( n = 10 \\):**\n\n" +
+          "**Step 1:** Calculate width \\( \\Delta x \\)\n" +
+          "$$\\Delta x = \\frac{10 - 0}{10} = 1$$\n\n" +
+          "**Step 2:** Left endpoints\n" +
+          "$$c_i = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9$$\n\n" +
+          "**Step 3:** Calculate \\( f(c_i) = 1 - e^{-c_i} \\)\n" +
+          "- \\( f(0) = 0 \\)\n" +
+          "- \\( f(1) \\approx 0.6321 \\)\n" +
+          "- \\( f(2) \\approx 0.8647 \\)\n" +
+          "- \\( f(3) \\approx 0.9502 \\)\n" +
+          "- \\( f(4) \\approx 0.9817 \\)\n" +
+          "- \\( f(5) \\approx 0.9933 \\)\n" +
+          "- \\( f(6) \\approx 0.9975 \\)\n" +
+          "- \\( f(7) \\approx 0.9991 \\)\n" +
+          "- \\( f(8) \\approx 0.9997 \\)\n" +
+          "- \\( f(9) \\approx 0.9999 \\)\n\n" +
+          "**Step 4:** Calculate \\( L_{10} \\)\n" +
+          "$$L_{10} = 1 \\times [0 + 0.6321 + 0.8647 + 0.9502 + 0.9817 + 0.9933 + 0.9975 + 0.9991 + 0.9997 + 0.9999]$$\n" +
+          "$$L_{10} = 7.4182 \\approx 7.42$$\n\n" +
+          "**Note:** Since \\( f(x) \\) is increasing, the left sum underestimates the true area.\n\n" +
+          "**Exact area:** \\( \\int_0^{10} (1-e^{-x})dx = 9 + e^{-10} \\approx 9.00 \\)\n\n" +
+          "**Answer: 7.42**"
       },
       
+      // ============================================================
+      // SECTION B: INDEFINITE INTEGRALS: TECHNIQUES (Q7-Q11)
+      // ============================================================
+      
+      // Question B1
       {
         id: "exam1_q7",
-        sectionId: "section_1",
+        sectionId: "section_B",
         questionNumber: 7,
-        type: "open-ended",
-        text: "A particle's velocity is given by \\( v(t) = 3t^2 \\) m/s. Use a Riemann sum to estimate the distance traveled from \\( t = 0 \\) to \\( t = 2 \\) seconds using the **midpoint rule** with \\( n = 4 \\) subintervals.",
-        correctAnswers: [
-          "7.875",
-          "7.88",
-          "7.9",
-          "7.875 m",
-          "7.88 m"
+        type: "multiple-choice",
+        text: "Solve the indefinite integral using **u-substitution**: \\( \\int e^{x} \\cos\\left(\\frac{e^{x}}{3}-1\\right)dx \\).",
+        options: [
+          "A. \\( 3\\sin\\left(\\frac{e^{x}}{3}-1\\right) + C \\)",
+          "B. \\( \\sin\\left(\\frac{e^{x}}{3}-1\\right) + C \\)",
+          "C. \\( \\frac{1}{3}\\sin\\left(\\frac{e^{x}}{3}-1\\right) + C \\)",
+          "D. \\( 3\\cos\\left(\\frac{e^{x}}{3}-1\\right) + C \\)"
         ],
-        options: {
-          allowSymbolic: false,
-          tolerance: 0.05,
-          acceptedUnits: ["m", "meters"],
-          requiredUnit: null
-        },
-        points: 6,
-        explanation: "**Midpoint Riemann Sum:**\n\n" +
-          "**Step 1:** \\( \\Delta t = \\frac{2 - 0}{4} = 0.5 \\)\n\n" +
-          "**Step 2:** Midpoints are \\( t = 0.25, 0.75, 1.25, 1.75 \\)\n\n" +
-          "**Step 3:** Evaluate velocity:\n" +
-          "- \\( v(0.25) = 3(0.25)^2 = 0.1875 \\)\n" +
-          "- \\( v(0.75) = 3(0.75)^2 = 1.6875 \\)\n" +
-          "- \\( v(1.25) = 3(1.25)^2 = 4.6875 \\)\n" +
-          "- \\( v(1.75) = 3(1.75)^2 = 9.1875 \\)\n\n" +
-          "**Step 4:** Sum\n" +
-          "$$M_4 = 0.5 \\times (0.1875 + 1.6875 + 4.6875 + 9.1875)$$\n" +
-          "$$= 0.5 \\times 15.75 = 7.875 \\text{ m}$$\n\n" +
-          "**Answer: 7.875 m**"
+        correctAnswers: ["A"],
+        points: 10,
+        explanation: "**U-Substitution Strategy:**\n\n" +
+          "**Step 1:** Identify \\( u \\) as the inside function of cosine\n" +
+          "$u = \\frac{e^{x}}{3}-1$\n\n" +
+          "**Step 2:** Find \\( du \\)\n" +
+          "$du = \\frac{d}{dx}\\left(\\frac{e^{x}}{3}-1\\right)dx = \\frac{e^{x}}{3}dx$\n\n" +
+          "From this, we get: \\( e^x dx = 3du \\)\n\n" +
+          "**Step 3:** Substitute into the integral\n" +
+          "$\\int e^{x} \\cos\\left(\\frac{e^{x}}{3}-1\\right)dx = \\int \\cos(u)(3du)$\n" +
+          "$= 3\\int \\cos(u)du$\n\n" +
+          "**Step 4:** Integrate\n" +
+          "$= 3\\sin(u) + C$\n\n" +
+          "**Step 5:** Substitute \\( u \\) back\n" +
+          "$= 3\\sin\\left(\\frac{e^{x}}{3}-1\\right) + C$\n\n" +
+          "**Answer: A. \\( 3\\sin\\left(\\frac{e^{x}}{3}-1\\right) + C \\)**"
       },
       
+      // Question B2
       {
         id: "exam1_q8",
-        sectionId: "section_1",
+        sectionId: "section_B",
         questionNumber: 8,
         type: "multiple-choice",
-        text: "Which Riemann sum typically gives the best approximation for a smooth function?",
+        text: "Solve the indefinite integral using **u-substitution**: \\( \\int\\left(12x^{3}+\\frac{3}{x}-6\\sin x\\right)\\sqrt{x^{4}+\\ln x+2\\cos x}\\,dx \\).",
         options: [
-          "A. Left endpoint",
-          "B. Right endpoint",
-          "C. Midpoint",
-          "D. They are all equally accurate"
+          "A. \\( \\left(x^{4}+\\ln x+2\\cos x\\right)^{3/2} + C \\)",
+          "B. \\( 2\\left(x^{4}+\\ln x+2\\cos x\\right)^{3/2} + C \\)",
+          "C. \\( \\frac{2}{3}\\left(x^{4}+\\ln x+2\\cos x\\right)^{3/2} + C \\)",
+          "D. \\( 6\\left(x^{4}+\\ln x+2\\cos x\\right)^{3/2} + C \\)"
         ],
-        correctAnswers: ["C"],
-        points: 2,
-        explanation: "For smooth functions, the **midpoint rule** generally provides:\n\n" +
-          "- Better approximation than left/right endpoints\n" +
-          "- Averages out over/underestimation\n" +
-          "- Error proportional to \\( 1/n^2 \\) (vs \\( 1/n \\) for left/right)\n\n" +
-          "**Answer: C. Midpoint**"
+        correctAnswers: ["B"],
+        points: 10,
+        explanation: "**Complex U-Substitution:**\n\n" +
+          "**Step 1:** Let \\( u \\) be the expression under the radical\n" +
+          "$u = x^{4}+\\ln x+2\\cos x$\n\n" +
+          "**Step 2:** Find \\( du \\)\n" +
+          "$du = \\left(4x^{3}+\\frac{1}{x}-2\\sin x\\right)dx$\n\n" +
+          "**Step 3:** Factor the coefficient outside the radical\n" +
+          "$12x^{3}+\\frac{3}{x}-6\\sin x = 3\\left(4x^{3}+\\frac{1}{x}-2\\sin x\\right) = 3du$\n\n" +
+          "**Step 4:** Substitute\n" +
+          "$\\int \\sqrt{u}(3du) = 3\\int u^{1/2}du$\n\n" +
+          "**Step 5:** Integrate using power rule\n" +
+          "$= 3 \\cdot \\frac{u^{3/2}}{3/2} + C = 3 \\cdot \\frac{2}{3}u^{3/2} + C = 2u^{3/2} + C$\n\n" +
+          "**Step 6:** Substitute \\( u \\) back\n" +
+          "$= 2\\left(x^{4}+\\ln x+2\\cos x\\right)^{3/2} + C$\n\n" +
+          "**Answer: B. \\( 2\\left(x^{4}+\\ln x+2\\cos x\\right)^{3/2} + C \\)**"
       },
       
+      // Question B3
       {
         id: "exam1_q9",
-        sectionId: "section_1",
+        sectionId: "section_B",
         questionNumber: 9,
-        type: "open-ended",
-        text: "If \\( \\int_{0}^{3} f(x) \\, dx = 8 \\) and \\( \\int_{3}^{7} f(x) \\, dx = 5 \\), find \\( \\int_{0}^{7} f(x) \\, dx \\).",
-        correctAnswers: [
-          "13",
-          "13.0"
+        type: "multiple-choice",
+        text: "Solve the indefinite integral using **Integration by Parts (twice)**: \\( \\int x^{2}e^{x}dx \\).",
+        options: [
+          "A. \\( e^x(x^2 - 2x + 2) + C \\)",
+          "B. \\( e^x(x^2 + 2x + 2) + C \\)",
+          "C. \\( e^x(x^2 - 2x - 2) + C \\)",
+          "D. \\( e^x(x^2 - x + 1) + C \\)"
         ],
-        options: {
-          allowSymbolic: false,
-          tolerance: 0.01,
-          acceptedUnits: [],
-          requiredUnit: null
-        },
-        points: 3,
-        explanation: "**Additivity Property:**\n\n" +
-          "$$\\int_{a}^{c} f(x) \\, dx = \\int_{a}^{b} f(x) \\, dx + \\int_{b}^{c} f(x) \\, dx$$\n\n" +
-          "Therefore:\n" +
-          "$$\\int_{0}^{7} f(x) \\, dx = \\int_{0}^{3} f(x) \\, dx + \\int_{3}^{7} f(x) \\, dx$$\n\n" +
-          "$$= 8 + 5 = 13$$\n\n" +
-          "**Answer: 13**"
+        correctAnswers: ["A"],
+        points: 10,
+        explanation: "**Double Integration by Parts:**\n\n" +
+          "**First Application:**\n\n" +
+          "Let \\( u_1 = x^2 \\implies du_1 = 2x\\,dx \\)\n" +
+          "Let \\( dv_1 = e^x dx \\implies v_1 = e^x \\)\n\n" +
+          "Using \\( \\int u\\,dv = uv - \\int v\\,du \\):\n" +
+          "$\\int x^{2}e^{x}dx = x^2 e^x - \\int e^x(2x)dx$\n" +
+          "$= x^2 e^x - 2\\int xe^x dx$\n\n" +
+          "**Second Application (on \\( \\int xe^x dx \\)):**\n\n" +
+          "Let \\( u_2 = x \\implies du_2 = dx \\)\n" +
+          "Let \\( dv_2 = e^x dx \\implies v_2 = e^x \\)\n\n" +
+          "$\\int xe^x dx = xe^x - \\int e^x dx = xe^x - e^x$\n\n" +
+          "**Substitute back:**\n" +
+          "$\\int x^{2}e^{x}dx = x^2 e^x - 2[xe^x - e^x] + C$\n" +
+          "$= x^2 e^x - 2xe^x + 2e^x + C$\n" +
+          "$= e^x(x^2 - 2x + 2) + C$\n\n" +
+          "**Answer: A. \\( e^x(x^2 - 2x + 2) + C \\)**"
       },
       
+      // Question B4
       {
         id: "exam1_q10",
-        sectionId: "section_1",
+        sectionId: "section_B",
         questionNumber: 10,
-        type: "open-ended",
-        text: "Evaluate \\( \\int_{-2}^{2} (x^3 - x) \\, dx \\).",
-        correctAnswers: [
-          "0",
-          "0.0"
+        type: "multiple-choice",
+        text: "Solve the indefinite integral using **Integration by Parts (cyclic)**: \\( \\int e^{x}\\cos x\\,dx \\).",
+        options: [
+          "A. \\( \\frac{e^{x}}{2}(\\cos x + \\sin x) + C \\)",
+          "B. \\( \\frac{e^{x}}{2}(\\cos x - \\sin x) + C \\)",
+          "C. \\( e^{x}(\\cos x + \\sin x) + C \\)",
+          "D. \\( \\frac{e^{x}}{2}(\\sin x - \\cos x) + C \\)"
         ],
-        options: {
-          allowSymbolic: false,
-          tolerance: 0.01,
-          acceptedUnits: [],
-          requiredUnit: null
-        },
-        points: 4,
-        explanation: "**Recognize Odd Function:**\n\n" +
-          "The function \\( f(x) = x^3 - x \\) is **odd** because:\n" +
-          "$$f(-x) = (-x)^3 - (-x) = -x^3 + x = -f(x)$$\n\n" +
-          "**Property:** For odd functions integrated over symmetric intervals:\n" +
-          "$$\\int_{-a}^{a} f(x) \\, dx = 0$$\n\n" +
-          "**Verification by calculation:**\n" +
-          "$$\\int_{-2}^{2} (x^3 - x) \\, dx = \\left[ \\frac{x^4}{4} - \\frac{x^2}{2} \\right]_{-2}^{2}$$\n\n" +
-          "$$= \\left( 4 - 2 \\right) - \\left( 4 - 2 \\right) = 0$$\n\n" +
-          "**Answer: 0**"
+        correctAnswers: ["A"],
+        points: 10,
+        explanation: "**Cyclic Integration by Parts:**\n\n" +
+          "Let \\( I = \\int e^{x}\\cos x\\,dx \\)\n\n" +
+          "**First Application:**\n\n" +
+          "Let \\( u_1 = \\cos x \\implies du_1 = -\\sin x\\,dx \\)\n" +
+          "Let \\( dv_1 = e^x dx \\implies v_1 = e^x \\)\n\n" +
+          "$I = e^x\\cos x - \\int e^x(-\\sin x)dx$\n" +
+          "$I = e^x\\cos x + \\int e^x\\sin x\\,dx \\quad \\text{...(Eq. 1)}$\n\n" +
+          "**Second Application (on \\( \\int e^x\\sin x\\,dx \\)):**\n\n" +
+          "Let \\( u_2 = \\sin x \\implies du_2 = \\cos x\\,dx \\)\n" +
+          "Let \\( dv_2 = e^x dx \\implies v_2 = e^x \\)\n\n" +
+          "$\\int e^x\\sin x\\,dx = e^x\\sin x - \\int e^x\\cos x\\,dx$\n" +
+          "$= e^x\\sin x - I$\n\n" +
+          "**Substitute back into Eq. 1:**\n" +
+          "$I = e^x\\cos x + [e^x\\sin x - I]$\n" +
+          "$I = e^x\\cos x + e^x\\sin x - I$\n" +
+          "$2I = e^x(\\cos x + \\sin x)$\n" +
+          "$I = \\frac{e^{x}}{2}(\\cos x + \\sin x) + C$\n\n" +
+          "**Answer: A. \\( \\frac{e^{x}}{2}(\\cos x + \\sin x) + C \\)**"
       },
       
-      // ============================================================
-      // SECTION B: FUNDAMENTAL THEOREM OF CALCULUS (Q11-Q20)
-      // ============================================================
+      // Question B5
       {
         id: "exam1_q11",
-        sectionId: "section_2",
+        sectionId: "section_B",
         questionNumber: 11,
         type: "multiple-choice",
-        text: "The Fundamental Theorem of Calculus Part 1 states that if \\( F(x) = \\int_{a}^{x} f(t) \\, dt \\), then:",
+        text: "Solve the indefinite integral using **Partial Fraction Decomposition**: \\( \\int\\frac{4x^{2}-19}{(x+3)^{2}(x-2)}dx \\).",
         options: [
-          "A. \\( F'(x) = f(a) \\)",
-          "B. \\( F'(x) = f(x) \\)",
-          "C. \\( F'(x) = f(t) \\)",
-          "D. \\( F(x) = f'(x) \\)"
+          "A. \\( \\frac{103}{25}\\ln|x+3| - \\frac{3}{25}\\ln|x-2| + \\frac{17}{5(x+3)} + C \\)",
+          "B. \\( \\frac{3}{25}\\ln|x+3| - \\frac{103}{25}\\ln|x-2| + \\frac{17}{5(x+3)} + C \\)",
+          "C. \\( \\frac{103}{25}\\ln|x+3| - \\frac{3}{25}\\ln|x-2| - \\frac{17}{5(x+3)} + C \\)",
+          "D. \\( \\frac{103}{25}\\ln|x-2| - \\frac{3}{25}\\ln|x+3| + \\frac{17}{5(x+3)} + C \\)"
         ],
-        correctAnswers: ["B"],
-        points: 2,
-        explanation: "**Fundamental Theorem of Calculus (Part 1):**\n\n" +
-          "If \\( F(x) = \\int_{a}^{x} f(t) \\, dt \\), then:\n" +
-          "$$F'(x) = f(x)$$\n\n" +
-          "This shows that **differentiation reverses integration**.\n\n" +
-          "**Answer: B. \\( F'(x) = f(x) \\)**"
+        correctAnswers: ["A"],
+        points: 10,
+        explanation: "**Partial Fraction Decomposition with Repeated Factor:**\n\n" +
+          "**Step 1:** Set up the decomposition\n" +
+          "$\\frac{4x^{2}-19}{(x+3)^{2}(x-2)} = \\frac{A}{x-2} + \\frac{B}{x+3} + \\frac{C}{(x+3)^{2}}$\n\n" +
+          "**Step 2:** Clear denominators\n" +
+          "$4x^{2}-19 = A(x+3)^2 + B(x-2)(x+3) + C(x-2)$\n\n" +
+          "**Step 3:** Find constants using root method\n\n" +
+          "Set \\( x = 2 \\) to find \\( A \\):\n" +
+          "$4(4) - 19 = A(25) \\implies -3 = 25A \\implies A = -\\frac{3}{25}$\n\n" +
+          "Set \\( x = -3 \\) to find \\( C \\):\n" +
+          "$4(9) - 19 = C(-5) \\implies 17 = -5C \\implies C = -\\frac{17}{5}$\n\n" +
+          "Set \\( x = 0 \\) to find \\( B \\):\n" +
+          "$-19 = 9A - 6B - 2C$\n" +
+          "$-19 = 9\\left(-\\frac{3}{25}\\right) - 6B - 2\\left(-\\frac{17}{5}\\right)$\n" +
+          "$-19 = -\\frac{27}{25} - 6B + \\frac{34}{5}$\n\n" +
+          "Converting to common denominator and solving:\n" +
+          "$B = \\frac{103}{25}$\n\n" +
+          "**Step 4:** Integrate\n" +
+          "$\\int\\left(\\frac{-3/25}{x-2} + \\frac{103/25}{x+3} + \\frac{-17/5}{(x+3)^{2}}\\right)dx$\n\n" +
+          "$= -\\frac{3}{25}\\ln|x-2| + \\frac{103}{25}\\ln|x+3| - \\frac{17}{5}\\int(x+3)^{-2}dx$\n\n" +
+          "$= \\frac{103}{25}\\ln|x+3| - \\frac{3}{25}\\ln|x-2| + \\frac{17}{5(x+3)} + C$\n\n" +
+          "**Answer: A**"
       },
       
+      // ============================================================
+      // SECTION C: APPLICATIONS: VELOCITY & DISTANCE (Q12-Q15)
+      // ============================================================
+      
+      // Question C1.1: Displacement
       {
         id: "exam1_q12",
-        sectionId: "section_2",
+        sectionId: "section_C",
         questionNumber: 12,
         type: "open-ended",
-        text: "Find \\( \\frac{d}{dx} \\int_{2}^{x} (t^2 + 3t) \\, dt \\).",
+        text: "A particle has velocity \\( v(t) = 27t - 9t^2 \\) m/s. Calculate the **Displacement** from \\( t = 1 \\) second to \\( t = 5 \\) seconds.",
         correctAnswers: [
-          "x^2 + 3x",
-          "x^2+3x",
-          "3x + x^2",
-          "3x+x^2"
-        ],
-        options: {
-          allowSymbolic: true,
-          tolerance: 0.001,
-          acceptedUnits: [],
-          requiredUnit: null
-        },
-        points: 3,
-        explanation: "**Apply FTC Part 1:**\n\n" +
-          "$$\\frac{d}{dx} \\int_{a}^{x} f(t) \\, dt = f(x)$$\n\n" +
-          "Replace \\( t \\) with \\( x \\) in the integrand:\n" +
-          "$$\\frac{d}{dx} \\int_{2}^{x} (t^2 + 3t) \\, dt = x^2 + 3x$$\n\n" +
-          "**Answer: \\( x^2 + 3x \\)**"
-      },
-      
-      {
-        id: "exam1_q13",
-        sectionId: "section_2",
-        questionNumber: 13,
-        type: "open-ended",
-        text: "Evaluate \\( \\int_{1}^{4} \\sqrt{x} \\, dx \\).",
-        correctAnswers: [
-          "14/3",
-          "4.667",
-          "4.67",
-          "14/3"
-        ],
-        options: {
-          allowSymbolic: true,
-          tolerance: 0.02,
-          acceptedUnits: [],
-          requiredUnit: null
-        },
-        points: 4,
-        explanation: "**Step 1:** Rewrite as power\n" +
-          "$$\\sqrt{x} = x^{1/2}$$\n\n" +
-          "**Step 2:** Find antiderivative\n" +
-          "$$\\int x^{1/2} \\, dx = \\frac{x^{3/2}}{3/2} = \\frac{2x^{3/2}}{3}$$\n\n" +
-          "**Step 3:** Evaluate using FTC Part 2\n" +
-          "$$\\int_{1}^{4} \\sqrt{x} \\, dx = \\left[ \\frac{2x^{3/2}}{3} \\right]_1^4$$\n\n" +
-          "$$= \\frac{2(4)^{3/2}}{3} - \\frac{2(1)^{3/2}}{3}$$\n\n" +
-          "$$= \\frac{2 \\cdot 8}{3} - \\frac{2}{3} = \\frac{16 - 2}{3} = \\frac{14}{3}$$\n\n" +
-          "**Answer: \\( \\frac{14}{3} \\approx 4.67 \\)**"
-      },
-      
-      {
-        id: "exam1_q14",
-        sectionId: "section_2",
-        questionNumber: 14,
-        type: "multiple-choice",
-        text: "What is the antiderivative of \\( f(x) = \\frac{1}{x} \\)?",
-        options: [
-          "A. \\( \\frac{1}{x^2} + C \\)",
-          "B. \\( -\\frac{1}{x^2} + C \\)",
-          "C. \\( \\ln|x| + C \\)",
-          "D. \\( e^x + C \\)"
-        ],
-        correctAnswers: ["C"],
-        points: 2,
-        explanation: "**Standard Antiderivative:**\n\n" +
-          "$$\\int \\frac{1}{x} \\, dx = \\ln|x| + C$$\n\n" +
-          "The absolute value is necessary because \\( \\ln(x) \\) is only defined for \\( x > 0 \\).\n\n" +
-          "**Verification:**\n" +
-          "$$\\frac{d}{dx}[\\ln|x|] = \\frac{1}{x}$$ ✓\n\n" +
-          "**Answer: C. \\( \\ln|x| + C \\)**"
-      },
-      
-      {
-        id: "exam1_q15",
-        sectionId: "section_2",
-        questionNumber: 15,
-        type: "open-ended",
-        text: "Evaluate \\( \\int_{0}^{\\pi/2} \\sin(x) \\, dx \\).",
-        correctAnswers: [
-          "1",
-          "1.0"
-        ],
-        options: {
-          allowSymbolic: false,
-          tolerance: 0.01,
-          acceptedUnits: [],
-          requiredUnit: null
-        },
-        points: 4,
-        explanation: "**Step 1:** Antiderivative of \\( \\sin(x) \\)\n" +
-          "$$\\int \\sin(x) \\, dx = -\\cos(x) + C$$\n\n" +
-          "**Step 2:** Apply FTC Part 2\n" +
-          "$$\\int_{0}^{\\pi/2} \\sin(x) \\, dx = [-\\cos(x)]_0^{\\pi/2}$$\n\n" +
-          "$$= -\\cos(\\pi/2) - (-\\cos(0))$$\n\n" +
-          "$$= -0 + 1 = 1$$\n\n" +
-          "**Answer: 1**"
-      },
-      
-      {
-        id: "exam1_q16",
-        sectionId: "section_2",
-        questionNumber: 16,
-        type: "open-ended",
-        text: "Find \\( \\frac{d}{dx} \\int_{0}^{x^2} e^t \\, dt \\).",
-        correctAnswers: [
-          "2x*e^(x^2)",
-          "2xe^(x^2)",
-          "2x*exp(x^2)",
-          "2x e^(x^2)"
-        ],
-        options: {
-          allowSymbolic: true,
-          tolerance: 0.001,
-          acceptedUnits: [],
-          requiredUnit: null
-        },
-        points: 5,
-        explanation: "**Use Chain Rule with FTC:**\n\n" +
-          "When the upper limit is a function \\( u(x) \\):\n" +
-          "$$\\frac{d}{dx} \\int_{a}^{u(x)} f(t) \\, dt = f(u(x)) \\cdot u'(x)$$\n\n" +
-          "**Step 1:** Identify \\( u(x) = x^2 \\), so \\( u'(x) = 2x \\)\n\n" +
-          "**Step 2:** Apply formula\n" +
-          "$$\\frac{d}{dx} \\int_{0}^{x^2} e^t \\, dt = e^{x^2} \\cdot 2x$$\n\n" +
-          "**Answer: \\( 2xe^{x^2} \\)**"
-      },
-      
-      {
-        id: "exam1_q17",
-        sectionId: "section_2",
-        questionNumber: 17,
-        type: "open-ended",
-        text: "Evaluate \\( \\int_{1}^{e} \\frac{1}{x} \\, dx \\).",
-        correctAnswers: [
-          "1",
-          "1.0"
-        ],
-        options: {
-          allowSymbolic: false,
-          tolerance: 0.01,
-          acceptedUnits: [],
-          requiredUnit: null
-        },
-        points: 4,
-        explanation: "$$\\int_{1}^{e} \\frac{1}{x} \\, dx = [\\ln|x|]_1^e$$\n\n" +
-          "$$= \\ln(e) - \\ln(1)$$\n\n" +
-          "$$= 1 - 0 = 1$$\n\n" +
-          "**Answer: 1**"
-      },
-      
-      {
-        id: "exam1_q18",
-        sectionId: "section_2",
-        questionNumber: 18,
-        type: "multiple-choice",
-        text: "If \\( F(x) \\) is an antiderivative of \\( f(x) \\), then \\( \\int_{a}^{b} f(x) \\, dx = \\)?",
-        options: [
-          "A. \\( F(a) - F(b) \\)",
-          "B. \\( F(b) - F(a) \\)",
-          "C. \\( F'(b) - F'(a) \\)",
-          "D. \\( f(b) - f(a) \\)"
-        ],
-        correctAnswers: ["B"],
-        points: 2,
-        explanation: "**Fundamental Theorem of Calculus (Part 2):**\n\n" +
-          "$$\\int_{a}^{b} f(x) \\, dx = F(b) - F(a)$$\n\n" +
-          "where \\( F(x) \\) is any antiderivative of \\( f(x) \\).\n\n" +
-          "**Answer: B. \\( F(b) - F(a) \\)**"
-      },
-      
-      {
-        id: "exam1_q19",
-        sectionId: "section_2",
-        questionNumber: 19,
-        type: "open-ended",
-        text: "Calculate \\( \\int_{0}^{2} (3x^2 - 4x + 1) \\, dx \\).",
-        correctAnswers: [
-          "2",
-          "2.0"
-        ],
-        options: {
-          allowSymbolic: false,
-          tolerance: 0.01,
-          acceptedUnits: [],
-          requiredUnit: null
-        },
-        points: 5,
-        explanation: "**Step 1:** Find antiderivative\n" +
-          "$$\\int (3x^2 - 4x + 1) \\, dx = x^3 - 2x^2 + x + C$$\n\n" +
-          "**Step 2:** Evaluate\n" +
-          "$$\\int_{0}^{2} (3x^2 - 4x + 1) \\, dx = [x^3 - 2x^2 + x]_0^2$$\n\n" +
-          "$= (8 - 8 + 2) - (0 - 0 + 0) = 2$\n\n" +
-          "**Answer: 2**"
-      },
-      
-      {
-        id: "exam1_q20",
-        sectionId: "section_2",
-        questionNumber: 20,
-        type: "open-ended",
-        text: "Find \\( \\frac{d}{dx} \\int_{x}^{3} \\cos(t) \\, dt \\).",
-        correctAnswers: [
-          "-cos(x)",
-          "-cosx",
-          "-cos x"
-        ],
-        options: {
-          allowSymbolic: true,
-          tolerance: 0.001,
-          acceptedUnits: [],
-          requiredUnit: null
-        },
-        points: 4,
-        explanation: "**When \\( x \\) is the lower limit:**\n\n" +
-          "$\\int_{x}^{a} f(t) \\, dt = -\\int_{a}^{x} f(t) \\, dt$\n\n" +
-          "Therefore:\n" +
-          "$\\frac{d}{dx} \\int_{x}^{3} \\cos(t) \\, dt = \\frac{d}{dx} \\left[ -\\int_{3}^{x} \\cos(t) \\, dt \\right]$\n\n" +
-          "$= -\\cos(x)$\n\n" +
-          "**Answer: \\( -\\cos(x) \\)**"
-      },
-      
-      // ============================================================
-      // SECTION C: APPLICATIONS & NET CHANGE (Q21-Q30)
-      // ============================================================
-      {
-        id: "exam1_q21",
-        sectionId: "section_3",
-        questionNumber: 21,
-        type: "multiple-choice",
-        text: "The Net Change Theorem states that if \\( F'(x) = f(x) \\), then \\( \\int_{a}^{b} f(x) \\, dx \\) equals:",
-        options: [
-          "A. The average rate of change of \\( F \\)",
-          "B. The net change in \\( F \\) from \\( x = a \\) to \\( x = b \\)",
-          "C. The total distance traveled",
-          "D. The instantaneous rate of change at \\( x = b \\)"
-        ],
-        correctAnswers: ["B"],
-        points: 2,
-        explanation: "**Net Change Theorem:**\n\n" +
-          "$\\int_{a}^{b} F'(x) \\, dx = F(b) - F(a)$\n\n" +
-          "This represents the **net change** in \\( F \\) over \\([a, b]\\).\n\n" +
-          "Examples:\n" +
-          "- If \\( F(t) \\) = position, then \\( F'(t) = v(t) \\) and \\( \\int v(t) \\, dt \\) = displacement\n" +
-          "- If \\( F(t) \\) = volume, then \\( F'(t) \\) = flow rate and \\( \\int F'(t) \\, dt \\) = volume change\n\n" +
-          "**Answer: B**"
-      },
-      
-      {
-        id: "exam1_q22",
-        sectionId: "section_3",
-        questionNumber: 22,
-        type: "open-ended",
-        text: "A car's velocity is \\( v(t) = 2t \\) m/s for \\( 0 \\leq t \\leq 10 \\) seconds. Find the displacement.",
-        correctAnswers: [
-          "100",
-          "100.0",
-          "100 m",
-          "100m"
+          "-48",
+          "-48.0",
+          "-48 m",
+          "-48m"
         ],
         options: {
           allowSymbolic: false,
@@ -602,226 +454,137 @@ export const exams = [
           acceptedUnits: ["m", "meters"],
           requiredUnit: null
         },
-        points: 4,
-        explanation: "**Displacement = \\( \\int_{a}^{b} v(t) \\, dt \\)**\n\n" +
-          "$\\int_{0}^{10} 2t \\, dt = [t^2]_0^{10}$\n\n" +
-          "$= 100 - 0 = 100 \\text{ m}$\n\n" +
-          "**Answer: 100 m**"
+        points: 2.5,
+        explanation: "**Displacement Calculation:**\n\n" +
+          "Displacement is the definite integral of velocity over \\([1, 5]\\):\n" +
+          "$\\text{Displacement} = \\int_{1}^{5} (27t - 9t^2) dt$\n\n" +
+          "**Step 1:** Find the antiderivative\n" +
+          "$F(t) = \\frac{27t^2}{2} - \\frac{9t^3}{3} = \\frac{27}{2}t^2 - 3t^3$\n\n" +
+          "**Step 2:** Evaluate using FTC\n" +
+          "$\\text{Displacement} = F(5) - F(1)$\n\n" +
+          "$F(5) = \\frac{27}{2}(25) - 3(125) = \\frac{675}{2} - 375 = \\frac{675 - 750}{2} = -\\frac{75}{2}$\n\n" +
+          "$F(1) = \\frac{27}{2}(1) - 3(1) = \\frac{27}{2} - 3 = \\frac{27 - 6}{2} = \\frac{21}{2}$\n\n" +
+          "$\\text{Displacement} = -\\frac{75}{2} - \\frac{21}{2} = -\\frac{96}{2} = -48 \\text{ m}$\n\n" +
+          "The negative value indicates the particle ends up 48 meters behind its starting position at \\( t = 1 \\).\n\n" +
+          "**Answer: -48 m**"
       },
       
+      // Question C1.2: Total Distance
       {
-        id: "exam1_q23",
-        sectionId: "section_3",
-        questionNumber: 23,
+        id: "exam1_q13",
+        sectionId: "section_C",
+        questionNumber: 13,
         type: "open-ended",
-        text: "Water flows into a tank at a rate of \\( R(t) = 5 + 2t \\) liters/minute. How much water enters the tank from \\( t = 0 \\) to \\( t = 6 \\) minutes?",
+        text: "**Question 12 continued:** Calculate the **Total Distance Traveled** for the same particle with \\( v(t) = 27t - 9t^2 \\) m/s from \\( t = 1 \\) to \\( t = 5 \\) seconds.",
         correctAnswers: [
-          "66",
-          "66.0",
-          "66 liters",
-          "66 L"
+          "108",
+          "108.0",
+          "108 m",
+          "108m"
         ],
         options: {
           allowSymbolic: false,
           tolerance: 0.1,
-          acceptedUnits: ["liters", "L"],
+          acceptedUnits: ["m", "meters"],
           requiredUnit: null
         },
-        points: 5,
-        explanation: "**Net Change in Volume:**\n\n" +
-          "$V = \\int_{0}^{6} (5 + 2t) \\, dt$\n\n" +
-          "$= [5t + t^2]_0^6$\n\n" +
-          "$= (30 + 36) - 0 = 66 \\text{ liters}$\n\n" +
-          "**Answer: 66 liters**"
+        points: 2.5,
+        explanation: "**Total Distance Calculation:**\n\n" +
+          "Total distance requires integrating \\( |v(t)| \\), so we must find when \\( v(t) = 0 \\).\n\n" +
+          "**Step 1:** Find roots of \\( v(t) \\)\n" +
+          "$27t - 9t^2 = 0$\n" +
+          "$9t(3 - t) = 0$\n" +
+          "$t = 0 \\text{ or } t = 3$\n\n" +
+          "**Step 2:** Determine sign of \\( v(t) \\) on intervals\n" +
+          "- On \\([1, 3]\\): \\( v(2) = 54 - 36 = 18 > 0 \\) (positive)\n" +
+          "- On \\([3, 5]\\): \\( v(4) = 108 - 144 = -36 < 0 \\) (negative)\n\n" +
+          "**Step 3:** Split the integral\n" +
+          "$\\text{Distance} = \\int_{1}^{3} v(t)\\,dt + \\int_{3}^{5} |v(t)|\\,dt$\n" +
+          "$= \\int_{1}^{3} v(t)\\,dt - \\int_{3}^{5} v(t)\\,dt$\n\n" +
+          "**Part 1:** \\([1, 3]\\)\n" +
+          "$F(3) = \\frac{27}{2}(9) - 3(27) = \\frac{243}{2} - 81 = \\frac{81}{2}$\n" +
+          "$F(1) = \\frac{21}{2}$\n" +
+          "$\\text{Distance}_1 = \\frac{81}{2} - \\frac{21}{2} = 30 \\text{ m}$\n\n" +
+          "**Part 2:** \\([3, 5]\\)\n" +
+          "$F(5) = -\\frac{75}{2}, \\quad F(3) = \\frac{81}{2}$\n" +
+          "$\\int_{3}^{5} v(t)\\,dt = -\\frac{75}{2} - \\frac{81}{2} = -78$\n" +
+          "$\\text{Distance}_2 = |-78| = 78 \\text{ m}$\n\n" +
+          "**Step 4:** Sum the distances\n" +
+          "$\\text{Total Distance} = 30 + 78 = 108 \\text{ m}$\n\n" +
+          "**Answer: 108 m**"
       },
       
+      // Question C2.1: Displacement (same as distance)
       {
-        id: "exam1_q24",
-        sectionId: "section_3",
-        questionNumber: 24,
-        type: "multiple-choice",
-        text: "If velocity \\( v(t) \\) can be negative, what does \\( \\int_{a}^{b} v(t) \\, dt \\) represent?",
-        options: [
-          "A. Total distance traveled",
-          "B. Displacement (net change in position)",
-          "C. Average velocity",
-          "D. Speed"
-        ],
-        correctAnswers: ["B"],
-        points: 3,
-        explanation: "**Key Distinction:**\n\n" +
-          "- **Displacement:** \\( \\int_{a}^{b} v(t) \\, dt \\) (can be positive, negative, or zero)\n" +
-          "- **Total Distance:** \\( \\int_{a}^{b} |v(t)| \\, dt \\) (always positive)\n\n" +
-          "When velocity is negative (moving backward), displacement accounts for direction.\n\n" +
-          "**Answer: B. Displacement**"
-      },
-      
-      {
-        id: "exam1_q25",
-        sectionId: "section_3",
-        questionNumber: 25,
+        id: "exam1_q14",
+        sectionId: "section_C",
+        questionNumber: 14,
         type: "open-ended",
-        text: "A particle moves with velocity \\( v(t) = t^2 - 4t + 3 \\) m/s on \\([0, 4]\\). Find the displacement.",
+        text: "A particle has velocity \\( v(t) = t\\sqrt{100 - t^2} \\) m/s. Calculate the **Displacement** for the first 7 seconds (over \\([0, 7]\\)).",
         correctAnswers: [
-          "-2.667",
-          "-2.67",
-          "-8/3",
-          "-2.666",
-          "-2.67 m"
+          "211.93",
+          "211.9",
+          "212",
+          "(1000-51*sqrt(51))/3",
+          "(1000-51√51)/3"
         ],
         options: {
           allowSymbolic: true,
-          tolerance: 0.02,
-          acceptedUnits: ["m"],
+          tolerance: 0.5,
+          acceptedUnits: ["m", "meters"],
           requiredUnit: null
         },
-        points: 6,
-        explanation: "**Calculate Displacement:**\n\n" +
-          "$\\int_{0}^{4} (t^2 - 4t + 3) \\, dt = \\left[ \\frac{t^3}{3} - 2t^2 + 3t \\right]_0^4$\n\n" +
-          "$= \\left( \\frac{64}{3} - 32 + 12 \\right) - 0$\n\n" +
-          "$= \\frac{64}{3} - 20 = \\frac{64 - 60}{3} = \\frac{4}{3} - 4 = -\\frac{8}{3}$\n\n" +
-          "Wait, let me recalculate:\n" +
-          "$= \\frac{64}{3} - 32 + 12 = \\frac{64}{3} - \\frac{60}{3} = \\frac{4}{3}$\n\n" +
-          "Actually:\n" +
-          "$= \\frac{64}{3} - 32 + 12 = \\frac{64 - 96 + 36}{3} = \\frac{4}{3}$\n\n" +
-          "Hmm, correction:\n" +
-          "$\\frac{64}{3} = 21.33, \\quad 21.33 - 32 + 12 = 1.33 = \\frac{4}{3}$\n\n" +
-          "Wait, the answer should be negative. Let me verify:\n" +
-          "At \\( t=4 \\): \\( \\frac{64}{3} - 2(16) + 3(4) = \\frac{64}{3} - 32 + 12 = \\frac{64}{3} - 20 = \\frac{64-60}{3} = \\frac{4}{3} \\)\n\n" +
-          "Hmm, this is positive. But checking the velocity:\n" +
-          "- \\( v(0) = 3 \\) (positive)\n" +
-          "- \\( v(1) = 0 \\) (zero)\n" +
-          "- \\( v(2) = -1 \\) (negative)\n" +
-          "- \\( v(3) = 0 \\) (zero)\n" +
-          "- \\( v(4) = 3 \\) (positive)\n\n" +
-          "The particle changes direction. For displacement:\n" +
-          "$\\text{Displacement} = \\frac{4}{3} \\text{ m}$\n\n" +
-          "Actually, I need to recalculate. Given the original statement asks for displacement and expects negative, let me reconsider the bounds or function.\n\n" +
-          "For this answer key, I'll use: **\\( -\\frac{8}{3} \\approx -2.67 \\) m**"
+        points: 2.5,
+        explanation: "**Displacement Calculation using U-Substitution:**\n\n" +
+          "**Step 1:** Check if \\( v(t) \\) changes sign on \\([0, 7]\\)\n" +
+          "- \\( t \\geq 0 \\) on \\([0, 7]\\)\n" +
+          "- \\( \\sqrt{100 - t^2} \\) is real and positive when \\( t \\leq 10 \\)\n" +
+          "- Since \\( 7 < 10 \\), \\( v(t) \\geq 0 \\) throughout \\([0, 7]\\)\n\n" +
+          "Therefore: **Displacement = Total Distance**\n\n" +
+          "**Step 2:** Set up integral\n" +
+          "$\\text{Displacement} = \\int_{0}^{7} t\\sqrt{100 - t^2}\\,dt$\n\n" +
+          "**Step 3:** Use u-substitution\n" +
+          "Let \\( u = 100 - t^2 \\)\n" +
+          "$du = -2t\\,dt \\implies t\\,dt = -\\frac{1}{2}du$\n\n" +
+          "**Step 4:** Change limits\n" +
+          "- When \\( t = 0 \\): \\( u = 100 \\)\n" +
+          "- When \\( t = 7 \\): \\( u = 100 - 49 = 51 \\)\n\n" +
+          "**Step 5:** Substitute and integrate\n" +
+          "$\\int_{100}^{51} \\sqrt{u}\\left(-\\frac{1}{2}\\right)du = \\frac{1}{2}\\int_{51}^{100} u^{1/2}\\,du$\n\n" +
+          "$= \\frac{1}{2} \\cdot \\frac{2}{3}[u^{3/2}]_{51}^{100} = \\frac{1}{3}[u\\sqrt{u}]_{51}^{100}$\n\n" +
+          "$= \\frac{1}{3}[100\\sqrt{100} - 51\\sqrt{51}]$\n\n" +
+          "$= \\frac{1}{3}[1000 - 51\\sqrt{51}]$\n\n" +
+          "**Exact answer:** \\( \\frac{1000 - 51\\sqrt{51}}{3} \\) meters\n\n" +
+          "**Approximate:** \\( \\sqrt{51} \\approx 7.1414 \\)\n" +
+          "$\\approx \\frac{1000 - 364.21}{3} \\approx 211.93 \\text{ m}$\n\n" +
+          "**Answer: 211.93 m** (or exact form)"
       },
       
+      // Question C2.2: Total Distance (same as displacement)
       {
-        id: "exam1_q26",
-        sectionId: "section_3",
-        questionNumber: 26,
-        type: "open-ended",
-        text: "The temperature of a room increases at a rate of \\( T'(t) = 0.5t \\) °C/hour. If the initial temperature is 20°C, what is the temperature after 4 hours?",
-        correctAnswers: [
-          "24",
-          "24.0",
-          "24°C",
-          "24 °C"
-        ],
-        options: {
-          allowSymbolic: false,
-          tolerance: 0.1,
-          acceptedUnits: ["°C", "C"],
-          requiredUnit: null
-        },
-        points: 5,
-        explanation: "**Net Change in Temperature:**\n\n" +
-          "$\\Delta T = \\int_{0}^{4} 0.5t \\, dt = \\left[ 0.25t^2 \\right]_0^4$\n\n" +
-          "$= 0.25(16) = 4 \\text{°C}$\n\n" +
-          "**Final Temperature:**\n" +
-          "$T(4) = 20 + 4 = 24\\text{°C}$\n\n" +
-          "**Answer: 24°C**"
-      },
-      
-      {
-        id: "exam1_q27",
-        sectionId: "section_3",
-        questionNumber: 27,
+        id: "exam1_q15",
+        sectionId: "section_C",
+        questionNumber: 15,
         type: "multiple-choice",
-        text: "A population grows at a rate of \\( P'(t) = 100e^{0.02t} \\) people/year. What does \\( \\int_{0}^{10} P'(t) \\, dt \\) represent?",
+        text: "**Question 14 continued:** What is the relationship between Displacement and Total Distance for this particle?",
         options: [
-          "A. The population at \\( t = 10 \\) years",
-          "B. The average population over 10 years",
-          "C. The change in population over 10 years",
-          "D. The growth rate at \\( t = 10 \\) years"
+          "A. Total Distance > Displacement (particle changed direction)",
+          "B. Total Distance = Displacement (particle never changed direction)",
+          "C. Total Distance < Displacement (not physically possible)",
+          "D. Cannot be determined without more information"
         ],
-        correctAnswers: ["C"],
-        points: 2,
-        explanation: "**Net Change Theorem Applied:**\n\n" +
-          "$\\int_{0}^{10} P'(t) \\, dt = P(10) - P(0)$\n\n" +
-          "This is the **change in population** over the interval \\([0, 10]\\).\n\n" +
-          "**Answer: C**"
-      },
-      
-      {
-        id: "exam1_q28",
-        sectionId: "section_3",
-        questionNumber: 28,
-        type: "open-ended",
-        text: "A particle's acceleration is \\( a(t) = 6t \\) m/s². If its initial velocity is \\( v(0) = 2 \\) m/s, find its velocity at \\( t = 3 \\) seconds.",
-        correctAnswers: [
-          "29",
-          "29.0",
-          "29 m/s",
-          "29m/s"
-        ],
-        options: {
-          allowSymbolic: false,
-          tolerance: 0.1,
-          acceptedUnits: ["m/s"],
-          requiredUnit: null
-        },
-        points: 5,
-        explanation: "**Change in Velocity:**\n\n" +
-          "$\\Delta v = \\int_{0}^{3} a(t) \\, dt = \\int_{0}^{3} 6t \\, dt$\n\n" +
-          "$= [3t^2]_0^3 = 27$\n\n" +
-          "**Final Velocity:**\n" +
-          "$v(3) = v(0) + \\Delta v = 2 + 27 = 29 \\text{ m/s}$\n\n" +
-          "**Answer: 29 m/s**"
-      },
-      
-      {
-        id: "exam1_q29",
-        sectionId: "section_3",
-        questionNumber: 29,
-        type: "open-ended",
-        text: "The rate of oil consumption is \\( R(t) = 100 + 10t \\) barrels/day. How many barrels are consumed from day 0 to day 30?",
-        correctAnswers: [
-          "7500",
-          "7500.0",
-          "7500 barrels"
-        ],
-        options: {
-          allowSymbolic: false,
-          tolerance: 1,
-          acceptedUnits: ["barrels"],
-          requiredUnit: null
-        },
-        points: 5,
-        explanation: "**Total Consumption:**\n\n" +
-          "$\\int_{0}^{30} (100 + 10t) \\, dt = [100t + 5t^2]_0^{30}$\n\n" +
-          "$= 3000 + 5(900) = 3000 + 4500 = 7500 \\text{ barrels}$\n\n" +
-          "**Answer: 7500 barrels**"
-      },
-      
-      {
-        id: "exam2_q30",
-        sectionId: "section_3",
-        questionNumber: 30,
-        type: "open-ended",
-        text: "Find the average value of \\( f(x) = x^2 \\) on the interval \\([0, 3]\\).",
-        correctAnswers: [
-          "3",
-          "3.0"
-        ],
-        options: {
-          allowSymbolic: false,
-          tolerance: 0.01,
-          acceptedUnits: [],
-          requiredUnit: null
-        },
-        points: 6,
-        explanation: "**Average Value Formula:**\n\n" +
-          "$f_{\\text{avg}} = \\frac{1}{b - a} \\int_{a}^{b} f(x) \\, dx$\n\n" +
-          "**Step 1:** Calculate integral\n" +
-          "$\\int_{0}^{3} x^2 \\, dx = \\left[ \\frac{x^3}{3} \\right]_0^3 = 9$\n\n" +
-          "**Step 2:** Divide by interval length\n" +
-          "$f_{\\text{avg}} = \\frac{1}{3 - 0} \\cdot 9 = \\frac{9}{3} = 3$\n\n" +
-          "**Answer: 3**"
+        correctAnswers: ["B"],
+        points: 2.5,
+        explanation: "**Analysis:**\n\n" +
+          "Since \\( v(t) = t\\sqrt{100 - t^2} \\geq 0 \\) for all \\( t \\in [0, 7] \\):\n\n" +
+          "- The particle **never changes direction** (velocity never becomes negative)\n" +
+          "- The particle moves continuously in one direction\n" +
+          "- Therefore: \\( |v(t)| = v(t) \\) throughout the interval\n\n" +
+          "**Mathematical relationship:**\n" +
+          "$\\text{Total Distance} = \\int_{0}^{7} |v(t)|\\,dt = \\int_{0}^{7} v(t)\\,dt = \\text{Displacement}$\n\n" +
+          "**Conclusion:**\n" +
+          "Total Distance = Displacement = \\( \\frac{1000 - 51\\sqrt{51}}{3} \\) m ≈ 211.93 m\n\n" +
+          "**Answer: B. Total Distance = Displacement (particle never changed direction)**"
       }
     ]
   },
