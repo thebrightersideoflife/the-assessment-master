@@ -2,7 +2,7 @@ export const exams = [
 {
     id: "ITMTB_EXAM1",
     moduleId: "ITMTB",
-    title: "ITMTB Midterm Exam: Calculus of Integration (Hardest Subset)",
+    title: "ITMTB Midterm Exam: Calculus of Integration (Hardest Subset)_By Mr Kwadwo Afrane-Okese_",
     description: "Week 1-3. Covers the most challenging problems from Riemann Sums, Advanced Integration Techniques (IBP, Partial Fractions), and Velocity Applications. Total Score: 100 Points.",
     timeLimit: 120,
     passingScore: 70,

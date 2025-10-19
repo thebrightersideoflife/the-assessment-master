@@ -487,7 +487,7 @@ const useExamManager = (exam) => {
   const handleExit = useCallback((onExit) => {
     const confirmExit = window.confirm(
       `⚠️ Are you sure you want to exit this exam?\n\n` +
-      'Your progress will be saved and you can continue later.'
+      'Your progress will be saved and you can continue later.\nBut the timer will not stop'
     );
     
     if (!confirmExit) return;

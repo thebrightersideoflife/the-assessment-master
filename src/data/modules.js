@@ -332,7 +332,7 @@ export const modules = [
       title: 'ITMTB Formula Sheet'
     },
     exams: [
-      { id: 'ITMTB_EXAM1', name: 'Midterm Exam (Week 1-3)', description: 'ITMTB Midterm Exam: Calculus of Integration (Hardest Subset)' },
+      { id: 'ITMTB_EXAM1', name: 'Midterm Exam (Week 1-3)', description: 'ITMTB Midterm Exam: Calculus of Integration (Hardest Subset)_By Mr Kwadwo Afrane-Okese_' },
       { id: 'ITMTB_EXAM2', name: 'Final Exam', description: 'Not yet set. Contact founder for more info.' },
       { id: 'ITMTB_EXAM3', name: 'Practice Exam', description: 'Untimed practice' }
     ],

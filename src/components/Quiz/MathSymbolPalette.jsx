@@ -8,7 +8,6 @@ const MathSymbolPalette = ({ onInsert }) => {
     { symbol: "√(", desc: "Square root" },
     { symbol: "≠", desc: "Not equal" },
     { symbol: "∞", desc: "Infinity" },
-    { symbol: "∑", desc: "Summation" },
     { symbol: "Δ", desc: "Delta (change)" },
     { symbol: "θ", desc: "Theta (angle)" },
     { symbol: "≈", desc: "Approximately equal" },
