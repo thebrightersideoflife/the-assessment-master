@@ -26,6 +26,12 @@ export const exams = [
         title: "Section C: Applications: Velocity & Distance (2 Questions, 10 Points)",
         description: "Application problems requiring the calculation of both Displacement and Total Distance Traveled. One problem involves sign change, and one involves u-substitution.",
         instructions: "Clearly distinguish between Distance and Displacement. Show the process of finding roots if necessary. Include appropriate units in your final answers.",
+      },
+      {
+        id: "section_D",
+        title: "Section D: Fundamental Theorem of Calculus, Part 1 (5 Questions, 50 Points)",
+        description: "Covers the differentiation of definite integrals with variable limits, requiring the Chain Rule and substitution.",
+        instructions: "Apply FTC Part 1 carefully. For integrals with both variable upper and lower limits, split the integral at a constant. Remember to use the Chain Rule when differentiating the limits of integration.",
       }
     ],
     
@@ -586,90 +592,170 @@ export const exams = [
           "**Conclusion:**\n" +
           "Total Distance = Displacement = \\( \\frac{1000 - 51\\sqrt{51}}{3} \\) m ≈ 211.93 m\n\n" +
           "**Answer: B. Total Distance = Displacement (particle never changed direction)**"
+      },
+      
+      // ============================================================
+      // SECTION D: FUNDAMENTAL THEOREM OF CALCULUS, PART 1 (Q16-Q20)
+      // ============================================================
+      
+      // Question D1
+      {
+        id: "exam1_q16",
+        sectionId: "section_D",
+        questionNumber: 16,
+        type: "multiple-choice",
+        text: "Find the derivative: \\( F(x) = \\int_{\\ln(2x^2-7x+3)}^{\\sin(x^4)} \\cos(t)\\,dt \\).",
+        options: [
+          "A. \\( 4x^3\\cos(x^4)\\cos(\\sin(x^4)) - \\frac{4x-7}{2x^2-7x+3}\\cos(\\ln(2x^2-7x+3)) \\)",
+          "B. \\( \\cos(\\sin(x^4)) - \\cos(\\ln(2x^2-7x+3)) \\)",
+          "C. \\( 4x^3\\cos(\\sin(x^4)) - (4x-7)\\cos(\\ln(2x^2-7x+3)) \\)",
+          "D. \\( \\sin(\\sin(x^4)) - \\sin(\\ln(2x^2-7x+3)) \\)"
+        ],
+        correctAnswers: ["A"],
+        points: 10,
+        explanation: "**FTC1 with Variable Limits on Both Bounds:**\n\n" +
+          "When both limits are variable, split the integral at a constant (e.g., 0).\n\n" +
+          "**Step 1:** Split the integral\n" +
+          "$F(x) = \\int_{\\ln(2x^2-7x+3)}^{0} \\cos(t)\\,dt + \\int_{0}^{\\sin(x^4)} \\cos(t)\\,dt$\n" +
+          "$= -\\int_{0}^{\\ln(2x^2-7x+3)} \\cos(t)\\,dt + \\int_{0}^{\\sin(x^4)} \\cos(t)\\,dt$\n\n" +
+          "**Step 2:** Apply FTC1 and Chain Rule\n\n" +
+          "For \\( G(x) = \\int_a^{g(x)} f(t)\\,dt \\): \\( G'(x) = f(g(x)) \\cdot g'(x) \\)\n\n" +
+          "$F'(x) = -\\cos(\\ln(2x^2-7x+3)) \\cdot \\frac{d}{dx}[\\ln(2x^2-7x+3)]$\n" +
+          "$\\quad + \\cos(\\sin(x^4)) \\cdot \\frac{d}{dx}[\\sin(x^4)]$\n\n" +
+          "**Step 3:** Calculate derivatives of limits\n" +
+          "$\\frac{d}{dx}[\\ln(2x^2-7x+3)] = \\frac{4x-7}{2x^2-7x+3}$\n\n" +
+          "$\\frac{d}{dx}[\\sin(x^4)] = \\cos(x^4) \\cdot 4x^3 = 4x^3\\cos(x^4)$\n\n" +
+          "**Step 4:** Combine\n" +
+          "$F'(x) = -\\cos(\\ln(2x^2-7x+3)) \\cdot \\frac{4x-7}{2x^2-7x+3}$\n" +
+          "$\\quad + \\cos(\\sin(x^4)) \\cdot 4x^3\\cos(x^4)$\n\n" +
+          "$= 4x^3\\cos(x^4)\\cos(\\sin(x^4)) - \\frac{4x-7}{2x^2-7x+3}\\cos(\\ln(2x^2-7x+3))$\n\n" +
+          "**Answer: A**"
+      },
+      
+      // Question D2
+      {
+        id: "exam1_q17",
+        sectionId: "section_D",
+        questionNumber: 17,
+        type: "multiple-choice",
+        text: "Find the derivative: \\( F(x) = \\int_{x^4-7x}^{\\cos^2 x} \\frac{1}{t}\\,dt \\).",
+        options: [
+          "A. \\( \\frac{7-4x^3}{x^4-7x} - 2\\tan x \\)",
+          "B. \\( \\frac{4x^3-7}{x^4-7x} + 2\\tan x \\)",
+          "C. \\( \\frac{1}{\\cos^2 x} - \\frac{1}{x^4-7x} \\)",
+          "D. \\( \\frac{7-4x^3}{x^4-7x} + 2\\tan x \\)"
+        ],
+        correctAnswers: ["A"],
+        points: 10,
+        explanation: "**FTC1 with Variable Limits on Both Bounds:**\n\n" +
+          "**Step 1:** Split the integral at 0\n" +
+          "$F(x) = -\\int_{0}^{x^4-7x} \\frac{1}{t}\\,dt + \\int_{0}^{\\cos^2 x} \\frac{1}{t}\\,dt$\n\n" +
+          "**Step 2:** Apply FTC1 and Chain Rule\n" +
+          "$F'(x) = -\\frac{1}{x^4-7x} \\cdot \\frac{d}{dx}(x^4-7x) + \\frac{1}{\\cos^2 x} \\cdot \\frac{d}{dx}(\\cos^2 x)$\n\n" +
+          "**Step 3:** Calculate derivatives of limits\n" +
+          "$\\frac{d}{dx}(x^4-7x) = 4x^3 - 7$\n\n" +
+          "$\\frac{d}{dx}(\\cos^2 x) = 2\\cos x \\cdot (-\\sin x) = -2\\sin x\\cos x = -\\sin(2x)$\n\n" +
+          "**Step 4:** Substitute\n" +
+          "$F'(x) = -\\frac{1}{x^4-7x}(4x^3-7) + \\frac{1}{\\cos^2 x}(-2\\sin x\\cos x)$\n\n" +
+          "$= -\\frac{4x^3-7}{x^4-7x} - \\frac{2\\sin x}{\\cos x}$\n\n" +
+          "$= \\frac{7-4x^3}{x^4-7x} - 2\\tan x$\n\n" +
+          "**Answer: A. \\( \\frac{7-4x^3}{x^4-7x} - 2\\tan x \\)**"
+      },
+      
+      // Question D3
+      {
+        id: "exam1_q18",
+        sectionId: "section_D",
+        questionNumber: 18,
+        type: "multiple-choice",
+        text: "Find the derivative: \\( F(x) = \\int_{\\ln 3}^{e^{x^2+2x}} \\ln t\\,dt \\).",
+        options: [
+          "A. \\( (x^2+2x)e^{x^2+2x} \\)",
+          "B. \\( 2x(x+2)(x+1)e^{x^2+2x} \\)",
+          "C. \\( (2x+2)e^{x^2+2x} \\)",
+          "D. \\( (x^2+2x)(2x+2) \\)"
+        ],
+        correctAnswers: ["B"],
+        points: 10,
+        explanation: "**FTC1 with Constant Lower Limit:**\n\n" +
+          "**Step 1:** Apply FTC1 and Chain Rule\n\n" +
+          "For \\( F(x) = \\int_a^{g(x)} f(t)\\,dt \\): \\( F'(x) = f(g(x)) \\cdot g'(x) \\)\n\n" +
+          "The constant lower limit \\( \\ln 3 \\) differentiates to 0.\n\n" +
+          "$F'(x) = \\ln(e^{x^2+2x}) \\cdot \\frac{d}{dx}(e^{x^2+2x})$\n\n" +
+          "**Step 2:** Simplify \\( f(g(x)) \\)\n" +
+          "$\\ln(e^{x^2+2x}) = x^2+2x$\n\n" +
+          "**Step 3:** Calculate \\( g'(x) \\)\n" +
+          "$\\frac{d}{dx}(e^{x^2+2x}) = e^{x^2+2x} \\cdot (2x+2)$\n\n" +
+          "**Step 4:** Combine\n" +
+          "$F'(x) = (x^2+2x) \\cdot e^{x^2+2x} \\cdot (2x+2)$\n\n" +
+          "**Step 5:** Factor\n" +
+          "$= x(x+2) \\cdot e^{x^2+2x} \\cdot 2(x+1)$\n" +
+          "$= 2x(x+2)(x+1)e^{x^2+2x}$\n\n" +
+          "**Answer: B. \\( 2x(x+2)(x+1)e^{x^2+2x} \\)**"
+      },
+      
+      // Question D4
+      {
+        id: "exam1_q19",
+        sectionId: "section_D",
+        questionNumber: 19,
+        type: "multiple-choice",
+        text: "Find the derivative: \\( F(x) = \\int_{x}^{\\ln x} \\sqrt{e^{3t} + \\sin t}\\,dt \\).",
+        options: [
+          "A. \\( \\sqrt{x^3 + \\sin(\\ln x)} - \\sqrt{e^{3x} + \\sin x} \\)",
+          "B. \\( \\frac{1}{x}\\sqrt{x^3 + \\sin(\\ln x)} - \\sqrt{e^{3x} + \\sin x} \\)",
+          "C. \\( \\sqrt{e^{3\\ln x} + \\sin(\\ln x)} - \\sqrt{e^{3x} + \\sin x} \\)",
+          "D. \\( \\frac{1}{x}\\sqrt{e^{3\\ln x} + \\sin x} - \\sqrt{e^{3x} + \\sin x} \\)"
+        ],
+        correctAnswers: ["B"],
+        points: 10,
+        explanation: "**FTC1 with Variable Limits on Both Bounds:**\n\n" +
+          "**Step 1:** Split the integral at 0\n" +
+          "$F(x) = -\\int_{0}^{x} \\sqrt{e^{3t} + \\sin t}\\,dt + \\int_{0}^{\\ln x} \\sqrt{e^{3t} + \\sin t}\\,dt$\n\n" +
+          "**Step 2:** Apply FTC1 and Chain Rule\n\n" +
+          "First term (upper limit \\( x \\)):\n" +
+          "$\\frac{d}{dx}(x) = 1$\n\n" +
+          "Second term (upper limit \\( \\ln x \\)):\n" +
+          "$\\frac{d}{dx}(\\ln x) = \\frac{1}{x}$\n\n" +
+          "$F'(x) = -\\sqrt{e^{3x} + \\sin x} \\cdot 1 + \\sqrt{e^{3(\\ln x)} + \\sin(\\ln x)} \\cdot \\frac{1}{x}$\n\n" +
+          "**Step 3:** Simplify \\( e^{3\\ln x} \\)\n" +
+          "$e^{3\\ln x} = e^{\\ln(x^3)} = x^3$\n\n" +
+          "**Step 4:** Final answer\n" +
+          "$F'(x) = \\frac{1}{x}\\sqrt{x^3 + \\sin(\\ln x)} - \\sqrt{e^{3x} + \\sin x}$\n\n" +
+          "**Answer: B. \\( \\frac{1}{x}\\sqrt{x^3 + \\sin(\\ln x)} - \\sqrt{e^{3x} + \\sin x} \\)**"
+      },
+      
+      // Question D5
+      {
+        id: "exam1_q20",
+        sectionId: "section_D",
+        questionNumber: 20,
+        type: "multiple-choice",
+        text: "Find the derivative: \\( F(x) = \\cos\\left(\\int_{1}^{x} 2t^2 e^{t^3}\\,dt\\right) \\).",
+        options: [
+          "A. \\( -2x^2 e^{x^3}\\sin\\left(\\int_{1}^{x} 2t^2 e^{t^3}\\,dt\\right) \\)",
+          "B. \\( 2x^2 e^{x^3}\\cos\\left(\\int_{1}^{x} 2t^2 e^{t^3}\\,dt\\right) \\)",
+          "C. \\( -\\sin\\left(\\int_{1}^{x} 2t^2 e^{t^3}\\,dt\\right) \\)",
+          "D. \\( -2x^2 e^{x^3} \\)"
+        ],
+        correctAnswers: ["A"],
+        points: 10,
+        explanation: "**Chain Rule on Outer Function:**\n\n" +
+          "The integral is the **argument** of the cosine function.\n\n" +
+          "**Step 1:** Let \\( G(x) = \\int_{1}^{x} 2t^2 e^{t^3}\\,dt \\)\n\n" +
+          "Then \\( F(x) = \\cos(G(x)) \\)\n\n" +
+          "**Step 2:** Apply outer Chain Rule\n" +
+          "$F'(x) = \\frac{d}{dx}[\\cos(G(x))] = -\\sin(G(x)) \\cdot G'(x)$\n\n" +
+          "**Step 3:** Find \\( G'(x) \\) using FTC1\n\n" +
+          "Upper limit is \\( x \\), lower limit is constant (1):\n" +
+          "$G'(x) = 2x^2 e^{x^3} \\cdot \\frac{d}{dx}(x) = 2x^2 e^{x^3}$\n\n" +
+          "**Step 4:** Substitute back\n" +
+          "$F'(x) = -\\sin(G(x)) \\cdot 2x^2 e^{x^3}$\n\n" +
+          "$= -2x^2 e^{x^3}\\sin\\left(\\int_{1}^{x} 2t^2 e^{t^3}\\,dt\\right)$\n\n" +
+          "**Answer: A. \\( -2x^2 e^{x^3}\\sin\\left(\\int_{1}^{x} 2t^2 e^{t^3}\\,dt\\right) \\)**"
       }
     ]
-  },
-
-  //************************************************************************************************************************** */
-
-{
-    id: "ITMTB_EXAM2",
-    moduleId: "ITMTB",
-    title: "ITMTB Final Exam",
-    description: "Not yet set",
-    timeLimit: 1, // minutes (optional, set to null for no limit)
-    passingScore: 70, // percentage
-    
-    // Sections organize the exam
-    sections: [
-      {
-        id: "section_1",
-        title: "Section A: Not yet set",
-        description: "Coming soon...",
-        instructions: "Contact the founder for more info.",
-      },
-    ],
-    
-        questions: [
-      {
-        id: "exam2_q1",
-        sectionId: "section_1",
-        questionNumber: 1,
-        type: "multiple-choice",
-        text: "Coming soon...",
-        options: [
-          "Coming soon...",
-        ],
-        correctAnswers: ["B"],
-        points: 2,
-        explanation: "The definite integral represents the **signed area** between the curve and the x-axis:\n\n" +
-          "- Area **above** the x-axis is positive\n" +
-          "- Area **below** the x-axis is negative\n\n" +
-          "$$\\int_{a}^{b} f(x) \\, dx = \\text{(Signed Area)}$$\n\n" +
-          "**Answer: B**"
-      },
-    ]
-  },
-
-  {
-    id: "ITMTB_EXAM3",
-    moduleId: "ITMTB",
-    title: "ITMTB Practice Questions (Unlimited)",
-    description: "Not yet set",
-    timeLimit: 1, // minutes (optional, set to null for no limit)
-    passingScore: 70, // percentage
-    
-    // Sections organize the exam
-    sections: [
-      {
-        id: "section_1",
-        title: "Section A: Not yet set",
-        description: "Coming soon...",
-        instructions: "Contact the founder for more info.",
-      },
-    ],
-    
-        questions: [
-      {
-        id: "exam3_q1",
-        sectionId: "section_1",
-        questionNumber: 1,
-        type: "multiple-choice",
-        text: "Coming soon...",
-        options: [
-          "Coming soon...",
-        ],
-        correctAnswers: ["B"],
-        points: 2,
-        explanation: "The definite integral represents the **signed area** between the curve and the x-axis:\n\n" +
-          "- Area **above** the x-axis is positive\n" +
-          "- Area **below** the x-axis is negative\n\n" +
-          "$$\\int_{a}^{b} f(x) \\, dx = \\text{(Signed Area)}$$\n\n" +
-          "**Answer: B**"
-      },
-    ]
   }
-
 ];
 
 // Export utility functions for working with exams

@@ -151,7 +151,7 @@ const ExamActiveScreen = ({
         </button>
         <button
           onClick={() => {
-            if (window.confirm('⚠️ Are you sure you want to exit? Your progress will be saved.')) {
+            if (window.confirm('⚠️ Are you sure you want to exit? Your progress will be saved.\nBut the timer will not stop')) {
               window.location.href = `/modules/${exam.moduleId}`;
             }
           }}
