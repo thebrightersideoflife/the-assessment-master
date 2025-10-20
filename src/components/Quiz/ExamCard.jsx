@@ -22,15 +22,24 @@ const ExamCard = ({ exam }) => {
             <p className="text-sm text-gray-600">
               {exam.description}
             </p>
+
+            {/* 👇 Added Lecturer Credit */}
+            {exam.examBy && (
+              <p className="text-xs text-gray-500 mt-1 italic">
+                <span className="font-medium text-gray-700">Exam by:</span> {exam.examBy}
+              </p>
+            )}
           </div>
         </div>
         
         {isSubmitted && (
-          <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
-            results?.passed
-              ? 'bg-green-100 text-green-700'
-              : 'bg-orange-100 text-orange-700'
-          }`}>
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-semibold ${
+              results?.passed
+                ? 'bg-green-100 text-green-700'
+                : 'bg-orange-100 text-orange-700'
+            }`}
+          >
             {results?.passed ? '✓ Passed' : 'Review'}
           </span>
         )}
@@ -41,9 +50,11 @@ const ExamCard = ({ exam }) => {
         <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4">
           <div className="flex justify-between items-center mb-2">
             <span className="text-sm text-gray-600">Your Score:</span>
-            <span className={`text-2xl font-bold ${
-              results.passed ? 'text-[#28B463]' : 'text-[#E67E22]'
-            }`}>
+            <span
+              className={`text-2xl font-bold ${
+                results.passed ? 'text-[#28B463]' : 'text-[#E67E22]'
+              }`}
+            >
               {results.percentage}%
             </span>
           </div>

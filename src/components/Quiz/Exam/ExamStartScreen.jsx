@@ -38,6 +38,18 @@ const ExamStartScreen = ({ exam, questions, attemptNumber, handleStart }) => {
               <span className="mr-2">•</span>
               <span><strong>Title:</strong> {exam.title}</span>
             </li>
+
+            {/* 👇 Added Exam By (Lecturer Credit) */}
+            {exam.examBy && (
+              <li className="flex items-start">
+                <span className="mr-2">•</span>
+                <span>
+                  <strong>Exam by:</strong>{' '}
+                  <span className="italic text-gray-600">{exam.examBy}</span>
+                </span>
+              </li>
+            )}
+
             <li className="flex items-start">
               <span className="mr-2">•</span>
               <span><strong>Total Questions:</strong> {questions.length}</span>

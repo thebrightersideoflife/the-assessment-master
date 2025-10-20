@@ -90,6 +90,13 @@ const Exam = () => {
             {exam.title}
           </h1>
           <p className="text-lg text-gray-600">{exam.description}</p>
+
+          {/* 👇 Added Lecturer Credit */}
+          {exam.examBy && (
+            <p className="text-sm text-gray-500 italic mt-1">
+              <span className="font-medium text-gray-700">Exam by:</span> {exam.examBy}
+            </p>
+          )}
         </div>
 
         {/* Exam Info Card */}

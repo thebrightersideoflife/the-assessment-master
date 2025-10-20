@@ -15,6 +15,8 @@ import ExamResultsScreen from "./ExamResultsScreen";
  * Orchestrator component that uses the useExamManager hook
  * and renders the appropriate screen based on the current mode.
  * 
+ * Supports lecturer credit via exam.examBy
+ * 
  * Modes:
  * - "start": Warning screen with attempt counter
  * - "exam": Active exam with questions and navigation
@@ -87,14 +89,23 @@ const ExamManagerCore = ({ exam, onExit }) => {
       )}
 
       {examState.mode === "results" && (
-        <ExamResultsScreen
-          exam={examState.exam}
-          questions={examState.questions}
-          userAnswers={examState.userAnswers}
-          score={examState.score}
-          attemptNumber={examState.attemptNumber}
-          handleReset={examState.handleReset}
-        />
+        <>
+          <ExamResultsScreen
+            exam={examState.exam}
+            questions={examState.questions}
+            userAnswers={examState.userAnswers}
+            score={examState.score}
+            attemptNumber={examState.attemptNumber}
+            handleReset={examState.handleReset}
+          />
+          
+          {/* 👇 Optional: Display credit under results */}
+          {examState.exam?.examBy && (
+            <div className="text-center mt-6 text-sm text-gray-500 italic">
+              Exam created by {examState.exam.examBy}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

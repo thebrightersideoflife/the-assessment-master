@@ -48,6 +48,7 @@ const ResultsSummary = ({
           </div>
           <div className="mt-3 text-sm text-gray-500">
             <p><strong>Exam:</strong> {exam.title}</p>
+            <p><strong>Exam By:</strong> {exam.examBy}</p>
             <p><strong>Date:</strong> {new Date().toLocaleString()}</p>
             <p><strong>Attempt:</strong> #{attemptNumber || 1}</p>
           </div>
