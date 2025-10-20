@@ -1,9 +1,9 @@
-// src/components/Quiz/Exam/ExamResultsScreen.jsx
 import React, { useState } from 'react';
 import ResultsSummary from './ResultsSummary';
 import StudentDetailsForm from './StudentDetailsForm';
 import ExamQuestion from '../ExamQuestion';
 import ExamExplanation from '../ExamExplanation';
+import { AnswerValidator } from '../../../utils/answerValidator';
 
 /**
  * ExamResultsScreen
@@ -14,6 +14,8 @@ import ExamExplanation from '../ExamExplanation';
  * - Detailed question review with explanations
  * - Student details form
  * - Print/Reset/Back buttons
+ * 
+ * ✅ FIXED: Now uses AnswerValidator for consistent validation
  */
 const ExamResultsScreen = ({
   exam,
@@ -122,9 +124,15 @@ const ExamResultsScreen = ({
                     </h4>
                     {sectionQs.map((question) => {
                       const userAnswer = userAnswers[question.id] || "";
-                      const isCorrect = Array.isArray(question.correctAnswers)
-                        ? question.correctAnswers.includes(userAnswer)
-                        : question.correctAnswers === userAnswer;
+                      
+                      // ✅ CRITICAL FIX: Use AnswerValidator for consistent validation
+                      // This ensures visual correctness matches the percentage calculation
+                      const validationResult = AnswerValidator.validate(
+                        userAnswer,
+                        question.correctAnswers,
+                        question.options || {}
+                      );
+                      const isCorrect = validationResult?.equivalent === true;
 
                       return (
                         <div key={question.id} className="mb-6 avoid-break">
@@ -161,9 +169,15 @@ const ExamResultsScreen = ({
               <div className="border border-gray-200 rounded-lg p-6">
                 {questions.map((question, index) => {
                   const userAnswer = userAnswers[question.id] || "";
-                  const isCorrect = Array.isArray(question.correctAnswers)
-                    ? question.correctAnswers.includes(userAnswer)
-                    : question.correctAnswers === userAnswer;
+                  
+                  // ✅ CRITICAL FIX: Use AnswerValidator for consistent validation
+                  // This ensures visual correctness matches the percentage calculation
+                  const validationResult = AnswerValidator.validate(
+                    userAnswer,
+                    question.correctAnswers,
+                    question.options || {}
+                  );
+                  const isCorrect = validationResult?.equivalent === true;
 
                   return (
                     <div key={question.id} className="mb-6">

@@ -1,10 +1,13 @@
-// src/components/Quiz/ExamExplanation.jsx
 import React from 'react';
 import TextRenderer from '../../utils/textRenderer';
 
 /**
  * ExamExplanation - Shows explanation with correctness indicator
  * Only used in the results view after exam submission
+ * 
+ * ✅ NOTE: This component receives `isCorrect` from parent component.
+ * The parent (ExamResultsScreen) now uses AnswerValidator for validation,
+ * ensuring consistency across the entire results display.
  */
 const ExamExplanation = ({ question, userAnswer, isCorrect }) => {
   return (
@@ -28,8 +31,16 @@ const ExamExplanation = ({ question, userAnswer, isCorrect }) => {
         <div className="mb-3">
           <p className="text-sm font-semibold text-gray-700 mb-1">Correct Answer:</p>
           <p className="font-mono text-lg text-green-700">
-            {question.correctAnswers[0]}
+            {Array.isArray(question.correctAnswers) 
+              ? question.correctAnswers[0] 
+              : question.correctAnswers}
           </p>
+          {/* Show all accepted forms if multiple */}
+          {Array.isArray(question.correctAnswers) && question.correctAnswers.length > 1 && (
+            <p className="text-xs text-gray-500 mt-1">
+              Other accepted forms: {question.correctAnswers.slice(1).join(', ')}
+            </p>
+          )}
         </div>
       )}
 

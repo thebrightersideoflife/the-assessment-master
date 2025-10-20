@@ -1,5 +1,5 @@
-// src/components/Quiz/Exam/ResultsSummary.jsx
 import React from 'react';
+import { AnswerValidator } from '../../../utils/answerValidator';
 
 /**
  * ResultsSummary
@@ -9,6 +9,8 @@ import React from 'react';
  * - Score percentage and pass/fail status
  * - Points breakdown
  * - Section-wise performance
+ * 
+ * ✅ FIXED: Now uses AnswerValidator for consistent validation
  */
 const ResultsSummary = ({
   exam,
@@ -93,9 +95,14 @@ const ResultsSummary = ({
 
             sectionQs.forEach(q => {
               const userAnswer = userAnswers[q.id] || "";
-              const isCorrect = Array.isArray(q.correctAnswers)
-                ? q.correctAnswers.includes(userAnswer)
-                : q.correctAnswers === userAnswer;
+              
+              // ✅ CRITICAL FIX: Use AnswerValidator for consistent validation
+              const validationResult = AnswerValidator.validate(
+                userAnswer,
+                q.correctAnswers,
+                q.options || {}
+              );
+              const isCorrect = validationResult?.equivalent === true;
               
               sectionTotal += q.points || 1;
               if (isCorrect) sectionCorrect += q.points || 1;

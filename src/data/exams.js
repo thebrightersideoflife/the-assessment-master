@@ -5,7 +5,7 @@ export const exams = [
     title: "ITMTB Midterm Exam: Calculus of Integration (Hardest Subset)",
     description: "Week 1-3. Covers the most challenging problems from Riemann Sums, Advanced Integration Techniques (IBP, Partial Fractions), and Velocity Applications. Total Score: 100 Points.",
     examBy: "Mr Kwadwo Afrane-Okese",
-    timeLimit: 120,
+    timeLimit: 150,
     passingScore: 70,
     
     sections: [
@@ -190,9 +190,9 @@ export const exams = [
         type: "open-ended",
         text: "Approximate the area for the function \\( f(x) = 4\\cos(2x) \\) over the interval \\( [\\frac{\\pi}{4}, \\frac{\\pi}{2}] \\) using the **Midpoint Riemann Sum** \\( (M_n) \\) with \\( n = 5 \\) rectangles.",
         correctAnswers: [
-          "-2.23",
-          "-2.2335",
-          "-2.234"
+          "-2.01",
+          "-2.008",
+          "-2.0082"
         ],
         options: {
           allowSymbolic: false,
@@ -203,25 +203,26 @@ export const exams = [
         points: 10,
         explanation: "**Midpoint Riemann Sum with \\( n = 5 \\):**\n\n" +
           "**Step 1:** Calculate width \\( \\Delta x \\)\n" +
-          "$$\\Delta x = \\frac{\\frac{\\pi}{2} - \\frac{\\pi}{4}}{5} = \\frac{\\frac{\\pi}{4}}{5} = \\frac{\\pi}{20} \\approx 0.1571$$\n\n" +
+          "$$\\Delta x = \\frac{\\frac{\\pi}{2} - \\frac{\\pi}{4}}{5} = \\frac{\\pi}{20} \\approx 0.1571$$\n\n" +
           "**Step 2:** Find midpoints \\( c_i = a + (i - \\frac{1}{2})\\Delta x \\)\n" +
-          "- \\( c_1 = \\frac{\\pi}{4} + \\frac{\\pi}{40} = \\frac{11\\pi}{40} \\approx 0.8639 \\)\n" +
+          "- \\( c_1 = \\frac{11\\pi}{40} \\approx 0.8639 \\)\n" +
           "- \\( c_2 = \\frac{13\\pi}{40} \\approx 1.0210 \\)\n" +
-          "- \\( c_3 = \\frac{3\\pi}{8} \\approx 1.1781 \\)\n" +
+          "- \\( c_3 = \\frac{15\\pi}{40} = \\frac{3\\pi}{8} \\approx 1.1781 \\)\n" +
           "- \\( c_4 = \\frac{17\\pi}{40} \\approx 1.3352 \\)\n" +
           "- \\( c_5 = \\frac{19\\pi}{40} \\approx 1.4923 \\)\n\n" +
           "**Step 3:** Calculate \\( f(c_i) = 4\\cos(2c_i) \\)\n" +
-          "- \\( f(c_1) = 4\\cos(\\frac{11\\pi}{20}) \\approx -1.0964 \\)\n" +
-          "- \\( f(c_2) = 4\\cos(\\frac{13\\pi}{20}) \\approx -2.5976 \\)\n" +
-          "- \\( f(c_3) = 4\\cos(\\frac{3\\pi}{4}) = 4(-\\frac{\\sqrt{2}}{2}) \\approx -2.8284 \\)\n" +
-          "- \\( f(c_4) = 4\\cos(\\frac{17\\pi}{20}) \\approx -3.7588 \\)\n" +
+          "- \\( f(c_1) = 4\\cos(\\frac{11\\pi}{20}) \\approx -0.6257 \\)\n" +
+          "- \\( f(c_2) = 4\\cos(\\frac{13\\pi}{20}) \\approx -1.8160 \\)\n" +
+          "- \\( f(c_3) = 4\\cos(\\frac{3\\pi}{4}) = -2.8284 \\)\n" +
+          "- \\( f(c_4) = 4\\cos(\\frac{17\\pi}{20}) \\approx -3.5640 \\)\n" +
           "- \\( f(c_5) = 4\\cos(\\frac{19\\pi}{20}) \\approx -3.9508 \\)\n\n" +
           "**Step 4:** Calculate \\( M_5 \\)\n" +
           "$$M_5 = \\frac{\\pi}{20}[f(c_1) + f(c_2) + f(c_3) + f(c_4) + f(c_5)]$$\n" +
-          "$$M_5 \\approx 0.1571[-1.0964 - 2.5976 - 2.8284 - 3.7588 - 3.9508]$$\n" +
-          "$$M_5 \\approx 0.1571 \\times (-14.232) \\approx -2.23$$\n\n" +
-          "**Answer: -2.23**"
+          "$$M_5 \\approx 0.1571[-0.6257 - 1.8160 - 2.8284 - 3.5640 - 3.9508]$$\n" +
+          "$$M_5 \\approx 0.1571 \\times (-12.7079) \\approx -2.01$$\n\n" +
+          "**Answer: -2.01**"
       },
+
       
       // Question A4
       {
