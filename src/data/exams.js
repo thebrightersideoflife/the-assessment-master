@@ -232,9 +232,9 @@ export const exams = [
         type: "open-ended",
         text: "Approximate the area for the function \\( f(x) = 1 - e^{-x} \\) over the interval \\( [0, 10] \\) using the **Left Riemann Sum** \\( (L_n) \\) with \\( n = 10 \\) rectangles.",
         correctAnswers: [
-          "7.42",
-          "7.4182",
-          "7.418"
+          "8.4180951148",
+          "8.4181",
+          "8.42"
         ],
         options: {
           allowSymbolic: false,
@@ -243,28 +243,45 @@ export const exams = [
           requiredUnit: null
         },
         points: 10,
-        explanation: "**Left Riemann Sum with \\( n = 10 \\):**\n\n" +
-          "**Step 1:** Calculate width \\( \\Delta x \\)\n" +
-          "$$\\Delta x = \\frac{10 - 0}{10} = 1$$\n\n" +
-          "**Step 2:** Left endpoints\n" +
-          "$$c_i = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9$$\n\n" +
-          "**Step 3:** Calculate \\( f(c_i) = 1 - e^{-c_i} \\)\n" +
-          "- \\( f(0) = 0 \\)\n" +
-          "- \\( f(1) \\approx 0.6321 \\)\n" +
-          "- \\( f(2) \\approx 0.8647 \\)\n" +
-          "- \\( f(3) \\approx 0.9502 \\)\n" +
-          "- \\( f(4) \\approx 0.9817 \\)\n" +
-          "- \\( f(5) \\approx 0.9933 \\)\n" +
-          "- \\( f(6) \\approx 0.9975 \\)\n" +
-          "- \\( f(7) \\approx 0.9991 \\)\n" +
-          "- \\( f(8) \\approx 0.9997 \\)\n" +
-          "- \\( f(9) \\approx 0.9999 \\)\n\n" +
-          "**Step 4:** Calculate \\( L_{10} \\)\n" +
-          "$$L_{10} = 1 \\times [0 + 0.6321 + 0.8647 + 0.9502 + 0.9817 + 0.9933 + 0.9975 + 0.9991 + 0.9997 + 0.9999]$$\n" +
-          "$$L_{10} = 7.4182 \\approx 7.42$$\n\n" +
-          "**Note:** Since \\( f(x) \\) is increasing, the left sum underestimates the true area.\n\n" +
-          "**Exact area:** \\( \\int_0^{10} (1-e^{-x})dx = 9 + e^{-10} \\approx 9.00 \\)\n\n" +
-          "**Answer: 7.42**"
+        explanation: "**Extensively elaborated solution — Left Riemann Sum with \\( n = 10 \\):**\n\n" +
+          "**Overview / strategy:** We partition the interval \\([0,10]\\) into \\(n=10\\) equal subintervals, use the left endpoint of each subinterval to evaluate \\(f(x)=1-e^{-x}\\), multiply each value by the width \\(\\Delta x\\), and sum. Since \\(f(x)\\) is increasing on \\([0,10]\\), the left Riemann sum will be an underestimate of the exact integral.\n\n" +
+          "**Step 1 — width of each rectangle:**\n\n" +
+          "$$\\Delta x = \\frac{10-0}{10} = 1.$$ \n\n" +
+          "**Step 2 — left endpoints (ten of them):**\n\n" +
+          "$$x_0=0,\\; x_1=1,\\; x_2=2,\\; x_3=3,\\; x_4=4,\\; x_5=5,\\; x_6=6,\\; x_7=7,\\; x_8=8,\\; x_9=9.$$ \n\n" +
+          "**Step 3 — evaluate \\(f(x_i)=1-e^{-x_i}\\) at left endpoints (more digits shown):**\n" +
+          "- \\(f(0)=1-e^{0}=0.0000000000\\)\n" +
+          "- \\(f(1)=1-e^{-1}\\approx 0.6321205588\\)\n" +
+          "- \\(f(2)=1-e^{-2}\\approx 0.8646647168\\)\n" +
+          "- \\(f(3)=1-e^{-3}\\approx 0.9502129316\\)\n" +
+          "- \\(f(4)=1-e^{-4}\\approx 0.9816843611\\)\n" +
+          "- \\(f(5)=1-e^{-5}\\approx 0.9932620530\\)\n" +
+          "- \\(f(6)=1-e^{-6}\\approx 0.9975212471\\)\n" +
+          "- \\(f(7)=1-e^{-7}\\approx 0.9990889488\\)\n" +
+          "- \\(f(8)=1-e^{-8}\\approx 0.9996645374\\)\n" +
+          "- \\(f(9)=1-e^{-9}\\approx 0.9998766054\\)\n\n" +
+          "These are the values we will sum and multiply by \\(\\Delta x=1\\).\n\n" +
+          "**Step 4 — compute the left Riemann sum directly:**\n\n" +
+          "$$L_{10} = \\sum_{i=0}^{9} f(x_i)\\Delta x = \\sum_{i=0}^{9}\\big(1-e^{-x_i}\\big) \\cdot 1 = \\sum_{i=0}^9 1 - \\sum_{i=0}^9 e^{-i}.$$ \n\n" +
+          "There are ten 1's, so the first sum is 10. The second sum is a geometric series:\n\n" +
+          "$$\\sum_{i=0}^{9} e^{-i} = 1 + e^{-1} + e^{-2} + \\cdots + e^{-9} = \\frac{1-e^{-10}}{1-e^{-1}}.$$ \n\n" +
+          "Hence an exact closed form is\n\n" +
+          "$$L_{10} = 10 - \\frac{1-e^{-10}}{1-e^{-1}}. $$\n\n" +
+          "**Step 5 — numerical evaluation (high precision):**\n\n" +
+          "Using the listed \\(f(x_i)\\) values, the sum\n\n" +
+          "$$S = \\sum_{i=0}^9 f(x_i) \\approx 0 + 0.6321205588 + 0.8646647168 + 0.9502129316 + 0.9816843611 + 0.9932620530 + 0.9975212471 + 0.9990889488 + 0.9996645374 + 0.9998766054 $$\n\n" +
+          "$$S \\approx 8.4180951148.$$ \n\n" +
+          "Multiplying by \\(\\Delta x=1\\) gives\n\n" +
+          "$$L_{10} \\approx 8.4180951148.$$ \n\n" +
+          "(Equivalently evaluating the closed form yields the same number.)\n\n" +
+          "**Step 6 — comparison with the exact integral and error comment:**\n\n" +
+          "The exact definite integral is\n\n" +
+          "$$\\int_0^{10} (1-e^{-x})\\,dx = \\big[x + e^{-x}\\big]_0^{10} = (10 + e^{-10}) - (0 + 1) = 9 + e^{-10} \\approx 9.0000453999.$$\n\n" +
+          "Because \\(f\\) is increasing on \\([0,10]\\), the left Riemann sum underestimates the true area. The numerical underestimate here is about\n\n" +
+          "$$\\text{error} = (9 + e^{-10}) - L_{10} \\approx 9.0000453999 - 8.4180951148 \\approx 0.5819502851.$$\n\n" +
+          "This error is expected and fairly sizable because the interval is long (length 10) and we used only 10 rectangles (each of width 1). Increasing \\(n\\) will reduce the error.\n\n" +
+          "**Final numeric answer (rounded as requested):**\n\n" +
+          "$$\\boxed{L_{10} \\approx 8.4180951148}\\quad(\\text{rounded }\\approx 8.4181\\text{ or }8.42).$$"
       },
       
       // ============================================================
