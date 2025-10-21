@@ -421,7 +421,7 @@ export const questions = [
     moduleId: "ITMTB",
     weekId: "ITMTB_W1",
     type: "open-ended",
-    text: "Use properties of integrals to evaluate \\( \\int_1^3 (2e^x + 1)\\,dx \\).",
+    text: "Use properties of integrals to evaluate \\( \\int_1^3 (2e^x + 1)\\,dx \\). Give your answer in terms of $\\mathbf{e}$",
     correctAnswers: ["2(e^3 - e) + 2", "2e^3 - 2e + 2", "2e³ - 2e + 2"],
     options: {
       allowSymbolic: true,
