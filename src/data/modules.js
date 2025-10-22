@@ -465,7 +465,7 @@ export const modules = [
             competency: "Assessment Coverage: 5.3",
             explanation: "The Fundamental Theorem of Calculus states that if $f$ is continuous on $[a, b]$ and $F$ is any antiderivative of $f$ (meaning $F'(x) = f(x)$), then $\\int_{a}^{b} f(x) \\, dx = F(b) - F(a)$. This provides a simple method for evaluating definite integrals without computing limits of Riemann sums, connecting the area problem directly to antiderivatives.",
             example: "If $v(t)$ is velocity and $s(t)$ is position (antiderivative of velocity), total distance traveled from $t=a$ to $t=b$ is $\\int_{a}^{b} v(t) \\, dt = s(b) - s(a)$. For water flowing into a tank at rate $r(t)$ with volume $V(t)$, change in volume from $t=3$ to $t=6$ is $\\int_{3}^{6} r(t) \\, dt = V(6) - V(3)$.",
-            studyTip: "Always verify $f(x)$ is continuous on $[a, b]$ before applying 5.3—discontinuities invalidate the theorem. Use three steps: (1) Find any antiderivative $F(x)$, (2) Evaluate $F(b)$ and $F(a)$, (3) Subtract using notation $F(x)]_{a}^{b}$. Master common antiderivatives with flashcards: $x^n$, $\\sin x$, $\\cos x$, $e^x$, $1/x$.",
+            studyTip: "Always verify $f(x)$ is continuous on $[a, b]$ before applying FTC1—discontinuities invalidate the theorem. Use three steps: (1) Find any antiderivative $F(x)$, (2) Evaluate $F(b)$ and $F(a)$, (3) Subtract using notation $F(x)]_{a}^{b}$. Master common antiderivatives with flashcards: $x^n$, $\\sin x$, $\\cos x$, $e^x$, $1/x$.",
             videoUrl: "https://youtu.be/rfG8ce4nNh0",
             quizId: "ITMTB_W2_Quiz"
           },
@@ -501,6 +501,9 @@ export const modules = [
           }
         ]
       },
+
+ //----------------------------------------------------------------------------------------------------------------------------------------
+
       {
         id: "ITMTB_W3",
         name: "Week 3",
@@ -512,109 +515,116 @@ export const modules = [
             name: "U-Substitution: The Complete Guide",
             competency: "Assessment Coverage: 6",
             explanation: "When to Use U-Substitution: Look for an integrand that fits one of these patterns: $\\mathbf{(1) A Composite Function:}$ $\\int f(g(x))g'(x)\\,dx$. $\\mathbf{(2) A Quotient}$: Where the numerator is the derivative of the denominator (e.g., $\\int \\frac{g'(x)}{g(x)}\\,dx$). In both cases, you let $\\mathbf{u} = g(x)$, which simplifies the entire integral into a basic power rule or logarithmic form.",
-            example: "For example: $\\lim_{x \\to 0^+} \\frac{1}{x} = +\\infty$, $\\lim_{x \\to 0^-} \\frac{1}{x} = -\\infty$. A two-sided limit requires both to match.",
+            example: "Example: $\\int 2x(x^2+1)^5\\,dx$. Let $u = x^2+1$, so $du = 2x\\,dx$. The integral becomes $\\int u^5\\,du = \\frac{u^6}{6} + C = \\frac{(x^2+1)^6}{6} + C$.",
             studyTip: "When identifying $u$, look for a function nested inside another or one whose derivative appears elsewhere in the integrand.",
             videoUrl: "https://www.youtube.com/watch?v=sdYdnpYn-1o&t=891s",
             quizId: "ITMTB_W3_Quiz"
           },
 
           {
-            id: "ITMTB_W3_T1",
+            id: "ITMTB_W3_T2",
             name: "U-Substitution Explained",
             competency: "Assessment Coverage: 6",
-            explanation: "When to Use U-Substitution: \n",
-            example: "",
-            studyTip: "",
+            explanation: "U-substitution is a change of variable method that simplifies an integral by replacing a complicated inner function with a single variable $u$. It reverses the chain rule from differentiation, turning complex expressions into standard integral forms.",
+            example: "Example: $\\int \\sin(3x)\\,dx$. Let $u = 3x$, then $du = 3\\,dx \\Rightarrow dx = \\frac{du}{3}$. Substitute to get $\\frac{1}{3}\\int \\sin(u)\\,du = -\\frac{1}{3}\\cos(u) + C = -\\frac{1}{3}\\cos(3x) + C$.",
+            studyTip: "Always change both $dx$ and $x$ terms into $u$ terms before integrating, then substitute back to $x$ at the end.",
             videoUrl: "https://www.youtube.com/watch?v=sci1pls4Lc8",
             quizId: "ITMTB_W3_Quiz"
           },
 
           {
-            id: "ITMTB_W3_T1",
+            id: "ITMTB_W3_T3",
             name: "Average Value of a Function on an Interval",
             competency: "Assessment Coverage: 6",
-            explanation: "",
-            example: "",
-            studyTip: "",
+            explanation: "The average value of a continuous function $f(x)$ over $[a,b]$ is the constant value that produces the same total area as $f(x)$ over that interval. It’s defined by $f_{avg} = \\frac{1}{b-a} \\int_a^b f(x)\\,dx$.",
+            example: "Example: Find the average value of $f(x) = x^2$ on $[0,2]$. $f_{avg} = \\frac{1}{2-0}\\int_0^2 x^2\\,dx = \\frac{1}{2}\\left[\\frac{x^3}{3}\\right]_0^2 = \\frac{1}{2}\\left(\\frac{8}{3}\\right) = \\frac{4}{3}$.",
+            studyTip: "Think of the average value as the ‘height’ of a rectangle with the same area under the curve on $[a,b]$. This helps visualize it as a balancing height.",
             videoUrl: "http://www.youtube.com/watch?v=K-H86pxiBlk",
             quizId: "ITMTB_W3_Quiz"
           },
+
           {
-            id: "ITMTB_W3_T1",
+            id: "ITMTB_W3_T4",
             name: "The Mean Value Theorem For Integrals: Average Value of a Function",
             competency: "Assessment Coverage: 6",
-            explanation: "",
-            example: "",
-            studyTip: "",
+            explanation: "The Mean Value Theorem for Integrals states that if $f$ is continuous on $[a,b]$, then there exists at least one $c$ in $(a,b)$ such that $f(c) = \\frac{1}{b-a}\\int_a^b f(x)\\,dx$. This means the function takes on its average value at some point in the interval.",
+            example: "Example: For $f(x) = x^2$ on $[0,3]$, $f_{avg} = \\frac{1}{3}\\int_0^3 x^2\\,dx = \\frac{1}{3}\\left[\\frac{x^3}{3}\\right]_0^3 = 3$. So $f(c) = 3 \\Rightarrow c^2 = 3 \\Rightarrow c = \\sqrt{3}$.",
+            studyTip: "Always check continuity before applying the theorem. The existence of $c$ depends on $f$ being continuous on the entire interval.",
             videoUrl: "http://www.youtube.com/watch?v=56-JCZIkDVU",
             quizId: "ITMTB_W3_Quiz"
           },
+
           {
-            id: "ITMTB_W3_T1",
+            id: "ITMTB_W3_T5",
             name: "Integration By Parts",
             competency: "Assessment Coverage: 6",
-            explanation: "",
-            example: "",
-            studyTip: "",
+            explanation: "Integration by Parts is based on the Product Rule for differentiation. It allows us to integrate products of functions using the formula $\\int u\\,dv = uv - \\int v\\,du$. Choose $u$ and $dv$ such that differentiating $u$ simplifies the expression.",
+            example: "Example: $\\int x e^x\\,dx$. Let $u = x$, $dv = e^x dx$. Then $du = dx$, $v = e^x$. Applying the formula: $\\int x e^x\\,dx = x e^x - \\int e^x\\,dx = e^x(x - 1) + C$.",
+            studyTip: "Use the LIATE rule to choose $u$: Logarithmic, Inverse trig, Algebraic, Trig, Exponential — in that order of preference.",
             videoUrl: "http://www.youtube.com/watch?v=sWSLLO3DS1I",
             quizId: "ITMTB_W3_Quiz"
           },
+
           {
-            id: "ITMTB_W3_T1",
+            id: "ITMTB_W3_T6",
             name: "Integration By Parts (continued)",
             competency: "Assessment Coverage: 6",
-            explanation: "",
-            example: "",
-            studyTip: "",
+            explanation: "When one application of Integration by Parts still leaves another product, you may need to apply it repeatedly or rearrange to solve for the original integral. This often happens with powers of $x$ and trigonometric or exponential functions.",
+            example: "Example: $\\int x^2 e^x\\,dx$. Let $u = x^2$, $dv = e^x dx$. Then $du = 2x\\,dx$, $v = e^x$. So $\\int x^2 e^x\\,dx = x^2 e^x - \\int 2x e^x\\,dx$. Apply integration by parts again on $\\int 2x e^x\\,dx$ to get the final answer $e^x(x^2 - 2x + 2) + C$.",
+            studyTip: "If your first integration by parts produces another product, don’t panic—just apply the formula again systematically until the integral simplifies.",
             videoUrl: "http://www.youtube.com/watch?v=zNU8iK8sGD0",
             quizId: "ITMTB_W3_Quiz"
           },
+
           {
-            id: "ITMTB_W3_T1",
+            id: "ITMTB_W3_T7",
             name: "Integration by parts, DI method.",
             competency: "Assessment Coverage: 6",
-            explanation: "",
-            example: "",
-            studyTip: "",
+            explanation: "The DI (Derivative–Integral) method is a shortcut for repeated Integration by Parts. List derivatives of one function (D column) and integrals of the other (I column), then multiply diagonally with alternating signs to find the result.",
+            example: "Example: $\\int x^2 e^x\\,dx$. D column: $x^2$, $2x$, $2$, $0$. I column: $e^x$, $e^x$, $e^x$. Multiply diagonally with alternating signs: $x^2 e^x - 2x e^x + 2e^x + C = e^x(x^2 - 2x + 2) + C$.",
+            studyTip: "Use DI tables when the derivative column eventually becomes zero — it’s faster and reduces errors compared to repeating the full formula.",
             videoUrl: "http://www.youtube.com/watch?v=2I-_SV8cwsw",
             quizId: "ITMTB_W3_Quiz"
           },
 
           {
-            id: "ITMTB_W3_T1",
+            id: "ITMTB_W3_T8",
             name: "Integration By Partial Fractions",
             competency: "Assessment Coverage: 6",
-            explanation: "",
-            example: "",
-            studyTip: "",
+            explanation: "Partial Fraction Decomposition breaks a rational function into simpler fractions that are easier to integrate. It applies when the numerator’s degree is less than the denominator’s. Each term corresponds to a simpler integral form (logarithmic or arctangent).",
+            example: "Example: $\\int \\frac{3x+5}{x^2 - x - 2}\\,dx$. Factor the denominator: $(x-2)(x+1)$. Write $\\frac{3x+5}{x^2 - x - 2} = \\frac{A}{x-2} + \\frac{B}{x+1}$. Solving gives $A=\\frac{11}{3}$, $B=-2$. Integrate each term to get $\\frac{11}{3}\\ln|x-2| - 2\\ln|x+1| + C$.",
+            studyTip: "Always factor the denominator completely before decomposing. Check the degree of the numerator — if it’s not smaller, perform polynomial long division first.",
             videoUrl: "http://www.youtube.com/watch?v=6rXByMcuAyI",
             quizId: "ITMTB_W3_Quiz"
           },
 
           {
-            id: "ITMTB_W3_T1",
+            id: "ITMTB_W3_T9",
             name: "Integration By Partial Fractions (Heaviside Cover-Up Method)",
             competency: "Assessment Coverage: 6",
-            explanation: "",
-            example: "",
-            studyTip: "",
+            explanation: "The Heaviside Cover-Up Method provides a quick way to find coefficients in partial fractions when the denominator factors into distinct linear terms. You 'cover up' each factor and substitute its root to find its corresponding coefficient.",
+            example: "Example: Decompose $\\frac{5x+3}{(x-1)(x+2)}$. Cover $(x-1)$: set $x=1$, giving $A = \\frac{5(1)+3}{1+2} = \\frac{8}{3}$. Cover $(x+2)$: set $x=-2$, giving $B = \\frac{5(-2)+3}{-2-1} = \\frac{-7}{-3} = \\frac{7}{3}$. So $\\frac{5x+3}{(x-1)(x+2)} = \\frac{8/3}{x-1} + \\frac{7/3}{x+2}$.",
+            studyTip: "This method only works for non-repeated linear factors — use algebraic methods for repeated or quadratic factors.",
             videoUrl: "http://www.youtube.com/watch?v=aF4o_c46VnI",
             quizId: "ITMTB_W3_Quiz"
           },
 
           {
-            id: "ITMTB_W3_T1",
+            id: "ITMTB_W3_T10",
             name: "Process of Setting Up and Solving Integrals Using Partial Fractions.",
             competency: "Assessment Coverage: 6",
-            explanation: "",
-            example: "",
-            studyTip: "",
+            explanation: "The general process: (1) Check if the numerator’s degree is less than the denominator’s. If not, perform long division. (2) Factor the denominator completely. (3) Decompose into partial fractions. (4) Solve for unknown constants. (5) Integrate each simpler term individually.",
+            example: "Example: $\\int \\frac{x^2 + 3x + 2}{x^3 - x}\\,dx = \\int \\frac{x^2 + 3x + 2}{x(x-1)(x+1)}\\,dx$. Decompose as $\\frac{A}{x} + \\frac{B}{x-1} + \\frac{C}{x+1}$. Solving gives $A=2$, $B=1$, $C=0$. Integrate to get $2\\ln|x| + \\ln|x-1| + C$.",
+            studyTip: "Write out each step carefully. The accuracy of your decomposition determines how easy your integration will be — errors in constants can cascade.",
             videoUrl: "http://www.youtube.com/watch?v=Mt92Ozs7aJg",
             quizId: "ITMTB_W3_Quiz"
-          },
+          }
 
         ]
       },
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+
       {
         id: "ITMTB_W4",
         name: "Week 4",
