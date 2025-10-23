@@ -628,9 +628,49 @@ export const modules = [
       {
         id: "ITMTB_W4",
         name: "Week 4",
-        title: "Applications of Integration: Areas Between Curves",
-        title: "Not Yet Assigned 🙂‍↔️",
-        topics: []
+        title: "Techniques and Applications of Integration",
+        topics: [
+          {
+            id: "ITMTB_W4_T1",
+            name: "Lesson 1: Area Between Curves",
+            competency: "Assessment Coverage: Lesson 1",
+            explanation: "This lesson covers how to find the area enclosed between two curves. The key idea is that area is the integral of the vertical (or horizontal) distance between the curves. If $y = f(x)$ lies above $y = g(x)$ over an interval $[a, b]$, then the area is given by $A = \\int_a^b [f(x) - g(x)]\\,dx$. When the region is better described by horizontal slices, we integrate with respect to $y$: $A = \\int_c^d [f(y) - g(y)]\\,dy$.",
+            example: "Example 1 (with respect to $x$): Find the area bounded by $y = x^2$ and $y = 2x$ between $x = 0$ and $x = 2$. Here, the upper curve is $y = 2x$ and the lower is $y = x^2$. Thus, \n\n$A = \\int_0^2 (2x - x^2)\\,dx = [x^2 - \\frac{x^3}{3}]_0^2 = 4 - \\frac{8}{3} = \\frac{4}{3}.$\n\nExample 2 (with respect to $y$): Find the area between $x = y^2$ and $x = y + 2$. Intersections occur when $y^2 = y + 2 \\Rightarrow y = -1, 2$. For $-1 \\le y \\le 2$, the right curve is $x = y + 2$, and the left curve is $x = y^2$. So \n\n$A = \\int_{-1}^2 [(y + 2) - y^2]\\,dy = [\\tfrac{1}{2}y^2 + 2y - \\tfrac{1}{3}y^3]_{-1}^2 = \\tfrac{9}{2}.$",
+            studyTip: "Always sketch the curves first to see which one is on top (or right). Find intersection points to determine limits of integration. Remember: area must be positive — if your integral gives a negative number, take the absolute value.",
+            videoUrl: "https://youtu.be/kgg5Rspf1Js",
+            quizId: "ITMTB_W4_Quiz"
+          },
+          {
+            id: "ITMTB_W4_T2",
+            name: "Lesson 2: Average Value of a Function",
+            competency: "Assessment Coverage: 6.5",
+            explanation: "The average value of a continuous function $f(x)$ on $[a, b]$ represents the constant value that would give the same area under the curve as $f(x)$ itself. It is defined as \n\n$f_{avg} = \\frac{1}{b - a} \\int_a^b f(x)\\,dx.$\n\nThe Mean Value Theorem for Integrals states that if $f$ is continuous on $[a, b]$, then there exists at least one $c \\in (a, b)$ such that $f(c) = f_{avg}$. In other words, somewhere on the interval, the function actually takes on its average value.",
+            example: "Example 1: Find the average value of $f(x) = 3x^2$ on $[0, 2]$.\n\n$f_{avg} = \\frac{1}{2 - 0} \\int_0^2 3x^2\\,dx = \\tfrac{1}{2}[x^3]_0^2 = \\tfrac{1}{2}(8) = 4.$\n\nExample 2 (Mean Value Theorem): For $f(x) = 3x^2$ on $[0, 2]$, we have $f_{avg} = 4$. Find $c$ such that $f(c) = 4 \\Rightarrow 3c^2 = 4 \\Rightarrow c = \\sqrt{\\tfrac{4}{3}} \\approx 1.155.$\n\nThus, at $x \\approx 1.155$, $f(x)$ equals its average value.\n\nExample: Find the average value of $f(x) = x^2$ on $[0,2]$. \n\n$f_{avg} = \\frac{1}{2-0}\\int_0^2 x^2\\,dx = \\frac{1}{2}\\left[\\frac{x^3}{3}\\right]_0^2 = \\frac{1}{2}\\left(\\frac{8}{3}\\right) = \\frac{4}{3}.$",
+            studyTip: "Think of $f_{avg}$ as the 'height' of a rectangle whose area equals the area under $f(x)$. For continuous functions, this average always exists and is guaranteed by the Mean Value Theorem for Integrals.",
+            videoUrl: "https://youtu.be/K-H86pxiBlk",
+            quizId: "ITMTB_W4_Quiz"
+          },
+          {
+            id: "ITMTB_W4_T3",
+            name: "Lesson 3: Integration by Parts",
+            competency: "Assessment Coverage: 7.1",
+            explanation: "Integration by parts is derived from the product rule for differentiation: $\\frac{d}{dx}(uv) = u\\frac{dv}{dx} + v\\frac{du}{dx}$. Integrating both sides gives the formula \n\n$\\int u\\,dv = uv - \\int v\\,du.$\n\nIt is used when the integrand is a product of two functions, one that becomes simpler upon differentiation and one that is easy to integrate.\n\nWhen applied to definite integrals, the formula becomes \n\n$\\int_a^b u\\,dv = [uv]_a^b - \\int_a^b v\\,du.$\n\nSometimes, integration by parts must be repeated or rearranged to solve for the original integral (cyclic cases).",
+            example: "Example 1: $\\int x e^x\\,dx$. Choose $u = x$ (so $du = dx$) and $dv = e^x\\,dx$ (so $v = e^x$). Then\n\n$\\int x e^x\\,dx = x e^x - \\int e^x\\,dx = e^x(x - 1) + C.$\n\nExample 2 (Definite Integral): $\\int_0^{\\pi/2} x\\sin x\\,dx$. Let $u = x$, $dv = \\sin x\\,dx$. Then $du = dx$, $v = -\\cos x$. So \n\n$\\int_0^{\\pi/2} x\\sin x\\,dx = [-x\\cos x]_0^{\\pi/2} + \\int_0^{\\pi/2} \\cos x\\,dx = (0 - 0) + [\\sin x]_0^{\\pi/2} = 1.$\n\nAnother example: $\\int 2x(x^2+1)^5\\,dx$. Let $u = x^2+1$, so $du = 2x\\,dx$. The integral becomes $\\int u^5\\,du = \\frac{u^6}{6} + C = \\frac{(x^2+1)^6}{6} + C.$\n\n$\\int \\sin(3x)\\,dx$: Let $u = 3x$, then $du = 3\\,dx \\Rightarrow dx = \\frac{du}{3}$. Substitute to get $\\frac{1}{3}\\int \\sin(u)\\,du = -\\frac{1}{3}\\cos(u) + C = -\\frac{1}{3}\\cos(3x) + C.$",
+            studyTip: "Use the LIATE rule (Logarithmic, Inverse Trig, Algebraic, Trig, Exponential) to choose $u$. Always check if the result after applying integration by parts simplifies the problem — if not, try swapping $u$ and $dv$.",
+            videoUrl: "https://youtu.be/sWSLLO3DS1I",
+            quizId: "ITMTB_W4_Quiz"
+          },
+          {
+            id: "ITMTB_W4_T4",
+            name: "Lesson 4: Integration of Rational Functions by Partial Fractions",
+            competency: "Assessment Coverage: 7.4",
+            explanation: "To integrate a rational function $\\frac{P(x)}{Q(x)}$, first ensure the degree of the numerator is less than that of the denominator. If not, use polynomial long division. Then factor the denominator $Q(x)$ into linear and/or irreducible quadratic factors and express the fraction as a sum of simpler 'partial fractions'. Each term is integrated separately.\n\nCommon decomposition forms:\n1. Distinct linear factors: $\\frac{A}{x−a} + \\frac{B}{x−b}$\n2. Repeated linear factors: $\\frac{A}{x−a} + \\frac{B}{(x−a)^2} + …$\n3. Irreducible quadratic factors: $\\frac{Ax + B}{x^2 + px + q}$\n\nAfter finding the constants ($A$, $B$, …) via substitution or comparison, integrate each term using standard logarithmic or arctangent formulas.",
+            example: "Example 1: $\\int \\frac{2x + 3}{x^2 + x - 2}\\,dx$. Factor denominator: $x^2 + x - 2 = (x + 2)(x - 1)$. Decompose: \n\n$\\frac{2x + 3}{(x + 2)(x - 1)} = \\frac{A}{x + 2} + \\frac{B}{x - 1}.$\n\nSolve for $A$ and $B$: $2x + 3 = A(x - 1) + B(x + 2)$ → $A = 1$, $B = 1$. So integral $= \\int \\left(\\frac{1}{x + 2} + \\frac{1}{x - 1}\\right)dx = \\ln|x + 2| + \\ln|x - 1| + C.$\n\nExample 2 (Improper Rational Function): $\\int \\frac{x^2 + x + 1}{x - 1}\\,dx = \\int (x + 2) + \\frac{3}{x - 1}\\,dx = \\tfrac{1}{2}x^2 + 2x + 3\\ln|x - 1| + C.$",
+            studyTip: "Always check if the fraction is proper before decomposing. For distinct linear factors, the cover-up method quickly finds constants. For quadratic factors, remember $\\int \\frac{dx}{x^2 + a^2} = \\frac{1}{a}\\tan^{-1}\\left(\\frac{x}{a}\\right) + C.$",
+            videoUrl: "https://youtu.be/UBaDS1Sc7qM",
+            quizId: "ITMTB_W4_Quiz"
+          }
+        ]
       },
       {
         id: "ITMTB_W5",
