@@ -68,7 +68,7 @@ const AnswerInput = ({
     onSubmit(safeValue);
   };
 
-  // Generate helpful hints based on user's incorrect answer
+  // ✅ FIX: Move correctNums extraction outside the if block
   const generateHint = () => {
     if (!value || isCorrect) return null;
     
@@ -79,18 +79,21 @@ const AnswerInput = ({
     // Common mistake hints
     const hints = [];
     
-    // Check if answer is close numerically
+    // ✅ FIX: Extract correctNums FIRST, before using it
     const userNum = parseFloat(userVal.replace(/[^0-9.-]/g, ''));
-    if (!isNaN(userNum) && Array.isArray(correctAnswer)) {
-      const correctNums = correctAnswer
-        .map(ans => parseFloat(String(ans).replace(/[^0-9.-]/g, '')))
-        .filter(n => !isNaN(n));
-      
+    const correctNums = Array.isArray(correctAnswer)
+      ? correctAnswer
+          .map(ans => parseFloat(String(ans).replace(/[^0-9.-]/g, '')))
+          .filter(n => !isNaN(n))
+      : [];
+    
+    // Check if answer is close numerically
+    if (!isNaN(userNum) && correctNums.length > 0) {
       const closest = correctNums.reduce((prev, curr) => 
         Math.abs(curr - userNum) < Math.abs(prev - userNum) ? curr : prev
       , Infinity);
       
-      if (Math.abs(closest - userNum) / Math.abs(closest) < 0.1) {
+      if (closest !== Infinity && Math.abs(closest - userNum) / Math.abs(closest) < 0.1) {
         hints.push("You're close! Double-check your calculation or rounding.");
       }
     }
@@ -110,12 +113,14 @@ const AnswerInput = ({
     }
     
     // Fraction vs decimal
-    if (userVal.includes('/') && correctAnswer.some(ans => String(ans).includes('.'))) {
+    if (userVal.includes('/') && Array.isArray(correctAnswer) && correctAnswer.some(ans => String(ans).includes('.'))) {
       hints.push("Try converting your fraction to a decimal, or vice versa.");
     }
     
-    // Sign errors
-    if (hasNumber && userNum < 0 && correctNums && correctNums.every(n => n > 0)) {
+    // Sign errors - now correctNums is accessible here
+    if (hasNumber && userNum < 0 && correctNums.length > 0 && correctNums.every(n => n > 0)) {
+      hints.push("Check the sign of your answer. Should it be positive or negative?");
+    } else if (hasNumber && userNum > 0 && correctNums.length > 0 && correctNums.every(n => n < 0)) {
       hints.push("Check the sign of your answer. Should it be positive or negative?");
     }
     
