@@ -600,7 +600,7 @@ export const questions = [
       moduleId: "ITMTB",
       weekId: "ITMTB_W2",
       type: "open-ended",
-      text: "Use Part 2 of the Fundamental Theorem of Calculus to evaluate \\( \\int_{1}^{3}(x^{2}+2x-4)\\,dx \\). Show all steps.",
+      text: "Use Part 2 of the Fundamental Theorem of Calculus to evaluate \\( \\int_{1}^{3}(x^{2}+2x-4)\\,dx \\).",
       correctAnswers: [
         "26/3",
         "8.667",

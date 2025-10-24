@@ -57,9 +57,9 @@ function toSI(value, unit) {
 }
 
 /* -------------------------
-   Symbolic normalization
+   Symbolic normalization - STRICT VERSION
    ------------------------- */
-function normalizeSymbolic(raw) {
+function normalizeSymbolic(raw, strictMode = true) {
   if (raw == null) return '';
   let s = String(raw).trim();
  
@@ -70,17 +70,50 @@ function normalizeSymbolic(raw) {
   s = s.replace(/approximately|about|roughly|around/gi, '');
   s = s.replace(/≈/g, '');
   
-  // Normalize commas to periods
+  // Normalize commas to periods for decimals
   s = s.replace(/,/g, '.');
  
-  // Replace unicode characters
+  // Replace ALL unicode superscripts to caret notation
+  s = s.replace(/⁰/g, '^0').replace(/¹/g, '^1').replace(/²/g, '^2')
+       .replace(/³/g, '^3').replace(/⁴/g, '^4').replace(/⁵/g, '^5')
+       .replace(/⁶/g, '^6').replace(/⁷/g, '^7').replace(/⁸/g, '^8')
+       .replace(/⁹/g, '^9');
+  
+  // Replace unicode fractions
   s = s.replace(/½/g, '(1/2)').replace(/¼/g, '(1/4)').replace(/¾/g, '(3/4)')
-       .replace(/²/g, '^2').replace(/³/g, '^3');
+       .replace(/⅓/g, '(1/3)').replace(/⅔/g, '(2/3)')
+       .replace(/⅕/g, '(1/5)').replace(/⅖/g, '(2/5)').replace(/⅗/g, '(3/5)').replace(/⅘/g, '(4/5)')
+       .replace(/⅙/g, '(1/6)').replace(/⅚/g, '(5/6)')
+       .replace(/⅐/g, '(1/7)').replace(/⅛/g, '(1/8)').replace(/⅑/g, '(1/9)').replace(/⅒/g, '(1/10)');
  
   // Normalize sqrt
   s = s.replace(/√\s*/g, 'sqrt').replace(/\\sqrt\s*\(?/g, 'sqrt(');
+  
+  // ✅ FIX: Remove spaces BEFORE normalizing constants
   s = s.replace(/\s+/g, '');
+  
+  // ✅ FIX: Remove leading '+' sign (it's implicit)
+  s = s.replace(/^\+/, '');
+  
   s = s.replace(/\*\*/g, '^');
+ 
+  // ✅ FIX: Normalize ALL constants to lowercase - improved regex
+  // This handles C, C1, C2, K, K1, A, B etc. in all positions
+  // Match: start of string OR after operator, then constant letter(s) with optional digits
+  s = s.replace(/(?:^|([+\-*/^(]))([CKAB])(\d*)\b/gi, (match, operator, letter, num) => {
+    const op = operator || '';
+    return op + letter.toLowerCase() + num;
+  });
+  
+  // Also catch constants at the very end (e.g., "x^2+C")
+  s = s.replace(/([+\-])([CKAB])(\d*)$/gi, (match, sign, letter, num) => {
+    return sign + letter.toLowerCase() + num;
+  });
+  
+  // And at the beginning (e.g., "C+x^2")
+  s = s.replace(/^([CKAB])(\d*)(?=[+\-/*^(]|$)/gi, (match, letter, num) => {
+    return letter.toLowerCase() + num;
+  });
  
   // Add parentheses for sqrt if missing
   s = s.replace(/sqrt([a-z0-9(])/gi, (_, a) => {
@@ -93,27 +126,92 @@ function normalizeSymbolic(raw) {
   s = s.replace(/\^\(0?\.5\)/g, '^(1/2)').replace(/\^0\.5/g, '^(1/2)');
   s = s.replace(/\^\(1\/2\)/g, '^(1/2)');
  
-  // Convert sqrt to exponent form
+  // Convert sqrt to exponent form for comparison
   s = s.replace(/sqrt\(([^)]+)\)/g, '($1)^(1/2)');
  
   // Detect invalid forms like x3 (should be x^3)
-  if (/[a-zA-Z][0-9]/.test(s) && !/([a-zA-Z]\^|\^[0-9]|e[+-]?\d)/.test(s)) {
+  // But exclude e notation (e.g., 1e-3) and function names (cos, sin, etc.)
+  if (/[a-df-z][0-9]/i.test(s) && !/([a-z]\^|\^[0-9]|[0-9]e[+-]?\d)/i.test(s)) {
     return null; // Invalid symbolic form
   }
  
-  // Remove outer parentheses
+  // Remove outer parentheses CAREFULLY - only if they encompass the entire expression
   while (/^\(([^()]+)\)$/.test(s)) {
     s = s.replace(/^\(([^()]+)\)$/, '$1');
   }
  
-  // Canonicalize addition order
-  const topTerms = splitTopLevel(s, '+');
-  if (topTerms.length > 1) {
-    topTerms.sort();
-    s = topTerms.join('+');
+  // ✅ FIX: ALWAYS normalize addition order (addition is commutative!)
+  // Split by top-level + and - signs, preserving the signs with terms
+  const terms = splitAndPreserveSigns(s);
+  
+  if (terms.length > 1) {
+    // Sort terms alphabetically, but keep negative terms as-is
+    terms.sort((a, b) => {
+      // Remove leading signs for comparison
+      const aKey = a.replace(/^[+-]/, '');
+      const bKey = b.replace(/^[+-]/, '');
+      return aKey.localeCompare(bKey);
+    });
+    
+    // Reconstruct the expression
+    s = terms.join('');
+    
+    // Clean up double signs (e.g., "+-" becomes "-", "++" becomes "+")
+    s = s.replace(/\+\+/g, '+').replace(/\+-/g, '-').replace(/-\+/g, '-').replace(/--/g, '+');
+    
+    // Remove leading '+' again if it was added back
+    s = s.replace(/^\+/, '');
   }
  
   return s;
+}
+
+function splitAndPreserveSigns(str) {
+  const terms = [];
+  let depth = 0;
+  let buf = '';
+  let prevSign = '+'; // Start with implicit positive
+  
+  for (let i = 0; i < str.length; i++) {
+    const ch = str[i];
+    
+    if (ch === '(') {
+      depth++;
+      buf += ch;
+    } else if (ch === ')') {
+      depth = Math.max(0, depth - 1);
+      buf += ch;
+    } else if (depth === 0 && (ch === '+' || ch === '-')) {
+      // Found a top-level operator
+      if (buf) {
+        // Add the previous term with its sign
+        if (prevSign === '-' && !buf.startsWith('-')) {
+          terms.push('-' + buf);
+        } else if (prevSign === '+' && !buf.startsWith('-')) {
+          terms.push('+' + buf);
+        } else {
+          terms.push(buf);
+        }
+        buf = '';
+      }
+      prevSign = ch;
+    } else {
+      buf += ch;
+    }
+  }
+  
+  // Add the last term
+  if (buf) {
+    if (prevSign === '-' && !buf.startsWith('-')) {
+      terms.push('-' + buf);
+    } else if (prevSign === '+' && !buf.startsWith('-')) {
+      terms.push('+' + buf);
+    } else {
+      terms.push(buf);
+    }
+  }
+  
+  return terms.filter(t => t && t !== '+' && t !== '-');
 }
 
 function splitTopLevel(str, sep) {
@@ -133,10 +231,124 @@ function splitTopLevel(str, sep) {
 }
 
 /* -------------------------
+   Extract variables and constants
+   ------------------------- */
+function extractSymbolicComponents(normalized) {
+  const components = {
+    variables: new Set(),
+    hasConstant: false,
+    leadingSign: '+',
+    terms: []
+  };
+  
+  // Check leading sign (after normalization, leading '+' should be removed)
+  if (normalized.startsWith('-')) {
+    components.leadingSign = '-';
+  }
+  
+  // Extract all variable letters (excluding e for exponential notation)
+  // Also exclude common function prefixes
+  const varMatches = normalized.match(/(?<!co)(?<!si)(?<!ta)(?<!lo)(?<!ln)(?<!se)(?<!cs)[a-df-z]/gi);
+  if (varMatches) {
+    varMatches.forEach(v => {
+      const lower = v.toLowerCase();
+      // Skip if it's a constant marker
+      if (lower !== 'c' && lower !== 'k') {
+        components.variables.add(lower);
+      }
+    });
+  }
+  
+  // Check for constant term (standalone 'c' or 'k' with optional digit)
+  // Must be:
+  // - At start: ^c1 or ^k
+  // - After operator: +c or -c2
+  // - At end: ...+c$ or ...-k1$
+  // Must NOT be part of cos, sec, etc.
+  if (/(?:^|[+\-*/^(])[ck]\d*(?:[+\-*/^)]|$)/i.test(normalized)) {
+    components.hasConstant = true;
+  }
+  
+  // Split into terms (by + and - at top level)
+  const terms = normalized.split(/(?=[+\-])/);
+  components.terms = terms.filter(t => t.trim());
+  
+  return components;
+}
+
+/* -------------------------
+   Strict comparison for symbolic expressions
+   ------------------------- */
+function strictSymbolicMatch(userNorm, correctNorm) {
+  // Must match exactly after normalization
+  if (userNorm === correctNorm) {
+    return { match: true, reason: null };
+  }
+  
+  // Extract components
+  const userComp = extractSymbolicComponents(userNorm);
+  const correctComp = extractSymbolicComponents(correctNorm);
+  
+  // ✅ Check 1: Variables must match exactly
+  const userVars = Array.from(userComp.variables).sort().join(',');
+  const correctVars = Array.from(correctComp.variables).sort().join(',');
+  
+  if (userVars !== correctVars) {
+    return { 
+      match: false, 
+      reason: `Variable mismatch: expected ${correctVars || 'none'}, got ${userVars || 'none'}`
+    };
+  }
+  
+  // ✅ Check 2: Constant of integration must match
+  if (correctComp.hasConstant && !userComp.hasConstant) {
+    return { 
+      match: false, 
+      reason: 'Missing constant of integration (+C)'
+    };
+  }
+  
+  // ✅ Check 3: Leading sign must match (catches -x^2 vs x^2)
+  // Note: After term reordering, this checks the sign of the FIRST term alphabetically
+  if (userComp.leadingSign !== correctComp.leadingSign) {
+    return { 
+      match: false, 
+      reason: 'Sign error: check if your answer should be positive or negative'
+    };
+  }
+  
+  // ✅ Check 4: Number of terms should match (helps catch missing terms)
+  if (Math.abs(userComp.terms.length - correctComp.terms.length) > 1) {
+    return { 
+      match: false, 
+      reason: 'Expression structure differs significantly'
+    };
+  }
+  
+  return { match: false, reason: 'Expressions are not equivalent' };
+}
+
+/* -------------------------
    Generate helpful hints
    ------------------------- */
 function generateHint(userAnswer, correctAnswers, userParsed, options, validationResult) {
   const hints = [];
+  
+  // Symbolic-specific hints
+  if (validationResult.method === 'symbolic' && validationResult.symbolicReason) {
+    hints.push(validationResult.symbolicReason);
+    
+    // Additional context-specific hints
+    if (validationResult.symbolicReason.includes('variable')) {
+      hints.push('Make sure you\'re using the correct variable name from the problem.');
+    }
+    if (validationResult.symbolicReason.includes('constant')) {
+      hints.push('Indefinite integrals require adding a constant of integration (usually +C).');
+    }
+    if (validationResult.symbolicReason.includes('Sign error')) {
+      hints.push('Double-check the signs in your calculation, especially when distributing negatives.');
+    }
+  }
   
   // If close numerically
   if (validationResult.details?.diff !== undefined) {
@@ -159,28 +371,19 @@ function generateHint(userAnswer, correctAnswers, userParsed, options, validatio
       hints.push(`Use one of these units: ${options.acceptedUnits.join(', ')}.`);
     }
     
-    // Check if user forgot unit entirely
     if (!userParsed.unit && userParsed.value !== null) {
       hints.push("Don't forget to include the unit with your numerical answer.");
     }
   }
   
-  // Symbolic answer hints
-  if (validationResult.method === 'symbolic' && !validationResult.equivalent) {
-    const normalized = normalizeSymbolic(userAnswer);
-    
-    if (normalized === null) {
-      hints.push("Invalid format detected. Use ^ for exponents (e.g., x^2 not x2) and check parentheses.");
-    } else if (normalized.includes('sqrt')) {
-      hints.push("Try simplifying your square roots or converting to exponent form (e.g., √x = x^(1/2)).");
-    } else if (normalized.includes('/')) {
-      hints.push("Check your fraction simplification. Make sure numerator and denominator are correct.");
-    } else {
-      hints.push("Verify your algebraic simplification. Combine like terms and factor if possible.");
-    }
+  // Invalid format hints
+  if (validationResult.method === 'symbolic' && validationResult.message?.includes('Invalid')) {
+    hints.push("Use ^ for exponents (e.g., x^3 not x3)");
+    hints.push("Check that parentheses are balanced");
+    hints.push("Use sqrt(x) or x^(1/2) for square roots");
   }
   
-  // Sign error detection
+  // Sign error detection for pure numbers
   const userNum = parseFloat(String(userAnswer).replace(/[^0-9.-]/g, ''));
   if (!isNaN(userNum)) {
     const correctNums = correctAnswers
@@ -199,20 +402,9 @@ function generateHint(userAnswer, correctAnswers, userParsed, options, validatio
     }
   }
   
-  // Fraction vs decimal hint
-  if (String(userAnswer).includes('/')) {
-    if (correctAnswers.some(ans => String(ans).includes('.'))) {
-      hints.push("Try converting your fraction to a decimal form.");
-    }
-  } else if (String(userAnswer).includes('.')) {
-    if (correctAnswers.some(ans => String(ans).includes('/'))) {
-      hints.push("The answer might be expressed as a fraction. Try that form.");
-    }
-  }
-  
   // Generic fallback
   if (hints.length === 0) {
-    hints.push("Review the problem carefully. Check your units, signs, and calculation steps.");
+    hints.push("Review the problem carefully and verify each step of your solution.");
   }
   
   return hints;
@@ -235,6 +427,7 @@ export class AnswerValidator {
       acceptedUnits: [],
       requiredUnit: null,
       tolerance: 1e-3,
+      strictSymbolic: true, // ✅ Enforces strict symbolic matching
       ...options
     };
    
@@ -247,10 +440,15 @@ export class AnswerValidator {
       };
     }
    
-    // Try pure numeric comparison first
+    // ✅ Strategy 1: Pure numeric comparison (for answers that are just numbers)
     const userNumeric = this.extractNumericValue(userAnswer);
+    const allCorrectAreNumeric = correctAnswers.every(ans => {
+      const normalized = normalizeSymbolic(ans, false);
+      // Check if it's purely numeric (no variables)
+      return !/[a-z]/i.test(normalized.replace(/e[+-]?\d/gi, ''));
+    });
     
-    if (userNumeric !== null) {
+    if (userNumeric !== null && allCorrectAreNumeric) {
       for (const corr of correctAnswers) {
         const corrNumeric = this.extractNumericValue(corr);
         
@@ -269,9 +467,22 @@ export class AnswerValidator {
           }
         }
       }
+      
+      // If we get here, numeric comparison failed
+      const result = {
+        equivalent: false,
+        message: 'Numerical value incorrect',
+        method: 'numeric',
+        details: { 
+          diff: Math.abs(userNumeric - this.extractNumericValue(correctAnswers[0])), 
+          correct: this.extractNumericValue(correctAnswers[0])
+        }
+      };
+      result.hints = generateHint(userAnswer, correctAnswers, {}, opts, result);
+      return result;
     }
     
-    // Strategy 1: Unit-based comparison
+    // ✅ Strategy 2: Unit-based comparison (numeric with units)
     const userParsed = parseValueAndUnit(userAnswer);
     const anyCorrectHasUnit = correctAnswers.some(a => parseValueAndUnit(a).unit != null);
    
@@ -330,15 +541,18 @@ export class AnswerValidator {
         unitError: false,
         message: 'Values differ beyond tolerance',
         method: 'unit',
-        details: { diff: Math.abs(userParsed.value - parseValueAndUnit(correctAnswers[0]).value), correct: parseValueAndUnit(correctAnswers[0]).value }
+        details: { 
+          diff: Math.abs(userParsed.value - parseValueAndUnit(correctAnswers[0]).value), 
+          correct: parseValueAndUnit(correctAnswers[0]).value 
+        }
       };
       result.hints = generateHint(userAnswer, correctAnswers, userParsed, opts, result);
       return result;
     }
    
-    // Strategy 2: Symbolic comparison
+    // ✅ Strategy 3: STRICT Symbolic comparison
     if (opts.allowSymbolic) {
-      const nUser = normalizeSymbolic(userAnswer);
+      const nUser = normalizeSymbolic(userAnswer, opts.strictSymbolic);
      
       if (nUser === null) {
         return {
@@ -350,10 +564,13 @@ export class AnswerValidator {
       }
      
       for (const corr of correctAnswers) {
-        const nCorr = normalizeSymbolic(corr);
+        const nCorr = normalizeSymbolic(corr, opts.strictSymbolic);
         if (nCorr === null) continue;
        
-        if (nUser === nCorr) {
+        // ✅ Use strict matching
+        const matchResult = strictSymbolicMatch(nUser, nCorr);
+        
+        if (matchResult.match) {
           return {
             equivalent: true,
             message: 'Symbolically equivalent',
@@ -364,16 +581,21 @@ export class AnswerValidator {
         }
       }
       
+      // If no match, provide detailed feedback
+      const firstCorrect = normalizeSymbolic(correctAnswers[0], opts.strictSymbolic);
+      const matchResult = strictSymbolicMatch(nUser, firstCorrect);
+      
       const result = {
         equivalent: false,
-        message: 'Sometimes you can confirm your answer by substituting it in the original equation or expression.',
-        method: 'symbolic'
+        message: matchResult.reason || 'Expression does not match expected form',
+        method: 'symbolic',
+        symbolicReason: matchResult.reason
       };
       result.hints = generateHint(userAnswer, correctAnswers, userParsed, opts, result);
       return result;
     }
    
-    // Strategy 3: Fallback text comparison
+    // ✅ Strategy 4: Fallback text comparison (case-insensitive, whitespace-normalized)
     const userText = this.basicTextNormalize(userAnswer);
     for (const corr of correctAnswers) {
       if (userText === this.basicTextNormalize(corr)) {
@@ -389,7 +611,7 @@ export class AnswerValidator {
     // No match found
     const result = {
       equivalent: false, 
-      message: 'Answer does not match',
+      message: 'Answer does not match expected form',
       method: 'none'
     };
     result.hints = generateHint(userAnswer, correctAnswers, userParsed, opts, result);
@@ -408,7 +630,8 @@ export class AnswerValidator {
       .replace(/,/g, '.')
       .trim();
     
-    const match = s.match(/([-+]?\d*\.?\d+(?:e[-+]?\d+)?)/);
+    // Match the number part, preserving sign
+    const match = s.match(/^([-+]?\d*\.?\d+(?:e[-+]?\d+)?)/);
     if (!match) return null;
     
     const val = parseFloat(match[1]);
@@ -425,7 +648,7 @@ export class AnswerValidator {
       .replace(/approximately|about|roughly|around/gi, '')
       .replace(/≈/g, '')
       .replace(/,/g, '.')
-      .replace(/\s+/g, ' ')
+      .replace(/\s+/g, '')
       .replace(/\$/g, '')
       .replace(/\\left|\\right/g, '')
       .replace(/[{}]/g, '')
