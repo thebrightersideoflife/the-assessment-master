@@ -3134,4 +3134,1397 @@ export const questions = [
           "Summing these products yields the final answer, plus the constant of integration \\( C \\)."
       },
 
+      {
+        id: "q81",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "What is the average value of the function \\( f(x) = 3x^2 + 8x \\) on the interval \\( [-1, 2] \\)?",
+        
+        correctAnswers: [
+          "7",
+          "7.0",
+          "7.00"
+        ],
+        
+        options: {
+          allowSymbolic: false,
+          tolerance: 0.001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "To find the average value of a function on an interval \\([a, b]\\), we use the formula:\n\n" +
+          "$$f_{\\text{avg}} = \\frac{1}{b-a} \\int_{a}^{b} f(x)\\,dx$$\n\n" +
+          "**Step 1: Set up the integral**\n\n" +
+          "$$f_{\\text{avg}} = \\frac{1}{2 - (-1)} \\int_{-1}^{2} (3x^2 + 8x)\\,dx$$\n\n" +
+          "$$= \\frac{1}{3} \\int_{-1}^{2} (3x^2 + 8x)\\,dx$$\n\n" +
+          "**Step 2: Find the antiderivative**\n\n" +
+          "$$f_{\\text{avg}} = \\frac{1}{3} \\left[x^3 + 4x^2\\right]_{-1}^{2}$$\n\n" +
+          "**Step 3: Evaluate using the Fundamental Theorem of Calculus**\n\n" +
+          "$$f_{\\text{avg}} = \\frac{1}{3} \\left[(2^3 + 4(2)^2) - ((-1)^3 + 4(-1)^2)\\right]$$\n\n" +
+          "$$= \\frac{1}{3} \\left[(8 + 16) - (-1 + 4)\\right]$$\n\n" +
+          "$$= \\frac{1}{3} (24 - 3)$$\n\n" +
+          "$$= \\frac{1}{3}(21) = 7$$\n\n" +
+          "**Answer: 7**\n\n" +
+          "**Key Concept:** The average value formula integrates the function over the interval and divides by the interval length. This gives the constant value that would produce the same total area under the curve."
+      },
+
+      {
+        id: "q82",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "Find the average value of \\( f(x) = \\sqrt{x} \\) on the interval \\( [0, 4] \\).",
+        
+        correctAnswers: [
+          "4/3",
+          "4 / 3",
+          "1.333",
+          "1.33",
+          "1.3333",
+          "≈1.33"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.01,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**Step 1: Set up the integral**\n\n" +
+          "$$f_{\\text{avg}} = \\frac{1}{4 - 0} \\int_{0}^{4} \\sqrt{x}\\,dx = \\frac{1}{4} \\int_{0}^{4} x^{1/2}\\,dx$$\n\n" +
+          "**Step 2: Find the antiderivative using the power rule**\n\n" +
+          "For \\( x^{1/2} \\), we add 1 to the exponent and divide by the new exponent:\n\n" +
+          "$$\\int x^{1/2}\\,dx = \\frac{x^{3/2}}{3/2} = \\frac{2}{3}x^{3/2}$$\n\n" +
+          "$$f_{\\text{avg}} = \\frac{1}{4} \\left[\\frac{2}{3}x^{3/2}\\right]_{0}^{4}$$\n\n" +
+          "**Step 3: Evaluate**\n\n" +
+          "$$f_{\\text{avg}} = \\frac{1}{4} \\left(\\frac{2}{3}(4)^{3/2} - \\frac{2}{3}(0)^{3/2}\\right)$$\n\n" +
+          "Note: \\( (4)^{3/2} = (\\sqrt{4})^3 = 2^3 = 8 \\)\n\n" +
+          "$$f_{\\text{avg}} = \\frac{1}{4} \\left(\\frac{2}{3} \\cdot 8 - 0\\right)$$\n\n" +
+          "$$= \\frac{1}{4} \\cdot \\frac{16}{3} = \\frac{16}{12} = \\frac{4}{3}$$\n\n" +
+          "**Answer: \\( \\frac{4}{3} \\approx 1.33 \\)**\n\n" +
+          "**Key Concept:** When working with radical functions, convert to exponential form (\\(\\sqrt{x} = x^{1/2}\\)) to apply the power rule for integration."
+      },
+
+      {
+        id: "q83",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "Find the average value of \\( g(x) = 3\\cos x \\) on the interval \\( \\left[-\\frac{\\pi}{2}, \\frac{\\pi}{2}\\right] \\).",
+        
+        correctAnswers: [
+          "6/π",
+          "6/pi",
+          "6 / π",
+          "6 / pi",
+          "1.909",
+          "1.91",
+          "≈1.91"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.02,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**Step 1: Set up the integral**\n\n" +
+          "$$g_{\\text{avg}} = \\frac{1}{\\pi/2 - (-\\pi/2)} \\int_{-\\pi/2}^{\\pi/2} 3\\cos x\\,dx$$\n\n" +
+          "$$= \\frac{1}{\\pi} \\int_{-\\pi/2}^{\\pi/2} 3\\cos x\\,dx$$\n\n" +
+          "**Step 2: Find the antiderivative**\n\n" +
+          "The antiderivative of \\( \\cos x \\) is \\( \\sin x \\):\n\n" +
+          "$$g_{\\text{avg}} = \\frac{3}{\\pi} \\left[\\sin x\\right]_{-\\pi/2}^{\\pi/2}$$\n\n" +
+          "**Step 3: Evaluate**\n\n" +
+          "$$g_{\\text{avg}} = \\frac{3}{\\pi} \\left(\\sin\\left(\\frac{\\pi}{2}\\right) - \\sin\\left(-\\frac{\\pi}{2}\\right)\\right)$$\n\n" +
+          "Recall: \\( \\sin(\\pi/2) = 1 \\) and \\( \\sin(-\\pi/2) = -1 \\)\n\n" +
+          "$$g_{\\text{avg}} = \\frac{3}{\\pi}(1 - (-1))$$\n\n" +
+          "$$= \\frac{3}{\\pi}(2) = \\frac{6}{\\pi}$$\n\n" +
+          "**Answer: \\( \\frac{6}{\\pi} \\approx 1.91 \\)**\n\n" +
+          "**Key Concept:** For trigonometric functions, remember the fundamental antiderivatives. The symmetry of cosine on this interval (symmetric about \\(x = 0\\)) contributes to the clean result."
+      },
+
+      {
+        id: "q84",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "Find the average value of \\( f(x) = \\frac{x^2}{(x^3+3)^2} \\) on the interval \\( [-1, 1] \\).",
+        
+        correctAnswers: [
+          "1/24",
+          "1 / 24",
+          "0.04167",
+          "0.0417",
+          "≈0.042"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**Step 1: Set up the integral**\n\n" +
+          "$$f_{\\text{avg}} = \\frac{1}{1 - (-1)} \\int_{-1}^{1} \\frac{x^2}{(x^3+3)^2}\\,dx$$\n\n" +
+          "$$= \\frac{1}{2} \\int_{-1}^{1} (x^3+3)^{-2} \\cdot x^2\\,dx$$\n\n" +
+          "**Step 2: Use u-substitution**\n\n" +
+          "Let \\( u = x^3 + 3 \\)\n\n" +
+          "Then \\( du = 3x^2\\,dx \\), so \\( x^2\\,dx = \\frac{du}{3} \\)\n\n" +
+          "**Change limits:**\n" +
+          "- When \\( x = -1 \\): \\( u = (-1)^3 + 3 = 2 \\)\n" +
+          "- When \\( x = 1 \\): \\( u = (1)^3 + 3 = 4 \\)\n\n" +
+          "**Step 3: Rewrite and solve the integral**\n\n" +
+          "$$f_{\\text{avg}} = \\frac{1}{2} \\int_{2}^{4} u^{-2} \\cdot \\frac{du}{3}$$\n\n" +
+          "$$= \\frac{1}{6} \\int_{2}^{4} u^{-2}\\,du$$\n\n" +
+          "$$= \\frac{1}{6} \\left[\\frac{u^{-1}}{-1}\\right]_{2}^{4}$$\n\n" +
+          "$$= -\\frac{1}{6} \\left[\\frac{1}{u}\\right]_{2}^{4}$$\n\n" +
+          "**Step 4: Evaluate**\n\n" +
+          "$$f_{\\text{avg}} = -\\frac{1}{6}\\left(\\frac{1}{4} - \\frac{1}{2}\\right)$$\n\n" +
+          "$$= -\\frac{1}{6}\\left(-\\frac{1}{4}\\right) = \\frac{1}{24}$$\n\n" +
+          "**Answer: \\( \\frac{1}{24} \\approx 0.042 \\)**\n\n" +
+          "**Key Concept:** U-substitution is essential when you see a function and its derivative (or a multiple of it) in the integrand. Here, \\( x^2 \\) is related to the derivative of \\( x^3 + 3 \\), making substitution straightforward."
+      },
+
+      {
+        id: "q85",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "The velocity graph of an accelerating car is shown. Use the Midpoint Rule with 3 subintervals (\\(n=3\\)) to estimate the average velocity of the car during the first 12 seconds. Express your answer in km/h.",
+        
+        image: {
+          src: "/images/ITMTB_Week 4_Quiz 1_Question 5.png",
+          alt: "Velocity-time graph showing car acceleration from 0 to approximately 80 km/h over 12 seconds",
+          caption: "Velocity (km/h) vs Time (seconds) graph"
+        },
+        
+        correctAnswers: [
+          "45 km/h",
+          "45km/h",
+          "45",
+          "≈45 km/h"
+        ],
+        
+        options: {
+          allowSymbolic: false,
+          tolerance: 2,
+          acceptedUnits: ["km/h"],
+          requiredUnit: null
+        },
+        
+        explanation: "**Understanding Average Velocity:**\n\n" +
+          "The average velocity is given by:\n\n" +
+          "$$v_{\\text{avg}} = \\frac{1}{12-0} \\int_{0}^{12} v(t)\\,dt$$\n\n" +
+          "We estimate the integral using the **Midpoint Rule**.\n\n" +
+          "**Step 1: Set up the Midpoint Rule (n=3)**\n\n" +
+          "- Total interval: \\([0, 12]\\)\n" +
+          "- Width of each subinterval: \\( \\Delta t = \\frac{12 - 0}{3} = 4 \\) seconds\n" +
+          "- Subintervals: \\([0, 4]\\), \\([4, 8]\\), \\([8, 12]\\)\n" +
+          "- Midpoints: \\( t_1 = 2 \\), \\( t_2 = 6 \\), \\( t_3 = 10 \\)\n\n" +
+          "**Step 2: Read velocities from the graph**\n\n" +
+          "- \\( v(2) \\approx 20 \\) km/h\n" +
+          "- \\( v(6) \\approx 50 \\) km/h\n" +
+          "- \\( v(10) \\approx 65 \\) km/h\n\n" +
+          "**Step 3: Calculate the integral estimate**\n\n" +
+          "The Midpoint Rule formula:\n\n" +
+          "$$\\int_{0}^{12} v(t)\\,dt \\approx \\Delta t \\left[v(t_1) + v(t_2) + v(t_3)\\right]$$\n\n" +
+          "$$\\int_{0}^{12} v(t)\\,dt \\approx 4[20 + 50 + 65]$$\n\n" +
+          "$$= 4 \\times 135 = 540$$\n\n" +
+          "**Step 4: Calculate average velocity**\n\n" +
+          "$$v_{\\text{avg}} \\approx \\frac{1}{12}(540) = 45 \\text{ km/h}$$\n\n" +
+          "**Answer: 45 km/h**\n\n" +
+          "**Key Concept:** The Midpoint Rule estimates an integral by evaluating the function at the midpoint of each subinterval. It generally provides better accuracy than left or right endpoint approximations because it balances overestimation and underestimation."
+      },
+
+      {
+        id: "q86",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "**Question continued:** Based on the velocity graph and the estimated average velocity of 45 km/h (from Quiz 1, Question 5), at what time was the instantaneous velocity equal to the average velocity? Express your answer in seconds.",
+        
+        image: {
+          src: "/images/ITMTB_Week 4_Quiz 1_Question 5.png",
+          alt: "Velocity-time graph showing car acceleration",
+          caption: "Find where v(t) = 45 km/h"
+        },
+        
+        correctAnswers: [
+          "5",
+          "5 s",
+          "5s",
+          "5 seconds",
+          "≈5",
+          "≈5 s"
+        ],
+        
+        options: {
+          allowSymbolic: false,
+          tolerance: 0.5,
+          acceptedUnits: ["s", "seconds"],
+          requiredUnit: null
+        },
+        
+        explanation: "This question applies the **Mean Value Theorem for Integrals**.\n\n" +
+          "**The Mean Value Theorem for Integrals states:**\n\n" +
+          "If \\( f \\) is continuous on \\([a, b]\\), then there exists at least one point \\( c \\) in \\([a, b]\\) where:\n\n" +
+          "$$f(c) = f_{\\text{avg}} = \\frac{1}{b-a} \\int_{a}^{b} f(x)\\,dx$$\n\n" +
+          "**Application to this problem:**\n\n" +
+          "We need to find when \\( v(t) = 45 \\) km/h.\n\n" +
+          "**Step 1: Locate 45 km/h on the graph**\n\n" +
+          "- Find 45 km/h on the vertical axis (velocity)\n" +
+          "- This is midway between 40 and 50 km/h\n\n" +
+          "**Step 2: Find where the curve crosses this line**\n\n" +
+          "- Draw a horizontal line at \\( v = 45 \\) km/h\n" +
+          "- Find where this line intersects the velocity curve\n" +
+          "- Read the corresponding time on the horizontal axis\n\n" +
+          "**Step 3: Read the time**\n\n" +
+          "The curve \\( v(t) \\) crosses \\( v = 45 \\) km/h at approximately **\\( t = 5 \\) seconds**.\n\n" +
+          "**Answer: 5 seconds**\n\n" +
+          "**Key Concept:** The Mean Value Theorem guarantees that for a continuous function, the average value is actually attained somewhere in the interval. This point \\( c \\) represents where the instantaneous rate equals the average rate."
+      },
+
+      {
+        id: "q87",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "multiple-choice",
+        text: "If \\( f \\) is continuous and \\( \\displaystyle\\int_{1}^{3} f(x)\\,dx = 8 \\), what can we conclude about the value of \\( f \\) on the interval \\([1, 3]\\)?",
+        
+        options: [
+          "A. \\( f \\) must equal 4 at every point in \\([1, 3]\\)",
+          "B. \\( f \\) takes on the value 4 at least once in \\([1, 3]\\)",
+          "C. \\( f \\) has a maximum value of 4 in \\([1, 3]\\)",
+          "D. \\( f \\) must be increasing on \\([1, 3]\\)"
+        ],
+        
+        correctAnswers: ["B"],
+        
+        explanation: "This is a direct application of the **Mean Value Theorem for Integrals**.\n\n" +
+          "**Step 1: Find the average value**\n\n" +
+          "The average value of \\( f \\) on \\([1, 3]\\) is:\n\n" +
+          "$$f_{\\text{avg}} = \\frac{1}{3-1} \\int_{1}^{3} f(x)\\,dx$$\n\n" +
+          "Given that \\( \\displaystyle\\int_{1}^{3} f(x)\\,dx = 8 \\):\n\n" +
+          "$$f_{\\text{avg}} = \\frac{1}{2}(8) = 4$$\n\n" +
+          "**Step 2: Apply the Mean Value Theorem**\n\n" +
+          "The Mean Value Theorem for Integrals states:\n\n" +
+          "*If \\( f \\) is continuous on \\([a, b]\\), then there exists at least one number \\( c \\) in \\([a, b]\\) such that:*\n\n" +
+          "$$f(c) = f_{\\text{avg}}$$\n\n" +
+          "**Step 3: Conclusion**\n\n" +
+          "Since \\( f \\) is continuous on \\([1, 3]\\) and its average value is 4, the theorem **guarantees** that there is at least one point \\( c \\) in \\([1, 3]\\) where:\n\n" +
+          "$$f(c) = 4$$\n\n" +
+          "**Why other options are wrong:**\n\n" +
+          "- **Option A**: The function doesn't need to equal 4 everywhere, just at least once\n" +
+          "- **Option C**: 4 is the average value, not necessarily the maximum\n" +
+          "- **Option D**: There's no information about whether \\( f \\) is increasing or decreasing\n\n" +
+          "**Answer: B**\n\n" +
+          "**Key Concept:** The Mean Value Theorem for Integrals is the integral analog of the Mean Value Theorem for derivatives. It guarantees that a continuous function achieves its average value at least once in the interval."
+      },
+
+      {
+        id: "q88",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "Find the numbers \\( b \\) such that the average value of \\( f(x) = 2 + 6x - 3x^2 \\) on the interval \\([0, b]\\) is equal to 3. Express your answer(s) in the form \\( \\frac{a \\pm \\sqrt{c}}{d} \\).",
+        
+        correctAnswers: [
+          "(3+√5)/2",
+          "(3 + √5)/2",
+          "(3+sqrt(5))/2",
+          "(3 + sqrt(5))/2",
+          "2.618",
+          "≈2.62"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.02,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**Step 1: Set up the average value equation**\n\n" +
+          "$$f_{\\text{avg}} = \\frac{1}{b - 0} \\int_{0}^{b} (2 + 6x - 3x^2)\\,dx = 3$$\n\n" +
+          "**Step 2: Integrate**\n\n" +
+          "$$\\frac{1}{b} \\left[2x + 3x^2 - x^3\\right]_{0}^{b} = 3$$\n\n" +
+          "**Step 3: Evaluate the integral**\n\n" +
+          "$$\\frac{1}{b}\\left[(2b + 3b^2 - b^3) - 0\\right] = 3$$\n\n" +
+          "**Step 4: Simplify**\n\n" +
+          "Multiply both sides by \\( b \\):\n\n" +
+          "$$2b + 3b^2 - b^3 = 3b$$\n\n" +
+          "Rearrange:\n\n" +
+          "$$-b^3 + 3b^2 + 2b - 3b = 0$$\n\n" +
+          "$$-b^3 + 3b^2 - b = 0$$\n\n" +
+          "Multiply by \\(-1\\):\n\n" +
+          "$$b^3 - 3b^2 + b = 0$$\n\n" +
+          "Wait, let me recalculate:\n\n" +
+          "$$2b + 3b^2 - b^3 = 3b$$\n\n" +
+          "$$3b^2 - b^3 = 3b - 2b = b$$\n\n" +
+          "$$-b^3 + 3b^2 - b = 0$$\n\n" +
+          "Multiply by \\(-1\\):\n\n" +
+          "$$b^3 - 3b^2 + b = 0$$\n\n" +
+          "Actually, dividing by \\(b\\) gives:\n\n" +
+          "$$\\frac{2b + 3b^2 - b^3}{b} = 3$$\n\n" +
+          "$$2 + 3b - b^2 = 3$$\n\n" +
+          "$$-b^2 + 3b - 1 = 0$$\n\n" +
+          "$$b^2 - 3b + 1 = 0$$\n\n" +
+          "**Step 5: Use the quadratic formula**\n\n" +
+          "For \\( b^2 - 3b + 1 = 0 \\):\n\n" +
+          "$$b = \\frac{-(-3) \\pm \\sqrt{(-3)^2 - 4(1)(1)}}{2(1)}$$\n\n" +
+          "$$b = \\frac{3 \\pm \\sqrt{9 - 4}}{2}$$\n\n" +
+          "$$b = \\frac{3 \\pm \\sqrt{5}}{2}$$\n\n" +
+          "**Step 6: Check both solutions**\n\n" +
+          "Both values are positive:\n" +
+          "- \\( b = \\frac{3 + \\sqrt{5}}{2} \\approx 2.618 \\)\n" +
+          "- \\( b = \\frac{3 - \\sqrt{5}}{2} \\approx 0.382 \\)\n\n" +
+          "Both are valid endpoints for the interval \\([0, b]\\).\n\n" +
+          "**Answer: \\( b = \\frac{3 \\pm \\sqrt{5}}{2} \\)**\n\n" +
+          "(The larger value \\( \\frac{3 + \\sqrt{5}}{2} \\approx 2.618 \\) is typically the primary answer)\n\n" +
+          "**Key Concept:** When solving for an interval boundary given average value, you often end up with a quadratic equation. Both positive solutions are mathematically valid, representing different interval lengths that yield the same average."
+      },
+
+      {
+        id: "q89",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "In a certain city, the temperature (in °C) \\( t \\) hours after 9 AM was modeled by \\( T(t) = 10 + 4\\sin\\left(\\frac{\\pi t}{12}\\right) \\). Find the average temperature during the period from 9 AM to 9 PM. Express your answer in the form \\( a + \\frac{b}{\\pi} \\).",
+        
+        correctAnswers: [
+          "10 + 8/π",
+          "10 + 8/pi",
+          "10+8/π",
+          "10+8/pi",
+          "12.55",
+          "≈12.55",
+          "12.5"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.1,
+          acceptedUnits: ["°C", "C"],
+          requiredUnit: null
+        },
+        
+        explanation: "**Step 1: Identify the interval**\n\n" +
+          "From 9 AM to 9 PM is 12 hours, so we find the average on \\([0, 12]\\).\n\n" +
+          "**Step 2: Set up the average value integral**\n\n" +
+          "$$T_{\\text{avg}} = \\frac{1}{12 - 0} \\int_{0}^{12} \\left(10 + 4\\sin\\left(\\frac{\\pi t}{12}\\right)\\right)dt$$\n\n" +
+          "$$= \\frac{1}{12} \\int_{0}^{12} \\left(10 + 4\\sin\\left(\\frac{\\pi t}{12}\\right)\\right)dt$$\n\n" +
+          "**Step 3: Integrate term by term**\n\n" +
+          "For the sine term, use substitution: if \\( u = \\frac{\\pi t}{12} \\), then \\( du = \\frac{\\pi}{12}dt \\)\n\n" +
+          "The antiderivative of \\( \\sin\\left(\\frac{\\pi t}{12}\\right) \\) is \\( -\\frac{12}{\\pi}\\cos\\left(\\frac{\\pi t}{12}\\right) \\)\n\n" +
+          "$$T_{\\text{avg}} = \\frac{1}{12}\\left[10t - \\frac{48}{\\pi}\\cos\\left(\\frac{\\pi t}{12}\\right)\\right]_{0}^{12}$$\n\n" +
+          "**Step 4: Evaluate at the bounds**\n\n" +
+          "At \\( t = 12 \\):\n\n" +
+          "$10(12) - \\frac{48}{\\pi}\\cos\\left(\\frac{12\\pi}{12}\\right) = 120 - \\frac{48}{\\pi}\\cos(\\pi)$\n\n" +
+          "Since \\( \\cos(\\pi) = -1 \\):\n\n" +
+          "$120 - \\frac{48}{\\pi}(-1) = 120 + \\frac{48}{\\pi}$\n\n" +
+          "At \\( t = 0 \\):\n\n" +
+          "$10(0) - \\frac{48}{\\pi}\\cos(0) = 0 - \\frac{48}{\\pi}(1) = -\\frac{48}{\\pi}$\n\n" +
+          "**Step 5: Calculate the difference**\n\n" +
+          "$T_{\\text{avg}} = \\frac{1}{12}\\left[\\left(120 + \\frac{48}{\\pi}\\right) - \\left(-\\frac{48}{\\pi}\\right)\\right]$\n\n" +
+          "$= \\frac{1}{12}\\left(120 + \\frac{48}{\\pi} + \\frac{48}{\\pi}\\right)$\n\n" +
+          "$= \\frac{1}{12}\\left(120 + \\frac{96}{\\pi}\\right)$\n\n" +
+          "$= 10 + \\frac{8}{\\pi}$\n\n" +
+          "**Numerical value:** \\( 10 + \\frac{8}{\\pi} \\approx 10 + 2.55 \\approx 12.55°\\text{C} \\)\n\n" +
+          "**Answer: \\( 10 + \\frac{8}{\\pi} \\)°C ≈ 12.55°C**\n\n" +
+          "**Key Concept:** When integrating trigonometric functions with coefficients inside the argument, remember to apply the chain rule in reverse. The period of the sine function is \\( 2\\pi \\), but here it's been adjusted to match a 24-hour cycle, making \\( T(12) \\) represent one half-period."
+      },
+
+      {
+        id: "q90",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "Find the second positive value of \\( b \\) such that the average value of \\( f(x) = 2 + 6x - 3x^2 \\) on the interval \\([0, b]\\) is equal to 3. (This is the smaller solution from Question 88.)",
+        
+        correctAnswers: [
+          "(3-√5)/2",
+          "(3 - √5)/2",
+          "(3-sqrt(5))/2",
+          "(3 - sqrt(5))/2",
+          "0.382",
+          "0.38",
+          "≈0.38"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.02,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "From Question 88, we found that the average value equation led to:\n\n" +
+          "$b^2 - 3b + 1 = 0$\n\n" +
+          "Using the quadratic formula:\n\n" +
+          "$b = \\frac{3 \\pm \\sqrt{5}}{2}$\n\n" +
+          "This gives us **two positive solutions**:\n\n" +
+          "1. \\( b = \\frac{3 + \\sqrt{5}}{2} \\approx 2.618 \\) (larger solution)\n" +
+          "2. \\( b = \\frac{3 - \\sqrt{5}}{2} \\approx 0.382 \\) (smaller solution)\n\n" +
+          "**This question asks for the smaller solution:**\n\n" +
+          "$b = \\frac{3 - \\sqrt{5}}{2} \\approx 0.382$\n\n" +
+          "**Why are there two solutions?**\n\n" +
+          "The function \\( f(x) = 2 + 6x - 3x^2 \\) is a downward-opening parabola. As the interval \\([0, b]\\) grows:\n\n" +
+          "- Initially (small \\(b\\)), the average value increases\n" +
+          "- At \\( b \\approx 0.382 \\), the average value reaches 3 for the first time\n" +
+          "- The average continues to increase and peaks somewhere in the middle\n" +
+          "- At \\( b \\approx 2.618 \\), the average value equals 3 again on its way down\n\n" +
+          "**Answer: \\( \\frac{3 - \\sqrt{5}}{2} \\approx 0.382 \\)**\n\n" +
+          "**Key Concept:** When a continuous function is not monotonic (doesn't always increase or decrease), the average value over \\([0, b]\\) can equal a given target at multiple values of \\(b\\)."
+      },
+
+      {
+        id: "q91",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "The linear density in a rod 8 m long is \\( \\rho(x) = \\frac{12}{\\sqrt{x+1}} \\) kg/m, where \\( x \\) is measured in meters from one end. Find the average density of the rod. Express your answer in kg/m.",
+        
+        correctAnswers: [
+          "6",
+          "6.0",
+          "6 kg/m",
+          "6.0 kg/m"
+        ],
+        
+        options: {
+          allowSymbolic: false,
+          tolerance: 0.01,
+          acceptedUnits: ["kg/m"],
+          requiredUnit: null
+        },
+        
+        explanation: "**Step 1: Identify the function and interval**\n\n" +
+          "We need the average value of the density function:\n\n" +
+          "$\\rho(x) = \\frac{12}{\\sqrt{x+1}}$\n\n" +
+          "on the interval \\([0, 8]\\) (since the rod is 8 m long).\n\n" +
+          "**Step 2: Set up the average value integral**\n\n" +
+          "$\\rho_{\\text{avg}} = \\frac{1}{8 - 0} \\int_{0}^{8} \\frac{12}{\\sqrt{x+1}}\\,dx$\n\n" +
+          "$= \\frac{12}{8} \\int_{0}^{8} (x+1)^{-1/2}\\,dx$\n\n" +
+          "$= \\frac{3}{2} \\int_{0}^{8} (x+1)^{-1/2}\\,dx$\n\n" +
+          "**Step 3: Integrate using the power rule**\n\n" +
+          "For \\( (x+1)^{-1/2} \\), the antiderivative is:\n\n" +
+          "$\\int (x+1)^{-1/2}\\,dx = \\frac{(x+1)^{1/2}}{1/2} = 2(x+1)^{1/2} = 2\\sqrt{x+1}$\n\n" +
+          "Therefore:\n\n" +
+          "$\\rho_{\\text{avg}} = \\frac{3}{2} \\left[2\\sqrt{x+1}\\right]_{0}^{8}$\n\n" +
+          "$= 3\\left[\\sqrt{x+1}\\right]_{0}^{8}$\n\n" +
+          "**Step 4: Evaluate at the bounds**\n\n" +
+          "$\\rho_{\\text{avg}} = 3\\left(\\sqrt{8+1} - \\sqrt{0+1}\\right)$\n\n" +
+          "$= 3\\left(\\sqrt{9} - \\sqrt{1}\\right)$\n\n" +
+          "$= 3(3 - 1)$\n\n" +
+          "$= 3(2) = 6$\n\n" +
+          "**Answer: 6 kg/m**\n\n" +
+          "**Physical Interpretation:**\n\n" +
+          "- The density is highest at \\( x = 0 \\): \\( \\rho(0) = \\frac{12}{\\sqrt{1}} = 12 \\) kg/m\n" +
+          "- The density decreases as \\( x \\) increases\n" +
+          "- At \\( x = 8 \\): \\( \\rho(8) = \\frac{12}{\\sqrt{9}} = 4 \\) kg/m\n" +
+          "- The average density of 6 kg/m falls between these extremes\n\n" +
+          "**Key Concept:** Average density (or any average value of a varying quantity) represents a uniform distribution that would have the same total effect. If the rod had uniform density of 6 kg/m throughout its 8 m length, it would have the same total mass as the actual variable-density rod."
+      },
+
+      {
+        id: "q92",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "multiple-choice",
+        text: "Evaluate the integral \\( \\displaystyle\\int xe^{2x}\\,dx \\) using integration by parts with \\( u = x \\) and \\( dv = e^{2x}\\,dx \\).",
+        
+        options: [
+          "A. \\( \\frac{1}{2}xe^{2x} - \\frac{1}{4}e^{2x} + C \\)",
+          "B. \\( xe^{2x} - \\frac{1}{2}e^{2x} + C \\)",
+          "C. \\( \\frac{1}{2}xe^{2x} - e^{2x} + C \\)",
+          "D. \\( 2xe^{2x} - e^{2x} + C \\)"
+        ],
+        
+        correctAnswers: ["A"],
+        
+        explanation: "**Integration by Parts Formula:**\n\n" +
+          "$\\int u\\,dv = uv - \\int v\\,du$\n\n" +
+          "**Step 1: Identify the parts**\n\n" +
+          "Given:\n" +
+          "- \\( u = x \\) → \\( du = dx \\)\n" +
+          "- \\( dv = e^{2x}\\,dx \\) → \\( v = \\int e^{2x}\\,dx = \\frac{1}{2}e^{2x} \\)\n\n" +
+          "**Step 2: Apply the formula**\n\n" +
+          "$\\int xe^{2x}\\,dx = x \\cdot \\frac{1}{2}e^{2x} - \\int \\frac{1}{2}e^{2x}\\,dx$\n\n" +
+          "$= \\frac{1}{2}xe^{2x} - \\frac{1}{2}\\int e^{2x}\\,dx$\n\n" +
+          "**Step 3: Integrate the remaining term**\n\n" +
+          "$= \\frac{1}{2}xe^{2x} - \\frac{1}{2} \\cdot \\frac{1}{2}e^{2x} + C$\n\n" +
+          "$= \\frac{1}{2}xe^{2x} - \\frac{1}{4}e^{2x} + C$\n\n" +
+          "**Can be factored as:**\n\n" +
+          "$= \\frac{e^{2x}}{4}(2x - 1) + C$\n\n" +
+          "**Answer: \\( \\frac{1}{2}xe^{2x} - \\frac{1}{4}e^{2x} + C \\)**\n\n" +
+          "**Key Concept - LIATE Rule:** When choosing \\(u\\) and \\(dv\\), use the LIATE priority:\n" +
+          "- **L**ogarithmic\n" +
+          "- **I**nverse trigonometric\n" +
+          "- **A**lgebraic (polynomials)\n" +
+          "- **T**rigonometric\n" +
+          "- **E**xponential\n\n" +
+          "Here, \\(x\\) (algebraic) comes before \\(e^{2x}\\) (exponential), so we let \\(u = x\\)."
+      },
+
+      {
+        id: "q93",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "multiple-choice",
+        text: "Evaluate the integral \\( \\displaystyle\\int \\sin^{-1}x\\,dx \\) using integration by parts with \\( u = \\sin^{-1}x \\) and \\( dv = dx \\).",
+        
+        options: [
+          "A. \\( x\\sin^{-1}x + \\sqrt{1-x^2} + C \\)",
+          "B. \\( x\\sin^{-1}x - \\sqrt{1-x^2} + C \\)",
+          "C. \\( \\sin^{-1}x + x\\sqrt{1-x^2} + C \\)",
+          "D. \\( x\\sin^{-1}x + \\frac{1}{\\sqrt{1-x^2}} + C \\)"
+        ],
+        
+        correctAnswers: ["A"],
+        
+        explanation: "**Step 1: Set up integration by parts**\n\n" +
+          "Given:\n" +
+          "- \\( u = \\sin^{-1}x \\) → \\( du = \\frac{1}{\\sqrt{1-x^2}}\\,dx \\)\n" +
+          "- \\( dv = dx \\) → \\( v = x \\)\n\n" +
+          "**Step 2: Apply the formula**\n\n" +
+          "$\\int \\sin^{-1}x\\,dx = x\\sin^{-1}x - \\int x \\cdot \\frac{1}{\\sqrt{1-x^2}}\\,dx$\n\n" +
+          "$= x\\sin^{-1}x - \\int \\frac{x}{\\sqrt{1-x^2}}\\,dx$\n\n" +
+          "**Step 3: Solve the remaining integral using substitution**\n\n" +
+          "Let \\( w = 1 - x^2 \\)\n\n" +
+          "Then \\( dw = -2x\\,dx \\), so \\( x\\,dx = -\\frac{1}{2}dw \\)\n\n" +
+          "$\\int \\frac{x}{\\sqrt{1-x^2}}\\,dx = \\int \\frac{1}{\\sqrt{w}} \\cdot \\left(-\\frac{1}{2}\\right)dw$\n\n" +
+          "$= -\\frac{1}{2}\\int w^{-1/2}\\,dw$\n\n" +
+          "$= -\\frac{1}{2} \\cdot 2w^{1/2} = -\\sqrt{w}$\n\n" +
+          "$= -\\sqrt{1-x^2}$\n\n" +
+          "**Step 4: Combine the results**\n\n" +
+          "$\\int \\sin^{-1}x\\,dx = x\\sin^{-1}x - (-\\sqrt{1-x^2}) + C$\n\n" +
+          "$= x\\sin^{-1}x + \\sqrt{1-x^2} + C$\n\n" +
+          "**Answer: \\( x\\sin^{-1}x + \\sqrt{1-x^2} + C \\)**\n\n" +
+          "**Key Concept:** For inverse trigonometric functions, we typically let \\(u\\) be the inverse trig function and \\(dv = dx\\). This transforms the problem into an algebraic integral that can be solved with substitution."
+      },
+
+      {
+        id: "q94",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "multiple-choice",
+        text: "Evaluate the integral \\( \\displaystyle\\int t^2\\sin(\\beta t)\\,dt \\) where \\( \\beta \\) is a constant.",
+        
+        options: [
+          "A. \\( -\\frac{t^2}{\\beta}\\cos(\\beta t) + \\frac{2t}{\\beta^2}\\sin(\\beta t) + \\frac{2}{\\beta^3}\\cos(\\beta t) + C \\)",
+          "B. \\( -\\frac{t^2}{\\beta}\\sin(\\beta t) + \\frac{2t}{\\beta^2}\\cos(\\beta t) + \\frac{2}{\\beta^3}\\sin(\\beta t) + C \\)",
+          "C. \\( \\frac{t^2}{\\beta}\\cos(\\beta t) + \\frac{2t}{\\beta^2}\\sin(\\beta t) - \\frac{2}{\\beta^3}\\cos(\\beta t) + C \\)",
+          "D. \\( -\\frac{t^2}{\\beta^2}\\cos(\\beta t) + \\frac{2t}{\\beta}\\sin(\\beta t) + \\frac{2}{\\beta^2}\\cos(\\beta t) + C \\)"
+        ],
+        
+        correctAnswers: ["A"],
+        
+        explanation: "This integral requires **repeated integration by parts** (twice).\n\n" +
+          "**First Integration by Parts:**\n\n" +
+          "Let \\( u = t^2 \\) and \\( dv = \\sin(\\beta t)\\,dt \\)\n\n" +
+          "Then:\n" +
+          "- \\( du = 2t\\,dt \\)\n" +
+          "- \\( v = -\\frac{1}{\\beta}\\cos(\\beta t) \\)\n\n" +
+          "$\\int t^2\\sin(\\beta t)\\,dt = t^2 \\cdot \\left(-\\frac{1}{\\beta}\\cos(\\beta t)\\right) - \\int \\left(-\\frac{1}{\\beta}\\cos(\\beta t)\\right)(2t)\\,dt$\n\n" +
+          "$= -\\frac{t^2}{\\beta}\\cos(\\beta t) + \\frac{2}{\\beta}\\int t\\cos(\\beta t)\\,dt$\n\n" +
+          "**Second Integration by Parts** (for \\(\\int t\\cos(\\beta t)\\,dt\\)):\n\n" +
+          "Let \\( u = t \\) and \\( dv = \\cos(\\beta t)\\,dt \\)\n\n" +
+          "Then:\n" +
+          "- \\( du = dt \\)\n" +
+          "- \\( v = \\frac{1}{\\beta}\\sin(\\beta t) \\)\n\n" +
+          "$\\int t\\cos(\\beta t)\\,dt = t \\cdot \\frac{1}{\\beta}\\sin(\\beta t) - \\int \\frac{1}{\\beta}\\sin(\\beta t)\\,dt$\n\n" +
+          "$= \\frac{t}{\\beta}\\sin(\\beta t) - \\frac{1}{\\beta}\\left(-\\frac{1}{\\beta}\\cos(\\beta t)\\right)$\n\n" +
+          "$= \\frac{t}{\\beta}\\sin(\\beta t) + \\frac{1}{\\beta^2}\\cos(\\beta t)$\n\n" +
+          "**Combine both results:**\n\n" +
+          "$\\int t^2\\sin(\\beta t)\\,dt = -\\frac{t^2}{\\beta}\\cos(\\beta t) + \\frac{2}{\\beta}\\left[\\frac{t}{\\beta}\\sin(\\beta t) + \\frac{1}{\\beta^2}\\cos(\\beta t)\\right] + C$\n\n" +
+          "$= -\\frac{t^2}{\\beta}\\cos(\\beta t) + \\frac{2t}{\\beta^2}\\sin(\\beta t) + \\frac{2}{\\beta^3}\\cos(\\beta t) + C$\n\n" +
+          "**Answer: \\( -\\frac{t^2}{\\beta}\\cos(\\beta t) + \\frac{2t}{\\beta^2}\\sin(\\beta t) + \\frac{2}{\\beta^3}\\cos(\\beta t) + C \\)**\n\n" +
+          "**Key Concept:** When integrating products of polynomials with trig/exponential functions, we may need to apply integration by parts multiple times. Each application reduces the degree of the polynomial by 1."
+      },
+
+      {
+        id: "q95",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "multiple-choice",
+        text: "Evaluate the integral \\( \\displaystyle\\int e^{2\\theta}\\sin(3\\theta)\\,d\\theta \\) using the \"looping\" method.",
+        
+        options: [
+          "A. \\( \\frac{e^{2\\theta}}{13}\\left[2\\sin(3\\theta) - 3\\cos(3\\theta)\\right] + C \\)",
+          "B. \\( \\frac{e^{2\\theta}}{13}\\left[3\\sin(3\\theta) - 2\\cos(3\\theta)\\right] + C \\)",
+          "C. \\( \\frac{e^{2\\theta}}{13}\\left[2\\sin(3\\theta) + 3\\cos(3\\theta)\\right] + C \\)",
+          "D. \\( \\frac{e^{2\\theta}}{5}\\left[2\\sin(3\\theta) - 3\\cos(3\\theta)\\right] + C \\)"
+        ],
+        
+        correctAnswers: ["A"],
+        
+        explanation: "The \"looping\" method is used when integration by parts brings us back to the original integral.\n\n" +
+          "Let \\( I = \\displaystyle\\int e^{2\\theta}\\sin(3\\theta)\\,d\\theta \\)\n\n" +
+          "**First Integration by Parts:**\n\n" +
+          "- \\( u = e^{2\\theta} \\), \\( dv = \\sin(3\\theta)\\,d\\theta \\)\n" +
+          "- \\( du = 2e^{2\\theta}\\,d\\theta \\), \\( v = -\\frac{1}{3}\\cos(3\\theta) \\)\n\n" +
+          "$I = e^{2\\theta}\\left(-\\frac{1}{3}\\cos(3\\theta)\\right) - \\int \\left(-\\frac{1}{3}\\cos(3\\theta)\\right)(2e^{2\\theta})\\,d\\theta$\n\n" +
+          "$I = -\\frac{1}{3}e^{2\\theta}\\cos(3\\theta) + \\frac{2}{3}\\int e^{2\\theta}\\cos(3\\theta)\\,d\\theta$\n\n" +
+          "**Second Integration by Parts** (on the new integral):\n\n" +
+          "- \\( u = e^{2\\theta} \\), \\( dv = \\cos(3\\theta)\\,d\\theta \\)\n" +
+          "- \\( du = 2e^{2\\theta}\\,d\\theta \\), \\( v = \\frac{1}{3}\\sin(3\\theta) \\)\n\n" +
+          "$\\int e^{2\\theta}\\cos(3\\theta)\\,d\\theta = e^{2\\theta}\\left(\\frac{1}{3}\\sin(3\\theta)\\right) - \\int \\frac{1}{3}\\sin(3\\theta)(2e^{2\\theta})\\,d\\theta$\n\n" +
+          "$= \\frac{1}{3}e^{2\\theta}\\sin(3\\theta) - \\frac{2}{3}\\int e^{2\\theta}\\sin(3\\theta)\\,d\\theta$\n\n" +
+          "$= \\frac{1}{3}e^{2\\theta}\\sin(3\\theta) - \\frac{2}{3}I$\n\n" +
+          "**Substitute back into the first equation:**\n\n" +
+          "$I = -\\frac{1}{3}e^{2\\theta}\\cos(3\\theta) + \\frac{2}{3}\\left[\\frac{1}{3}e^{2\\theta}\\sin(3\\theta) - \\frac{2}{3}I\\right]$\n\n" +
+          "$I = -\\frac{1}{3}e^{2\\theta}\\cos(3\\theta) + \\frac{2}{9}e^{2\\theta}\\sin(3\\theta) - \\frac{4}{9}I$\n\n" +
+          "**Solve for \\(I\\):**\n\n" +
+          "$I + \\frac{4}{9}I = \\frac{13}{9}I = -\\frac{1}{3}e^{2\\theta}\\cos(3\\theta) + \\frac{2}{9}e^{2\\theta}\\sin(3\\theta)$\n\n" +
+          "$I = \\frac{9}{13}\\left[-\\frac{1}{3}e^{2\\theta}\\cos(3\\theta) + \\frac{2}{9}e^{2\\theta}\\sin(3\\theta)\\right] + C$\n\n" +
+          "$I = -\\frac{3}{13}e^{2\\theta}\\cos(3\\theta) + \\frac{2}{13}e^{2\\theta}\\sin(3\\theta) + C$\n\n" +
+          "**Answer: \\( \\frac{e^{2\\theta}}{13}\\left[2\\sin(3\\theta) - 3\\cos(3\\theta)\\right] + C \\)**\n\n" +
+          "**Key Concept:** When integrating products of exponentials and trig functions, the integral \"loops back\" to itself. We collect all terms with the original integral on one side and solve algebraically."
+      },
+
+      {
+        id: "q96",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "Evaluate \\( \\displaystyle\\int e^{\\sqrt{x}}\\,dx \\) by first making a substitution and then using integration by parts.",
+        
+        correctAnswers: [
+          "2√x*e^(√x) - 2e^(√x) + C",
+          "2e^(√x)(√x - 1) + C",
+          "2e^(√x)√x - 2e^(√x) + C",
+          "2√(x)e^(√x) - 2e^(√x) + C"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**Step 1: Make a substitution**\n\n" +
+          "Let \\( w = \\sqrt{x} \\)\n\n" +
+          "Then:\n" +
+          "- \\( w^2 = x \\)\n" +
+          "- \\( 2w\\,dw = dx \\)\n\n" +
+          "Substituting:\n\n" +
+          "$\\int e^{\\sqrt{x}}\\,dx = \\int e^w \\cdot 2w\\,dw = 2\\int we^w\\,dw$\n\n" +
+          "**Step 2: Use integration by parts on \\(\\int we^w\\,dw\\)**\n\n" +
+          "- \\( u = w \\), \\( dv = e^w\\,dw \\)\n" +
+          "- \\( du = dw \\), \\( v = e^w \\)\n\n" +
+          "$\\int we^w\\,dw = we^w - \\int e^w\\,dw$\n\n" +
+          "$= we^w - e^w + C$\n\n" +
+          "**Step 3: Multiply by 2 and substitute back**\n\n" +
+          "$2\\int we^w\\,dw = 2(we^w - e^w) + C$\n\n" +
+          "$= 2we^w - 2e^w + C$\n\n" +
+          "Substitute \\( w = \\sqrt{x} \\) back:\n\n" +
+          "$= 2\\sqrt{x}\\,e^{\\sqrt{x}} - 2e^{\\sqrt{x}} + C$\n\n" +
+          "**Can be factored as:**\n\n" +
+          "$= 2e^{\\sqrt{x}}(\\sqrt{x} - 1) + C$\n\n" +
+          "**Answer: \\( 2\\sqrt{x}\\,e^{\\sqrt{x}} - 2e^{\\sqrt{x}} + C \\)**\n\n" +
+          "**Key Concept:** Sometimes an integral requires **both substitution and integration by parts**. The substitution simplifies the form, making integration by parts applicable. Always look for ways to simplify before applying integration techniques."
+      },
+
+      {
+        id: "q97",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "Evaluate the definite integral \\( \\displaystyle\\int_{0}^{1/2} \\theta\\sin(3\\pi\\theta)\\,d\\theta \\).",
+        
+        correctAnswers: [
+          "-1/(9π^2)",
+          "-1/(9pi^2)",
+          "-1/(9π²)",
+          "-0.01126",
+          "≈-0.011"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**Step 1: Find the antiderivative using integration by parts**\n\n" +
+          "- \\( u = \\theta \\), \\( dv = \\sin(3\\pi\\theta)\\,d\\theta \\)\n" +
+          "- \\( du = d\\theta \\), \\( v = -\\frac{1}{3\\pi}\\cos(3\\pi\\theta) \\)\n\n" +
+          "$\\int \\theta\\sin(3\\pi\\theta)\\,d\\theta = \\theta\\left(-\\frac{1}{3\\pi}\\cos(3\\pi\\theta)\\right) - \\int \\left(-\\frac{1}{3\\pi}\\cos(3\\pi\\theta)\\right)d\\theta$\n\n" +
+          "$= -\\frac{\\theta}{3\\pi}\\cos(3\\pi\\theta) + \\frac{1}{3\\pi}\\int \\cos(3\\pi\\theta)\\,d\\theta$\n\n" +
+          "$= -\\frac{\\theta}{3\\pi}\\cos(3\\pi\\theta) + \\frac{1}{3\\pi} \\cdot \\frac{1}{3\\pi}\\sin(3\\pi\\theta)$\n\n" +
+          "$= -\\frac{\\theta}{3\\pi}\\cos(3\\pi\\theta) + \\frac{1}{9\\pi^2}\\sin(3\\pi\\theta)$\n\n" +
+          "**Step 2: Evaluate using the Fundamental Theorem of Calculus**\n\n" +
+          "$\\left[-\\frac{\\theta}{3\\pi}\\cos(3\\pi\\theta) + \\frac{1}{9\\pi^2}\\sin(3\\pi\\theta)\\right]_{0}^{1/2}$\n\n" +
+          "**At \\(\\theta = 1/2\\):**\n\n" +
+          "$-\\frac{1/2}{3\\pi}\\cos\\left(\\frac{3\\pi}{2}\\right) + \\frac{1}{9\\pi^2}\\sin\\left(\\frac{3\\pi}{2}\\right)$\n\n" +
+          "Note: \\( \\cos(3\\pi/2) = 0 \\) and \\( \\sin(3\\pi/2) = -1 \\)\n\n" +
+          "$= -\\frac{1}{6\\pi}(0) + \\frac{1}{9\\pi^2}(-1) = -\\frac{1}{9\\pi^2}$\n\n" +
+          "**At \\(\\theta = 0\\):**\n\n" +
+          "$-\\frac{0}{3\\pi}\\cos(0) + \\frac{1}{9\\pi^2}\\sin(0) = 0 + 0 = 0$\n\n" +
+          "**Step 3: Subtract**\n\n" +
+          "$-\\frac{1}{9\\pi^2} - 0 = -\\frac{1}{9\\pi^2}$\n\n" +
+          "**Answer: \\( -\\frac{1}{9\\pi^2} \\approx -0.0113 \\)**\n\n" +
+          "**Key Concept:** For definite integrals with integration by parts, find the antiderivative first, then apply the Fundamental Theorem. Remember key trig values: \\(\\cos(3\\pi/2) = 0\\), \\(\\sin(3\\pi/2) = -1\\)."
+      },
+
+      {
+        id: "q98",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "Use the trigonometric identity to show that \\( \\displaystyle\\int \\sin^2 x\\,dx = \\frac{x}{2} - \\frac{\\sin 2x}{4} + C \\).",
+        
+        correctAnswers: [
+          "x/2 - sin(2x)/4 + C",
+          "x/2 - (sin(2x))/4 + C",
+          "0.5x - 0.25sin(2x) + C"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**Step 1: Use the power-reducing identity**\n\n" +
+          "The power-reducing identity for sine is:\n\n" +
+          "$\\sin^2 x = \\frac{1 - \\cos(2x)}{2}$\n\n" +
+          "**Step 2: Substitute into the integral**\n\n" +
+          "$\\int \\sin^2 x\\,dx = \\int \\frac{1 - \\cos(2x)}{2}\\,dx$\n\n" +
+          "**Step 3: Split the integral**\n\n" +
+          "$= \\frac{1}{2}\\int 1\\,dx - \\frac{1}{2}\\int \\cos(2x)\\,dx$\n\n" +
+          "**Step 4: Integrate each term**\n\n" +
+          "$\\frac{1}{2}\\int 1\\,dx = \\frac{x}{2}$\n\n" +
+          "For the second term:\n\n" +
+          "$\\int \\cos(2x)\\,dx = \\frac{\\sin(2x)}{2}$\n\n" +
+          "So:\n\n" +
+          "$-\\frac{1}{2} \\cdot \\frac{\\sin(2x)}{2} = -\\frac{\\sin(2x)}{4}$\n\n" +
+          "**Step 5: Combine**\n\n" +
+          "$\\int \\sin^2 x\\,dx = \\frac{x}{2} - \\frac{\\sin(2x)}{4} + C$\n\n" +
+          "**Answer: \\( \\frac{x}{2} - \\frac{\\sin(2x)}{4} + C \\) ✓**\n\n" +
+          "**Key Concept - Power-Reducing Identities:**\n\n" +
+          "These identities are essential for integrating even powers of trig functions:\n" +
+          "- \\( \\sin^2 x = \\frac{1 - \\cos(2x)}{2} \\)\n" +
+          "- \\( \\cos^2 x = \\frac{1 + \\cos(2x)}{2} \\)\n\n" +
+          "They convert powers into linear combinations of trig functions, which are easier to integrate."
+      },
+
+      {
+        id: "q99",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "multiple-choice",
+        text: "**Question 98 continued:** Using the reduction formula and the result from Question 98, evaluate \\( \\displaystyle\\int \\sin^4 x\\,dx \\).",
+        
+        options: [
+          "A. \\( -\\frac{1}{4}\\cos x\\sin^3 x + \\frac{3x}{8} - \\frac{3\\sin 2x}{16} + C \\)",
+          "B. \\( -\\frac{1}{4}\\cos x\\sin^3 x + \\frac{3x}{8} + \\frac{3\\sin 2x}{16} + C \\)",
+          "C. \\( \\frac{1}{4}\\cos x\\sin^3 x + \\frac{3x}{8} - \\frac{3\\sin 2x}{16} + C \\)",
+          "D. \\( -\\frac{1}{4}\\cos x\\sin^3 x + \\frac{x}{2} - \\frac{3\\sin 2x}{16} + C \\)"
+        ],
+        
+        correctAnswers: ["A"],
+        
+        explanation: "**The Reduction Formula for \\(\\sin^n x\\):**\n\n" +
+          "$\\int \\sin^n x\\,dx = -\\frac{1}{n}\\cos x\\sin^{n-1}x + \\frac{n-1}{n}\\int \\sin^{n-2}x\\,dx$\n\n" +
+          "From Question 98, we have:\n\n" +
+          "$\\int \\sin^2 x\\,dx = \\frac{x}{2} - \\frac{\\sin 2x}{4} + C$\n\n" +
+          "**Step 1: Apply the reduction formula for \\(n = 4\\)**\n\n" +
+          "$\\int \\sin^4 x\\,dx = -\\frac{1}{4}\\cos x\\sin^{4-1}x + \\frac{4-1}{4}\\int \\sin^{4-2}x\\,dx$\n\n" +
+          "$= -\\frac{1}{4}\\cos x\\sin^3 x + \\frac{3}{4}\\int \\sin^2 x\\,dx$\n\n" +
+          "**Step 2: Substitute the result from Question 98**\n\n" +
+          "$= -\\frac{1}{4}\\cos x\\sin^3 x + \\frac{3}{4}\\left(\\frac{x}{2} - \\frac{\\sin 2x}{4}\\right) + C$\n\n" +
+          "**Step 3: Simplify**\n\n" +
+          "$= -\\frac{1}{4}\\cos x\\sin^3 x + \\frac{3x}{8} - \\frac{3\\sin 2x}{16} + C$\n\n" +
+          "**Answer: \\( -\\frac{1}{4}\\cos x\\sin^3 x + \\frac{3x}{8} - \\frac{3\\sin 2x}{16} + C \\)**\n\n" +
+          "**Key Concept - Reduction Formulas:**\n\n" +
+          "Reduction formulas recursively express \\(\\int \\sin^n x\\,dx\\) in terms of \\(\\int \\sin^{n-2}x\\,dx\\). This allows us to:\n" +
+          "1. Reduce higher powers step-by-step\n" +
+          "2. Eventually reach \\(\\sin^2 x\\) or \\(\\sin x\\), which we can integrate directly\n" +
+          "3. Build complex integrals from simpler ones\n\n" +
+          "The formula comes from integration by parts with \\(u = \\sin^{n-1}x\\) and \\(dv = \\sin x\\,dx\\)."
+      },
+
+      {
+        id: "q100",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "Calculate the average value of \\( f(x) = x\\sec^2 x \\) on the interval \\( \\left[0, \\frac{\\pi}{4}\\right] \\).",
+        
+        correctAnswers: [
+          "1 - 2ln(2)/π",
+          "1 - 2ln(2)/pi",
+          "1 - (2ln(2))/π",
+          "1 - (2ln(2))/pi",
+          "0.5586",
+          "≈0.56"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.02,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**Step 1: Set up the average value formula**\n\n" +
+          "$f_{\\text{avg}} = \\frac{1}{b-a}\\int_a^b f(x)\\,dx = \\frac{1}{\\pi/4 - 0}\\int_0^{\\pi/4} x\\sec^2 x\\,dx$\n\n" +
+          "$= \\frac{4}{\\pi}\\int_0^{\\pi/4} x\\sec^2 x\\,dx$\n\n" +
+          "**Step 2: Integrate by parts**\n\n" +
+          "For \\( \\int x\\sec^2 x\\,dx \\):\n\n" +
+          "- \\( u = x \\), \\( dv = \\sec^2 x\\,dx \\)\n" +
+          "- \\( du = dx \\), \\( v = \\tan x \\)\n\n" +
+          "$\\int x\\sec^2 x\\,dx = x\\tan x - \\int \\tan x\\,dx$\n\n" +
+          "Recall: \\( \\int \\tan x\\,dx = \\ln|\\sec x| + C \\) (or \\( -\\ln|\\cos x| + C \\))\n\n" +
+          "$= x\\tan x - \\ln|\\sec x| + C$\n\n" +
+          "**Step 3: Evaluate the definite integral**\n\n" +
+          "$\\left[x\\tan x - \\ln|\\sec x|\\right]_0^{\\pi/4}$\n\n" +
+          "**At \\( x = \\pi/4 \\):**\n\n" +
+          "$\\frac{\\pi}{4}\\tan\\left(\\frac{\\pi}{4}\\right) - \\ln\\left|\\sec\\left(\\frac{\\pi}{4}\\right)\\right|$\n\n" +
+          "Note: \\( \\tan(\\pi/4) = 1 \\) and \\( \\sec(\\pi/4) = \\sqrt{2} \\)\n\n" +
+          "$= \\frac{\\pi}{4}(1) - \\ln(\\sqrt{2})$\n\n" +
+          "$= \\frac{\\pi}{4} - \\ln(2^{1/2})$\n\n" +
+          "$= \\frac{\\pi}{4} - \\frac{1}{2}\\ln(2)$\n\n" +
+          "**At \\( x = 0 \\):**\n\n" +
+          "$0 \\cdot \\tan(0) - \\ln|\\sec(0)| = 0 - \\ln(1) = 0$\n\n" +
+          "**Step 4: Calculate the average value**\n\n" +
+          "$f_{\\text{avg}} = \\frac{4}{\\pi}\\left[\\frac{\\pi}{4} - \\frac{1}{2}\\ln(2) - 0\\right]$\n\n" +
+          "$= \\frac{4}{\\pi}\\left[\\frac{\\pi}{4} - \\frac{\\ln(2)}{2}\\right]$\n\n" +
+          "$= 1 - \\frac{2\\ln(2)}{\\pi}$\n\n" +
+          "**Numerical value:** \\( 1 - \\frac{2\\ln(2)}{\\pi} \\approx 1 - 0.4413 \\approx 0.5587 \\)\n\n" +
+          "**Answer: \\( 1 - \\frac{2\\ln(2)}{\\pi} \\approx 0.559 \\)**\n\n" +
+          "**Key Concept:** This problem combines integration by parts with the average value formula. Remember that \\(\\sec^2 x\\) is the derivative of \\(\\tan x\\), making it a natural choice for \\(dv\\)."
+      },
+
+      {
+        id: "q101",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "Suppose \\( f(1) = 2 \\), \\( f(4) = 7 \\), \\( f'(1) = 5 \\), \\( f'(4) = 3 \\), and \\( f'' \\) is continuous. Find the value of \\( \\displaystyle\\int_1^4 xf''(x)\\,dx \\).",
+        
+        correctAnswers: [
+          "2",
+          "2.0"
+        ],
+        
+        options: {
+          allowSymbolic: false,
+          tolerance: 0.001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**Step 1: Use integration by parts**\n\n" +
+          "For \\( \\displaystyle\\int_1^4 xf''(x)\\,dx \\):\n\n" +
+          "- Let \\( u = x \\) and \\( dv = f''(x)\\,dx \\)\n" +
+          "- Then \\( du = dx \\) and \\( v = f'(x) \\)\n\n" +
+          "Using the formula \\( \\displaystyle\\int_a^b u\\,dv = [uv]_a^b - \\int_a^b v\\,du \\):\n\n" +
+          "$\\int_1^4 xf''(x)\\,dx = \\left[xf'(x)\\right]_1^4 - \\int_1^4 f'(x)\\,dx$\n\n" +
+          "**Step 2: Evaluate \\( \\left[xf'(x)\\right]_1^4 \\)**\n\n" +
+          "$\\left[xf'(x)\\right]_1^4 = 4f'(4) - 1f'(1)$\n\n" +
+          "Given \\( f'(4) = 3 \\) and \\( f'(1) = 5 \\):\n\n" +
+          "$= 4(3) - 1(5) = 12 - 5 = 7$\n\n" +
+          "**Step 3: Evaluate \\( \\displaystyle\\int_1^4 f'(x)\\,dx \\) using the Fundamental Theorem**\n\n" +
+          "By the Fundamental Theorem of Calculus:\n\n" +
+          "$\\int_1^4 f'(x)\\,dx = f(4) - f(1)$\n\n" +
+          "Given \\( f(4) = 7 \\) and \\( f(1) = 2 \\):\n\n" +
+          "$= 7 - 2 = 5$\n\n" +
+          "**Step 4: Combine the results**\n\n" +
+          "$\\int_1^4 xf''(x)\\,dx = 7 - 5 = 2$\n\n" +
+          "**Answer: 2**\n\n" +
+          "**Key Concept - Theoretical Integration by Parts:**\n\n" +
+          "This problem demonstrates that integration by parts works even when we don't have explicit formulas. Key insights:\n\n" +
+          "1. **Integration by parts** converts \\( \\int xf''(x)\\,dx \\) into boundary terms and \\( \\int f'(x)\\,dx \\)\n" +
+          "2. **Fundamental Theorem** tells us \\( \\int f'(x)\\,dx = f(b) - f(a) \\)\n" +
+          "3. We only need **function values at endpoints**, not the explicit form of \\( f \\)\n\n" +
+          "This technique is powerful for working with abstract functions given only their values and derivatives at specific points."
+      },
+
+      {
+        id: "q102",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "multiple-choice",
+        text: "In the proof of the reduction formula for \\( \\displaystyle\\int \\sin^n x\\,dx \\), what trigonometric identity is used to rewrite the integral \\( (n-1)\\displaystyle\\int \\sin^{n-2}x\\cos^2 x\\,dx \\)?",
+        
+        options: [
+          "A. \\( \\cos^2 x = 1 - \\sin^2 x \\)",
+          "B. \\( \\sin^2 x = 1 - \\cos^2 x \\)",
+          "C. \\( \\sin(2x) = 2\\sin x\\cos x \\)",
+          "D. \\( \\cos(2x) = \\cos^2 x - \\sin^2 x \\)"
+        ],
+        
+        correctAnswers: ["A"],
+        
+        explanation: "**Understanding the Reduction Formula Proof**\n\n" +
+          "The reduction formula for \\( \\displaystyle\\int \\sin^n x\\,dx \\) is derived using integration by parts. During the proof, we encounter:\n\n" +
+          "$(n-1)\\int \\sin^{n-2}x\\cos^2 x\\,dx$\n\n" +
+          "**Step 1: Apply the Pythagorean identity**\n\n" +
+          "We use the identity:\n\n" +
+          "$\\cos^2 x = 1 - \\sin^2 x$\n\n" +
+          "**Step 2: Transform the integral**\n\n" +
+          "$(n-1)\\int \\sin^{n-2}x(1 - \\sin^2 x)\\,dx$\n\n" +
+          "$= (n-1)\\int \\sin^{n-2}x\\,dx - (n-1)\\int \\sin^n x\\,dx$\n\n" +
+          "**Why this step is crucial:**\n\n" +
+          "This transformation **reintroduces the original integral** \\( \\displaystyle\\int \\sin^n x\\,dx \\) on the right side with a coefficient \\( -(n-1) \\).\n\n" +
+          "**Step 3: Algebraic manipulation**\n\n" +
+          "We can now move this term to the left side:\n\n" +
+          "$\\int \\sin^n x\\,dx + (n-1)\\int \\sin^n x\\,dx = \\text{[other terms]}$\n\n" +
+          "$n\\int \\sin^n x\\,dx = \\text{[other terms]}$\n\n" +
+          "Dividing by \\( n \\) gives us the reduction formula:\n\n" +
+          "$\\int \\sin^n x\\,dx = -\\frac{1}{n}\\cos x\\sin^{n-1}x + \\frac{n-1}{n}\\int \\sin^{n-2}x\\,dx$\n\n" +
+          "**Answer: A. \\( \\cos^2 x = 1 - \\sin^2 x \\)**\n\n" +
+          "**Why other options are incorrect:**\n\n" +
+          "- **Option B**: While true, we need to eliminate \\(\\cos^2 x\\), not \\(\\sin^2 x\\)\n" +
+          "- **Option C**: This double-angle identity isn't used in this part of the proof\n" +
+          "- **Option D**: Another double-angle identity, not applicable here\n\n" +
+          "**Key Concept:** The Pythagorean identity \\( \\cos^2 x = 1 - \\sin^2 x \\) is essential for deriving reduction formulas because it allows us to express everything in terms of powers of sine, creating an equation we can solve for the original integral."
+      },
+      {
+        id: "q103",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "multiple-choice",
+        text: "Write out the form of the partial fraction decomposition for the function \\( f(x) = \\frac{x^5+1}{(x^2-x)(x^4+2x^2+1)} \\). Do not determine the numerical values of the coefficients.",
+        
+        options: [
+          "A. \\( \\frac{A}{x} + \\frac{B}{x-1} + \\frac{Cx+D}{x^2+1} + \\frac{Ex+F}{(x^2+1)^2} \\)",
+          "B. \\( \\frac{A}{x} + \\frac{B}{x-1} + \\frac{C}{x^2+1} + \\frac{D}{(x^2+1)^2} \\)",
+          "C. \\( \\frac{Ax+B}{x^2-x} + \\frac{Cx+D}{x^2+1} + \\frac{Ex+F}{(x^2+1)^2} \\)",
+          "D. \\( \\frac{A}{x} + \\frac{B}{x-1} + \\frac{Cx+D}{x^2+1} \\)"
+        ],
+        
+        correctAnswers: ["A"],
+        
+        explanation: "**Step 1: Factor the denominator completely**\n\n" +
+          "$x^2 - x = x(x-1)$\n\n" +
+          "$x^4 + 2x^2 + 1 = (x^2)^2 + 2(x^2)(1) + 1^2 = (x^2+1)^2$\n\n" +
+          "The complete factorization is:\n\n" +
+          "$x(x-1)(x^2+1)^2$\n\n" +
+          "**Step 2: Identify each type of factor**\n\n" +
+          "1. **\\(x\\)**: Distinct linear factor → \\( \\frac{A}{x} \\)\n\n" +
+          "2. **\\(x-1\\)**: Distinct linear factor → \\( \\frac{B}{x-1} \\)\n\n" +
+          "3. **\\((x^2+1)^2\\)**: Irreducible quadratic factor with multiplicity 2\n\n" +
+          "**Step 3: Set up terms for the repeated quadratic factor**\n\n" +
+          "For an irreducible quadratic \\((x^2+1)\\) repeated twice, we need:\n\n" +
+          "- \\( \\frac{Cx+D}{x^2+1} \\) (for the first power)\n" +
+          "- \\( \\frac{Ex+F}{(x^2+1)^2} \\) (for the second power)\n\n" +
+          "**Note:** Each irreducible quadratic term requires a **linear numerator** (\\(Cx+D\\), not just \\(C\\)).\n\n" +
+          "**Step 4: Combine all terms**\n\n" +
+          "$\\frac{x^5+1}{x(x-1)(x^2+1)^2} = \\frac{A}{x} + \\frac{B}{x-1} + \\frac{Cx+D}{x^2+1} + \\frac{Ex+F}{(x^2+1)^2}$\n\n" +
+          "**Answer: A**\n\n" +
+          "**Key Concept - Partial Fraction Rules:**\n\n" +
+          "1. **Distinct linear factor** \\((ax+b)\\): Use \\( \\frac{A}{ax+b} \\)\n" +
+          "2. **Repeated linear factor** \\((ax+b)^n\\): Use \\( \\frac{A_1}{ax+b} + \\frac{A_2}{(ax+b)^2} + \\cdots + \\frac{A_n}{(ax+b)^n} \\)\n" +
+          "3. **Distinct irreducible quadratic** \\((ax^2+bx+c)\\): Use \\( \\frac{Ax+B}{ax^2+bx+c} \\)\n" +
+          "4. **Repeated irreducible quadratic** \\((ax^2+bx+c)^n\\): Use \\( \\frac{A_1x+B_1}{ax^2+bx+c} + \\frac{A_2x+B_2}{(ax^2+bx+c)^2} + \\cdots \\)"
+      },
+
+      {
+        id: "q104",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "Write out the form of the partial fraction decomposition for the function \\( f(x) = \\frac{x^2}{x^2+x-6} \\). Do not determine the numerical values of the coefficients.",
+        
+        correctAnswers: [
+          "1 + A/(x+3) + B/(x-2)",
+          "1 + A/(x+3) + B/(x-2)",
+          "1+A/(x+3)+B/(x-2)"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**Step 1: Check if the fraction is proper or improper**\n\n" +
+          "The degree of the numerator (2) equals the degree of the denominator (2), so this is an **improper fraction**.\n\n" +
+          "**Step 2: Perform polynomial long division**\n\n" +
+          "$\\frac{x^2}{x^2+x-6}$\n\n" +
+          "Dividing \\(x^2\\) by \\(x^2+x-6\\):\n\n" +
+          "$x^2 \\div (x^2+x-6) = 1 \\text{ with remainder } -x+6$\n\n" +
+          "Therefore:\n\n" +
+          "$\\frac{x^2}{x^2+x-6} = 1 + \\frac{-x+6}{x^2+x-6}$\n\n" +
+          "**Step 3: Factor the denominator of the remainder**\n\n" +
+          "$x^2+x-6 = (x+3)(x-2)$\n\n" +
+          "**Step 4: Set up partial fractions for the proper fraction**\n\n" +
+          "$\\frac{-x+6}{(x+3)(x-2)} = \\frac{A}{x+3} + \\frac{B}{x-2}$\n\n" +
+          "**Step 5: Write the complete decomposition**\n\n" +
+          "$f(x) = 1 + \\frac{A}{x+3} + \\frac{B}{x-2}$\n\n" +
+          "**Answer: \\( 1 + \\frac{A}{x+3} + \\frac{B}{x-2} \\)**\n\n" +
+          "**Key Concept - Improper Fractions:**\n\n" +
+          "When the degree of the numerator ≥ degree of the denominator:\n" +
+          "1. First perform polynomial long division\n" +
+          "2. Get: (polynomial) + (proper fraction)\n" +
+          "3. Then apply partial fraction decomposition only to the proper fraction part\n\n" +
+          "**Rule of thumb:** Always check degrees first! If improper, divide before decomposing."
+      },
+
+      {
+        id: "q105",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "multiple-choice",
+        text: "Evaluate the integral \\( \\displaystyle\\int \\frac{5x+1}{(2x+1)(x-1)}\\,dx \\).",
+        
+        options: [
+          "A. \\( \\frac{1}{2}\\ln|2x+1| + 2\\ln|x-1| + C \\)",
+          "B. \\( \\ln|2x+1| + 2\\ln|x-1| + C \\)",
+          "C. \\( \\frac{1}{2}\\ln|2x+1| + \\ln|x-1| + C \\)",
+          "D. \\( 2\\ln|2x+1| + \\frac{1}{2}\\ln|x-1| + C \\)"
+        ],
+        
+        correctAnswers: ["A"],
+        
+        explanation: "**Step 1: Set up the partial fraction decomposition**\n\n" +
+          "$\\frac{5x+1}{(2x+1)(x-1)} = \\frac{A}{2x+1} + \\frac{B}{x-1}$\n\n" +
+          "Multiply both sides by \\((2x+1)(x-1)\\):\n\n" +
+          "$5x+1 = A(x-1) + B(2x+1)$\n\n" +
+          "**Step 2: Solve for coefficients using strategic values**\n\n" +
+          "**Let \\(x = 1\\):**\n\n" +
+          "$5(1)+1 = A(0) + B(2(1)+1)$\n\n" +
+          "$6 = 3B$\n\n" +
+          "$B = 2$\n\n" +
+          "**Let \\(x = -\\frac{1}{2}\\):**\n\n" +
+          "$5\\left(-\\frac{1}{2}\\right)+1 = A\\left(-\\frac{1}{2}-1\\right) + B(0)$\n\n" +
+          "$-\\frac{5}{2}+1 = A\\left(-\\frac{3}{2}\\right)$\n\n" +
+          "$-\\frac{3}{2} = -\\frac{3}{2}A$\n\n" +
+          "$A = 1$\n\n" +
+          "**Step 3: Rewrite the integral**\n\n" +
+          "$\\int \\left(\\frac{1}{2x+1} + \\frac{2}{x-1}\\right)dx$\n\n" +
+          "**Step 4: Integrate each term**\n\n" +
+          "$\\int \\frac{1}{2x+1}\\,dx = \\frac{1}{2}\\ln|2x+1|$\n\n" +
+          "(Use substitution \\(u = 2x+1\\), \\(du = 2\\,dx\\))\n\n" +
+          "$\\int \\frac{2}{x-1}\\,dx = 2\\ln|x-1|$\n\n" +
+          "**Step 5: Combine**\n\n" +
+          "$= \\frac{1}{2}\\ln|2x+1| + 2\\ln|x-1| + C$\n\n" +
+          "**Answer: A**\n\n" +
+          "**Key Concept - Cover-Up Method:**\n\n" +
+          "To find coefficients quickly:\n" +
+          "1. Set \\(x\\) equal to values that make denominators zero (one at a time)\n" +
+          "2. This eliminates all other terms, leaving just one coefficient\n" +
+          "3. Solve directly for that coefficient\n\n" +
+          "This is faster than expanding and comparing coefficients!"
+      },
+
+      {
+        id: "q106",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "Evaluate the integral \\( \\displaystyle\\int \\frac{3t-2}{t+1}\\,dt \\).",
+        
+        correctAnswers: [
+          "3t - 5ln|t+1| + C",
+          "3t - 5*ln|t+1| + C",
+          "3t-5ln|t+1|+C",
+          "3t - 5ln(t+1) + C"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**Step 1: Check if the fraction is proper**\n\n" +
+          "The degree of the numerator (1) equals the degree of the denominator (1), so this is **improper**.\n\n" +
+          "**Step 2: Perform polynomial long division**\n\n" +
+          "$\\frac{3t-2}{t+1}$\n\n" +
+          "Divide \\(3t\\) by \\(t\\): quotient is \\(3\\)\n\n" +
+          "$3(t+1) = 3t + 3$\n\n" +
+          "Subtract from numerator:\n\n" +
+          "$(3t-2) - (3t+3) = -5$\n\n" +
+          "Therefore:\n\n" +
+          "$\\frac{3t-2}{t+1} = 3 - \\frac{5}{t+1}$\n\n" +
+          "**Step 3: Integrate**\n\n" +
+          "$\\int \\left(3 - \\frac{5}{t+1}\\right)dt$\n\n" +
+          "$= \\int 3\\,dt - \\int \\frac{5}{t+1}\\,dt$\n\n" +
+          "$= 3t - 5\\ln|t+1| + C$\n\n" +
+          "**Answer: \\( 3t - 5\\ln|t+1| + C \\)**\n\n" +
+          "**Key Concept - Quick Division for Linear Terms:**\n\n" +
+          "For \\( \\frac{ax+b}{cx+d} \\), you can quickly perform division:\n\n" +
+          "1. Divide leading coefficients: \\( \\frac{a}{c} \\) is the quotient\n" +
+          "2. Multiply back and subtract to find remainder\n" +
+          "3. Result: \\( \\frac{a}{c} + \\frac{\\text{remainder}}{cx+d} \\)\n\n" +
+          "**Example verification:**\n" +
+          "$3 - \\frac{5}{t+1} = \\frac{3(t+1) - 5}{t+1} = \\frac{3t+3-5}{t+1} = \\frac{3t-2}{t+1}$ ✓"
+      },
+
+      {
+        id: "q107",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "multiple-choice",
+        text: "Evaluate the integral \\( \\displaystyle\\int \\frac{10}{(x-1)(x^2+9)}\\,dx \\).",
+        
+        options: [
+          "A. \\( \\ln|x-1| - \\frac{1}{2}\\ln(x^2+9) - \\frac{1}{3}\\tan^{-1}\\left(\\frac{x}{3}\\right) + C \\)",
+          "B. \\( \\ln|x-1| + \\frac{1}{2}\\ln(x^2+9) + \\frac{1}{3}\\tan^{-1}\\left(\\frac{x}{3}\\right) + C \\)",
+          "C. \\( \\ln|x-1| - \\frac{1}{2}\\ln(x^2+9) + \\frac{1}{3}\\tan^{-1}\\left(\\frac{x}{3}\\right) + C \\)",
+          "D. \\( \\ln|x-1| + \\ln(x^2+9) - \\frac{1}{3}\\tan^{-1}\\left(\\frac{x}{3}\\right) + C \\)"
+        ],
+        
+        correctAnswers: ["A"],
+        
+        explanation: "**Step 1: Set up partial fraction decomposition**\n\n" +
+          "Since \\(x^2+9\\) is irreducible (no real roots), we use:\n\n" +
+          "$\\frac{10}{(x-1)(x^2+9)} = \\frac{A}{x-1} + \\frac{Bx+C}{x^2+9}$\n\n" +
+          "Multiply by \\((x-1)(x^2+9)\\):\n\n" +
+          "$10 = A(x^2+9) + (Bx+C)(x-1)$\n\n" +
+          "**Step 2: Solve for coefficients**\n\n" +
+          "**Let \\(x = 1\\):**\n\n" +
+          "$10 = A(1+9) + 0$\n\n" +
+          "$10 = 10A \\implies A = 1$\n\n" +
+          "**Expand and compare coefficients:**\n\n" +
+          "$10 = Ax^2 + 9A + Bx^2 - Bx + Cx - C$\n\n" +
+          "$10 = (A+B)x^2 + (C-B)x + (9A-C)$\n\n" +
+          "With \\(A = 1\\):\n" +
+          "- Coefficient of \\(x^2\\): \\(0 = 1+B \\implies B = -1\\)\n" +
+          "- Constant term: \\(10 = 9-C \\implies C = -1\\)\n" +
+          "- Check \\(x\\) term: \\(C-B = -1-(-1) = 0\\) ✓\n\n" +
+          "**Step 3: Rewrite and integrate**\n\n" +
+          "$\\int \\left(\\frac{1}{x-1} + \\frac{-x-1}{x^2+9}\\right)dx$\n\n" +
+          "$= \\int \\frac{1}{x-1}\\,dx - \\int \\frac{x}{x^2+9}\\,dx - \\int \\frac{1}{x^2+9}\\,dx$\n\n" +
+          "**First integral:**\n\n" +
+          "$\\int \\frac{1}{x-1}\\,dx = \\ln|x-1|$\n\n" +
+          "**Second integral** (use \\(u = x^2+9\\), \\(du = 2x\\,dx\\)):\n\n" +
+          "$\\int \\frac{x}{x^2+9}\\,dx = \\frac{1}{2}\\ln(x^2+9)$\n\n" +
+          "**Third integral** (use formula \\(\\int \\frac{1}{x^2+a^2}\\,dx = \\frac{1}{a}\\tan^{-1}\\left(\\frac{x}{a}\\right)\\) with \\(a=3\\)):\n\n" +
+          "$\\int \\frac{1}{x^2+9}\\,dx = \\frac{1}{3}\\tan^{-1}\\left(\\frac{x}{3}\\right)$\n\n" +
+          "**Step 4: Combine**\n\n" +
+          "$= \\ln|x-1| - \\frac{1}{2}\\ln(x^2+9) - \\frac{1}{3}\\tan^{-1}\\left(\\frac{x}{3}\\right) + C$\n\n" +
+          "**Answer: A**\n\n" +
+          "**Key Concept - Irreducible Quadratics:**\n\n" +
+          "When you have \\(\\frac{Bx+C}{x^2+a^2}\\), split it:\n" +
+          "- \\(\\frac{Bx}{x^2+a^2}\\): Use substitution (leads to logarithm)\n" +
+          "- \\(\\frac{C}{x^2+a^2}\\): Use arctangent formula\n\n" +
+          "**Important formula:** \\(\\displaystyle\\int \\frac{1}{x^2+a^2}\\,dx = \\frac{1}{a}\\tan^{-1}\\left(\\frac{x}{a}\\right) + C\\)"
+      },
+
+      {
+        id: "q108",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "Evaluate the integral \\( \\displaystyle\\int \\frac{e^{2x}}{e^{2x}+3e^x+2}\\,dx \\).",
+        
+        correctAnswers: [
+          "-ln|e^x+1| + 2ln|e^x+2| + C",
+          "-ln(e^x+1) + 2ln(e^x+2) + C",
+          "2ln(e^x+2) - ln(e^x+1) + C",
+          "ln[(e^x+2)^2/(e^x+1)] + C"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**Step 1: Make a substitution**\n\n" +
+          "Let \\( u = e^x \\), then \\( du = e^x\\,dx \\), which means \\( dx = \\frac{du}{e^x} = \\frac{du}{u} \\)\n\n" +
+          "Also: \\( e^{2x} = (e^x)^2 = u^2 \\)\n\n" +
+          "The integral becomes:\n\n" +
+          "$\\int \\frac{e^x \\cdot e^x\\,dx}{(e^x)^2 + 3e^x + 2} = \\int \\frac{u \\cdot du}{u^2 + 3u + 2}$\n\n" +
+          "**Step 2: Factor and set up partial fractions**\n\n" +
+          "$u^2 + 3u + 2 = (u+1)(u+2)$\n\n" +
+          "$\\frac{u}{(u+1)(u+2)} = \\frac{A}{u+1} + \\frac{B}{u+2}$\n\n" +
+          "$u = A(u+2) + B(u+1)$\n\n" +
+          "**Let \\(u = -1\\):** \\(-1 = A(1) \\implies A = -1\\)\n\n" +
+          "**Let \\(u = -2\\):** \\(-2 = B(-1) \\implies B = 2\\)\n\n" +
+          "**Step 3: Integrate in terms of \\(u\\)**\n\n" +
+          "$\\int \\left(\\frac{-1}{u+1} + \\frac{2}{u+2}\\right)du$\n\n" +
+          "$= -\\ln|u+1| + 2\\ln|u+2| + C$\n\n" +
+          "**Step 4: Substitute back \\(u = e^x\\)**\n\n" +
+          "$= -\\ln|e^x+1| + 2\\ln|e^x+2| + C$\n\n" +
+          "Since \\(e^x > 0\\) always, \\(e^x+1\\) and \\(e^x+2\\) are always positive, so we can drop absolute values:\n\n" +
+          "$= -\\ln(e^x+1) + 2\\ln(e^x+2) + C$\n\n" +
+          "**Alternative form using logarithm properties:**\n\n" +
+          "$= \\ln\\left(\\frac{(e^x+2)^2}{e^x+1}\\right) + C$\n\n" +
+          "**Answer: \\( -\\ln(e^x+1) + 2\\ln(e^x+2) + C \\)**\n\n" +
+          "**Key Concept - Exponential Substitution:**\n\n" +
+          "When you see expressions like \\(e^{2x} + ae^x + b\\), use \\(u = e^x\\):\n" +
+          "1. Converts exponential to polynomial in \\(u\\)\n" +
+          "2. Makes the problem algebraic/rational\n" +
+          "3. Remember: \\(du = e^x\\,dx\\), so you need an \\(e^x\\) factor in the numerator\n\n" +
+          "This technique also works for similar patterns like \\(\\sin^2 x + a\\sin x + b\\) with \\(u = \\sin x\\)."
+      },
+
+      {
+        id: "q109",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "Evaluate the integral \\( \\displaystyle\\int \\frac{\\sec^2 t}{\\tan^2 t + 3\\tan t + 2}\\,dt \\).",
+        
+        correctAnswers: [
+          "ln|(tan(t)+1)/(tan(t)+2)| + C",
+          "ln|tan(t)+1| - ln|tan(t)+2| + C",
+          "ln|(tan t+1)/(tan t+2)| + C"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "**Step 1: Make a trigonometric substitution**\n\n" +
+          "Let \\( u = \\tan t \\)\n\n" +
+          "Then \\( du = \\sec^2 t\\,dt \\)\n\n" +
+          "The integral becomes:\n\n" +
+          "$\\int \\frac{du}{u^2 + 3u + 2}$\n\n" +
+          "**Step 2: Factor the denominator**\n\n" +
+          "$u^2 + 3u + 2 = (u+1)(u+2)$\n\n" +
+          "**Step 3: Set up partial fractions**\n\n" +
+          "$\\frac{1}{(u+1)(u+2)} = \\frac{A}{u+1} + \\frac{B}{u+2}$\n\n" +
+          "$1 = A(u+2) + B(u+1)$\n\n" +
+          "**Let \\(u = -1\\):** \\(1 = A(1) \\implies A = 1\\)\n\n" +
+          "**Let \\(u = -2\\):** \\(1 = B(-1) \\implies B = -1\\)\n\n" +
+          "**Step 4: Integrate in terms of \\(u\\)**\n\n" +
+          "$\\int \\left(\\frac{1}{u+1} - \\frac{1}{u+2}\\right)du$\n\n" +
+          "$= \\ln|u+1| - \\ln|u+2| + C$\n\n" +
+          "Using logarithm properties:\n\n" +
+          "$= \\ln\\left|\\frac{u+1}{u+2}\\right| + C$\n\n" +
+          "**Step 5: Substitute back \\(u = \\tan t\\)**\n\n" +
+          "$= \\ln\\left|\\frac{\\tan t + 1}{\\tan t + 2}\\right| + C$\n\n" +
+          "**Answer: \\( \\ln\\left|\\frac{\\tan t + 1}{\\tan t + 2}\\right| + C \\)**\n\n" +
+          "**Key Concept - Trigonometric Substitutions:**\n\n" +
+          "When you see expressions involving trigonometric functions, look for substitutions:\n\n" +
+          "| **If you see...** | **Try substitution** | **Because** |\n" +
+          "|---|---|---|\n" +
+          "| \\(\\sec^2 x\\) with \\(\\tan x\\) | \\(u = \\tan x\\) | \\(du = \\sec^2 x\\,dx\\) |\n" +
+          "| \\(\\sin x\\) with \\(\\cos x\\) | \\(u = \\sin x\\) or \\(u = \\cos x\\) | Derivatives match |\n" +
+          "| \\(\\sec x \\tan x\\) with \\(\\sec x\\) | \\(u = \\sec x\\) | \\(du = \\sec x \\tan x\\,dx\\) |\n\n" +
+          "The key is recognizing when the derivative of one trig function appears with another."
+      },
+
+      {
+        id: "q110",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "multiple-choice",
+        text: "Evaluate the integral \\( \\displaystyle\\int\\frac{1}{\\sqrt{x}-\\sqrt[3]{x}}\\,dx \\) using the substitution \\( u=\\sqrt[6]{x} \\). Which of the following is the correct result?",
+        
+        options: [
+          "A. \\( 2\\sqrt{x} + 3\\sqrt[3]{x} + 6\\sqrt[6]{x} + 6\\ln|\\sqrt[6]{x}-1| + C \\)",
+          "B. \\( 2\\sqrt{x} - 3\\sqrt[3]{x} + 6\\sqrt[6]{x} + 6\\ln|\\sqrt[6]{x}-1| + C \\)",
+          "C. \\( 2\\sqrt{x} + 3\\sqrt[3]{x} - 6\\sqrt[6]{x} + 6\\ln|\\sqrt[6]{x}-1| + C \\)",
+          "D. \\( \\sqrt{x} + 3\\sqrt[3]{x} + 6\\sqrt[6]{x} + 6\\ln|\\sqrt[6]{x}-1| + C \\)"
+        ],
+        
+        correctAnswers: ["A"],
+        
+        explanation: "This problem uses a **radical substitution** to eliminate fractional exponents and create a rational function.\n\n" +
+          "### Step 1: Apply the substitution\n" +
+          "Let \\( u = \\sqrt[6]{x} = x^{1/6} \\), then:\n" +
+          "- \\( x = u^6 \\)\n" +
+          "- \\( dx = 6u^5 \\, du \\)\n" +
+          "- \\( \\sqrt{x} = (u^6)^{1/2} = u^3 \\)\n" +
+          "- \\( \\sqrt[3]{x} = (u^6)^{1/3} = u^2 \\)\n\n" +
+          "**Why this substitution?** The LCM of the indices (2 and 3) is 6, so \\( u = x^{1/6} \\) will eliminate both radicals.\n\n" +
+          "### Step 2: Transform the integral\n" +
+          "$$\\int \\frac{1}{\\sqrt{x}-\\sqrt[3]{x}}\\,dx = \\int \\frac{1}{u^3 - u^2} \\cdot 6u^5 \\, du$$\n\n" +
+          "$$= \\int \\frac{6u^5}{u^2(u-1)} \\, du = \\int \\frac{6u^3}{u-1} \\, du$$\n\n" +
+          "### Step 3: Polynomial long division\n" +
+          "Since the degree of the numerator (3) is greater than the denominator (1), we use long division:\n\n" +
+          "$$\\frac{6u^3}{u-1} = 6u^2 + 6u + 6 + \\frac{6}{u-1}$$\n\n" +
+          "**Verification:** \\( (u-1)(6u^2 + 6u + 6) + 6 = 6u^3 - 6u^2 + 6u^2 - 6u + 6u - 6 + 6 = 6u^3 \\) ✓\n\n" +
+          "### Step 4: Integrate\n" +
+          "$$\\int \\left(6u^2 + 6u + 6 + \\frac{6}{u-1}\\right) du$$\n\n" +
+          "$$= 2u^3 + 3u^2 + 6u + 6\\ln|u-1| + C$$\n\n" +
+          "### Step 5: Substitute back \\( u = \\sqrt[6]{x} \\)\n" +
+          "$$= 2(\\sqrt[6]{x})^3 + 3(\\sqrt[6]{x})^2 + 6\\sqrt[6]{x} + 6\\ln|\\sqrt[6]{x}-1| + C$$\n\n" +
+          "Simplify the exponents:\n" +
+          "- \\( (\\sqrt[6]{x})^3 = x^{3/6} = x^{1/2} = \\sqrt{x} \\)\n" +
+          "- \\( (\\sqrt[6]{x})^2 = x^{2/6} = x^{1/3} = \\sqrt[3]{x} \\)\n\n" +
+          "$$\\boxed{2\\sqrt{x} + 3\\sqrt[3]{x} + 6\\sqrt[6]{x} + 6\\ln|\\sqrt[6]{x}-1| + C}$$\n\n" +
+          "**Answer: A**\n\n" +
+          "**Key Strategy:** For integrals with multiple radicals, substitute \\( u = x^{1/n} \\) where \\( n \\) is the LCM of all radical indices."
+      },
+
+      {
+        id: "q111",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W4",
+        type: "open-ended",
+        text: "Find the volume of the solid generated by rotating the region under the curve \\( y=\\frac{1}{x^{2}+3x+2} \\) from \\( x=0 \\) to \\( x=1 \\) about the y-axis. Express your answer in terms of \\( \\pi \\) and natural logarithms.",
+        
+        correctAnswers: [
+          "2π*ln(9/8)",
+          "2π*ln(9/8)",
+          "2pi*ln(9/8)",
+          "2*π*ln(9/8)",
+          "2*pi*ln(9/8)",
+          "(2π)ln(9/8)",
+          "2πln(9/8)",
+          "2*π*(ln(9) - ln(8))",
+          "2π(ln(9) - ln(8))",
+          "2π(2ln(3) - 3ln(2))",
+          "2*pi*(ln(9) - ln(8))",
+          "2pi(ln(9) - ln(8))"
+        ],
+        
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.001,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "This problem uses the **method of cylindrical shells** to find a volume of revolution about the y-axis.\n\n" +
+          "### Step 1: Choose the method\n" +
+          "When rotating about the **y-axis**, cylindrical shells are often easier than washers.\n\n" +
+          "**Shell Method Formula:**\n" +
+          "$$V = 2\\pi \\int_{a}^{b} x \\cdot f(x) \\, dx$$\n\n" +
+          "where \\( x \\) is the **radius** of each shell and \\( f(x) \\) is the **height**.\n\n" +
+          "### Step 2: Set up the integral\n" +
+          "$$V = 2\\pi \\int_{0}^{1} x \\cdot \\frac{1}{x^2+3x+2} \\, dx = 2\\pi \\int_{0}^{1} \\frac{x}{x^2+3x+2} \\, dx$$\n\n" +
+          "### Step 3: Factor the denominator\n" +
+          "$$x^2 + 3x + 2 = (x+1)(x+2)$$\n\n" +
+          "So the integral becomes:\n" +
+          "$$V = 2\\pi \\int_{0}^{1} \\frac{x}{(x+1)(x+2)} \\, dx$$\n\n" +
+          "### Step 4: Partial fraction decomposition\n" +
+          "$$\\frac{x}{(x+1)(x+2)} = \\frac{A}{x+1} + \\frac{B}{x+2}$$\n\n" +
+          "Multiply both sides by \\( (x+1)(x+2) \\):\n" +
+          "$$x = A(x+2) + B(x+1)$$\n\n" +
+          "**Find A:** Let \\( x = -1 \\):\n" +
+          "$$-1 = A(1) \\implies A = -1$$\n\n" +
+          "**Find B:** Let \\( x = -2 \\):\n" +
+          "$$-2 = B(-1) \\implies B = 2$$\n\n" +
+          "### Step 5: Integrate\n" +
+          "$$\\int_{0}^{1} \\left(\\frac{-1}{x+1} + \\frac{2}{x+2}\\right) dx$$\n\n" +
+          "$$= \\left[-\\ln|x+1| + 2\\ln|x+2|\\right]_0^1$$\n\n" +
+          "**Evaluate at upper limit** \\( x = 1 \\):\n" +
+          "$$-\\ln(2) + 2\\ln(3)$$\n\n" +
+          "**Evaluate at lower limit** \\( x = 0 \\):\n" +
+          "$$-\\ln(1) + 2\\ln(2) = 0 + 2\\ln(2) = 2\\ln(2)$$\n\n" +
+          "**Subtract:**\n" +
+          "$$(-\\ln(2) + 2\\ln(3)) - (2\\ln(2)) = 2\\ln(3) - 3\\ln(2)$$\n\n" +
+          "### Step 6: Simplify using logarithm properties\n" +
+          "$$2\\ln(3) - 3\\ln(2) = \\ln(3^2) - \\ln(2^3) = \\ln(9) - \\ln(8) = \\ln\\left(\\frac{9}{8}\\right)$$\n\n" +
+          "### Step 7: Final volume\n" +
+          "$$\\boxed{V = 2\\pi \\ln\\left(\\frac{9}{8}\\right)}$$\n\n" +
+          "**Numerical approximation:** \\( V \\approx 2\\pi(0.1178) \\approx 0.740 \\) cubic units\n\n" +
+          "**Key Concept:** For rotation about the y-axis, shells often simplify the calculation compared to the washer method, especially when the function is given as \\( y = f(x) \\)."
+      },
+
+
 ]

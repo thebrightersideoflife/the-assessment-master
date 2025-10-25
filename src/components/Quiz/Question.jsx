@@ -331,12 +331,23 @@ const Question = ({
           )}
 
           {/* Show explanation if available and visible */}
-          {showExplanation && question.explanation && (
-            <div className="mt-3 p-3 bg-white/70 rounded-lg border border-gray-200">
-              <p className="font-semibold text-gray-800 mb-2">Explanation:</p>
-              <div className="text-gray-700">{renderMath(question.explanation)}</div>
-            </div>
-          )}
+          {showExplanation && question.explanation && (() => {
+            // DEBUG: Log explanation details
+            console.log('=== QUESTION COMPONENT DEBUG ===');
+            console.log('FULL EXPLANATION LENGTH:', question.explanation.length);
+            console.log('EXPLANATION FIRST 300 CHARS:', question.explanation.substring(0, 300));
+            console.log('EXPLANATION LAST 300 CHARS:', question.explanation.substring(question.explanation.length - 300));
+            console.log('HAS TABLE MARKERS:', question.explanation.includes('|'));
+            console.log('TABLE LINES COUNT:', question.explanation.split('\n').filter(l => l.includes('|')).length);
+            console.log('================================');
+            
+            return (
+              <div className="mt-3 p-3 bg-white/70 rounded-lg border border-gray-200">
+                <p className="font-semibold text-gray-800 mb-2">Explanation:</p>
+                <div className="text-gray-700">{renderMath(question.explanation)}</div>
+              </div>
+            );
+          })()}
 
           {/* Show suggestions/hints for incorrect answers */}
           {!feedback.isCorrect && feedback.suggestions?.length > 0 && (

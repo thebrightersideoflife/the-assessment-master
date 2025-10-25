@@ -16,26 +16,163 @@ const sanitizeMathText = (text) => {
 };
 
 /**
- * Enhanced text renderer: handles LaTeX, markdown, and line breaks.
+ * Check if a line is part of a markdown table
+ */
+const isTableLine = (line) => {
+  const trimmed = line.trim();
+  return trimmed.startsWith('|') && trimmed.endsWith('|') && (trimmed.match(/\|/g) || []).length >= 3;
+};
+
+/**
+ * Parse markdown table rows
+ */
+const parseTableRow = (line) => {
+  return line
+    .split('|')
+    .slice(1, -1)
+    .map(cell => cell.trim());
+};
+
+/**
+ * Check if a line is a table separator (e.g., |---|---|---| or |---|---|)
+ */
+const isTableSeparator = (line) => {
+  const trimmed = line.trim();
+  // Must start with |, end with |, and contain only |, -, :, and whitespace
+  // Must have at least one instance of ---
+  const hasOnlyValidChars = /^[\|\-:\s]+$/.test(trimmed);
+  const startsAndEndsCorrectly = trimmed.startsWith('|') && trimmed.endsWith('|');
+  const hasTripleDash = trimmed.includes('---');
+  
+  return hasOnlyValidChars && startsAndEndsCorrectly && hasTripleDash;
+};
+
+/**
+ * Process markdown tables in text - returns array of blocks
+ */
+const processTablesInText = (text) => {
+  const lines = text.split('\n');
+  const result = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+    const trimmedLine = line.trim();
+
+    // Check if this is the start of a table
+    if (isTableLine(line)) {
+      // Look ahead to see if the next line is a separator
+      const nextLineIdx = i + 1;
+      
+      if (nextLineIdx < lines.length && isTableSeparator(lines[nextLineIdx])) {
+        const tableLines = [line, lines[nextLineIdx]]; // Header and separator
+        i = nextLineIdx + 1;
+
+        // Collect all subsequent table rows
+        while (i < lines.length && isTableLine(lines[i]) && !isTableSeparator(lines[i])) {
+          tableLines.push(lines[i]);
+          i++;
+        }
+
+        // Parse the table
+        const headers = parseTableRow(tableLines[0]);
+        const rows = tableLines.slice(2).map(parseTableRow); // Skip header and separator
+
+        result.push({
+          type: 'table',
+          headers,
+          rows
+        });
+        
+        continue;
+      }
+    }
+
+    // Not a table, handle as text or break
+    if (trimmedLine !== '') {
+      result.push({
+        type: 'text',
+        content: line
+      });
+    } else {
+      result.push({
+        type: 'break'
+      });
+    }
+    i++;
+  }
+
+  return result;
+};
+
+/**
+ * Render a markdown table
+ */
+const renderTable = (headers, rows, key) => {
+  return (
+    <div key={key} className="my-6 overflow-x-auto">
+      <table className="min-w-full border-collapse border border-gray-300 shadow-sm">
+        <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
+          <tr>
+            {headers.map((header, idx) => (
+              <th
+                key={idx}
+                className="border border-gray-300 px-4 py-3 text-left font-semibold text-gray-800"
+              >
+                {processLineWithMathAndBold(header)}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, rowIdx) => (
+            <tr 
+              key={rowIdx} 
+              className={rowIdx % 2 === 0 ? 'bg-white hover:bg-gray-50' : 'bg-gray-50 hover:bg-gray-100'}
+            >
+              {row.map((cell, cellIdx) => (
+                <td key={cellIdx} className="border border-gray-300 px-4 py-3 text-gray-700">
+                  {processLineWithMathAndBold(cell)}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+/**
+ * Enhanced text renderer: handles LaTeX, markdown tables, bold text, and line breaks.
  */
 export const renderTextWithMathAndMarkdown = (text) => {
   if (!text) return null;
 
   try {
     const cleanText = sanitizeMathText(text);
-    const lines = cleanText.split('\n');
-    
-    return lines.map((line, lineIndex) => (
-      <React.Fragment key={lineIndex}>
-        {processLineWithMathAndBold(line)}
-        {lineIndex < lines.length - 1 && <br />}
-      </React.Fragment>
-    ));
+    const blocks = processTablesInText(cleanText);
+
+    return blocks.map((block, blockIdx) => {
+      if (block.type === 'table') {
+        return renderTable(block.headers, block.rows, `table-${blockIdx}`);
+      } else if (block.type === 'text') {
+        return (
+          <React.Fragment key={`text-${blockIdx}`}>
+            {processLineWithMathAndBold(block.content)}
+            <br />
+          </React.Fragment>
+        );
+      } else if (block.type === 'break') {
+        return <br key={`break-${blockIdx}`} />;
+      }
+      return null;
+    });
   } catch (error) {
-    console.error('Text rendering error:', error, 'Text:', text);
+    console.error('Text rendering error:', error);
     return (
       <span className="text-red-600">
-        {text} (Rendering failed)
+        Error rendering content
       </span>
     );
   }
@@ -45,6 +182,8 @@ export const renderTextWithMathAndMarkdown = (text) => {
  * Process a single line: handle both bold and math
  */
 const processLineWithMathAndBold = (line) => {
+  if (!line) return null;
+  
   const boldRegex = /\*\*(.*?)\*\*/g;
   const segments = [];
   let lastIndex = 0;
@@ -96,6 +235,8 @@ const processLineWithMathAndBold = (line) => {
  * Process math delimiters in text
  */
 const processMathInText = (text) => {
+  if (!text) return null;
+  
   const mathRegex =
     /(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)|\$[^\$\n]+?\$)/g;
   const parts = text.split(mathRegex).filter(Boolean);
@@ -121,8 +262,7 @@ const processMathInText = (text) => {
  * TextRenderer Component - Wraps the rendering logic
  */
 const TextRenderer = ({ content }) => {
-  return <>{renderTextWithMathAndMarkdown(content)}</>;
+  return <div className="text-renderer-wrapper">{renderTextWithMathAndMarkdown(content)}</div>;
 };
 
-// ✅ ADD DEFAULT EXPORT
 export default TextRenderer;
