@@ -11,6 +11,9 @@ const MathSymbolPalette = ({ onInsert }) => {
     { symbol: "Δ", desc: "Delta (change)" },
     { symbol: "θ", desc: "Theta (angle)" },
     { symbol: "≈", desc: "Approximately equal" },
+    { symbol: "°C", desc: "Degrees Celsius" },
+    { symbol: "°F", desc: "Degrees Fahrenheit" },
+    { symbol: "^", desc: "Exponentiation" },
 
     // Logarithm functions
     { symbol: "log(", desc: "Logarithm base 10" },

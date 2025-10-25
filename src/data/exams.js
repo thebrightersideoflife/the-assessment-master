@@ -129,22 +129,35 @@ export const exams = [
           requiredUnit: null
         },
         points: 5,
-        explanation: "**Midpoint Riemann Sum with \\( n = 2 \\):**\n\n" +
-          "**Step 1:** Calculate width \\( \\Delta x \\)\n" +
-          "$$\\Delta x = \\frac{e - 1}{2} \\approx \\frac{2.718 - 1}{2} = 0.859$$\n\n" +
-          "**Step 2:** Determine partition points\n" +
-          "$$[1, 1.859] \\text{ and } [1.859, 2.718]$$\n\n" +
-          "**Step 3:** Find midpoints\n" +
-          "- \\( c_1 = 1 + \\frac{\\Delta x}{2} \\approx 1.4295 \\)\n" +
-          "- \\( c_2 = e - \\frac{\\Delta x}{2} \\approx 2.2885 \\)\n\n" +
-          "**Step 4:** Calculate \\( f(c_i) \\)\n" +
-          "- \\( f(c_1) = (1.4295)^2 \\ln(1.4295) \\approx 2.0434 \\times 0.3573 \\approx 0.7303 \\)\n" +
-          "- \\( f(c_2) = (2.2885)^2 \\ln(2.2885) \\approx 5.2372 \\times 0.8278 \\approx 4.3359 \\)\n\n" +
-          "**Step 5:** Calculate \\( M_2 \\)\n" +
-          "$$M_2 = \\Delta x [f(c_1) + f(c_2)]$$\n" +
-          "$$M_2 \\approx 0.859 [0.7303 + 4.3359]$$\n" +
-          "$$M_2 \\approx 0.859 \\times 5.0662 \\approx 4.35$$\n\n" +
-          "**Answer: 4.35**"
+        explanation: "**1. Find the Rectangle Width (\\( \\Delta x \\))**\n" +
+          "The interval is \\( [a, b] = [1, e] \\) and \\( n = 2 \\) rectangles.\n" +
+          "$$ \\Delta x = \\frac{b - a}{n} = \\frac{e - 1}{2} $$" +
+          "Using \\( e \\approx 2.71828 \\), we get \\( \\Delta x \\approx \\frac{2.71828 - 1}{2} \\approx 0.85914 $$" +
+          "\n" +
+          "**2. Determine Subintervals and Midpoints (\\( c_i \\))**\n" +
+          "First, find the partition points \\( x_0, x_1, x_2 \\):\n" +
+          "\\( x_0 = a = 1 \\)\n" +
+          "\\( x_1 = a + \\Delta x = 1 + \\frac{e - 1}{2} = \\frac{1 + e}{2} \\approx 1.85914 \\)\n" +
+          "\\( x_2 = a + 2\\Delta x = 1 + 2(\\frac{e - 1}{2}) = e \\approx 2.71828 \\)\n\n" +
+          "The subintervals are \\( [1, \\frac{1+e}{2}] \\) and \\( [\\frac{1+e}{2}, e] \\). Now find their midpoints:\n" +
+          "**Midpoint 1 (\\( c_1 \\)):**\n" +
+          "$$ c_1 = \\frac{x_0 + x_1}{2} = \\frac{1 + (\\frac{1 + e}{2})}{2} = \\frac{(\\frac{2 + 1 + e}{2})}{2} = \\frac{3 + e}{4} \\approx 1.42957 $$" +
+          "**Midpoint 2 (\\( c_2 \\)):**\n" +
+          "$$ c_2 = \\frac{x_1 + x_2}{2} = \\frac{(\\frac{1 + e}{2}) + e}{2} = \\frac{(\\frac{1 + e + 2e}{2})}{2} = \\frac{1 + 3e}{4} \\approx 2.28871 $$" +
+          "\n" +
+          "**3. Evaluate the Function at the Midpoints (\\( f(c_i) \\))**\n" +
+          "The function is \\( f(x) = x^2 \\ln(x) \\).\n" +
+          "$$ f(c_1) = f(\\frac{3 + e}{4}) \\approx f(1.42957) = (1.42957)^2 \\ln(1.42957) \\approx 0.73039 $$" +
+          "$$ f(c_2) = f(\\frac{1 + 3e}{4}) \\approx f(2.28871) = (2.28871)^2 \\ln(2.28871) \\approx 4.33745 $$" +
+          "\n" +
+          "**4. Calculate the Midpoint Sum (\\( M_2 \\))**\n" +
+          "The sum is the total area of the rectangles: \\( M_n = \\Delta x \\sum_{i=1}^{n} f(c_i) \\).\n" +
+          "$$ M_2 = \\Delta x [f(c_1) + f(c_2)] $$" +
+          "$$ M_2 \\approx 0.85914 \\times [0.73039 + 4.33745] $$" +
+          "$$ M_2 \\approx 0.85914 \\times [5.06784] $$" +
+          "$$ M_2 \\approx 4.3538 $$" +
+          "\n" +
+          "Rounding to two decimal places gives **4.35**. More precise answers like **4.353** are also correct."
       },
       
       // Question A2.2
@@ -773,7 +786,141 @@ export const exams = [
           "**Answer: A. \\( -2x^2 e^{x^3}\\sin\\left(\\int_{1}^{x} 2t^2 e^{t^3}\\,dt\\right) \\)**"
       }
     ]
+  },
+
+  {
+    id: "ITMTB_EXAM3",
+    moduleId: "ITMTB",
+    title: "ITMTB Exam: Interpreting Graphs",
+    description: "Applications of Integration: Covers reading graph data to answer questions.",
+    examBy: "Mr Kwadwo Afrane-Okese",
+    timeLimit: null,
+    passingScore: 10,
+    
+    // Sections array removed as new questions do not map to it.
+    sections: [], 
+    
+    questions: [
+      // ============================================================
+      // SECTION A: Graph Interpretation
+      // ============================================================
+      
+      // Question 1
+      {
+        id: "exam3_q1",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W_Exam3",
+        type: "open-ended",
+        text: "The figure shows graphs of the temperatures for an East Coast city (blue curve) and a West Coast city (red curve) over a 24-hour period. Which city had the highest temperature that day?",
+        image: {
+          src: "/images/ITMTB_Exam_East_And_West_Coast_Temp.png",
+          alt: "Graphs of East Coast (blue) and West Coast (red) temperatures over a 24-hour period.",
+          caption: "Temperature (T in °C) vs. Time (t in hours). The blue curve is the East Coast, and the red curve is the West Coast."
+        },
+        correctAnswers: [
+          "West Coast",
+          "West",
+          "The West Coast",
+          "Red",
+          "Red Curve"
+        ],
+        options: {
+          allowSymbolic: false,
+          tolerance: 0,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 2,
+        explanation: "To find the highest temperature, we look for the peak (absolute maximum) of both curves on the interval \\( [0, 24] \\).\n\n" +
+          "- The **East Coast (blue curve)** reaches its maximum temperature of approximately **22°C** at $t \\approx 10$ hours.\n" +
+          "- The **West Coast (red curve)** reaches its maximum temperature of approximately **25°C** at $t \\approx 13$ hours.\n\n" +
+          "Since 25°C > 22°C, the **West Coast** had the highest temperature."
+      },
+      
+      // Question 2
+      {
+        id: "exam3_q2",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W_Exam3",
+        type: "open-ended",
+        text: "Using the **Midpoint Rule** with \\( n = 12 \\) subintervals, estimate the average temperature for the **East Coast** city (blue curve). (Provide a numerical answer in °C).",
+        image: {
+          src: "/images/ITMTB_Exam_East_And_West_Coast_Temp.png",
+          alt: "Graphs of East Coast (blue) and West Coast (red) temperatures over a 24-hour period.",
+          caption: "Temperature (T in °C) vs. Time (t in hours). The blue curve is the East Coast, and the red curve is the West Coast."
+        },
+        correctAnswers: [
+          "17.5",
+          "17.5 C",
+          "17.5°C"
+        ],
+        options: {
+          allowSymbolic: false,
+          tolerance: 0.2,
+          acceptedUnits: ["C", "°C"],
+          requiredUnit: false,
+          convertToCanonicalUnit: false
+        },
+        points: 5,
+        explanation: "**1. Find Interval Width (\\( \\Delta t \\))**\n" +
+          "The total time is 24 hours and \\( n = 12 \\) intervals.\n" +
+          "$$ \\Delta t = \\frac{b - a}{n} = \\frac{24 - 0}{12} = 2 \\text{ hours} $$" +
+          "\n" +
+          "**2. Find Midpoints (\\( t_i \\))**\n" +
+          "The intervals are [0, 2], [2, 4], ..., [22, 24]. The midpoints are:\n" +
+          "\\( t_1=1, t_2=3, t_3=5, t_4=7, t_5=9, t_6=11, t_7=13, t_8=15, t_9=17, t_{10}=19, t_{11}=21, t_{12}=23 \\)\n\n" +
+          "**3. Estimate \\( T(t_i) \\) for East Coast (Blue Curve)**\n" +
+          "We read the approximate temperature values from the blue curve at each midpoint:\n" +
+          "- $T(1) \\approx 15$\n" +
+          "- $T(3) \\approx 15$\n" +
+          "- $T(5) \\approx 16$\n" +
+          "- $T(7) \\approx 18$\n" +
+          "- $T(9) \\approx 21$\n" +
+          "- $T(11) \\approx 22$\n" +
+          "- $T(13) \\approx 19$\n" +
+          "- $T(15) \\approx 20$\n" +
+          "- $T(17) \\approx 14$\n" +
+          "- $T(19) \\approx 18$\n" +
+          "- $T(21) \\approx 17$\n" +
+          "- $T(23) \\approx 15$\n\n" +
+          "**4. Calculate the Average Temperature**\n" +
+          "The average temperature is $T_{\\text{avg}} = \\frac{1}{b-a} \\int_{a}^{b} T(t) \\,dt \\approx \\frac{1}{24} \\left[ \\Delta t \\sum_{i=1}^{12} T(t_i) \\right]$\n" +
+          "$$ T_{\\text{avg}} = \\frac{1}{24} \\left[ 2 \\times (15+15+16+18+21+22+19+20+14+18+17+15) \\right] $$" +
+          "$$ T_{\\text{avg}} = \\frac{1}{12} \\left[ 210 \\right] $$" +
+          "$$ T_{\\text{avg}} = \\boxed{17.5^\\circ\\text{C}} $$"
+      },
+      
+      // Question 3
+      {
+        id: "exam3_q3",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W_Exam3",
+        type: "multiple-choice",
+        text: "An identical Midpoint Rule calculation (\\( n=12 \\)) for the **West Coast** city (red curve) yields an average temperature of approximately **14.4°C**. Given that the East Coast's average was **17.5°C**, which statement is the correct interpretation?",
+        image: {
+          src: "/images/ITMTB_Exam_East_And_West_Coast_Temp.png",
+          alt: "Graphs of East Coast (blue) and West Coast (red) temperatures over a 24-hour period.",
+          caption: "Temperature (T in °C) vs. Time (t in hours). The blue curve is the East Coast, and the red curve is the West Coast."
+        },
+        options: [
+            "A. The East Coast was warmer overall because its average temperature was higher.",
+            "B. The West Coast was warmer overall because its maximum temperature was higher.",
+            "C. The West Coast was warmer overall because its average temperature was higher.",
+            "D. Both cities were equally warm, as the maximum and average temperatures cancel out."
+          ],
+        correctAnswers: [
+          "A"
+        ],
+        points: 3,
+        explanation: "The **average temperature** (the average value of the function over the interval) is the correct measure for which city was 'warmer overall' during the 24-hour period.\n\n" +
+          "- **East Coast $T_{\\text{avg}} \\approx 17.5^\\circ\\text{C}$**\n" +
+          "- **West Coast $T_{\\text{avg}} \\approx 14.4^\\circ\\text{C}$**\n\n" +
+          "Although the West Coast had a higher *peak* temperature (≈25°C), its temperatures were much lower during the night and morning, bringing its average down.\n\n" +
+          "Since $17.5^\\circ\\text{C} > 14.4^\\circ\\text{C}$, the **East Coast was warmer overall**."
+      }
+    ]
   }
+
 ];
 
 // Export utility functions for working with exams

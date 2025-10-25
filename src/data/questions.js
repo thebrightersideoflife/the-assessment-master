@@ -1023,7 +1023,7 @@ export const questions = [
       weekId: "ITMTB_W2",
       type: "open-ended",
       text: "Use the Fundamental Theorem of Calculus, Part 1, combined with the Chain Rule, to find the derivative of the function $$y = \\int_{0}^{\\tan x} e^{-t^{2}}\\,dt$$.",
-      correctAnswers: ["e^(-tan^2 x) * sec^2 x", "e^(-(tan(x))^2) * sec^2(x)"],
+      correctAnswers: ["e^(-tan^2 x) * sec^2 x", "e^(-(tan(x))^2) * sec^2(x)","sec^2 (x) * e^(-tan(x)^2)","sec^2 (x) * e^(-tan^2 (x))"],
       explanation:
         "We apply the **Fundamental Theorem of Calculus, Part 1 (FTC1)** together with the **Chain Rule**:\n\n" +
         "FTC1 states:\n" +

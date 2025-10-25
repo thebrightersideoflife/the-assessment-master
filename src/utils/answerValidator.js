@@ -15,6 +15,10 @@ const UNIT_CONVERSIONS = {
   l: 0.001, ml: 1e-6,
   // Percent
   '%': 0.01,
+  // Temperature (for reference, though not converted to SI)
+  'c': 1, '°c': 1, 'celsius': 1,
+  'f': 1, '°f': 1, 'fahrenheit': 1,
+  'k': 1, 'kelvin': 1,
 };
 
 function parseValueAndUnit(input) {
@@ -41,6 +45,18 @@ function parseValueAndUnit(input) {
  
   if (u) {
     u = u.replace(/²/g, '^2').replace(/³/g, '^3').replace('µ', 'u').replace('μ', 'u');
+    
+    // ✅ CRITICAL FIX: Normalize temperature units
+    // Handle C, °C, c, celsius as equivalent
+    if (u === 'c' || u === '°c' || u === 'celsius') {
+      u = 'C'; // Canonical form
+    }
+    if (u === 'f' || u === '°f' || u === 'fahrenheit') {
+      u = 'F';
+    }
+    if (u === 'k' || u === 'kelvin') {
+      u = 'K';
+    }
   }
  
   return { value: isNaN(val) ? null : val, unit: u, raw: input };
@@ -440,6 +456,15 @@ export class AnswerValidator {
       };
     }
    
+    // ✅ Normalize accepted units to handle case variations
+    const normalizedAcceptedUnits = opts.acceptedUnits.map(u => {
+      const lower = u.toLowerCase();
+      if (lower === 'c' || lower === '°c' || lower === 'celsius') return 'C';
+      if (lower === 'f' || lower === '°f' || lower === 'fahrenheit') return 'F';
+      if (lower === 'k' || lower === 'kelvin') return 'K';
+      return u;
+    });
+   
     // ✅ Strategy 1: Pure numeric comparison (for answers that are just numbers)
     const userNumeric = this.extractNumericValue(userAnswer);
     const allCorrectAreNumeric = correctAnswers.every(ans => {
@@ -487,21 +512,26 @@ export class AnswerValidator {
     const anyCorrectHasUnit = correctAnswers.some(a => parseValueAndUnit(a).unit != null);
    
     if (userParsed.value != null && (userParsed.unit || anyCorrectHasUnit)) {
-      // Check required unit
-      if (opts.requiredUnit && userParsed.unit !== opts.requiredUnit) {
-        const result = {
-          equivalent: false,
-          unitError: true,
-          message: `Unit must be ${opts.requiredUnit}`,
-          method: 'unit'
-        };
-        result.hints = generateHint(userAnswer, correctAnswers, userParsed, opts, result);
-        return result;
+      // ✅ Check required unit with normalization
+      if (opts.requiredUnit) {
+        const normalizedRequired = opts.requiredUnit.toLowerCase() === 'c' || 
+                                   opts.requiredUnit === '°C' ? 'C' : opts.requiredUnit;
+        
+        if (userParsed.unit !== normalizedRequired) {
+          const result = {
+            equivalent: false,
+            unitError: true,
+            message: `Unit must be ${opts.requiredUnit}`,
+            method: 'unit'
+          };
+          result.hints = generateHint(userAnswer, correctAnswers, userParsed, opts, result);
+          return result;
+        }
       }
      
-      // Check accepted units
-      if (opts.acceptedUnits && opts.acceptedUnits.length > 0 && userParsed.unit &&
-          !opts.acceptedUnits.includes(userParsed.unit)) {
+      // ✅ Check accepted units with normalization
+      if (normalizedAcceptedUnits.length > 0 && userParsed.unit &&
+          !normalizedAcceptedUnits.includes(userParsed.unit)) {
         const result = {
           equivalent: false,
           unitError: true,
@@ -517,6 +547,25 @@ export class AnswerValidator {
         const cp = parseValueAndUnit(corr);
         if (cp.value == null) continue;
        
+        // ✅ For temperature, just compare values directly (no SI conversion)
+        if ((userParsed.unit === 'C' || userParsed.unit === 'F' || userParsed.unit === 'K') &&
+            (cp.unit === 'C' || cp.unit === 'F' || cp.unit === 'K')) {
+          const diff = Math.abs(userParsed.value - cp.value);
+          const ok = diff <= Math.abs(cp.value) * opts.tolerance || diff <= opts.tolerance;
+          
+          if (ok) {
+            return {
+              equivalent: true,
+              message: 'Values are equivalent',
+              method: 'unit',
+              details: { user: userParsed.value, correct: cp.value },
+              hints: []
+            };
+          }
+          continue;
+        }
+        
+        // For other units, use SI conversion
         const userSI = toSI(userParsed.value, userParsed.unit || cp.unit);
         const corrSI = toSI(cp.value, cp.unit || userParsed.unit);
        
