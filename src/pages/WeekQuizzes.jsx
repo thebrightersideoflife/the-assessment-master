@@ -19,7 +19,7 @@ const WeekQuizzes = ({ moduleId, weekId }) => {
     return (
       <div className="p-6 text-center bg-white rounded-xl shadow-lg border border-gray-200">
         <p className="text-lg text-gray-700 font-medium mb-2">
-          No quizzes available for this week.
+          No quizzes available for this week (yet😉).
         </p>
         <p className="text-sm text-gray-500">
           📚 Review the week’s material before attempting quizzes.

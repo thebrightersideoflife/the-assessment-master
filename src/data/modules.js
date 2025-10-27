@@ -340,12 +340,12 @@ export const modules = [
       {
         id: "ITMTB_W1",
         name: "Week 1",
-        title: "Integral: Area & Distance Problems, Definite Integrals",
+        title: "Integrals: Area & Distance Problems, Definite Integrals",
         topics: [
       {
           id: "ITMTB_W1_T1",
           name: "Lesson 1: Area & Distance Interpretation",
-          competency: "Assessment Coverage: 5.1",
+          competency: "Assessment Coverage: 5.1 (Prescribed Textbook)",
           explanation: "Interpret integrals or sums geometrically: area under curve or distance traveled over time.",
           example: "If velocity is v(t) = t² on [0,2], area under v(t) is total distance.",
           studyTip: "Draw the velocity graph and think ‘area = distance’.",
@@ -355,7 +355,7 @@ export const modules = [
         {
           id: "ITMTB_W1_T2",
           name: "Lesson 1: Riemann Sums (Left, Right, Midpoint)",
-          competency: "Assessment Coverage: 5.1",
+          competency: "Assessment Coverage: 5.1 (Prescribed Textbook)",
           explanation: "Approximate area by summing rectangles using left endpoints, right endpoints, or midpoints.",
           example: "Approximate ∫₀² x² dx using 4 rectangles and midpoint rule.",
           studyTip: "Start with small n, compare left/right/midpoint to see which is better.",
@@ -365,7 +365,7 @@ export const modules = [
         {
           id: "ITMTB_W1_T3",
           name: "Lesson 1: Definite Integral via Limit of Riemann Sums",
-          competency: "Assessment Coverage: 5.1",
+          competency: "Assessment Coverage: 5.1 (Prescribed Textbook)",
           explanation: "Define the definite integral as the limit of Riemann sums as partition norm → 0.",
           example: "Show limₙ→∞ Σ f(xᵢ*) Δx = ∫ₐᵇ f(x) dx for f(x)=x² on [0,1].",
           studyTip: "Really link the sum notation to integral notation step by step.",
@@ -375,7 +375,7 @@ export const modules = [
         {
           id: "ITMTB_W1_T4",
           name: "Lesson 1: Fundamental Theorem of Calculus",
-          competency: "Assessment Coverage: 5.1",
+          competency: "Assessment Coverage: 5.1 (Prescribed Textbook)",
           explanation: "Relates antiderivatives and definite integrals, enabling evaluation of integrals via antiderivatives.",
           example: "Compute ∫₀¹ x² dx by finding F(x)=x³/3 and using F(1)–F(0).",
           studyTip: "Memorize the statement: ∫ₐᵇ f(x) dx = F(b) – F(a) when F′(x)=f(x).",
@@ -385,7 +385,7 @@ export const modules = [
         {
           id: "ITMTB_W1_T5",
           name: "Lesson 2: Definition of the Definite Integral",
-          competency: "Assessment Coverage: Section 5.2",
+          competency: "Assessment Coverage: Section 5.2 (Prescribed Textbook)",
           explanation: "The definite integral $\\int_a^b f(x)\\,dx$ is defined as the limit of Riemann sums as the number of subintervals approaches infinity and their width approaches zero. It formalizes the idea of summing infinitely many small products $f(x_i^*)\\Delta x$ to find total accumulation over $[a,b]$.",
           example: "For $f(x)=x^2$ on $[0,1]$, divide into $n$ subintervals of width $\\frac{1}{n}$. The Riemann sum using right endpoints is $\\sum \\left(\\frac{i}{n}\\right)^2 \\left(\\frac{1}{n}\\right)$. Taking the limit as $n \\to \\infty$ gives $\\frac{1}{3}$, so $\\int_0^1 x^2\\,dx = \\frac{1}{3}$.",
           studyTip: "Visualize Riemann sums with rectangles. As you increase $n$, the rectangles fit the curve more closely — this helps build intuition before working with formal limits.",
@@ -395,7 +395,7 @@ export const modules = [
         {
           id: "ITMTB_W1_T6",
           name: "Lesson 2: Interpreting Definite Integrals as Net Area",
-          competency: "Assessment Coverage: Section 5.2",
+          competency: "Assessment Coverage: Section 5.2 (Prescribed Textbook)",
           explanation: "A definite integral can be viewed as net signed area between the curve $y=f(x)$ and the $x$-axis over $[a,b]$. Regions above the axis contribute positive area; regions below contribute negative area. The integral equals $A_1 - A_2$, where $A_1$ is area above and $A_2$ is area below the axis.",
           example: "For $f(x)=x^3-6x$ on $[0,3]$, parts of the curve lie above and below the axis. $\\int_0^3 (x^3-6x)\\,dx$ equals the positive area above minus the area below, yielding $-26.75$.",
           studyTip: "Sketch the function before integrating to identify where it's positive or negative. This makes it easier to interpret the integral geometrically.",
@@ -405,7 +405,7 @@ export const modules = [
         {
           id: "ITMTB_W1_T7",
           name: "Lesson 2: Evaluating Definite Integrals Using Limits",
-          competency: "Assessment Coverage: Section 5.2",
+          competency: "Assessment Coverage: Section 5.2 (Prescribed Textbook)",
           explanation: "By Theorem 4, if $f$ is integrable on $[a,b]$, then $\\int_a^b f(x)\\,dx = \\lim_{n \\to \\infty} \\sum f(x_i) \\Delta x$ using right endpoints. This allows us to convert complicated sums to integrals, and vice versa, recognizing patterns in limits.",
           example: "$\\lim_{n \\to \\infty} \\sum_{i=1}^n [x_i^3 + x_i \\sin x_i] \\Delta x$ on $[0,\\pi]$ equals $\\int_0^\\pi (x^3+x \\sin x)\\,dx$ by matching the Riemann sum structure.",
           studyTip: "When faced with a sum in a limit, look for $\\Delta x = \\frac{b-a}{n}$ and $x_i = a + i\\Delta x$. If they match, rewrite as an integral — it simplifies the problem enormously.",
@@ -415,7 +415,7 @@ export const modules = [
         {
           id: "ITMTB_W1_T8",
           name: "Lesson 2: The Midpoint Rule",
-          competency: "Assessment Coverage: Section 5.2",
+          competency: "Assessment Coverage: Section 5.2 (Prescribed Textbook)",
           explanation: "The Midpoint Rule approximates $\\int_a^b f(x)\\,dx$ by sampling at midpoints of subintervals instead of left or right endpoints. This usually gives a better estimate with fewer rectangles because it balances over- and underestimation.",
           example: "To approximate $\\int_1^2 \\frac{1}{x}\\,dx$ with $n=5$ subintervals, use midpoints $1.1, 1.3, 1.5, 1.7, 1.9$ and width $\\Delta x=0.2$. The Midpoint Rule gives approximately $0.692$, close to the exact $\\ln(2) \\approx 0.6931$.",
           studyTip: "For numeric integration without antiderivatives, midpoints usually outperform left or right sums. Use this method for faster, more accurate approximations.",
@@ -425,7 +425,7 @@ export const modules = [
         {
           id: "ITMTB_W1_T9",
           name: "Lesson 2: Properties of the Definite Integral",
-          competency: "Assessment Coverage: Section 5.2",
+          competency: "Assessment Coverage: Section 5.2 (Prescribed Textbook)",
           explanation: "Properties like linearity, additivity over intervals, and reversal of limits simplify integration. For example, $\\int_a^b c\\,dx = c(b-a)$; $\\int_a^b [f(x)+g(x)]\\,dx = \\int_a^b f(x)\\,dx + \\int_a^b g(x)\\,dx$; and $\\int_b^a f(x)\\,dx = -\\int_a^b f(x)\\,dx$.",
           example: "$\\int_0^1 [4+3x^2]\\,dx = \\int_0^1 4\\,dx + 3\\int_0^1 x^2\\,dx = 4(1) + 3\\left(\\frac{1}{3}\\right) = 5$.",
           studyTip: "Memorize these core properties — they let you break complicated integrals into simpler pieces and avoid unnecessary calculations.",
@@ -435,7 +435,7 @@ export const modules = [
         {
           id: "ITMTB_W1_T10",
           name: "Lesson 2: Comparison Properties and Estimation",
-          competency: "Assessment Coverage: Section 5.2",
+          competency: "Assessment Coverage: Section 5.2 (Prescribed Textbook)",
           explanation: "Comparison properties bound integrals using min and max values. If $m \\leq f(x) \\leq M$ on $[a,b]$, then $m(b-a) \\leq \\int_a^b f(x)\\,dx \\leq M(b-a)$. These are useful for quick estimates without full calculation.",
           example: "For $f(x)=e^{-x^2}$ on $[0,1]$, $m=f(1)=e^{-1}$, $M=f(0)=1$. So $e^{-1} \\leq \\int_0^1 e^{-x^2}\\,dx \\leq 1$, giving $0.367 < \\int_0^1 e^{-x^2}\\,dx < 1$.",
           studyTip: "This property is a fast way to check whether your computed integral is reasonable — especially useful on exams when you're unsure of your arithmetic.",
@@ -447,12 +447,12 @@ export const modules = [
       {
         id: "ITMTB_W2",
         name: "Week 2",
-        title: "Integral: Concluding Definite Integrals. Introducing Indefinite Integrals and the Net Change Theorem",
+        title: "Integrals: Concluding Definite Integrals. Introducing Indefinite Integrals and the Net Change Theorem",
         topics: [
           {
             id: "ITMTB_W2_T1",
             name: "Functions Defined as the Definite Integral of Another Function",
-            competency: "Assessment Coverage: 5.3",
+            competency: "Assessment Coverage: 5.3 (Prescribed Textbook)",
             explanation: "FTC1 establishes that differentiation and integration are inverse processes. If $g(x) = \\int_{a}^{x} f(t) \\, dt$ where $f$ is continuous, then $g'(x) = f(x)$. The derivative of a definite integral with respect to its upper limit is the integrand evaluated at the upper limit. When the upper limit is a function $u(x)$, apply the Chain Rule: $\\frac{d}{dx} \\int_{a}^{u(x)} f(t) \\, dt = f(u(x)) \\cdot u'(x)$.",
             example: "For a car with velocity $v(t)$, the position function $s(x) = \\int_{0}^{x} v(t) \\, dt$ represents total displacement. FTC1 gives $s'(x) = v(x)$, confirming that the derivative of position is velocity. For the Fresnel function $S(x) = \\int_{0}^{x} \\sin(\\pi t^2/2) \\, dt$, we get $S'(x) = \\sin(\\pi x^2/2)$ instantly.",
             studyTip: "Verbalize: 'The derivative of the integral from a constant to $x$ is the integrand in terms of $x$.' For composite upper limits like $x^4$, remember the Chain Rule: multiply by the derivative of the upper limit. Sketch $f(t)$ and its area function $g(x)$ to visually confirm that $g'(x)$ matches the sign of $f(x)$.",
@@ -462,7 +462,7 @@ export const modules = [
           {
             id: "ITMTB_W2_T2",
             name: "Evaluating Definite Integrals",
-            competency: "Assessment Coverage: 5.3",
+            competency: "Assessment Coverage: 5.3 (Prescribed Textbook)",
             explanation: "The Fundamental Theorem of Calculus states that if $f$ is continuous on $[a, b]$ and $F$ is any antiderivative of $f$ (meaning $F'(x) = f(x)$), then $\\int_{a}^{b} f(x) \\, dx = F(b) - F(a)$. This provides a simple method for evaluating definite integrals without computing limits of Riemann sums, connecting the area problem directly to antiderivatives.",
             example: "If $v(t)$ is velocity and $s(t)$ is position (antiderivative of velocity), total distance traveled from $t=a$ to $t=b$ is $\\int_{a}^{b} v(t) \\, dt = s(b) - s(a)$. For water flowing into a tank at rate $r(t)$ with volume $V(t)$, change in volume from $t=3$ to $t=6$ is $\\int_{3}^{6} r(t) \\, dt = V(6) - V(3)$.",
             studyTip: "Always verify $f(x)$ is continuous on $[a, b]$ before applying FTC1—discontinuities invalidate the theorem. Use three steps: (1) Find any antiderivative $F(x)$, (2) Evaluate $F(b)$ and $F(a)$, (3) Subtract using notation $F(x)]_{a}^{b}$. Master common antiderivatives with flashcards: $x^n$, $\\sin x$, $\\cos x$, $e^x$, $1/x$.",
@@ -472,7 +472,7 @@ export const modules = [
           {
             id: "ITMTB_W2_T3",
             name: "Indefinite Integrals",
-            competency: "Assessment Coverage: 5.4",
+            competency: "Assessment Coverage: 5.4 (Prescribed Textbook)",
             explanation: "The indefinite integral $\\int f(x) \\, dx$ represents the family of all antiderivatives of $f(x)$. If $\\int f(x) \\, dx = F(x)$, then $F'(x) = f(x)$. The general antiderivative includes an arbitrary constant $C$ (constant of integration) since the derivative of a constant is zero. The indefinite integral is a function (or family of functions), distinguished from the definite integral $\\int_{a}^{b} f(x) \\, dx$, which is a number.",
             example: "Velocity to Position: If $v(t)$ is a car's velocity, then $\\int v(t) \\, dt$ gives the position $s(t)$, where $C$ represents initial position. Marginal Cost to Total Cost: If $C'(x)$ is marginal cost, then $\\int C'(x) \\, dx$ gives total cost $C(x)$, where $C$ represents fixed costs. Common formulas: $\\int x^n \\, dx = \\frac{x^{n+1}}{n+1} + C$ (for $n \\neq -1$), $\\int e^x \\, dx = e^x + C$.",
             studyTip: "Memorize the table of core indefinite integral formulas using flashcards—they're the reverse of derivatives. Practice rewriting complex integrands into simpler forms that match table formulas. Always check your answer by differentiating the result to verify you get the original integrand.",
@@ -482,7 +482,7 @@ export const modules = [
           {
             id: "ITMTB_W2_T4",
             name: "Definite Integrals and FTC2",
-            competency: "Assessment Coverage: 5.4",
+            competency: "Assessment Coverage: 5.4 (Prescribed Textbook)",
             explanation: "FTC2 provides a method for evaluating definite integrals: if $F(x)$ is any antiderivative of continuous function $f(x)$ on $[a,b]$, then $\\int_{a}^{b} f(x) \\, dx = F(b) - F(a)$. The definite integral represents the net area bounded by the graph of $f(x)$, the x-axis, and vertical lines $x=a$ and $x=b$. Areas above the x-axis contribute positively, areas below contribute negatively.",
             example: "Calculating Area: FTC2 allows exact calculation of area under curves. Energy Consumption: If $P(t)$ is power consumption (megawatts) over time, then $\\int_{0}^{24} P(t) \\, dt$ calculates total energy consumed (megawatt-hours) during 24 hours. The integral of power (rate of energy use) is total energy used.",
             studyTip: "Practice the evaluation process: (1) Find antiderivative $F(x)$ (no $C$ needed—it cancels), (2) Evaluate $F(b)$, (3) Evaluate $F(a)$, (4) Subtract $F(b) - F(a)$. Understand net area vs. total area: sketch functions that cross the x-axis. Example: $\\int_{-1}^{1} x^3 \\, dx = 0$ (net area), but total area is positive.",
@@ -492,7 +492,7 @@ export const modules = [
           {
             id: "ITMTB_W2_T5",
             name: "The Net Change Theorem",
-            competency: "Assessment Coverage: 5.4",
+            competency: "Assessment Coverage: 5.4 (Prescribed Textbook)",
             explanation: "The Net Change Theorem is a restatement of FTC2 for rates of change: $\\int_{a}^{b} F'(x) \\, dx = F(b) - F(a)$. The integral of a rate of change $F'(x)$ over $[a,b]$ gives the net change in the original function $F(x)$ between $x=a$ and $x=b$. Net change accounts for both increases and decreases in the quantity $F(x)$.",
             example: "Displacement vs. Distance: If $v(t)$ is velocity, $\\int_{t_1}^{t_2} v(t) \\, dt$ is displacement (net change in position), while $\\int_{t_1}^{t_2} |v(t)| \\, dt$ is total distance traveled. Volume Flow: If $V'(t)$ is water flow rate into a reservoir, $\\int_{t_1}^{t_2} V'(t) \\, dt$ is change in water volume. Population: If $dn/dt$ is population growth rate, $\\int_{t_1}^{t_2} \\frac{dn}{dt} \\, dt$ is net population change.",
             studyTip: "Understand Rate → Net Change: if the integrand is a rate, the integral's value is accumulated amount (net change). Distinguish displacement ($\\int v(t) \\, dt$) from total distance ($\\int |v(t)| \\, dt$)—identify where the rate is negative and split the integral. Always verify units: integral result units = (integrand units) × (variable units). Example: (megawatts) × (hours) = megawatt-hours.",
@@ -513,7 +513,7 @@ export const modules = [
           {
             id: "ITMTB_W3_T1",
             name: "U-Substitution: The Complete Guide",
-            competency: "Assessment Coverage: 6",
+            competency: "Assessment Coverage: 6 (Prescribed Textbook)",
             explanation: "When to Use U-Substitution: Look for an integrand that fits one of these patterns: $\\mathbf{(1) A Composite Function:}$ $\\int f(g(x))g'(x)\\,dx$. $\\mathbf{(2) A Quotient}$: Where the numerator is the derivative of the denominator (e.g., $\\int \\frac{g'(x)}{g(x)}\\,dx$). In both cases, you let $\\mathbf{u} = g(x)$, which simplifies the entire integral into a basic power rule or logarithmic form.",
             example: "Example: $\\int 2x(x^2+1)^5\\,dx$. Let $u = x^2+1$, so $du = 2x\\,dx$. The integral becomes $\\int u^5\\,du = \\frac{u^6}{6} + C = \\frac{(x^2+1)^6}{6} + C$.",
             studyTip: "When identifying $u$, look for a function nested inside another or one whose derivative appears elsewhere in the integrand.",
@@ -524,7 +524,7 @@ export const modules = [
           {
             id: "ITMTB_W3_T2",
             name: "U-Substitution Explained",
-            competency: "Assessment Coverage: 6",
+            competency: "Assessment Coverage: 6 (Prescribed Textbook)",
             explanation: "U-substitution is a change of variable method that simplifies an integral by replacing a complicated inner function with a single variable $u$. It reverses the chain rule from differentiation, turning complex expressions into standard integral forms.",
             example: "Example: $\\int \\sin(3x)\\,dx$. Let $u = 3x$, then $du = 3\\,dx \\Rightarrow dx = \\frac{du}{3}$. Substitute to get $\\frac{1}{3}\\int \\sin(u)\\,du = -\\frac{1}{3}\\cos(u) + C = -\\frac{1}{3}\\cos(3x) + C$.",
             studyTip: "Always change both $dx$ and $x$ terms into $u$ terms before integrating, then substitute back to $x$ at the end.",
@@ -535,7 +535,7 @@ export const modules = [
           {
             id: "ITMTB_W3_T3",
             name: "Average Value of a Function on an Interval",
-            competency: "Assessment Coverage: 6",
+            competency: "Assessment Coverage: 6 (Prescribed Textbook)",
             explanation: "The average value of a continuous function $f(x)$ over $[a,b]$ is the constant value that produces the same total area as $f(x)$ over that interval. It’s defined by $f_{avg} = \\frac{1}{b-a} \\int_a^b f(x)\\,dx$.",
             example: "Example: Find the average value of $f(x) = x^2$ on $[0,2]$. $f_{avg} = \\frac{1}{2-0}\\int_0^2 x^2\\,dx = \\frac{1}{2}\\left[\\frac{x^3}{3}\\right]_0^2 = \\frac{1}{2}\\left(\\frac{8}{3}\\right) = \\frac{4}{3}$.",
             studyTip: "Think of the average value as the ‘height’ of a rectangle with the same area under the curve on $[a,b]$. This helps visualize it as a balancing height.",
@@ -546,7 +546,7 @@ export const modules = [
           {
             id: "ITMTB_W3_T4",
             name: "The Mean Value Theorem For Integrals: Average Value of a Function",
-            competency: "Assessment Coverage: 6",
+            competency: "Assessment Coverage: 6 (Prescribed Textbook)",
             explanation: "The Mean Value Theorem for Integrals states that if $f$ is continuous on $[a,b]$, then there exists at least one $c$ in $(a,b)$ such that $f(c) = \\frac{1}{b-a}\\int_a^b f(x)\\,dx$. This means the function takes on its average value at some point in the interval.",
             example: "Example: For $f(x) = x^2$ on $[0,3]$, $f_{avg} = \\frac{1}{3}\\int_0^3 x^2\\,dx = \\frac{1}{3}\\left[\\frac{x^3}{3}\\right]_0^3 = 3$. So $f(c) = 3 \\Rightarrow c^2 = 3 \\Rightarrow c = \\sqrt{3}$.",
             studyTip: "Always check continuity before applying the theorem. The existence of $c$ depends on $f$ being continuous on the entire interval.",
@@ -557,7 +557,7 @@ export const modules = [
           {
             id: "ITMTB_W3_T5",
             name: "Integration By Parts",
-            competency: "Assessment Coverage: 6",
+            competency: "Assessment Coverage: 6 (Prescribed Textbook)",
             explanation: "Integration by Parts is based on the Product Rule for differentiation. It allows us to integrate products of functions using the formula $\\int u\\,dv = uv - \\int v\\,du$. Choose $u$ and $dv$ such that differentiating $u$ simplifies the expression.",
             example: "Example: $\\int x e^x\\,dx$. Let $u = x$, $dv = e^x dx$. Then $du = dx$, $v = e^x$. Applying the formula: $\\int x e^x\\,dx = x e^x - \\int e^x\\,dx = e^x(x - 1) + C$.",
             studyTip: "Use the LIATE rule to choose $u$: Logarithmic, Inverse trig, Algebraic, Trig, Exponential — in that order of preference.",
@@ -568,7 +568,7 @@ export const modules = [
           {
             id: "ITMTB_W3_T6",
             name: "Integration By Parts (continued)",
-            competency: "Assessment Coverage: 6",
+            competency: "Assessment Coverage: 6 (Prescribed Textbook)",
             explanation: "When one application of Integration by Parts still leaves another product, you may need to apply it repeatedly or rearrange to solve for the original integral. This often happens with powers of $x$ and trigonometric or exponential functions.",
             example: "Example: $\\int x^2 e^x\\,dx$. Let $u = x^2$, $dv = e^x dx$. Then $du = 2x\\,dx$, $v = e^x$. So $\\int x^2 e^x\\,dx = x^2 e^x - \\int 2x e^x\\,dx$. Apply integration by parts again on $\\int 2x e^x\\,dx$ to get the final answer $e^x(x^2 - 2x + 2) + C$.",
             studyTip: "If your first integration by parts produces another product, don’t panic—just apply the formula again systematically until the integral simplifies.",
@@ -579,7 +579,7 @@ export const modules = [
           {
             id: "ITMTB_W3_T7",
             name: "Integration by parts, DI method.",
-            competency: "Assessment Coverage: 6",
+            competency: "Assessment Coverage: 6 (Prescribed Textbook)",
             explanation: "The DI (Derivative–Integral) method is a shortcut for repeated Integration by Parts. List derivatives of one function (D column) and integrals of the other (I column), then multiply diagonally with alternating signs to find the result.",
             example: "Example: $\\int x^2 e^x\\,dx$. D column: $x^2$, $2x$, $2$, $0$. I column: $e^x$, $e^x$, $e^x$. Multiply diagonally with alternating signs: $x^2 e^x - 2x e^x + 2e^x + C = e^x(x^2 - 2x + 2) + C$.",
             studyTip: "Use DI tables when the derivative column eventually becomes zero — it’s faster and reduces errors compared to repeating the full formula.",
@@ -590,7 +590,7 @@ export const modules = [
           {
             id: "ITMTB_W3_T8",
             name: "Integration By Partial Fractions",
-            competency: "Assessment Coverage: 6",
+            competency: "Assessment Coverage: 6 (Prescribed Textbook)",
             explanation: "Partial Fraction Decomposition breaks a rational function into simpler fractions that are easier to integrate. It applies when the numerator’s degree is less than the denominator’s. Each term corresponds to a simpler integral form (logarithmic or arctangent).",
             example: "Example: $\\int \\frac{3x+5}{x^2 - x - 2}\\,dx$. Factor the denominator: $(x-2)(x+1)$. Write $\\frac{3x+5}{x^2 - x - 2} = \\frac{A}{x-2} + \\frac{B}{x+1}$. Solving gives $A=\\frac{11}{3}$, $B=-2$. Integrate each term to get $\\frac{11}{3}\\ln|x-2| - 2\\ln|x+1| + C$.",
             studyTip: "Always factor the denominator completely before decomposing. Check the degree of the numerator — if it’s not smaller, perform polynomial long division first.",
@@ -601,7 +601,7 @@ export const modules = [
           {
             id: "ITMTB_W3_T9",
             name: "Integration By Partial Fractions (Heaviside Cover-Up Method)",
-            competency: "Assessment Coverage: 6",
+            competency: "Assessment Coverage: 6 (Prescribed Textbook)",
             explanation: "The Heaviside Cover-Up Method provides a quick way to find coefficients in partial fractions when the denominator factors into distinct linear terms. You 'cover up' each factor and substitute its root to find its corresponding coefficient.",
             example: "Example: Decompose $\\frac{5x+3}{(x-1)(x+2)}$. Cover $(x-1)$: set $x=1$, giving $A = \\frac{5(1)+3}{1+2} = \\frac{8}{3}$. Cover $(x+2)$: set $x=-2$, giving $B = \\frac{5(-2)+3}{-2-1} = \\frac{-7}{-3} = \\frac{7}{3}$. So $\\frac{5x+3}{(x-1)(x+2)} = \\frac{8/3}{x-1} + \\frac{7/3}{x+2}$.",
             studyTip: "This method only works for non-repeated linear factors — use algebraic methods for repeated or quadratic factors.",
@@ -612,7 +612,7 @@ export const modules = [
           {
             id: "ITMTB_W3_T10",
             name: "Process of Setting Up and Solving Integrals Using Partial Fractions.",
-            competency: "Assessment Coverage: 6",
+            competency: "Assessment Coverage: 6 (Prescribed Textbook)",
             explanation: "The general process: (1) Check if the numerator’s degree is less than the denominator’s. If not, perform long division. (2) Factor the denominator completely. (3) Decompose into partial fractions. (4) Solve for unknown constants. (5) Integrate each simpler term individually.",
             example: "Example: $\\int \\frac{x^2 + 3x + 2}{x^3 - x}\\,dx = \\int \\frac{x^2 + 3x + 2}{x(x-1)(x+1)}\\,dx$. Decompose as $\\frac{A}{x} + \\frac{B}{x-1} + \\frac{C}{x+1}$. Solving gives $A=2$, $B=1$, $C=0$. Integrate to get $2\\ln|x| + \\ln|x-1| + C$.",
             studyTip: "Write out each step carefully. The accuracy of your decomposition determines how easy your integration will be — errors in constants can cascade.",
@@ -633,7 +633,7 @@ export const modules = [
           {
             id: "ITMTB_W4_T1",
             name: "Lesson 1: Area Between Curves",
-            competency: "Assessment Coverage: Lesson 1",
+            competency: "Assessment Coverage: MyLMS 9.1",
             explanation: "This lesson covers how to find the area enclosed between two curves. The key idea is that area is the integral of the vertical (or horizontal) distance between the curves. If $y = f(x)$ lies above $y = g(x)$ over an interval $[a, b]$, then the area is given by $A = \\int_a^b [f(x) - g(x)]\\,dx$. When the region is better described by horizontal slices, we integrate with respect to $y$: $A = \\int_c^d [f(y) - g(y)]\\,dy$.",
             example: "Example 1 (with respect to $x$): Find the area bounded by $y = x^2$ and $y = 2x$ between $x = 0$ and $x = 2$. Here, the upper curve is $y = 2x$ and the lower is $y = x^2$. Thus, \n\n$A = \\int_0^2 (2x - x^2)\\,dx = [x^2 - \\frac{x^3}{3}]_0^2 = 4 - \\frac{8}{3} = \\frac{4}{3}.$\n\nExample 2 (with respect to $y$): Find the area between $x = y^2$ and $x = y + 2$. Intersections occur when $y^2 = y + 2 \\Rightarrow y = -1, 2$. For $-1 \\le y \\le 2$, the right curve is $x = y + 2$, and the left curve is $x = y^2$. So \n\n$A = \\int_{-1}^2 [(y + 2) - y^2]\\,dy = [\\tfrac{1}{2}y^2 + 2y - \\tfrac{1}{3}y^3]_{-1}^2 = \\tfrac{9}{2}.$",
             studyTip: "Always sketch the curves first to see which one is on top (or right). Find intersection points to determine limits of integration. Remember: area must be positive — if your integral gives a negative number, take the absolute value.",
@@ -643,7 +643,7 @@ export const modules = [
           {
             id: "ITMTB_W4_T2",
             name: "Lesson 2: Average Value of a Function",
-            competency: "Assessment Coverage: 6.5",
+            competency: "Assessment Coverage: 6.5 (Prescribed Textbook)",
             explanation: "The average value of a continuous function $f(x)$ on $[a, b]$ represents the constant value that would give the same area under the curve as $f(x)$ itself. It is defined as \n\n$f_{avg} = \\frac{1}{b - a} \\int_a^b f(x)\\,dx.$\n\nThe Mean Value Theorem for Integrals states that if $f$ is continuous on $[a, b]$, then there exists at least one $c \\in (a, b)$ such that $f(c) = f_{avg}$. In other words, somewhere on the interval, the function actually takes on its average value.",
             example: "Example 1: Find the average value of $f(x) = 3x^2$ on $[0, 2]$.\n\n$f_{avg} = \\frac{1}{2 - 0} \\int_0^2 3x^2\\,dx = \\tfrac{1}{2}[x^3]_0^2 = \\tfrac{1}{2}(8) = 4.$\n\nExample 2 (Mean Value Theorem): For $f(x) = 3x^2$ on $[0, 2]$, we have $f_{avg} = 4$. Find $c$ such that $f(c) = 4 \\Rightarrow 3c^2 = 4 \\Rightarrow c = \\sqrt{\\tfrac{4}{3}} \\approx 1.155.$\n\nThus, at $x \\approx 1.155$, $f(x)$ equals its average value.\n\nExample: Find the average value of $f(x) = x^2$ on $[0,2]$. \n\n$f_{avg} = \\frac{1}{2-0}\\int_0^2 x^2\\,dx = \\frac{1}{2}\\left[\\frac{x^3}{3}\\right]_0^2 = \\frac{1}{2}\\left(\\frac{8}{3}\\right) = \\frac{4}{3}.$",
             studyTip: "Think of $f_{avg}$ as the 'height' of a rectangle whose area equals the area under $f(x)$. For continuous functions, this average always exists and is guaranteed by the Mean Value Theorem for Integrals.",
@@ -653,7 +653,7 @@ export const modules = [
           {
             id: "ITMTB_W4_T3",
             name: "Lesson 3: Integration by Parts",
-            competency: "Assessment Coverage: 7.1",
+            competency: "Assessment Coverage: 7.1 (Prescribed Textbook)",
             explanation: "Integration by parts is derived from the product rule for differentiation: $\\frac{d}{dx}(uv) = u\\frac{dv}{dx} + v\\frac{du}{dx}$. Integrating both sides gives the formula \n\n$\\int u\\,dv = uv - \\int v\\,du.$\n\nIt is used when the integrand is a product of two functions, one that becomes simpler upon differentiation and one that is easy to integrate.\n\nWhen applied to definite integrals, the formula becomes \n\n$\\int_a^b u\\,dv = [uv]_a^b - \\int_a^b v\\,du.$\n\nSometimes, integration by parts must be repeated or rearranged to solve for the original integral (cyclic cases).",
             example: "Example 1: $\\int x e^x\\,dx$. Choose $u = x$ (so $du = dx$) and $dv = e^x\\,dx$ (so $v = e^x$). Then\n\n$\\int x e^x\\,dx = x e^x - \\int e^x\\,dx = e^x(x - 1) + C.$\n\nExample 2 (Definite Integral): $\\int_0^{\\pi/2} x\\sin x\\,dx$. Let $u = x$, $dv = \\sin x\\,dx$. Then $du = dx$, $v = -\\cos x$. So \n\n$\\int_0^{\\pi/2} x\\sin x\\,dx = [-x\\cos x]_0^{\\pi/2} + \\int_0^{\\pi/2} \\cos x\\,dx = (0 - 0) + [\\sin x]_0^{\\pi/2} = 1.$\n\nAnother example: $\\int 2x(x^2+1)^5\\,dx$. Let $u = x^2+1$, so $du = 2x\\,dx$. The integral becomes $\\int u^5\\,du = \\frac{u^6}{6} + C = \\frac{(x^2+1)^6}{6} + C.$\n\n$\\int \\sin(3x)\\,dx$: Let $u = 3x$, then $du = 3\\,dx \\Rightarrow dx = \\frac{du}{3}$. Substitute to get $\\frac{1}{3}\\int \\sin(u)\\,du = -\\frac{1}{3}\\cos(u) + C = -\\frac{1}{3}\\cos(3x) + C.$",
             studyTip: "Use the LIATE rule (Logarithmic, Inverse Trig, Algebraic, Trig, Exponential) to choose $u$. Always check if the result after applying integration by parts simplifies the problem — if not, try swapping $u$ and $dv$.",
@@ -663,7 +663,7 @@ export const modules = [
           {
             id: "ITMTB_W4_T4",
             name: "Lesson 4: Integration of Rational Functions by Partial Fractions",
-            competency: "Assessment Coverage: 7.4",
+            competency: "Assessment Coverage: 7.4 (Prescribed Textbook)",
             explanation: "To integrate a rational function $\\frac{P(x)}{Q(x)}$, first ensure the degree of the numerator is less than that of the denominator. If not, use polynomial long division. Then factor the denominator $Q(x)$ into linear and/or irreducible quadratic factors and express the fraction as a sum of simpler 'partial fractions'. Each term is integrated separately.\n\nCommon decomposition forms:\n1. Distinct linear factors: $\\frac{A}{x−a} + \\frac{B}{x−b}$\n2. Repeated linear factors: $\\frac{A}{x−a} + \\frac{B}{(x−a)^2} + …$\n3. Irreducible quadratic factors: $\\frac{Ax + B}{x^2 + px + q}$\n\nAfter finding the constants ($A$, $B$, …) via substitution or comparison, integrate each term using standard logarithmic or arctangent formulas.",
             example: "Example 1: $\\int \\frac{2x + 3}{x^2 + x - 2}\\,dx$. Factor denominator: $x^2 + x - 2 = (x + 2)(x - 1)$. Decompose: \n\n$\\frac{2x + 3}{(x + 2)(x - 1)} = \\frac{A}{x + 2} + \\frac{B}{x - 1}.$\n\nSolve for $A$ and $B$: $2x + 3 = A(x - 1) + B(x + 2)$ → $A = 1$, $B = 1$. So integral $= \\int \\left(\\frac{1}{x + 2} + \\frac{1}{x - 1}\\right)dx = \\ln|x + 2| + \\ln|x - 1| + C.$\n\nExample 2 (Improper Rational Function): $\\int \\frac{x^2 + x + 1}{x - 1}\\,dx = \\int (x + 2) + \\frac{3}{x - 1}\\,dx = \\tfrac{1}{2}x^2 + 2x + 3\\ln|x - 1| + C.$",
             studyTip: "Always check if the fraction is proper before decomposing. For distinct linear factors, the cover-up method quickly finds constants. For quadratic factors, remember $\\int \\frac{dx}{x^2 + a^2} = \\frac{1}{a}\\tan^{-1}\\left(\\frac{x}{a}\\right) + C.$",
@@ -675,9 +675,69 @@ export const modules = [
       {
         id: "ITMTB_W5",
         name: "Week 5",
-        title: "Volumes (Disk/Washer Method, Cylindrical Shells)",
-        title: "Not Yet Assigned 🙂‍↔️",
-        topics: []
+        title: "Volumes, Arc Length, and Surface Area",
+        topics: [
+          {
+            id: "ITMTB_W5_T1",
+            name: "Lesson 1: Volumes of Solids of Revolution (Disk and Washer Methods)",
+            competency: "Assessment Coverage: MyLMS 10.1",
+            explanation: "When a region in the plane is rotated around a line (axis of rotation), it generates a 3D solid. The volume of this solid can be found using integration. The **disk method** applies when the solid has no hole, while the **washer method** is used when there is a hollow region in the center.",
+            example: "Example (Disk Method): Find the volume formed by rotating the curve $y = x^2$ around the x-axis for $0 \\le x \\le 1$. Using the disk method, each cross-section is a disk with radius $y = x^2$. So, \n\n$V = \\int_0^1 \\pi [f(x)]^2 dx = \\pi \\int_0^1 (x^2)^2 dx = \\pi \\int_0^1 x^4 dx = \\pi [\\tfrac{x^5}{5}]_0^1 = \\tfrac{\\pi}{5}.$\n\nExample (Washer Method): The region between $y = \\sqrt{x}$ and $y = x$ from $x = 0$ to $x = 1$ is revolved around the x-axis. \n\n$V = \\pi \\int_0^1 [(\\sqrt{x})^2 - (x)^2] dx = \\pi \\int_0^1 (x - x^2) dx = \\pi [\\tfrac{x^2}{2} - \\tfrac{x^3}{3}]_0^1 = \\tfrac{\\pi}{6}.$",
+            studyTip: "Always sketch the region and axis of rotation first! Decide whether to use the disk or washer method depending on whether the solid has a hole (washer) or not (disk).",
+            videoUrl: "https://www.youtube.com/watch?v=qzj17dEMkyg",
+            quizId: "ITMTB_W5_Quiz"
+          },
+          {
+            id: "ITMTB_W5_T1.2",
+            name: "Lesson 1: Volumes of Solids of Revolution (Continued)",
+            competency: "Assessment Coverage: MyLMS 10.1",
+            explanation: "",
+            example: "",
+            studyTip: "",
+            videoUrl: "https://youtu.be/KozIM2VMFPI",
+            quizId: "ITMTB_W5_Quiz"
+          },
+          {
+            id: "ITMTB_W5_T2",
+            name: "Lesson 2: Volumes of Solids of Revolution (Cylindrical Shells)",
+            competency: "Assessment Coverage: MyLMS 11.1",
+            explanation: "The **cylindrical shells method** is used when integrating **perpendicular** to the axis of rotation. Each shell has radius $r$, height $h$, and thickness $dx$ or $dy$. The volume of each shell is $2\\pi r h$, and the total volume is found by integration. For rotation about the y-axis: $V = \\int_a^b 2\\pi x f(x) dx$. For rotation about the x-axis: $V = \\int_c^d 2\\pi y g(y) dy$.",
+            example: "Example: Find the volume formed when the region under $y = x^2$ from $x = 0$ to $x = 1$ is rotated about the y-axis.\n\nUsing shells: $V = \\int_0^1 2\\pi x f(x) dx = 2\\pi \\int_0^1 x(x^2) dx = 2\\pi \\int_0^1 x^3 dx = 2\\pi [\\tfrac{x^4}{4}]_0^1 = \\tfrac{\\pi}{2}.$",
+            studyTip: "Use the shell method when rotating **around the opposite axis** (e.g., function in terms of $x$ rotated around the y-axis). It often simplifies the setup when the other methods become complicated.",
+            videoUrl: "https://youtu.be/D5sT1br9soI?si=XiwPT4LnPil_YTvH",
+            quizId: "ITMTB_W5_Quiz"
+          },
+          {
+            id: "ITMTB_W5_T3",
+            name: "Lesson 3: Arc Length",
+            competency: "Assessment Coverage: 8.1 (Prescribed Textbook)",
+            explanation: "The **arc length** of a smooth curve $y = f(x)$ from $x = a$ to $x = b$ is the total distance along the curve. Starting from a polygonal approximation and taking the limit, we get the formula:\n\n$L = \\int_a^b \\sqrt{1 + [f'(x)]^2} dx.$\n\nIf the curve is given by $x = g(y)$, then $L = \\int_c^d \\sqrt{1 + [g'(y)]^2} dy.$\n\nBecause these integrals can be hard to evaluate, numerical methods such as Simpson’s Rule are sometimes used.",
+            example: "Example: Find the length of the curve $y = \\tfrac{1}{3}x^{3/2}$ from $x = 0$ to $x = 4$.\n\nWe have $f'(x) = \\tfrac{1}{2}x^{1/2}$. So \n\n$L = \\int_0^4 \\sqrt{1 + (\\tfrac{1}{2}x^{1/2})^2} dx = \\int_0^4 \\sqrt{1 + \\tfrac{x}{4}} dx.$\n\nLet $u = 1 + \\tfrac{x}{4}$, so $du = \\tfrac{1}{4}dx$ → $dx = 4du$. Then\n\n$L = 4 \\int_1^2 \\sqrt{u} du = 4[\\tfrac{2}{3}u^{3/2}]_1^2 = \\tfrac{8}{3}(2\\sqrt{2} - 1).$",
+            studyTip: "Memorize the formula $L = \\int \\sqrt{1 + (f'(x))^2}\\,dx$. To reduce errors, always compute $f'(x)$ separately and square it before substitution.",
+            videoUrl: "https://youtu.be/DNDAwWIL5FY?si=_WSV5oGdFjOB8XyM",
+            quizId: "ITMTB_W5_Quiz"
+          },
+          {
+            id: "ITMTB_W5_T3.1",
+            name: "Lesson 3: Arc Length (Continued)",
+            competency: "Assessment Coverage: 8.1 (Prescribed Textbook)",
+            explanation: "",
+            example: "",
+            studyTip: "",
+            videoUrl: "https://www.youtube.com/watch?v=PK7HZiFG_VI",
+            quizId: "ITMTB_W5_Quiz"
+          },
+          {
+            id: "ITMTB_W5_T4",
+            name: "Lesson 4: Area of a Surface of Revolution",
+            competency: "Assessment Coverage: 8.2 (Prescribed Textbook)",
+            explanation: "The **surface area** of a solid formed by rotating a curve about an axis is found by summing the areas of small bands generated by the curve’s rotation. For rotation about the x-axis, if $y = f(x)$, then:\n\n$S = \\int_a^b 2\\pi f(x) \\sqrt{1 + [f'(x)]^2} dx.$\n\nFor rotation about the y-axis (if $x = g(y)$):\n\n$S = \\int_c^d 2\\pi g(y) \\sqrt{1 + [g'(y)]^2} dy.$",
+            example: "Example: Find the surface area generated by rotating $y = \\sqrt{x}$ about the x-axis for $0 \\le x \\le 4$.\n\nWe have $f'(x) = \\tfrac{1}{2\\sqrt{x}}$. Then\n\n$S = \\int_0^4 2\\pi f(x) \\sqrt{1 + [f'(x)]^2} dx = 2\\pi \\int_0^4 \\sqrt{x} \\sqrt{1 + \\tfrac{1}{4x}} dx.$\n\nSimplify inside the square root: $\\sqrt{1 + \\tfrac{1}{4x}} = \\tfrac{\\sqrt{4x + 1}}{2\\sqrt{x}}$, giving\n\n$S = \\pi \\int_0^4 \\sqrt{4x + 1} dx = \\pi [\\tfrac{(4x + 1)^{3/2}}{6}]_0^4 = \\tfrac{\\pi}{6}[(17)^{3/2} - 1].$",
+            studyTip: "Surface area formulas are similar to arc length formulas—just multiply by $2\\pi$ times the radius ($f(x)$ or $g(y)$). Always check which axis the rotation occurs around.",
+            videoUrl: "https://www.youtube.com/watch?v=lQM-0Nqs9Pg",
+            quizId: "ITMTB_W5_Quiz"
+          }
+        ]
       },
       {
         id: "ITMTB_W6",
