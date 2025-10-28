@@ -736,6 +736,16 @@ export const modules = [
             studyTip: "Surface area formulas are similar to arc length formulas—just multiply by $2\\pi$ times the radius ($f(x)$ or $g(y)$). Always check which axis the rotation occurs around.",
             videoUrl: "https://www.youtube.com/watch?v=lQM-0Nqs9Pg",
             quizId: "ITMTB_W5_Quiz"
+          },
+          {
+            id: "ITMTB_W5_T4",
+            name: "Lesson 4: Area of a Surface of Revolution (Continued)",
+            competency: "Assessment Coverage: 8.2 (Prescribed Textbook)",
+            explanation: "",
+            example: "",
+            studyTip: "",
+            videoUrl: "https://youtu.be/L36Nu16FXZw",
+            quizId: "ITMTB_W5_Quiz"
           }
         ]
       },
