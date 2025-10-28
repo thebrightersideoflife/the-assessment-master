@@ -4525,6 +4525,1101 @@ export const questions = [
           "**Numerical approximation:** \\( V \\approx 2\\pi(0.1178) \\approx 0.740 \\) cubic units\n\n" +
           "**Key Concept:** For rotation about the y-axis, shells often simplify the calculation compared to the washer method, especially when the function is given as \\( y = f(x) \\)."
       },
+      // Question 112: Volume of Revolution - Disk Method
+        {
+          id: "q112",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W5",
+          type: "open-ended",
+          text: "Find the volume of the solid obtained by rotating the curve \\( y = \\sqrt{x} \\) from \\( x = 0 \\) to \\( x = 4 \\) about the \\( x \\)-axis.",
+          
+          correctAnswers: [
+            "8π",
+            "8*π",
+            "8*pi",
+            "8pi",
+            "8 π",
+            "8 pi",
+            "25.13",
+            "≈25.13",
+            "≈8π"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.01,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This problem uses the **disk method**, which is ideal when rotating a region about an axis with no hollow interior.\n\n" +
+            "**Formula for Disk Method (rotating about the \\( x \\)-axis):**\n\n" +
+            "$$V = \\int_{a}^{b} \\pi[f(x)]^2 \\, dx$$\n\n" +
+            "where \\( f(x) \\) is the radius of each disk.\n\n" +
+            "**Step 1: Identify Components**\n\n" +
+            "- Function (radius): \\( f(x) = \\sqrt{x} \\)\n" +
+            "- Interval: \\( a = 0 \\) to \\( b = 4 \\)\n\n" +
+            "**Step 2: Set Up the Integral**\n\n" +
+            "$$V = \\int_{0}^{4} \\pi (\\sqrt{x})^2 \\, dx$$\n\n" +
+            "**Step 3: Simplify the Integrand**\n\n" +
+            "The square and square root cancel:\n\n" +
+            "$$V = \\pi \\int_{0}^{4} x \\, dx$$\n\n" +
+            "**Step 4: Integrate**\n\n" +
+            "The antiderivative of \\( x \\) is \\( \\frac{x^2}{2} \\):\n\n" +
+            "$$V = \\pi \\left[ \\frac{x^2}{2} \\right]_{0}^{4}$$\n\n" +
+            "**Step 5: Evaluate (Apply Limits)**\n\n" +
+            "$$V = \\pi \\left( \\frac{4^2}{2} - \\frac{0^2}{2} \\right)$$\n\n" +
+            "$$V = \\pi \\left( \\frac{16}{2} - 0 \\right) = \\pi(8) = 8\\pi$$\n\n" +
+            "**Answer: \\( 8\\pi \\) cubic units** (approximately 25.13 cubic units)\n\n" +
+            "---\n\n" +
+            "**Key Concept - Disk Method:**\n\n" +
+            "| **When to Use** | **Formula** | **Key Idea** |\n" +
+            "|---|---|---|\n" +
+            "| Rotating about \\( x \\)-axis | \\( V = \\int_{a}^{b} \\pi[f(x)]^2 \\, dx \\) | Stack circular disks perpendicular to axis |\n" +
+            "| Rotating about \\( y \\)-axis | \\( V = \\int_{c}^{d} \\pi[g(y)]^2 \\, dy \\) | Integrate along axis of rotation |\n" +
+            "| No hole in solid | Use disk method | Each cross-section is a full circle |\n\n" +
+            "The disk method is like slicing the solid into thin circular disks and adding up their volumes."
+        },
 
+        // Question 113: Volume of Revolution - Washer Method
+        {
+          id: "q113",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W5",
+          type: "open-ended",
+          text: "Find the volume of the solid that results when the region \\( R \\), bounded by the graphs of \\( f(x) = \\sqrt{x} \\) and \\( g(x) = x^2 \\), is revolved about the \\( x \\)-axis.",
+          
+          correctAnswers: [
+            "3π/10",
+            "3*π/10",
+            "3*pi/10",
+            "3pi/10",
+            "(3/10)π",
+            "(3/10)*π",
+            "(3/10)*pi",
+            "0.3π",
+            "0.3*π",
+            "0.3pi",
+            "0.942",
+            "≈0.942",
+            "≈3π/10"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.01,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This problem requires the **washer method** because the region has a hole in the middle when rotated.\n\n" +
+            "**Formula for Washer Method (rotating about \\( x \\)-axis):**\n\n" +
+            "$$V = \\int_{a}^{b} \\pi \\left( [R(x)]^2 - [r(x)]^2 \\right) dx$$\n\n" +
+            "where \\( R(x) \\) is the **outer radius** and \\( r(x) \\) is the **inner radius**.\n\n" +
+            "**Step 1: Identify Components**\n\n" +
+            "First, find where the curves intersect:\n\n" +
+            "$$\\sqrt{x} = x^2$$\n" +
+            "$$x = x^4$$\n" +
+            "$$x^4 - x = 0$$\n" +
+            "$$x(x^3 - 1) = 0$$\n\n" +
+            "Intersection points: \\( x = 0 \\) and \\( x = 1 \\)\n\n" +
+            "Between these points, \\( \\sqrt{x} \\) is above \\( x^2 \\), so:\n" +
+            "- **Outer radius:** \\( R(x) = \\sqrt{x} \\)\n" +
+            "- **Inner radius:** \\( r(x) = x^2 \\)\n" +
+            "- **Limits:** \\( a = 0 \\) to \\( b = 1 \\)\n\n" +
+            "**Step 2: Set Up the Integral**\n\n" +
+            "$$V = \\int_{0}^{1} \\pi \\left( (\\sqrt{x})^2 - (x^2)^2 \\right) dx$$\n\n" +
+            "**Step 3: Simplify**\n\n" +
+            "$$V = \\pi \\int_{0}^{1} (x - x^4) \\, dx$$\n\n" +
+            "**Step 4: Integrate**\n\n" +
+            "$$V = \\pi \\left[ \\frac{x^2}{2} - \\frac{x^5}{5} \\right]_{0}^{1}$$\n\n" +
+            "**Step 5: Evaluate**\n\n" +
+            "$$V = \\pi \\left( \\frac{1}{2} - \\frac{1}{5} - 0 \\right)$$\n\n" +
+            "$$V = \\pi \\left( \\frac{5 - 2}{10} \\right) = \\frac{3\\pi}{10}$$\n\n" +
+            "**Answer: \\( \\frac{3\\pi}{10} \\) cubic units** (approximately 0.942 cubic units)\n\n" +
+            "---\n\n" +
+            "**Key Concept - Washer vs Disk Method:**\n\n" +
+            "| **Method** | **When to Use** | **Formula Pattern** |\n" +
+            "|---|---|---|\n" +
+            "| Disk | Solid shape (no hole) | \\( \\pi R^2 \\) |\n" +
+            "| Washer | Hollow shape (has hole) | \\( \\pi(R^2 - r^2) \\) |\n\n" +
+            "Think of washers as \"donuts\" - you subtract the inner circle from the outer circle to get the washer area."
+        },
+
+        // Question 114: Volume of Revolution - Cylindrical Shell Method
+        {
+          id: "q114",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W5",
+          type: "open-ended",
+          text: "Find the volume of the solid formed when the region between \\( x = y^3 \\) and \\( x = 1 \\) is rotated about the \\( x \\)-axis.",
+          
+          correctAnswers: [
+            "3π/5",
+            "3*π/5",
+            "3*pi/5",
+            "3pi/5",
+            "(3/5)π",
+            "(3/5)*π",
+            "(3/5)*pi",
+            "0.6π",
+            "0.6*π",
+            "0.6pi",
+            "1.885",
+            "≈1.885",
+            "≈3π/5"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.01,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This problem is best solved using the **cylindrical shell method**. Although we're rotating about the \\( x \\)-axis, it's easier to integrate with respect to \\( y \\).\n\n" +
+            "**Formula for Shell Method (rotating about \\( x \\)-axis, integrating with \\( y \\)):**\n\n" +
+            "$$V = \\int_{c}^{d} 2\\pi y \\cdot h(y) \\, dy$$\n\n" +
+            "where \\( y \\) is the **radius** and \\( h(y) \\) is the **height** of each shell.\n\n" +
+            "**Step 1: Identify Components (in terms of \\( y \\))**\n\n" +
+            "- **Radius:** Distance from \\( x \\)-axis to point at height \\( y \\) is just \\( y \\)\n" +
+            "- **Height:** Rightmost curve minus leftmost curve\n" +
+            "  - Right: \\( x = 1 \\)\n" +
+            "  - Left: \\( x = y^3 \\)\n" +
+            "  - Height: \\( h(y) = 1 - y^3 \\)\n" +
+            "- **Limits:** The curves intersect when \\( y^3 = 1 \\), so \\( y = 1 \\)\n" +
+            "  - From \\( c = 0 \\) to \\( d = 1 \\)\n\n" +
+            "**Step 2: Set Up the Integral**\n\n" +
+            "$$V = \\int_{0}^{1} 2\\pi y (1 - y^3) \\, dy$$\n\n" +
+            "**Step 3: Simplify**\n\n" +
+            "$$V = 2\\pi \\int_{0}^{1} (y - y^4) \\, dy$$\n\n" +
+            "**Step 4: Integrate**\n\n" +
+            "$$V = 2\\pi \\left[ \\frac{y^2}{2} - \\frac{y^5}{5} \\right]_{0}^{1}$$\n\n" +
+            "**Step 5: Evaluate**\n\n" +
+            "$$V = 2\\pi \\left( \\frac{1}{2} - \\frac{1}{5} - 0 \\right)$$\n\n" +
+            "$$V = 2\\pi \\left( \\frac{5 - 2}{10} \\right) = 2\\pi \\left( \\frac{3}{10} \\right) = \\frac{6\\pi}{10} = \\frac{3\\pi}{5}$$\n\n" +
+            "**Answer: \\( \\frac{3\\pi}{5} \\) cubic units** (approximately 1.885 cubic units)\n\n" +
+            "---\n\n" +
+            "**Key Concept - When to Use Shell Method:**\n\n" +
+            "| **Scenario** | **Best Method** | **Why?** |\n" +
+            "|---|---|---|\n" +
+            "| Rotating about \\( x \\)-axis, function is \\( y = f(x) \\) | Disk/Washer | Natural to integrate with \\( dx \\) |\n" +
+            "| Rotating about \\( x \\)-axis, function is \\( x = g(y) \\) | Shell Method | Easier to integrate with \\( dy \\) |\n" +
+            "| Rotating about \\( y \\)-axis, function is \\( x = g(y) \\) | Disk/Washer | Natural to integrate with \\( dy \\) |\n" +
+            "| Rotating about \\( y \\)-axis, function is \\( y = f(x) \\) | Shell Method | Easier to integrate with \\( dx \\) |\n\n" +
+            "**Shell Method Intuition:** Imagine wrapping the region with cylindrical shells (like nested cans). Each shell has:\n" +
+            "- Circumference: \\( 2\\pi r \\) (where \\( r \\) is distance to axis)\n" +
+            "- Height: \\( h \\) (width of the region)\n" +
+            "- Volume of thin shell: \\( 2\\pi r \\cdot h \\cdot dr \\)"
+        },
+
+        // Question 115: Arc Length - Geometric Check (Part 1 - Finding Arc Length)
+        {
+          id: "q115",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W5",
+          type: "open-ended",
+          text: "Use the arc length formula to find the length of the curve \\( y = \\sqrt{4 - x^2} \\) for \\( 0 \\le x \\le 2 \\).",
+          
+          image: {
+            src: "/images/ITMTB_Week 5_Quiz 1_Question 4.png",
+            alt: "Graph showing quarter circle from point (0,2) to (2,0)",
+            caption: "The curve is the upper half of the circle x² + y² = 4 in the first quadrant"
+          },
+          
+          correctAnswers: [
+            "π",
+            "pi",
+            "3.14159",
+            "3.1416",
+            "3.142",
+            "3.14",
+            "≈π",
+            "≈3.14"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.01,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This problem demonstrates how the arc length formula matches geometric results.\n\n" +
+            "**Arc Length Formula:**\n\n" +
+            "$$L = \\int_{a}^{b} \\sqrt{1 + (y')^2} \\, dx$$\n\n" +
+            "**Step 1: Find the Derivative**\n\n" +
+            "Given \\( y = (4 - x^2)^{1/2} \\), using the chain rule:\n\n" +
+            "$$y' = \\frac{1}{2}(4 - x^2)^{-1/2} \\cdot (-2x) = \\frac{-x}{\\sqrt{4 - x^2}}$$\n\n" +
+            "**Step 2: Find \\( 1 + (y')^2 \\)**\n\n" +
+            "First square the derivative:\n\n" +
+            "$$(y')^2 = \\frac{x^2}{4 - x^2}$$\n\n" +
+            "Then add 1:\n\n" +
+            "$$1 + (y')^2 = 1 + \\frac{x^2}{4 - x^2} = \\frac{(4 - x^2) + x^2}{4 - x^2} = \\frac{4}{4 - x^2}$$\n\n" +
+            "**Step 3: Set Up the Integral**\n\n" +
+            "$$L = \\int_{0}^{2} \\sqrt{\\frac{4}{4 - x^2}} \\, dx = \\int_{0}^{2} \\frac{2}{\\sqrt{4 - x^2}} \\, dx$$\n\n" +
+            "**Step 4: Integrate**\n\n" +
+            "This is a standard inverse trig integral: \\( \\int \\frac{1}{\\sqrt{a^2 - x^2}} dx = \\sin^{-1}\\left(\\frac{x}{a}\\right) + C \\)\n\n" +
+            "With \\( a = 2 \\):\n\n" +
+            "$$L = 2 \\left[ \\sin^{-1}\\left(\\frac{x}{2}\\right) \\right]_{0}^{2}$$\n\n" +
+            "**Step 5: Evaluate**\n\n" +
+            "$$L = 2 \\left( \\sin^{-1}(1) - \\sin^{-1}(0) \\right)$$\n\n" +
+            "$$L = 2 \\left( \\frac{\\pi}{2} - 0 \\right) = \\pi$$\n\n" +
+            "**Geometric Verification:**\n\n" +
+            "The equation \\( y = \\sqrt{4 - x^2} \\) represents the upper half of circle \\( x^2 + y^2 = 4 \\) with radius \\( r = 2 \\).\n\n" +
+            "The limits \\( 0 \\le x \\le 2 \\) give us the arc from \\( (0, 2) \\) to \\( (2, 0) \\) - exactly one quarter of the circle.\n\n" +
+            "- Full circumference: \\( C = 2\\pi r = 4\\pi \\)\n" +
+            "- Quarter arc: \\( \\frac{1}{4} \\times 4\\pi = \\pi \\) ✓\n\n" +
+            "**Answer: \\( \\pi \\)** (approximately 3.14159)\n\n" +
+            "---\n\n" +
+            "**Key Concept - Arc Length Intuition:**\n\n" +
+            "The arc length formula \\( ds = \\sqrt{1 + (y')^2} \\, dx \\) comes from the Pythagorean theorem:\n\n" +
+            "- Horizontal distance: \\( dx \\)\n" +
+            "- Vertical distance: \\( dy = y' dx \\)\n" +
+            "- Actual distance along curve: \\( ds = \\sqrt{(dx)^2 + (dy)^2} = \\sqrt{1 + (y')^2} \\, dx \\)\n\n" +
+            "We integrate these tiny arc segments to get total length."
+        },
+
+        // Question 116: Arc Length - Perfect Square Problem
+        {
+          id: "q116",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W5",
+          type: "open-ended",
+          text: "Find the exact length of the curve \\( y = \\frac{x^3}{3} + \\frac{1}{4x} \\) for \\( 1 \\le x \\le 2 \\).",
+          
+          correctAnswers: [
+            "59/24",
+            "59 / 24",
+            "(59/24)",
+            "2.458",
+            "2.4583",
+            "≈59/24",
+            "≈2.458"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.01,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This is a classic **perfect square** arc length problem - designed so \\( 1 + (y')^2 \\) simplifies beautifully.\n\n" +
+            "**Step 1: Find the Derivative**\n\n" +
+            "Rewrite as \\( y = \\frac{1}{3}x^3 + \\frac{1}{4}x^{-1} \\):\n\n" +
+            "$$y' = \\frac{1}{3}(3x^2) + \\frac{1}{4}(-x^{-2}) = x^2 - \\frac{1}{4x^2}$$\n\n" +
+            "**Step 2: Find \\( 1 + (y')^2 \\)**\n\n" +
+            "Square the derivative using \\( (a - b)^2 = a^2 - 2ab + b^2 \\):\n\n" +
+            "$$(y')^2 = \\left( x^2 - \\frac{1}{4x^2} \\right)^2 = x^4 - 2(x^2)\\left(\\frac{1}{4x^2}\\right) + \\frac{1}{16x^4}$$\n\n" +
+            "$$(y')^2 = x^4 - \\frac{1}{2} + \\frac{1}{16x^4}$$\n\n" +
+            "Now add 1 (this flips the sign of the middle term!):\n\n" +
+            "$$1 + (y')^2 = x^4 + \\frac{1}{2} + \\frac{1}{16x^4}$$\n\n" +
+            "**Step 3: Recognize the Perfect Square**\n\n" +
+            "This is \\( (a + b)^2 = a^2 + 2ab + b^2 \\) with \\( a = x^2 \\) and \\( b = \\frac{1}{4x^2} \\):\n\n" +
+            "$$1 + (y')^2 = \\left( x^2 + \\frac{1}{4x^2} \\right)^2$$\n\n" +
+            "**Step 4: Set Up the Integral**\n\n" +
+            "$$L = \\int_{1}^{2} \\sqrt{\\left( x^2 + \\frac{1}{4x^2} \\right)^2} \\, dx$$\n\n" +
+            "**Step 5: Simplify and Integrate**\n\n" +
+            "The square root and square cancel (the expression is always positive):\n\n" +
+            "$$L = \\int_{1}^{2} \\left( x^2 + \\frac{1}{4x^2} \\right) dx$$\n\n" +
+            "$$L = \\left[ \\frac{x^3}{3} - \\frac{1}{4x} \\right]_{1}^{2}$$\n\n" +
+            "**Step 6: Evaluate**\n\n" +
+            "$$L = \\left( \\frac{8}{3} - \\frac{1}{8} \\right) - \\left( \\frac{1}{3} - \\frac{1}{4} \\right)$$\n\n" +
+            "$$L = \\frac{8}{3} - \\frac{1}{8} - \\frac{1}{3} + \\frac{1}{4}$$\n\n" +
+            "$$L = \\left( \\frac{8 - 1}{3} \\right) + \\left( \\frac{2 - 1}{8} \\right) = \\frac{7}{3} + \\frac{1}{8}$$\n\n" +
+            "Finding common denominator (24):\n\n" +
+            "$$L = \\frac{56}{24} + \\frac{3}{24} = \\frac{59}{24}$$\n\n" +
+            "**Answer: \\( \\frac{59}{24} \\)** (approximately 2.458)\n\n" +
+            "---\n\n" +
+            "**Key Concept - Perfect Square Pattern:**\n\n" +
+            "Some arc length problems are designed so \\( 1 + (y')^2 \\) becomes a perfect square:\n\n" +
+            "| **If \\( y' \\) has form** | **Then \\( 1 + (y')^2 \\) simplifies to** |\n" +
+            "|---|---|\n" +
+            "| \\( x^n - \\frac{k}{x^n} \\) | \\( \\left( x^n + \\frac{k}{x^n} \\right)^2 \\) |\n" +
+            "| \\( \\sinh(x) \\) | \\( \\cosh^2(x) \\) |\n" +
+            "| \\( \\tan(x) \\) | \\( \\sec^2(x) \\) |\n\n" +
+            "**Why does adding 1 flip the sign?**\n\n" +
+            "When you have \\( (a - b)^2 = a^2 - 2ab + b^2 \\) and add 1:\n\n" +
+            "$$1 + (a^2 - 2ab + b^2) = a^2 + 2ab + b^2 = (a + b)^2$$\n\n" +
+            "The middle term changes from \\( -2ab \\) to \\( +2ab \\), giving us the perfect square!"
+        },
+
+        // Question 117: Surface Area of Revolution
+        {
+          id: "q117",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W5",
+          type: "open-ended",
+          text: "Find the exact area of the surface obtained by rotating the curve \\( y = x^3 \\) for \\( 0 \\le x \\le 2 \\) about the \\( x \\)-axis.",
+          
+          correctAnswers: [
+            "π(145√145 - 1)/27",
+            "π(145*√145 - 1)/27",
+            "π(145sqrt(145) - 1)/27",
+            "(π/27)(145√145 - 1)",
+            "(π/27)(145*sqrt(145) - 1)",
+            "199.48",
+            "≈199.48",
+            "≈π(145√145 - 1)/27"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.02,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This problem finds the surface area when rotating a curve, which requires integrating the circumference along the arc length.\n\n" +
+            "**Surface Area Formula (rotating about \\( x \\)-axis):**\n\n" +
+            "$$S = \\int_{a}^{b} 2\\pi y \\sqrt{1 + (y')^2} \\, dx$$\n\n" +
+            "Think of it as: **Circumference** \\( \\times \\) **Arc Length Element**\n\n" +
+            "**Step 1: Identify Components**\n\n" +
+            "- Function: \\( y = x^3 \\)\n" +
+            "- Derivative: \\( y' = 3x^2 \\)\n" +
+            "- Bounds: \\( a = 0, b = 2 \\)\n\n" +
+            "**Step 2: Find \\( 1 + (y')^2 \\)**\n\n" +
+            "$$(y')^2 = (3x^2)^2 = 9x^4$$\n\n" +
+            "$$1 + (y')^2 = 1 + 9x^4$$\n\n" +
+            "**Step 3: Set Up the Integral**\n\n" +
+            "$$S = \\int_{0}^{2} 2\\pi (x^3) \\sqrt{1 + 9x^4} \\, dx$$\n\n" +
+            "**Step 4: Use u-Substitution**\n\n" +
+            "This integral is perfect for substitution:\n\n" +
+            "- Let \\( u = 1 + 9x^4 \\)\n" +
+            "- Then \\( du = 36x^3 \\, dx \\)\n" +
+            "- Solving for \\( x^3 dx \\): \\( x^3 dx = \\frac{du}{36} \\)\n\n" +
+            "**Change the limits:**\n" +
+            "- When \\( x = 0 \\): \\( u = 1 + 9(0)^4 = 1 \\)\n" +
+            "- When \\( x = 2 \\): \\( u = 1 + 9(2)^4 = 1 + 9(16) = 145 \\)\n\n" +
+            "**Step 5: Substitute and Integrate**\n\n" +
+            "$S = 2\\pi \\int_{1}^{145} \\sqrt{u} \\cdot \\frac{du}{36}$\n\n" +
+            "$S = \\frac{2\\pi}{36} \\int_{1}^{145} u^{1/2} \\, du = \\frac{\\pi}{18} \\int_{1}^{145} u^{1/2} \\, du$\n\n" +
+            "$S = \\frac{\\pi}{18} \\left[ \\frac{u^{3/2}}{3/2} \\right]_{1}^{145} = \\frac{\\pi}{18} \\cdot \\frac{2}{3} \\left[ u^{3/2} \\right]_{1}^{145}$\n\n" +
+            "$S = \\frac{\\pi}{27} \\left[ u^{3/2} \\right]_{1}^{145}$\n\n" +
+            "**Step 6: Evaluate**\n\n" +
+            "$S = \\frac{\\pi}{27} \\left( 145^{3/2} - 1^{3/2} \\right)$\n\n" +
+            "Since \\( 145^{3/2} = 145\\sqrt{145} \\):\n\n" +
+            "$S = \\frac{\\pi}{27} (145\\sqrt{145} - 1)$\n\n" +
+            "**Answer: \\( \\frac{\\pi}{27}(145\\sqrt{145} - 1) \\)** (approximately 199.48 square units)\n\n" +
+            "---\n\n" +
+            "**Key Concept - Surface Area vs Volume:**\n\n" +
+            "| **Quantity** | **Formula (about \\( x \\)-axis)** | **Interpretation** |\n" +
+            "|---|---|---|\n" +
+            "| **Volume** (Disk) | \\( \\int \\pi[f(x)]^2 \\, dx \\) | Sum of disk areas \\( \\times \\) thickness |\n" +
+            "| **Surface Area** | \\( \\int 2\\pi f(x) \\sqrt{1+(f'(x))^2} \\, dx \\) | Sum of circumferences \\( \\times \\) arc length |\n\n" +
+            "**Why the \\( \\sqrt{1 + (y')^2} \\) term?**\n\n" +
+            "When rotating, we measure along the **slanted surface**, not just horizontal distance. The factor \\( \\sqrt{1 + (y')^2} \\) converts \\( dx \\) into the actual arc length \\( ds \\)."
+        },
+
+        // Question 118: Gabriel's Horn - Multiple Choice (Infinite Surface Area)
+        {
+          id: "q118",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W5",
+          type: "multiple-choice",
+          text: "Consider **Gabriel's Horn**: the surface formed by rotating the curve \\( y = \\frac{1}{x} \\) for \\( x \\ge 1 \\) about the \\( x \\)-axis.\n\n" +
+            "This famous shape has a finite volume but an infinite surface area. Which statement correctly explains why the surface area is infinite?",
+          
+          options: [
+            "A. The surface area integral \\( \\displaystyle S = 2\\pi \\int_{1}^{\\infty} \\frac{\\sqrt{x^4 + 1}}{x^3} \\, dx \\) is greater than \\( \\displaystyle 2\\pi \\int_{1}^{\\infty} \\frac{1}{x} \\, dx \\), which diverges to infinity",
+            "B. The surface area integral \\( \\displaystyle S = 2\\pi \\int_{1}^{\\infty} \\frac{1}{x^2} \\, dx \\) converges, so the surface area is finite",
+            "C. Both the volume and surface area integrals converge to finite values",
+            "D. The surface area is finite because \\( y = \\frac{1}{x} \\) approaches zero as \\( x \\to \\infty \\)"
+          ],
+          
+          correctAnswers: ["A"],
+          
+          explanation: "**Gabriel's Horn** is one of the most fascinating paradoxes in calculus - a shape you can fill with paint, but you cannot paint its surface!\n\n" +
+            "**Setting Up the Surface Area Integral:**\n\n" +
+            "For \\( y = \\frac{1}{x} \\) rotated about the \\( x \\)-axis:\n\n" +
+            "$S = \\int_{1}^{\\infty} 2\\pi y \\sqrt{1 + (y')^2} \\, dx$\n\n" +
+            "**Step 1: Find the Components**\n\n" +
+            "- \\( y = \\frac{1}{x} = x^{-1} \\)\n" +
+            "- \\( y' = -x^{-2} = -\\frac{1}{x^2} \\)\n" +
+            "- \\( (y')^2 = \\frac{1}{x^4} \\)\n\n" +
+            "**Step 2: Simplify \\( 1 + (y')^2 \\)**\n\n" +
+            "$1 + (y')^2 = 1 + \\frac{1}{x^4} = \\frac{x^4 + 1}{x^4}$\n\n" +
+            "**Step 3: Set Up the Integral**\n\n" +
+            "$S = \\int_{1}^{\\infty} 2\\pi \\left(\\frac{1}{x}\\right) \\sqrt{\\frac{x^4 + 1}{x^4}} \\, dx$\n\n" +
+            "$S = 2\\pi \\int_{1}^{\\infty} \\frac{1}{x} \\cdot \\frac{\\sqrt{x^4 + 1}}{x^2} \\, dx = 2\\pi \\int_{1}^{\\infty} \\frac{\\sqrt{x^4 + 1}}{x^3} \\, dx$\n\n" +
+            "**Step 4: Use the Direct Comparison Test**\n\n" +
+            "For \\( x \\ge 1 \\), we know:\n\n" +
+            "$\\sqrt{x^4 + 1} > \\sqrt{x^4} = x^2$\n\n" +
+            "Therefore:\n\n" +
+            "$\\frac{\\sqrt{x^4 + 1}}{x^3} > \\frac{x^2}{x^3} = \\frac{1}{x}$\n\n" +
+            "This means our surface area integral is **greater than** a simpler integral:\n\n" +
+            "$S = 2\\pi \\int_{1}^{\\infty} \\frac{\\sqrt{x^4 + 1}}{x^3} \\, dx > 2\\pi \\int_{1}^{\\infty} \\frac{1}{x} \\, dx$\n\n" +
+            "**Step 5: Show the Simpler Integral Diverges**\n\n" +
+            "$\\int_{1}^{\\infty} \\frac{1}{x} \\, dx = \\lim_{t \\to \\infty} \\left[ \\ln|x| \\right]_{1}^{t}$\n\n" +
+            "$= \\lim_{t \\to \\infty} (\\ln(t) - \\ln(1)) = \\lim_{t \\to \\infty} \\ln(t) = \\infty$\n\n" +
+            "**Conclusion:**\n\n" +
+            "Since \\( \\int_{1}^{\\infty} \\frac{1}{x} \\, dx \\) diverges to infinity, and our surface area is **always greater**, the surface area must also be infinite.\n\n" +
+            "**Answer: A**\n\n" +
+            "---\n\n" +
+            "**The Gabriel's Horn Paradox:**\n\n" +
+            "| **Property** | **Value** | **Why?** |\n" +
+            "|---|---|---|\n" +
+            "| **Volume** | \\( \\pi \\) (finite) | \\( \\int_{1}^{\\infty} \\pi \\left(\\frac{1}{x}\\right)^2 dx = \\int_{1}^{\\infty} \\frac{\\pi}{x^2} dx \\) converges |\n" +
+            "| **Surface Area** | \\( \\infty \\) (infinite) | \\( \\int_{1}^{\\infty} \\frac{2\\pi\\sqrt{x^4+1}}{x^3} dx > \\int_{1}^{\\infty} \\frac{2\\pi}{x} dx \\) diverges |\n\n" +
+            "**Why This Happens:**\n\n" +
+            "The volume depends on \\( y^2 = \\frac{1}{x^2} \\), which decays fast enough for convergence (\\( p \\)-test with \\( p = 2 > 1 \\)).\n\n" +
+            "The surface area depends on \\( y\\sqrt{1+(y')^2} \\approx \\frac{1}{x} \\), which decays too slowly (\\( p \\)-test with \\( p = 1 \\)).\n\n" +
+            "**Physical Interpretation:**\n\n" +
+            "You can **fill** Gabriel's Horn with \\( \\pi \\) cubic units of paint, but you can **never** paint its inner surface because the surface area is infinite. This seems paradoxical, but it's mathematically sound!\n\n" +
+            "The resolution: the \"thickness\" of real paint matters. In reality, you couldn't fill it completely because paint molecules have finite size."
+        }
+      ,
+
+        // Question 119: Volume - Disk Method (y = x³)
+        {
+          id: "q119",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W5",
+          type: "open-ended",
+          text: "Find the volume of the solid generated by rotating the region bounded by the curve \\( y = x^3 \\), the line \\( x = 2 \\), and the \\( x \\)-axis (\\( y = 0 \\)) about the \\( x \\)-axis.",
+          
+          correctAnswers: [
+            "128π/7",
+            "128*π/7",
+            "128*pi/7",
+            "128pi/7",
+            "(128/7)π",
+            "(128/7)*π",
+            "(128/7)*pi",
+            "18.286π",
+            "18.286*π",
+            "57.44",
+            "≈57.44",
+            "≈128π/7"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.01,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This problem uses the **disk method** because the region is flush against the axis of rotation.\n\n" +
+            "**Formula for Disk Method (rotating about \\( x \\)-axis):**\n\n" +
+            "$V = \\int_{a}^{b} \\pi[f(x)]^2 \\, dx$\n\n" +
+            "**Step 1: Identify Components**\n\n" +
+            "- **Radius function:** \\( f(x) = x^3 \\)\n" +
+            "- **Limits:** The region extends from \\( x = 0 \\) (where \\( y = 0 \\) intersects \\( y = x^3 \\)) to \\( x = 2 \\)\n" +
+            "- So \\( a = 0 \\) and \\( b = 2 \\)\n\n" +
+            "**Step 2: Set Up the Integral**\n\n" +
+            "$V = \\int_{0}^{2} \\pi (x^3)^2 \\, dx$\n\n" +
+            "**Step 3: Simplify**\n\n" +
+            "$V = \\pi \\int_{0}^{2} x^6 \\, dx$\n\n" +
+            "**Step 4: Integrate**\n\n" +
+            "Using the power rule:\n\n" +
+            "$V = \\pi \\left[ \\frac{x^7}{7} \\right]_{0}^{2}$\n\n" +
+            "**Step 5: Evaluate**\n\n" +
+            "$V = \\pi \\left( \\frac{2^7}{7} - \\frac{0^7}{7} \\right)$\n\n" +
+            "$V = \\pi \\left( \\frac{128}{7} - 0 \\right) = \\frac{128\\pi}{7}$\n\n" +
+            "**Answer: \\( \\frac{128\\pi}{7} \\) cubic units** (approximately 57.44 cubic units)\n\n" +
+            "---\n\n" +
+            "**Key Concept - Power Functions in Disk Method:**\n\n" +
+            "When rotating \\( y = x^n \\) about the \\( x \\)-axis:\n\n" +
+            "| **Step** | **Result** | **Note** |\n" +
+            "|---|---|---|\n" +
+            "| Square the function | \\( (x^n)^2 = x^{2n} \\) | The power doubles |\n" +
+            "| Integrate | \\( \\int x^{2n} dx = \\frac{x^{2n+1}}{2n+1} \\) | Add 1 to exponent, divide |\n" +
+            "| Multiply by \\( \\pi \\) | \\( \\pi \\cdot \\text{result} \\) | Don't forget this! |\n\n" +
+            "For \\( y = x^3 \\): squaring gives \\( x^6 \\), integrating gives \\( \\frac{x^7}{7} \\)."
+        },
+
+        // Question 120: Volume - Washer Method (y = x² and y = 4)
+        {
+          id: "q120",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W5",
+          type: "open-ended",
+          text: "Find the volume of the solid generated by rotating the region bounded by the curves \\( y = x^2 \\) and \\( y = 4 \\) about the \\( x \\)-axis.",
+          
+          correctAnswers: [
+            "256π/5",
+            "256*π/5",
+            "256*pi/5",
+            "256pi/5",
+            "(256/5)π",
+            "(256/5)*π",
+            "(256/5)*pi",
+            "51.2π",
+            "51.2*π",
+            "160.85",
+            "≈160.85",
+            "≈256π/5"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.01,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This problem uses the **washer method** because there's a gap between the region and the axis of rotation, creating a hollow center.\n\n" +
+            "**Formula for Washer Method (rotating about \\( x \\)-axis):**\n\n" +
+            "$V = \\int_{a}^{b} \\pi \\left( [R(x)]^2 - [r(x)]^2 \\right) dx$\n\n" +
+            "**Step 1: Identify Components**\n\n" +
+            "First, find intersection points:\n\n" +
+            "$x^2 = 4 \\implies x = \\pm 2$\n\n" +
+            "- **Outer radius:** \\( R(x) = 4 \\) (the horizontal line, farther from \\( x \\)-axis)\n" +
+            "- **Inner radius:** \\( r(x) = x^2 \\) (the parabola, closer to \\( x \\)-axis)\n" +
+            "- **Limits:** \\( a = -2 \\) to \\( b = 2 \\)\n\n" +
+            "**Step 2: Set Up the Integral**\n\n" +
+            "$V = \\int_{-2}^{2} \\pi \\left( (4)^2 - (x^2)^2 \\right) dx$\n\n" +
+            "$V = \\pi \\int_{-2}^{2} (16 - x^4) \\, dx$\n\n" +
+            "**Step 3: Use Symmetry**\n\n" +
+            "Since the integrand is even (symmetric about \\( y \\)-axis), we can integrate from 0 to 2 and double:\n\n" +
+            "$V = 2\\pi \\int_{0}^{2} (16 - x^4) \\, dx$\n\n" +
+            "**Step 4: Integrate**\n\n" +
+            "$V = 2\\pi \\left[ 16x - \\frac{x^5}{5} \\right]_{0}^{2}$\n\n" +
+            "**Step 5: Evaluate**\n\n" +
+            "$V = 2\\pi \\left( 16(2) - \\frac{2^5}{5} - 0 \\right)$\n\n" +
+            "$V = 2\\pi \\left( 32 - \\frac{32}{5} \\right)$\n\n" +
+            "$V = 2\\pi \\left( \\frac{160 - 32}{5} \\right) = 2\\pi \\left( \\frac{128}{5} \\right) = \\frac{256\\pi}{5}$\n\n" +
+            "**Answer: \\( \\frac{256\\pi}{5} \\) cubic units** (approximately 160.85 cubic units)\n\n" +
+            "---\n\n" +
+            "**Key Concept - Using Symmetry:**\n\n" +
+            "When the region is symmetric about the \\( y \\)-axis:\n\n" +
+            "| **Original Integral** | **Equivalent Using Symmetry** | **Benefit** |\n" +
+            "|---|---|---|\n" +
+            "| \\( \\int_{-a}^{a} f(x) \\, dx \\) | \\( 2\\int_{0}^{a} f(x) \\, dx \\) | Simpler limits |\n" +
+            "| Works when | \\( f(-x) = f(x) \\) | Function is even |\n\n" +
+            "**Why does this work?** If \\( f(x) = 16 - x^4 \\), then \\( f(-x) = 16 - (-x)^4 = 16 - x^4 = f(x) \\), so the function is even and the area from -2 to 0 equals the area from 0 to 2."
+        },
+
+        // Question 121: Volume - Washer Method about y-axis
+        {
+          id: "q121",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W5",
+          type: "open-ended",
+          text: "Find the volume of the solid generated by rotating the region bounded by the parabola \\( x = y^2 \\) and the line \\( x = y + 2 \\) about the \\( y \\)-axis.",
+          
+          correctAnswers: [
+            "72π/5",
+            "72*π/5",
+            "72*pi/5",
+            "72pi/5",
+            "(72/5)π",
+            "(72/5)*π",
+            "(72/5)*pi",
+            "14.4π",
+            "14.4*π",
+            "45.24",
+            "≈45.24",
+            "≈72π/5"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.01,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "We're rotating about the \\( y \\)-axis, so we integrate with respect to \\( y \\) using the washer method.\n\n" +
+            "**Formula for Washer Method (rotating about \\( y \\)-axis):**\n\n" +
+            "$V = \\int_{c}^{d} \\pi \\left( [R(y)]^2 - [r(y)]^2 \\right) dy$\n\n" +
+            "**Step 1: Find Intersection Points**\n\n" +
+            "Set the curves equal:\n\n" +
+            "$y^2 = y + 2$\n" +
+            "$y^2 - y - 2 = 0$\n" +
+            "$(y - 2)(y + 1) = 0$\n\n" +
+            "Intersections at \\( y = -1 \\) and \\( y = 2 \\)\n\n" +
+            "**Step 2: Identify Components**\n\n" +
+            "For \\( -1 \\le y \\le 2 \\), which curve is farther from the \\( y \\)-axis?\n\n" +
+            "Test \\( y = 0 \\): \\( x = y^2 = 0 \\) vs \\( x = y + 2 = 2 \\)\n\n" +
+            "- **Outer radius:** \\( R(y) = y + 2 \\) (the line)\n" +
+            "- **Inner radius:** \\( r(y) = y^2 \\) (the parabola)\n" +
+            "- **Limits:** \\( c = -1 \\) to \\( d = 2 \\)\n\n" +
+            "**Step 3: Set Up the Integral**\n\n" +
+            "$V = \\int_{-1}^{2} \\pi \\left( (y + 2)^2 - (y^2)^2 \\right) dy$\n\n" +
+            "**Step 4: Expand and Simplify**\n\n" +
+            "$V = \\pi \\int_{-1}^{2} (y^2 + 4y + 4 - y^4) \\, dy$\n\n" +
+            "**Step 5: Integrate**\n\n" +
+            "$V = \\pi \\left[ \\frac{y^3}{3} + 2y^2 + 4y - \\frac{y^5}{5} \\right]_{-1}^{2}$\n\n" +
+            "**Step 6: Evaluate at Upper Limit (\\( y = 2 \\))**\n\n" +
+            "$\\frac{8}{3} + 2(4) + 4(2) - \\frac{32}{5} = \\frac{8}{3} + 8 + 8 - \\frac{32}{5}$\n\n" +
+            "$= \\frac{8}{3} + 16 - \\frac{32}{5} = \\frac{40 + 240 - 96}{15} = \\frac{184}{15}$\n\n" +
+            "**Step 7: Evaluate at Lower Limit (\\( y = -1 \\))**\n\n" +
+            "$\\frac{-1}{3} + 2(1) + 4(-1) - \\frac{-1}{5} = -\\frac{1}{3} + 2 - 4 + \\frac{1}{5}$\n\n" +
+            "$= -\\frac{1}{3} - 2 + \\frac{1}{5} = \\frac{-5 - 30 + 3}{15} = -\\frac{32}{15}$\n\n" +
+            "**Step 8: Subtract**\n\n" +
+            "$V = \\pi \\left( \\frac{184}{15} - \\left(-\\frac{32}{15}\\right) \\right) = \\pi \\cdot \\frac{216}{15} = \\frac{216\\pi}{15} = \\frac{72\\pi}{5}$\n\n" +
+            "**Answer: \\( \\frac{72\\pi}{5} \\) cubic units** (approximately 45.24 cubic units)\n\n" +
+            "---\n\n" +
+            "**Key Concept - Rotation About Different Axes:**\n\n" +
+            "| **Axis of Rotation** | **Integrate with** | **Outer/Inner Radius** |\n" +
+            "|---|---|---|\n" +
+            "| \\( x \\)-axis | \\( dx \\) | Functions \\( y = f(x) \\) |\n" +
+            "| \\( y \\)-axis | \\( dy \\) | Functions \\( x = g(y) \\) |\n\n" +
+            "**Pro Tip:** Always sketch the region! It helps identify which curve is outer vs inner."
+        },
+
+        // Question 122: Volume - Cylindrical Shell (e^(-x²))
+        {
+          id: "q122",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W5",
+          type: "open-ended",
+          text: "Use the cylindrical shell method to find the volume of the solid generated by rotating the region bounded by \\( y = e^{-x^2} \\), \\( y = 0 \\), \\( x = 0 \\), and \\( x = 1 \\) about the \\( y \\)-axis.",
+          
+          correctAnswers: [
+            "π(1 - 1/e)",
+            "π(1 - e^(-1))",
+            "π(1-1/e)",
+            "π(1-e^(-1))",
+            "π*(1 - 1/e)",
+            "π*(1-1/e)",
+            "pi(1-1/e)",
+            "pi*(1-1/e)",
+            "(1-1/e)π",
+            "(1-1/e)*π",
+            "1.986",
+            "≈1.986",
+            "≈π(1-1/e)"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.01,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "We're rotating about the \\( y \\)-axis and integrating with respect to \\( x \\), which makes the **cylindrical shell method** the natural choice.\n\n" +
+            "**Formula for Shell Method (rotating about \\( y \\)-axis):**\n\n" +
+            "$V = \\int_{a}^{b} 2\\pi x \\cdot f(x) \\, dx$\n\n" +
+            "where \\( x \\) is the radius and \\( f(x) \\) is the height.\n\n" +
+            "**Step 1: Identify Components**\n\n" +
+            "- **Radius:** Distance from \\( y \\)-axis to point at \\( x \\) is \\( x \\)\n" +
+            "- **Height:** \\( f(x) = e^{-x^2} \\)\n" +
+            "- **Limits:** \\( a = 0 \\) to \\( b = 1 \\)\n\n" +
+            "**Step 2: Set Up the Integral**\n\n" +
+            "$V = \\int_{0}^{1} 2\\pi x \\cdot e^{-x^2} \\, dx$\n\n" +
+            "$V = 2\\pi \\int_{0}^{1} x e^{-x^2} \\, dx$\n\n" +
+            "**Step 3: Use u-Substitution**\n\n" +
+            "This integral is perfect for substitution because the derivative of \\( -x^2 \\) is \\( -2x \\):\n\n" +
+            "- Let \\( u = -x^2 \\)\n" +
+            "- Then \\( du = -2x \\, dx \\)\n" +
+            "- So \\( x \\, dx = -\\frac{du}{2} \\)\n\n" +
+            "**Change the limits:**\n" +
+            "- When \\( x = 0 \\): \\( u = -0^2 = 0 \\)\n" +
+            "- When \\( x = 1 \\): \\( u = -1^2 = -1 \\)\n\n" +
+            "**Step 4: Substitute and Integrate**\n\n" +
+            "$V = 2\\pi \\int_{0}^{-1} e^u \\left( -\\frac{du}{2} \\right)$\n\n" +
+            "$V = -\\pi \\int_{0}^{-1} e^u \\, du$\n\n" +
+            "**Flip the limits** (changes sign):\n\n" +
+            "$V = \\pi \\int_{-1}^{0} e^u \\, du$\n\n" +
+            "**Step 5: Evaluate**\n\n" +
+            "$V = \\pi \\left[ e^u \\right]_{-1}^{0}$\n\n" +
+            "$V = \\pi (e^0 - e^{-1})$\n\n" +
+            "$V = \\pi \\left(1 - \\frac{1}{e}\\right)$\n\n" +
+            "**Answer: \\( \\pi\\left(1 - \\frac{1}{e}\\right) \\) cubic units** (approximately 1.986 cubic units)\n\n" +
+            "---\n\n" +
+            "**Key Concept - Recognizing u-Substitution Opportunities:**\n\n" +
+            "When you see \\( x \\cdot f(x^2) \\), think u-substitution:\n\n" +
+            "| **Pattern** | **Let** | **Then** |\n" +
+            "|---|---|---|\n" +
+            "| \\( x e^{-x^2} \\) | \\( u = -x^2 \\) | \\( du = -2x \\, dx \\) |\n" +
+            "| \\( x \\sin(x^2) \\) | \\( u = x^2 \\) | \\( du = 2x \\, dx \\) |\n" +
+            "| \\( x(x^2 + 1)^5 \\) | \\( u = x^2 + 1 \\) | \\( du = 2x \\, dx \\) |\n\n" +
+            "**The key:** The \"extra \\( x \\)\" matches (up to a constant) the derivative of the inner function!"
+        },
+
+        // Question 123: Volume - Cylindrical Shell about x-axis
+        {
+          id: "q123",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W5",
+          type: "open-ended",
+          text: "Use the cylindrical shell method to find the volume of the solid generated by rotating the region bounded by the parabola \\( x = 4y - y^2 \\) and the line \\( x = 0 \\) (the \\( y \\)-axis) about the \\( x \\)-axis.",
+          
+          correctAnswers: [
+            "128π/3",
+            "128*π/3",
+            "128*pi/3",
+            "128pi/3",
+            "(128/3)π",
+            "(128/3)*π",
+            "(128/3)*pi",
+            "42.667π",
+            "134.04",
+            "≈134.04",
+            "≈128π/3"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.01,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "We're rotating about the \\( x \\)-axis, and the function is given as \\( x = g(y) \\), making it easiest to integrate with respect to \\( y \\) using the **cylindrical shell method**.\n\n" +
+            "**Formula for Shell Method (rotating about \\( x \\)-axis, integrating with \\( y \\)):**\n\n" +
+            "$V = \\int_{c}^{d} 2\\pi y \\cdot g(y) \\, dy$\n\n" +
+            "where \\( y \\) is the radius and \\( g(y) \\) is the height/length.\n\n" +
+            "**Step 1: Identify Components**\n\n" +
+            "- **Radius:** Distance from \\( x \\)-axis to height \\( y \\) is \\( y \\)\n" +
+            "- **Height:** \\( g(y) = 4y - y^2 \\)\n" +
+            "- **Limits:** Find where \\( x = 0 \\):\n\n" +
+            "$4y - y^2 = 0$\n" +
+            "$y(4 - y) = 0$\n\n" +
+            "So \\( y = 0 \\) and \\( y = 4 \\), giving us \\( c = 0 \\) to \\( d = 4 \\)\n\n" +
+            "**Step 2: Set Up the Integral**\n\n" +
+            "$V = \\int_{0}^{4} 2\\pi y (4y - y^2) \\, dy$\n\n" +
+            "**Step 3: Expand**\n\n" +
+            "$V = 2\\pi \\int_{0}^{4} (4y^2 - y^3) \\, dy$\n\n" +
+            "**Step 4: Integrate**\n\n" +
+            "$V = 2\\pi \\left[ \\frac{4y^3}{3} - \\frac{y^4}{4} \\right]_{0}^{4}$\n\n" +
+            "**Step 5: Evaluate**\n\n" +
+            "At \\( y = 4 \\):\n\n" +
+            "$\\frac{4(4^3)}{3} - \\frac{4^4}{4} = \\frac{4(64)}{3} - \\frac{256}{4} = \\frac{256}{3} - 64$\n\n" +
+            "$= \\frac{256}{3} - \\frac{192}{3} = \\frac{64}{3}$\n\n" +
+            "At \\( y = 0 \\): gives 0\n\n" +
+            "Therefore:\n\n" +
+            "$V = 2\\pi \\cdot \\frac{64}{3} = \\frac{128\\pi}{3}$\n\n" +
+            "**Answer: \\( \\frac{128\\pi}{3} \\) cubic units** (approximately 134.04 cubic units)\n\n" +
+            "---\n\n" +
+            "**Key Concept - Shell Method: When to Use It:**\n\n" +
+            "| **Situation** | **Best Method** | **Why?** |\n" +
+            "|---|---|---|\n" +
+            "| Function is \\( x = g(y) \\), rotating about \\( x \\)-axis | Shell (integrate \\( dy \\)) | Avoids solving for \\( y \\) |\n" +
+            "| Function is \\( y = f(x) \\), rotating about \\( y \\)-axis | Shell (integrate \\( dx \\)) | Avoids solving for \\( x \\) |\n" +
+            "| Region between two curves, rotating about parallel axis | Shell often simpler | Single integral vs. washer |\n\n" +
+            "**Shell Method Visualization:**\n" +
+            "Imagine peeling the solid like an onion - each shell is a cylinder with:\n" +
+            "- Circumference: \\( 2\\pi r \\) (where \\( r \\) is distance to axis)\n" +
+            "- Height: \\( h \\) (length of the region)\n" +
+            "- Thickness: \\( dr \\) or \\( dy \\) (infinitesimal)"
+        },
+
+        // Question 124: Arc Length - Perfect Square (x-based)
+        {
+          id: "q124",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W5",
+          type: "open-ended",
+          text: "Find the exact length of the curve \\( y = \\frac{x^4}{8} + \\frac{1}{4x^2} \\) from \\( x = 1 \\) to \\( x = 2 \\).",
+          
+          correctAnswers: [
+            "33/16",
+            "33 / 16",
+            "(33/16)",
+            "2.0625",
+            "2.063",
+            "≈33/16",
+            "≈2.0625"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.01,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This is another **perfect square** arc length problem - designed so \\( 1 + (y')^2 \\) simplifies beautifully.\n\n" +
+            "**Arc Length Formula:**\n\n" +
+            "$L = \\int_{a}^{b} \\sqrt{1 + (y')^2} \\, dx$\n\n" +
+            "**Step 1: Find the Derivative**\n\n" +
+            "Rewrite as \\( y = \\frac{1}{8}x^4 + \\frac{1}{4}x^{-2} \\):\n\n" +
+            "$y' = \\frac{4}{8}x^3 - \\frac{2}{4}x^{-3} = \\frac{x^3}{2} - \\frac{1}{2x^3}$\n\n" +
+            "**Step 2: Find \\( (y')^2 \\)**\n\n" +
+            "Using \\( (a - b)^2 = a^2 - 2ab + b^2 \\):\n\n" +
+            "$(y')^2 = \\left(\\frac{x^3}{2}\\right)^2 - 2\\left(\\frac{x^3}{2}\\right)\\left(\\frac{1}{2x^3}\\right) + \\left(\\frac{1}{2x^3}\\right)^2$\n\n" +
+            "$(y')^2 = \\frac{x^6}{4} - \\frac{1}{2} + \\frac{1}{4x^6}$\n\n" +
+            "**Step 3: Find \\( 1 + (y')^2 \\)**\n\n" +
+            "$1 + (y')^2 = 1 + \\frac{x^6}{4} - \\frac{1}{2} + \\frac{1}{4x^6}$\n\n" +
+            "$= \\frac{x^6}{4} + \\frac{1}{2} + \\frac{1}{4x^6}$\n\n" +
+            "**Step 4: Recognize the Perfect Square**\n\n" +
+            "This is \\( (a + b)^2 = a^2 + 2ab + b^2 \\) with \\( a = \\frac{x^3}{2} \\) and \\( b = \\frac{1}{2x^3} \\):\n\n" +
+            "$1 + (y')^2 = \\left( \\frac{x^3}{2} + \\frac{1}{2x^3} \\right)^2$\n\n" +
+            "**Step 5: Set Up and Integrate**\n\n" +
+            "$L = \\int_{1}^{2} \\sqrt{\\left( \\frac{x^3}{2} + \\frac{1}{2x^3} \\right)^2} \\, dx$\n\n" +
+            "The square root and square cancel:\n\n" +
+            "$L = \\int_{1}^{2} \\left( \\frac{x^3}{2} + \\frac{1}{2x^3} \\right) dx$\n\n" +
+            "$L = \\int_{1}^{2} \\left( \\frac{x^3}{2} + \\frac{1}{2}x^{-3} \\right) dx$\n\n" +
+            "$L = \\left[ \\frac{x^4}{8} - \\frac{1}{4x^2} \\right]_{1}^{2}$\n\n" +
+            "**Step 6: Evaluate**\n\n" +
+            "At \\( x = 2 \\):\n\n" +
+            "$\\frac{2^4}{8} - \\frac{1}{4(2^2)} = \\frac{16}{8} - \\frac{1}{16} = 2 - \\frac{1}{16} = \\frac{32 - 1}{16} = \\frac{31}{16}$\n\n" +
+            "At \\( x = 1 \\):\n\n" +
+            "$\\frac{1^4}{8} - \\frac{1}{4(1^2)} = \\frac{1}{8} - \\frac{1}{4} = \\frac{1 - 2}{8} = -\\frac{1}{8} = -\\frac{2}{16}$\n\n" +
+            "Subtract:\n\n" +
+            "$L = \\frac{31}{16} - \\left(-\\frac{2}{16}\\right) = \\frac{31 + 2}{16} = \\frac{33}{16}$\n\n" +
+            "**Answer: \\( \\frac{33}{16} \\)** (approximately 2.0625)\n\n" +
+            "---\n\n" +
+            "**Key Concept - The Perfect Square Trick:**\n\n" +
+            "Many calculus textbooks include arc length problems where \\( 1 + (y')^2 \\) is designed to be a perfect square:\n\n" +
+            "| **If \\( y' \\) has form** | **Then \\( 1 + (y')^2 \\) becomes** | **Pattern** |\n" +
+            "|---|---|---|\n" +
+            "| \\( \\frac{x^n}{2} - \\frac{1}{2x^n} \\) | \\( \\left( \\frac{x^n}{2} + \\frac{1}{2x^n} \\right)^2 \\) | Sign flips from - to + |\n" +
+            "| \\( x^n - \\frac{k}{x^n} \\) | \\( \\left( x^n + \\frac{k}{x^n} \\right)^2 \\) | Middle term changes |\n\n" +
+            "**Why does the sign flip?** When \\( (a - b)^2 = a^2 - 2ab + b^2 \\) and you add 1, the \\( -2ab \\) becomes \\( +2ab \\), creating \\( (a + b)^2 \\)!"
+        },
+
+        // Question 125: Arc Length - Perfect Square (y-based)
+        {
+          id: "q125",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W5",
+          type: "open-ended",
+          text: "Find the exact length of the curve \\( x = \\frac{y^3}{3} + \\frac{1}{4y} \\) from \\( y = 1 \\) to \\( y = 3 \\).",
+          
+          correctAnswers: [
+            "53/6",
+            "53 / 6",
+            "(53/6)",
+            "8.833",
+            "8.8333",
+            "≈53/6",
+            "≈8.833"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.01,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This problem uses the arc length formula for a function of \\( y \\):\n\n" +
+            "$L = \\int_{c}^{d} \\sqrt{1 + (x')^2} \\, dy$\n\n" +
+            "where \\( x' = \\frac{dx}{dy} \\).\n\n" +
+            "**Step 1: Find the Derivative**\n\n" +
+            "$x' = \\frac{dx}{dy} = \\frac{3y^2}{3} - \\frac{1}{4y^2} = y^2 - \\frac{1}{4y^2}$\n\n" +
+            "**Step 2: Find \\( (x')^2 \\)**\n\n" +
+            "Using \\( (a - b)^2 = a^2 - 2ab + b^2 \\):\n\n" +
+            "$(x')^2 = (y^2)^2 - 2(y^2)\\left(\\frac{1}{4y^2}\\right) + \\left(\\frac{1}{4y^2}\\right)^2$\n\n" +
+            "$(x')^2 = y^4 - \\frac{1}{2} + \\frac{1}{16y^4}$\n\n" +
+            "**Step 3: Find \\( 1 + (x')^2 \\)**\n\n" +
+            "$1 + (x')^2 = 1 + y^4 - \\frac{1}{2} + \\frac{1}{16y^4}$\n\n" +
+            "$= y^4 + \\frac{1}{2} + \\frac{1}{16y^4}$\n\n" +
+            "**Step 4: Recognize the Perfect Square**\n\n" +
+            "This is \\( (a + b)^2 \\) where \\( a = y^2 \\) and \\( b = \\frac{1}{4y^2} \\):\n\n" +
+            "$1 + (x')^2 = \\left( y^2 + \\frac{1}{4y^2} \\right)^2$\n\n" +
+            "**Step 5: Set Up and Integrate**\n\n" +
+            "$L = \\int_{1}^{3} \\sqrt{\\left( y^2 + \\frac{1}{4y^2} \\right)^2} \\, dy$\n\n" +
+            "$L = \\int_{1}^{3} \\left( y^2 + \\frac{1}{4}y^{-2} \\right) dy$\n\n" +
+            "$L = \\left[ \\frac{y^3}{3} - \\frac{1}{4y} \\right]_{1}^{3}$\n\n" +
+            "**Step 6: Evaluate**\n\n" +
+            "At \\( y = 3 \\):\n\n" +
+            "$\\frac{3^3}{3} - \\frac{1}{4(3)} = \\frac{27}{3} - \\frac{1}{12} = 9 - \\frac{1}{12} = \\frac{108 - 1}{12} = \\frac{107}{12}$\n\n" +
+            "At \\( y = 1 \\):\n\n" +
+            "$\\frac{1^3}{3} - \\frac{1}{4(1)} = \\frac{1}{3} - \\frac{1}{4} = \\frac{4 - 3}{12} = \\frac{1}{12}$\n\n" +
+            "Subtract:\n\n" +
+            "$L = \\frac{107}{12} - \\frac{1}{12} = \\frac{106}{12} = \\frac{53}{6}$\n\n" +
+            "**Answer: \\( \\frac{53}{6} \\)** (approximately 8.833)\n\n" +
+            "---\n\n" +
+            "**Key Concept - Arc Length in Different Variables:**\n\n" +
+            "| **Function Type** | **Formula** | **When to Use** |\n" +
+            "|---|---|---|\n" +
+            "| \\( y = f(x) \\) | \\( L = \\int_{a}^{b} \\sqrt{1 + (y')^2} \\, dx \\) | Function naturally given as \\( y(x) \\) |\n" +
+            "| \\( x = g(y) \\) | \\( L = \\int_{c}^{d} \\sqrt{1 + (x')^2} \\, dy \\) | Function naturally given as \\( x(y) \\) |\n" +
+            "| Parametric | \\( L = \\int_{t_1}^{t_2} \\sqrt{(x'(t))^2 + (y'(t))^2} \\, dt \\) | Curve given parametrically |\n\n" +
+            "Notice the symmetry: the formulas are identical except for swapping \\( x \\) and \\( y \\)!"
+        },
+
+        // Question 126: Arc Length Function
+        {
+          id: "q126",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W5",
+          type: "open-ended",
+          text: "Find the arc length function \\( s(x) \\) for the curve \\( y = \\frac{2}{3}(x-1)^{3/2} \\) with the starting point \\( P_0(1, 0) \\).",
+          
+          correctAnswers: [
+            "2(x^(3/2) - 1)/3",
+            "(2/3)(x^(3/2) - 1)",
+            "2(x^(3/2)-1)/3",
+            "(2/3)(x^(3/2)-1)",
+            "2/3*(x^(3/2) - 1)",
+            "2/3*(x^(3/2)-1)",
+            "(2/3)*(x^(3/2) - 1)",
+            "(2x^(3/2) - 2)/3",
+            "(2x^(3/2)-2)/3"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.01,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "The **arc length function** \\( s(x) \\) measures the distance along the curve from a starting point to a variable endpoint.\n\n" +
+            "**Arc Length Function Formula:**\n\n" +
+            "$s(x) = \\int_{a}^{x} \\sqrt{1 + [f'(t)]^2} \\, dt$\n\n" +
+            "where \\( a \\) is the starting point.\n\n" +
+            "**Step 1: Identify Components**\n\n" +
+            "- Starting point: \\( P_0(1, 0) \\), so \\( a = 1 \\)\n" +
+            "- Function: \\( f(t) = \\frac{2}{3}(t-1)^{3/2} \\)\n\n" +
+            "**Step 2: Find the Derivative**\n\n" +
+            "Using the chain rule:\n\n" +
+            "$f'(t) = \\frac{2}{3} \\cdot \\frac{3}{2}(t-1)^{1/2} \\cdot 1 = (t-1)^{1/2} = \\sqrt{t-1}$\n\n" +
+            "**Step 3: Find \\( 1 + [f'(t)]^2 \\)**\n\n" +
+            "$[f'(t)]^2 = (\\sqrt{t-1})^2 = t - 1$\n\n" +
+            "$1 + [f'(t)]^2 = 1 + (t - 1) = t$\n\n" +
+            "**Step 4: Set Up and Integrate**\n\n" +
+            "$s(x) = \\int_{1}^{x} \\sqrt{t} \\, dt$\n\n" +
+            "$s(x) = \\int_{1}^{x} t^{1/2} \\, dt$\n\n" +
+            "$s(x) = \\left[ \\frac{t^{3/2}}{3/2} \\right]_{1}^{x} = \\left[ \\frac{2}{3}t^{3/2} \\right]_{1}^{x}$\n\n" +
+            "**Step 5: Evaluate**\n\n" +
+            "$s(x) = \\frac{2}{3}(x)^{3/2} - \\frac{2}{3}(1)^{3/2}$\n\n" +
+            "$s(x) = \\frac{2}{3}x^{3/2} - \\frac{2}{3}$\n\n" +
+            "$s(x) = \\frac{2}{3}(x^{3/2} - 1)$\n\n" +
+            "**Answer: \\( s(x) = \\frac{2}{3}(x^{3/2} - 1) \\)**\n\n" +
+            "---\n\n" +
+            "**Key Concept - Arc Length Function:**\n\n" +
+            "| **Property** | **Meaning** | **Example** |\n" +
+            "|---|---|---|\n" +
+            "| \\( s(a) = 0 \\) | Zero distance at starting point | \\( s(1) = \\frac{2}{3}(1 - 1) = 0 \\) ✓ |\n" +
+            "| \\( s'(x) = \\sqrt{1 + [f'(x)]^2} \\) | Rate of arc length growth | \\( s'(x) = \\sqrt{x} \\) |\n" +
+            "| \\( s(x) \\) always increasing | Moving forward along curve | \\( s'(x) > 0 \\) for \\( x > 1 \\) |\n\n" +
+            "**Physical Interpretation:** If you drive along the curve starting at \\( x = 1 \\), then \\( s(x) \\) tells you how far you've traveled by the time you reach position \\( x \\).\n\n" +
+            "**Verification:** At \\( x = 2 \\):\n" +
+            "$s(2) = \\frac{2}{3}(2^{3/2} - 1) = \\frac{2}{3}(2\\sqrt{2} - 1) \\approx 1.219$\n\n" +
+            "This is the distance traveled from \\( x = 1 \\) to \\( x = 2 \\) along the curve."
+        },
+
+        // Question 127: Surface Area about x-axis
+        {
+          id: "q127",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W5",
+          type: "open-ended",
+          text: "Find the exact area of the surface obtained by rotating the curve \\( y = \\sqrt{x} \\) from \\( x = 1 \\) to \\( x = 4 \\) about the \\( x \\)-axis.",
+          
+          correctAnswers: [
+            "π(17√17 - 5√5)/6",
+            "π(17*√17 - 5*√5)/6",
+            "π(17sqrt(17) - 5sqrt(5))/6",
+            "(π/6)(17√17 - 5√5)",
+            "(π/6)(17*sqrt(17) - 5*sqrt(5))",
+            "π*(17√17 - 5√5)/6",
+            "30.85",
+            "≈30.85",
+            "≈π(17√17 - 5√5)/6"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.02,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "We're rotating about the \\( x \\)-axis, so we use the surface area formula:\n\n" +
+            "$S = \\int_{a}^{b} 2\\pi y \\sqrt{1 + (y')^2} \\, dx$\n\n" +
+            "**Step 1: Identify Components**\n\n" +
+            "- \\( y = \\sqrt{x} = x^{1/2} \\)\n" +
+            "- \\( y' = \\frac{1}{2}x^{-1/2} = \\frac{1}{2\\sqrt{x}} \\)\n" +
+            "- Bounds: \\( a = 1, b = 4 \\)\n\n" +
+            "**Step 2: Find \\( \\sqrt{1 + (y')^2} \\)**\n\n" +
+            "$(y')^2 = \\left(\\frac{1}{2\\sqrt{x}}\\right)^2 = \\frac{1}{4x}$\n\n" +
+            "$1 + (y')^2 = 1 + \\frac{1}{4x} = \\frac{4x + 1}{4x}$\n\n" +
+            "$\\sqrt{1 + (y')^2} = \\frac{\\sqrt{4x + 1}}{2\\sqrt{x}}$\n\n" +
+            "**Step 3: Set Up the Integral**\n\n" +
+            "$S = \\int_{1}^{4} 2\\pi (\\sqrt{x}) \\cdot \\frac{\\sqrt{4x + 1}}{2\\sqrt{x}} \\, dx$\n\n" +
+            "**Step 4: Simplify**\n\n" +
+            "The \\( 2\\pi \\) and \\( 2 \\) cancel, \\( \\sqrt{x} \\) cancels:\n\n" +
+            "$S = \\pi \\int_{1}^{4} \\sqrt{4x + 1} \\, dx$\n\n" +
+            "**Step 5: Use u-Substitution**\n\n" +
+            "- Let \\( u = 4x + 1 \\)\n" +
+            "- Then \\( du = 4 \\, dx \\), so \\( dx = \\frac{du}{4} \\)\n" +
+            "- When \\( x = 1 \\): \\( u = 5 \\)\n" +
+            "- When \\( x = 4 \\): \\( u = 17 \\)\n\n" +
+            "$S = \\pi \\int_{5}^{17} \\sqrt{u} \\cdot \\frac{du}{4} = \\frac{\\pi}{4} \\int_{5}^{17} u^{1/2} \\, du$\n\n" +
+            "**Step 6: Integrate and Evaluate**\n\n" +
+            "$S = \\frac{\\pi}{4} \\left[ \\frac{u^{3/2}}{3/2} \\right]_{5}^{17} = \\frac{\\pi}{4} \\cdot \\frac{2}{3} \\left[ u^{3/2} \\right]_{5}^{17}$\n\n" +
+            "$S = \\frac{\\pi}{6} \\left( 17^{3/2} - 5^{3/2} \\right)$\n\n" +
+            "Since \\( n^{3/2} = n\\sqrt{n} \\):\n\n" +
+            "$S = \\frac{\\pi}{6} (17\\sqrt{17} - 5\\sqrt{5})$\n\n" +
+            "**Answer: \\( \\frac{\\pi}{6}(17\\sqrt{17} - 5\\sqrt{5}) \\)** (approximately 30.85 square units)\n\n" +
+            "---\n\n" +
+            "**Key Concept - Surface Area Formula Components:**\n\n" +
+            "$S = \\int_{a}^{b} 2\\pi y \\sqrt{1 + (y')^2} \\, dx$\n\n" +
+            "| **Component** | **Meaning** | **Geometric Interpretation** |\n" +
+            "|---|---|---|\n" +
+            "| \\( 2\\pi y \\) | Circumference | Distance around the circle at height \\( y \\) |\n" +
+            "| \\( \\sqrt{1 + (y')^2} \\, dx \\) | Arc length element | Slanted distance along curve |\n" +
+            "| Product | Surface area element | Circumference \\( \\times \\) slant height |\n\n" +
+            "**Why not just \\( 2\\pi y \\, dx \\)?** Because we need to account for the **slope** of the curve. The steeper the curve, the more surface area we generate!"
+        },
+
+        // Question 128: Surface Area about y-axis
+        {
+          id: "q128",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W5",
+          type: "open-ended",
+          text: "Find the exact area of the surface generated by rotating the curve \\( x = y^3 \\) from \\( y = 0 \\) to \\( y = 1 \\) about the \\( y \\)-axis.",
+          
+          correctAnswers: [
+            "π(10√10 - 1)/27",
+            "π(10*√10 - 1)/27",
+            "π(10sqrt(10) - 1)/27",
+            "(π/27)(10√10 - 1)",
+            "(π/27)(10*sqrt(10) - 1)",
+            "π*(10√10 - 1)/27",
+            "3.563",
+            "≈3.563",
+            "≈π(10√10 - 1)/27"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.02,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "We're rotating about the \\( y \\)-axis and integrating with respect to \\( y \\):\n\n" +
+            "$S = \\int_{c}^{d} 2\\pi x \\sqrt{1 + (x')^2} \\, dy$\n\n" +
+            "**Step 1: Identify Components**\n\n" +
+            "- \\( x = y^3 \\)\n" +
+            "- \\( x' = \\frac{dx}{dy} = 3y^2 \\)\n" +
+            "- Bounds: \\( c = 0, d = 1 \\)\n\n" +
+            "**Step 2: Find \\( \\sqrt{1 + (x')^2} \\)**\n\n" +
+            "$(x')^2 = (3y^2)^2 = 9y^4$\n\n" +
+            "$\\sqrt{1 + (x')^2} = \\sqrt{1 + 9y^4}$\n\n" +
+            "**Step 3: Set Up the Integral**\n\n" +
+            "$S = \\int_{0}^{1} 2\\pi (y^3) \\sqrt{1 + 9y^4} \\, dy$\n\n" +
+            "$S = 2\\pi \\int_{0}^{1} y^3 \\sqrt{1 + 9y^4} \\, dy$\n\n" +
+            "**Step 4: Use u-Substitution**\n\n" +
+            "This is perfectly set up for substitution:\n\n" +
+            "- Let \\( u = 1 + 9y^4 \\)\n" +
+            "- Then \\( du = 36y^3 \\, dy \\)\n" +
+            "- So \\( y^3 dy = \\frac{du}{36} \\)\n\n" +
+            "**Change the limits:**\n" +
+            "- When \\( y = 0 \\): \\( u = 1 + 0 = 1 \\)\n" +
+            "- When \\( y = 1 \\): \\( u = 1 + 9(1) = 10 \\)\n\n" +
+            "**Step 5: Substitute and Integrate**\n\n" +
+            "$S = 2\\pi \\int_{1}^{10} \\sqrt{u} \\cdot \\frac{du}{36}$\n\n" +
+            "$S = \\frac{2\\pi}{36} \\int_{1}^{10} u^{1/2} \\, du = \\frac{\\pi}{18} \\int_{1}^{10} u^{1/2} \\, du$\n\n" +
+            "$S = \\frac{\\pi}{18} \\left[ \\frac{u^{3/2}}{3/2} \\right]_{1}^{10} = \\frac{\\pi}{18} \\cdot \\frac{2}{3} \\left[ u^{3/2} \\right]_{1}^{10}$\n\n" +
+            "$S = \\frac{\\pi}{27} \\left[ u^{3/2} \\right]_{1}^{10}$\n\n" +
+            "**Step 6: Evaluate**\n\n" +
+            "$S = \\frac{\\pi}{27} \\left( 10^{3/2} - 1^{3/2} \\right)$\n\n" +
+            "$S = \\frac{\\pi}{27} (10\\sqrt{10} - 1)$\n\n" +
+            "**Answer: \\( \\frac{\\pi}{27}(10\\sqrt{10} - 1) \\)** (approximately 3.563 square units)\n\n" +
+            "---\n\n" +
+            "**Key Concept - Surface Area About Different Axes:**\n\n" +
+            "| **Axis of Rotation** | **Formula** | **Radius** | **Arc Length Element** |\n" +
+            "|---|---|---|---|\n" +
+            "| \\( x \\)-axis | \\( \\int 2\\pi y \\sqrt{1+(y')^2} \\, dx \\) | \\( y \\) | \\( \\sqrt{1+(y')^2} \\, dx \\) |\n" +
+            "| \\( y \\)-axis | \\( \\int 2\\pi x \\sqrt{1+(x')^2} \\, dy \\) | \\( x \\) | \\( \\sqrt{1+(x')^2} \\, dy \\) |\n\n" +
+            "**Pattern Recognition:** Notice how this problem is similar to q117, just with \\( x \\) and \\( y \\) swapped!\n\n" +
+            "- q117: \\( y = x^3 \\) about \\( x \\)-axis → \\( \\frac{\\pi}{27}(145\\sqrt{145} - 1) \\)\n" +
+            "- q128: \\( x = y^3 \\) about \\( y \\)-axis → \\( \\frac{\\pi}{27}(10\\sqrt{10} - 1) \\)\n\n" +
+            "The structure is identical - only the limits differ!"
+        }
 
 ]
