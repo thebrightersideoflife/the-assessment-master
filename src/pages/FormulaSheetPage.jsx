@@ -9,7 +9,6 @@ import "katex/dist/katex.min.css";
 
 const FormulaSheetPage = () => {
   const { moduleId } = useParams();
-
   const module = modules.find(
     (m) => m.id.toLowerCase() === moduleId.toLowerCase()
   );
@@ -34,7 +33,7 @@ const FormulaSheetPage = () => {
           Formula Sheet Not Found
         </h1>
         <p className="mt-4 text-gray-600">
-          This module doesn’t have a formula sheet yet.
+          This module doesn't have a formula sheet yet.
         </p>
         <Link
           to="/modules"
@@ -47,6 +46,58 @@ const FormulaSheetPage = () => {
   }
 
   const formulaSheetUrl = `https://the-assessment-master.vercel.app`;
+
+  /**
+   * Helper function to check if an item is likely a table line
+   */
+  const isTableItem = (item) => {
+    const trimmed = item.trim();
+    return trimmed.startsWith('|') && trimmed.includes('|') && (trimmed.match(/\|/g) || []).length >= 3;
+  };
+
+  /**
+   * Group section items into table blocks and regular items
+   */
+  const groupSectionItems = (items) => {
+    const groups = [];
+    let currentTableLines = [];
+    let inTable = false;
+
+    items.forEach((item, index) => {
+      if (isTableItem(item)) {
+        currentTableLines.push(item);
+        inTable = true;
+      } else {
+        // If we were collecting table lines, save them as a table block
+        if (inTable && currentTableLines.length > 0) {
+          groups.push({
+            type: 'table',
+            content: currentTableLines.join('\n')
+          });
+          currentTableLines = [];
+          inTable = false;
+        }
+        
+        // Add regular item
+        if (item.trim() !== '') {
+          groups.push({
+            type: 'text',
+            content: item
+          });
+        }
+      }
+    });
+
+    // Don't forget any remaining table lines
+    if (currentTableLines.length > 0) {
+      groups.push({
+        type: 'table',
+        content: currentTableLines.join('\n')
+      });
+    }
+
+    return groups;
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 animate-fade-in">
@@ -93,20 +144,37 @@ const FormulaSheetPage = () => {
 
           {/* Formula Content */}
           <section className="prose max-w-none text-gray-800 print:text-black">
-            {sheet.sections.map((section) => (
-              <div key={section.title} className="mb-8">
-                <h3 className="text-xl font-semibold text-[#3498DB] mb-3">
-                  {section.title}
-                </h3>
-                <ul className="list-disc list-inside space-y-2">
-                  {section.items.map((item, i) => (
-                    <li key={i} className="leading-relaxed">
-                      {renderTextWithMathAndMarkdown(item)}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            {sheet.sections.map((section, sectionIndex) => {
+              const itemGroups = groupSectionItems(section.items);
+              
+              return (
+                <div key={`${section.title}-${sectionIndex}`} className="mb-8">
+                  <h3 className="text-xl font-semibold text-[#3498DB] mb-3">
+                    {section.title}
+                  </h3>
+                  
+                  {itemGroups.map((group, groupIndex) => {
+                    if (group.type === 'table') {
+                      // Render table directly without list
+                      return (
+                        <div key={`table-${sectionIndex}-${groupIndex}`} className="my-4">
+                          {renderTextWithMathAndMarkdown(group.content)}
+                        </div>
+                      );
+                    } else {
+                      // Render regular text items in a list
+                      return (
+                        <ul key={`list-${sectionIndex}-${groupIndex}`} className="list-disc list-inside space-y-2 mb-4">
+                          <li className="leading-relaxed">
+                            {renderTextWithMathAndMarkdown(group.content)}
+                          </li>
+                        </ul>
+                      );
+                    }
+                  })}
+                </div>
+              );
+            })}
           </section>
 
           {/* Print Button */}

@@ -48,6 +48,7 @@ export const exams = [
         type: "open-ended",
         text: "Find the area for the function \\( f(x) = 27 - x^3 \\) over the interval \\( [-1, 1] \\) using the **Left Riemann Sum** \\( (L_n) \\) with \\( n = 4 \\) rectangles.",
         correctAnswers: [
+          "109/2",
           "54.5",
           "54.50"
         ],
@@ -447,26 +448,54 @@ export const exams = [
         correctAnswers: ["A"],
         points: 10,
         explanation: "**Partial Fraction Decomposition with Repeated Factor:**\n\n" +
-          "**Step 1:** Set up the decomposition\n" +
+          "We'll find **all constants** (A, B, C) algebraically for:\n\n" +
           "$\\frac{4x^{2}-19}{(x+3)^{2}(x-2)} = \\frac{A}{x-2} + \\frac{B}{x+3} + \\frac{C}{(x+3)^{2}}$\n\n" +
-          "**Step 2:** Clear denominators\n" +
-          "$4x^{2}-19 = A(x+3)^2 + B(x-2)(x+3) + C(x-2)$\n\n" +
-          "**Step 3:** Find constants using root method\n\n" +
-          "Set \\( x = 2 \\) to find \\( A \\):\n" +
-          "$4(4) - 19 = A(25) \\implies -3 = 25A \\implies A = -\\frac{3}{25}$\n\n" +
-          "Set \\( x = -3 \\) to find \\( C \\):\n" +
-          "$4(9) - 19 = C(-5) \\implies 17 = -5C \\implies C = -\\frac{17}{5}$\n\n" +
-          "Set \\( x = 0 \\) to find \\( B \\):\n" +
-          "$-19 = 9A - 6B - 2C$\n" +
-          "$-19 = 9\\left(-\\frac{3}{25}\\right) - 6B - 2\\left(-\\frac{17}{5}\\right)$\n" +
-          "$-19 = -\\frac{27}{25} - 6B + \\frac{34}{5}$\n\n" +
-          "Converting to common denominator and solving:\n" +
-          "$B = \\frac{103}{25}$\n\n" +
-          "**Step 4:** Integrate\n" +
+          "**Step 1: Clear denominators**\n\n" +
+          "Multiply both sides by \\((x-2)(x+3)^2\\):\n\n" +
+          "$4x^{2}-19 = A(x+3)^{2} + B(x-2)(x+3) + C(x-2)$\n\n" +
+          "**Step 2: Use convenient roots (plugging values)**\n\n" +
+          "**Plug \\(x = 2\\)** (terms with \\((x-2)\\) vanish):\n\n" +
+          "$4(2)^2 - 19 = A(2+3)^2$\n\n" +
+          "$16 - 19 = 25A$\n\n" +
+          "$-3 = 25A \\quad\\Rightarrow\\quad A = -\\frac{3}{25}$\n\n" +
+          "**Plug \\(x = -3\\)** (terms with \\((x+3)\\) vanish):\n\n" +
+          "$4(-3)^2 - 19 = C(-3-2)$\n\n" +
+          "$36 - 19 = -5C$\n\n" +
+          "$17 = -5C \\quad\\Rightarrow\\quad C = -\\frac{17}{5}$\n\n" +
+          "So far: \\(A = -\\frac{3}{25}\\), \\(C = -\\frac{17}{5}\\)\n\n" +
+          "**Step 3: Solve for B by comparing coefficients**\n\n" +
+          "Expand the right-hand side:\n\n" +
+          "$A(x+3)^2 = A(x^2 + 6x + 9) = Ax^2 + 6Ax + 9A$\n\n" +
+          "$B(x-2)(x+3) = B(x^2 + x - 6) = Bx^2 + Bx - 6B$\n\n" +
+          "$C(x-2) = Cx - 2C$\n\n" +
+          "Adding them:\n\n" +
+          "$4x^{2} - 19 = (A+B)x^{2} + (6A+B+C)x + (9A-6B-2C)$\n\n" +
+          "Match coefficients with \\(4x^{2} + 0x - 19\\):\n\n" +
+          "| **Coefficient** | **Equation** |\n" +
+          "|---|---|\n" +
+          "| \\(x^2\\)-term | \\(A + B = 4\\) |\n" +
+          "| \\(x\\)-term | \\(6A + B + C = 0\\) |\n" +
+          "| constant | \\(9A - 6B - 2C = -19\\) |\n\n" +
+          "From the \\(x^2\\) equation:\n\n" +
+          "$B = 4 - A = 4 - \\left(-\\frac{3}{25}\\right) = 4 + \\frac{3}{25} = \\frac{100+3}{25} = \\frac{103}{25}$\n\n" +
+          "**Verification (optional):**\n\n" +
+          "Check \\(x\\)-term: \\(6\\left(-\\frac{3}{25}\\right) + \\frac{103}{25} + \\left(-\\frac{17}{5}\\right) = -\\frac{18}{25} + \\frac{103}{25} - \\frac{85}{25} = 0\\) ✓\n\n" +
+          "Check constant: \\(9\\left(-\\frac{3}{25}\\right) - 6\\left(\\frac{103}{25}\\right) - 2\\left(-\\frac{17}{5}\\right) = -\\frac{27}{25} - \\frac{618}{25} + \\frac{170}{25} = -\\frac{475}{25} = -19\\) ✓\n\n" +
+          "**Final values:**\n\n" +
+          "$A = -\\frac{3}{25}, \\quad B = \\frac{103}{25}, \\quad C = -\\frac{17}{5}$\n\n" +
+          "**Step 4: Integrate**\n\n" +
           "$\\int\\left(\\frac{-3/25}{x-2} + \\frac{103/25}{x+3} + \\frac{-17/5}{(x+3)^{2}}\\right)dx$\n\n" +
           "$= -\\frac{3}{25}\\ln|x-2| + \\frac{103}{25}\\ln|x+3| - \\frac{17}{5}\\int(x+3)^{-2}dx$\n\n" +
+          "$= -\\frac{3}{25}\\ln|x-2| + \\frac{103}{25}\\ln|x+3| + \\frac{17}{5(x+3)} + C$\n\n" +
           "$= \\frac{103}{25}\\ln|x+3| - \\frac{3}{25}\\ln|x-2| + \\frac{17}{5(x+3)} + C$\n\n" +
-          "**Answer: A**"
+          "**Answer: A**\n\n" +
+          "**Key Concept - Standard Partial Fraction Setup:**\n\n" +
+          "| **Denominator Type** | **Partial Fraction Form** | **Example** |\n" +
+          "|---|---|---|\n" +
+          "| Distinct linear factors: \\((x-a)(x-b)\\) | \\(\\frac{A}{x-a} + \\frac{B}{x-b}\\) | \\(\\frac{1}{(x-1)(x+2)}\\) |\n" +
+          "| Repeated linear factor: \\((x-a)^n\\) | \\(\\frac{A_1}{x-a} + \\frac{A_2}{(x-a)^2} + \\cdots + \\frac{A_n}{(x-a)^n}\\) | \\(\\frac{1}{(x+3)^2}\\) |\n" +
+          "| Irreducible quadratic: \\((x^2+bx+c)\\) | \\(\\frac{Ax+B}{x^2+bx+c}\\) | \\(\\frac{1}{x^2+4}\\) |\n\n" +
+          "For repeated factors, you **must include one term for each power** up to the highest power."
       },
       
       // ============================================================
