@@ -334,7 +334,8 @@ export const modules = [
     exams: [
       { id: 'ITMTB_EXAM1', name: 'Midterm Exam (Week 1-3)', description: 'ITMTB Midterm Exam: Calculus of Integration (Hardest Subset)', examBy: 'Mr Kwadwo Afrane-Okese' },
       { id: 'ITMTB_EXAM2', name: 'Final Exam', description: 'Not yet set. Contact founder for more info.' },
-      { id: 'ITMTB_EXAM3', name: 'ITMTB Exam: Interpreting Graphs', description: 'Applications of Integration: Covers reading graph data to answer questions.' }
+      { id: 'ITMTB_EXAM3', name: 'ITMTB Exam: Interpreting Graphs', description: 'Applications of Integration: Covers reading graph data to answer questions.' },
+      { id: 'ITMTB_EXAM4', name: 'Week 6, Class Test: Applications of Integration', description: 'Covers advanced integration techniques, area between curves, volumes of revolution (disk/washer and shell methods), surface area of revolution, and arc length. Real-world engineering applications included.', examBy: 'Mr. Mpho Nefale' }
     ],
     weeks: [
       {

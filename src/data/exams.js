@@ -948,8 +948,637 @@ export const exams = [
           "Since $17.5^\\circ\\text{C} > 14.4^\\circ\\text{C}$, the **East Coast was warmer overall**."
       }
     ]
+  },
+   {
+    id: "ITMTB_EXAM4",
+    moduleId: "ITMTB",
+    title: "Week 6, Class Test: Applications of Integration",
+    description: "Covers advanced integration techniques, area between curves, volumes of revolution (disk/washer and shell methods), surface area of revolution, and arc length. Real-world engineering applications included.",
+    examBy: "Mr. Mpho Nefale",
+    timeLimit: 75, // 1hr 15min
+    passingScore: 70,
+    
+    sections: [
+      {
+        id: "section_1",
+        title: "Section A: Integration Techniques",
+        description: "Question 1 | Advanced algebraic manipulation and power rule integration",
+        instructions: "Simplify the integrand completely before integrating. Express answers in exact form with constant of integration +C.",
+      },
+      {
+        id: "section_2",
+        title: "Section B: Area Between Curves",
+        description: "Questions 2-4 | Finding areas and net differences between functions",
+        instructions: "Set up integrals carefully, identifying top and bottom functions. For area, use absolute values where necessary. Express exact answers as fractions.",
+      },
+      {
+        id: "section_3",
+        title: "Section C: Volumes of Revolution",
+        description: "Questions 5-9 | Disk/washer method and shell method for volumes",
+        instructions: "Identify the axis of rotation and choose appropriate method. Find intersection points algebraically. Show complete setup before evaluating. Express volumes in exact form involving π.",
+      },
+      {
+        id: "section_4",
+        title: "Section D: Surface Area and Arc Length",
+        description: "Questions 10-12 | Applications requiring derivatives and advanced integration",
+        instructions: "Use the correct formulas for surface area and arc length. Simplify radicals before integrating. Include all substitution steps.",
+      },
+      {
+        id: "section_5",
+        title: "Section E: Conceptual Understanding",
+        description: "Question 13 | Comparing volume methods",
+        instructions: "Select the answer that best describes the conceptual difference between integration methods.",
+      }
+    ],
+    
+    questions: [
+      // ============================================================
+      // SECTION A: INTEGRATION TECHNIQUES (Q1)
+      // ============================================================
+      {
+        id: "exam4_q1",
+        sectionId: "section_1",
+        questionNumber: 1,
+        type: "multiple-choice",
+        text: "Evaluate the integral:\n\n$$\\int\\left(\\frac{2 - x^{-1}}{x^{1/3}} - \\frac{3}{x^{4/3}} + \\frac{x^{-2} - 2x}{x^{4/3}}\\right)dx$$",
+        options: [
+          "A. \\( -\\frac{3}{7}x^{-7/3} + 12x^{-1/3} + C \\)",
+          "B. \\( \\frac{3}{7}x^{-7/3} - 12x^{-1/3} + C \\)",
+          "C. \\( -\\frac{7}{3}x^{-10/3} - 4x^{-4/3} + C \\)",
+          "D. \\( x^{-10/3} - 4x^{-4/3} + C \\)"
+        ],
+        correctAnswers: ["A"],
+        points: 4,
+        explanation: "**Step 1 — Simplify the integrand algebraically**\n\n" +
+          "We simplify term-by-term using laws of exponents. Recall \\( \\frac{x^a}{x^b} = x^{a-b} \\) and \\( x^{-a} = \\frac{1}{x^a} \\).\n\n" +
+          "**First term:**\n" +
+          "$$\\frac{2 - x^{-1}}{x^{1/3}} = 2x^{-1/3} - x^{-1} \\cdot x^{-1/3} = 2x^{-1/3} - x^{-4/3}$$\n\n" +
+          "**Second term:**\n" +
+          "$$-\\frac{3}{x^{4/3}} = -3x^{-4/3}$$\n\n" +
+          "**Third term:**\n" +
+          "$$\\frac{x^{-2} - 2x}{x^{4/3}} = x^{-2} \\cdot x^{-4/3} - 2x \\cdot x^{-4/3} = x^{-10/3} - 2x^{-1/3}$$\n\n" +
+          "**Combine all terms:**\n" +
+          "$$(2x^{-1/3} - x^{-4/3}) + (-3x^{-4/3}) + (x^{-10/3} - 2x^{-1/3})$$\n\n" +
+          "Group like powers:\n" +
+          "- The \\( 2x^{-1/3} \\) and \\( -2x^{-1/3} \\) **cancel**\n" +
+          "- The \\( -x^{-4/3} - 3x^{-4/3} = -4x^{-4/3} \\)\n\n" +
+          "Simplified integrand:\n" +
+          "$$x^{-10/3} - 4x^{-4/3}$$\n\n" +
+          "**Step 2 — Integrate term-by-term**\n\n" +
+          "Using the power rule: \\( \\int x^m dx = \\frac{x^{m+1}}{m+1} \\) (for \\( m \\neq -1 \\))\n\n" +
+          "**First term:** \\( m = -\\frac{10}{3} \\), so \\( m+1 = -\\frac{7}{3} \\)\n" +
+          "$$\\int x^{-10/3}dx = \\frac{x^{-7/3}}{-7/3} = -\\frac{3}{7}x^{-7/3}$$\n\n" +
+          "**Second term:** \\( m = -\\frac{4}{3} \\), so \\( m+1 = -\\frac{1}{3} \\)\n" +
+          "$$\\int -4x^{-4/3}dx = -4 \\cdot \\frac{x^{-1/3}}{-1/3} = -4 \\cdot (-3)x^{-1/3} = 12x^{-1/3}$$\n\n" +
+          "**Step 3 — Combine and add constant**\n\n" +
+          "$$\\int\\left(\\frac{2 - x^{-1}}{x^{1/3}} - \\frac{3}{x^{4/3}} + \\frac{x^{-2} - 2x}{x^{4/3}}\\right)dx = -\\frac{3}{7}x^{-7/3} + 12x^{-1/3} + C$$\n\n" +
+          "**Verification:** Differentiate the result to recover \\( x^{-10/3} - 4x^{-4/3} \\) ✓\n\n" +
+          "**Answer: A. \\( -\\frac{3}{7}x^{-7/3} + 12x^{-1/3} + C \\)**"
+      },
+      
+      // ============================================================
+      // SECTION B: AREA BETWEEN CURVES (Q2-4)
+      // ============================================================
+      {
+        id: "exam4_q2",
+        sectionId: "section_2",
+        questionNumber: 2,
+        type: "open-ended",
+        text: "The upper curve is \\( f(x) = x^2 - 4x + 3 \\) and the lower (mirrored) curve is \\( g(x) = -(x^2 - 4x + 3) \\) on the interval \\( [0, 3] \\).\n\nFind the **exact area** enclosed between the two curves.",
+        correctAnswers: [
+          "16/3",
+          "5.333",
+          "5.33"
+        ],
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.02,
+          acceptedUnits: ["square units", "units^2"],
+          requiredUnit: null
+        },
+        points: 3,
+        explanation: "**Understanding the Setup:**\n\n" +
+          "The vertical distance between curves at any \\( x \\) is:\n" +
+          "$$\\text{distance} = f(x) - g(x) = f(x) - (-f(x)) = 2f(x)$$\n\n" +
+          "But area requires absolute value: \\( |f(x) - g(x)| = 2|f(x)| \\)\n\n" +
+          "**Step 1: Analyze where \\( f(x) \\) changes sign**\n\n" +
+          "Factor \\( f(x) \\):\n" +
+          "$$f(x) = x^2 - 4x + 3 = (x-1)(x-3)$$\n\n" +
+          "Roots at \\( x = 1 \\) and \\( x = 3 \\)\n\n" +
+          "| **Interval** | **Sign of \\( f(x) \\)** |\n" +
+          "|---|---|\n" +
+          "| \\( [0, 1] \\) | Positive (\\( f(0) = 3 > 0 \\)) |\n" +
+          "| \\( (1, 3) \\) | Negative (\\( f(2) = -1 < 0 \\)) |\n\n" +
+          "**Step 2: Set up integral with absolute values**\n\n" +
+          "$$\\text{Area} = \\int_0^3 2|f(x)|dx = 2\\left(\\int_0^1 f(x)dx + \\int_1^3 (-f(x))dx\\right)$$\n\n" +
+          "**Step 3: Find antiderivative**\n" +
+          "$$\\int f(x)dx = \\int (x^2 - 4x + 3)dx = \\frac{x^3}{3} - 2x^2 + 3x$$\n\n" +
+          "**Step 4: Evaluate on \\( [0, 1] \\)**\n" +
+          "$$\\int_0^1 f(x)dx = \\left[\\frac{x^3}{3} - 2x^2 + 3x\\right]_0^1 = \\left(\\frac{1}{3} - 2 + 3\\right) - 0 = \\frac{4}{3}$$\n\n" +
+          "**Step 5: Evaluate on \\( [1, 3] \\)**\n" +
+          "$$\\int_1^3 f(x)dx = \\left[\\frac{x^3}{3} - 2x^2 + 3x\\right]_1^3$$\n" +
+          "$$= \\left(9 - 18 + 9\\right) - \\left(\\frac{1}{3} - 2 + 3\\right) = 0 - \\frac{4}{3} = -\\frac{4}{3}$$\n\n" +
+          "**Step 6: Calculate total area**\n" +
+          "$$\\text{Area} = 2\\left(\\frac{4}{3} + \\left|-\\frac{4}{3}\\right|\\right) = 2\\left(\\frac{4}{3} + \\frac{4}{3}\\right) = 2 \\cdot \\frac{8}{3} = \\frac{16}{3}$$\n\n" +
+          "**Answer: \\( \\frac{16}{3} \\) square units** ≈ 5.33"
+      },
+      
+      {
+        id: "exam4_q3",
+        sectionId: "section_2",
+        questionNumber: 3,
+        type: "open-ended",
+        text: "Question 2 continued: The upper curve is \\( f(x) = x^2 - 4x + 3 \\) and the lower (mirrored) curve is \\( g(x) = -(x^2 - 4x + 3) \\) on the interval \\( [0, 3] \\).\n\nDetermine the **net difference** \\( \\int_0^3 (g(x) - f(x))dx \\).",
+        correctAnswers: [
+          "0",
+          "0.0"
+        ],
+        options: {
+          allowSymbolic: false,
+          tolerance: 0.01,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 2,
+        explanation: "**Computing Net Signed Area:**\n\n" +
+          "**Step 1: Simplify the integrand**\n" +
+          "$$g(x) - f(x) = -f(x) - f(x) = -2f(x)$$\n\n" +
+          "Therefore:\n" +
+          "$$\\int_0^3 (g(x) - f(x))dx = -2\\int_0^3 f(x)dx$$\n\n" +
+          "**Step 2: Evaluate \\( \\int_0^3 f(x)dx \\)**\n\n" +
+          "From Question 2, we know:\n" +
+          "- \\( \\int_0^1 f(x)dx = \\frac{4}{3} \\) (positive area)\n" +
+          "- \\( \\int_1^3 f(x)dx = -\\frac{4}{3} \\) (negative area)\n\n" +
+          "By additivity:\n" +
+          "$$\\int_0^3 f(x)dx = \\frac{4}{3} + \\left(-\\frac{4}{3}\\right) = 0$$\n\n" +
+          "**Alternative verification:**\n" +
+          "$$\\int_0^3 f(x)dx = \\left[\\frac{x^3}{3} - 2x^2 + 3x\\right]_0^3 = (9 - 18 + 9) - 0 = 0$$\n\n" +
+          "**Step 3: Calculate net difference**\n" +
+          "$$\\int_0^3 (g(x) - f(x))dx = -2 \\cdot 0 = 0$$\n\n" +
+          "**Geometric Interpretation:**\n\n" +
+          "The net signed area is **zero** because:\n" +
+          "- On \\( [0, 1] \\): \\( f(x) > 0 \\), contributing \\( +\\frac{4}{3} \\)\n" +
+          "- On \\( [1, 3] \\): \\( f(x) < 0 \\), contributing \\( -\\frac{4}{3} \\)\n" +
+          "- The positive and negative regions **exactly cancel**\n\n" +
+          "This is why **area** (Question 2) uses absolute values and gives \\( \\frac{16}{3} \\), while **net change** gives 0.\n\n" +
+          "**Answer: 0**"
+      },
+      
+      {
+        id: "exam4_q4",
+        sectionId: "section_2",
+        questionNumber: 4,
+        type: "multiple-choice",
+        text: "Consider the region bounded by \\( y = 6 - x \\) and \\( y = x^2 + 2 \\), revolved about the x-axis.\n\nThe correct x-limits for the volume integral are:",
+        options: [
+          "A. \\( x = \\frac{-1 - \\sqrt{17}}{2} \\) to \\( x = \\frac{-1 + \\sqrt{17}}{2} \\)",
+          "B. \\( x = -2 \\) to \\( x = 2 \\)",
+          "C. \\( x = 0 \\) to \\( x = 4 \\)",
+          "D. \\( x = 1 \\) to \\( x = 3 \\)"
+        ],
+        correctAnswers: ["A"],
+        points: 2,
+        explanation: "**Finding Intersection Points:**\n\n" +
+          "**Step 1: Set the functions equal**\n" +
+          "$$x^2 + 2 = 6 - x$$\n\n" +
+          "**Step 2: Rearrange to standard form**\n" +
+          "$$x^2 + x - 4 = 0$$\n\n" +
+          "**Step 3: Apply quadratic formula**\n" +
+          "$$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} = \\frac{-1 \\pm \\sqrt{1 + 16}}{2} = \\frac{-1 \\pm \\sqrt{17}}{2}$$\n\n" +
+          "**Step 4: Identify the two intersection points**\n\n" +
+          "| **Root** | **Value** | **Approximate** |\n" +
+          "|---|---|---|\n" +
+          "| Left | \\( x = \\frac{-1 - \\sqrt{17}}{2} \\) | ≈ -2.56 |\n" +
+          "| Right | \\( x = \\frac{-1 + \\sqrt{17}}{2} \\) | ≈ 1.56 |\n\n" +
+          "**Verification:**\n" +
+          "At \\( x \\approx -2.56 \\):\n" +
+          "- \\( y = 6 - (-2.56) \\approx 8.56 \\)\n" +
+          "- \\( y = (-2.56)^2 + 2 \\approx 8.56 \\) ✓\n\n" +
+          "**Geometric Interpretation:**\n\n" +
+          "The region exists between these two intersection points where one curve is above the other.\n\n" +
+          "For revolution about the x-axis, we integrate from the left intersection to the right intersection.\n\n" +
+          "**Answer: A. \\( x = \\frac{-1 - \\sqrt{17}}{2} \\) to \\( x = \\frac{-1 + \\sqrt{17}}{2} \\)**"
+      },
+      
+      // ============================================================
+      // SECTION C: VOLUMES OF REVOLUTION (Q5-9)
+      // ============================================================
+      {
+        id: "exam4_q5",
+        sectionId: "section_3",
+        questionNumber: 5,
+        type: "multiple-choice",
+        text: "Question 4 continued: Consider the region bounded by \\( y = 6 - x \\) and \\( y = x^2 + 2 \\), revolved about the x-axis.\n\nWhich setup is most appropriate for computing the volume when rotating about the x-axis?",
+        options: [
+          "A. Shell method: \\( V = 2\\pi\\int y(R(y) - r(y))dy \\)",
+          "B. Washer method: \\( V = \\pi\\int [(6-x)^2 - (x^2+2)^2]dx \\)",
+          "C. Disk method: \\( V = \\pi\\int (6-x)^2 dx \\)",
+          "D. Shell method: \\( V = 2\\pi\\int x[(6-x) - (x^2+2)]dx \\)"
+        ],
+        correctAnswers: ["B"],
+        points: 2,
+        explanation: "**Choosing the Appropriate Method:**\n\n" +
+          "**Analysis of the problem:**\n" +
+          "- **Axis of rotation:** x-axis (horizontal)\n" +
+          "- **Functions given:** \\( y = f(x) \\) form\n" +
+          "- **Region:** Between two curves\n\n" +
+          "**Step 1: Identify which curve is on top**\n\n" +
+          "Test at \\( x = 0 \\) (between the intersection points):\n" +
+          "- \\( y = 6 - 0 = 6 \\)\n" +
+          "- \\( y = 0^2 + 2 = 2 \\)\n\n" +
+          "Therefore \\( 6 - x \\) is the **upper curve** (outer radius)\n\n" +
+          "**Step 2: Washer Method Setup**\n\n" +
+          "When rotating about the x-axis with curves \\( y = R(x) \\) (outer) and \\( y = r(x) \\) (inner):\n\n" +
+          "$$V = \\pi\\int_a^b [R(x)^2 - r(x)^2]dx$$\n\n" +
+          "**For this problem:**\n" +
+          "- Outer radius: \\( R(x) = 6 - x \\)\n" +
+          "- Inner radius: \\( r(x) = x^2 + 2 \\)\n" +
+          "- Limits: \\( x = \\frac{-1-\\sqrt{17}}{2} \\) to \\( x = \\frac{-1+\\sqrt{17}}{2} \\)\n\n" +
+          "$$V = \\pi\\int_{\\frac{-1-\\sqrt{17}}{2}}^{\\frac{-1+\\sqrt{17}}{2}} [(6-x)^2 - (x^2+2)^2]dx$$\n\n" +
+          "**Why not other methods?**\n\n" +
+          "| **Method** | **Why not appropriate** |\n" +
+          "|---|---|\n" +
+          "| Shell (options A, D) | Shells are for rotation about a **parallel axis** using slices parallel to axis |\n" +
+          "| Disk (option C) | Only works when region touches the axis (no hole) |\n" +
+          "| Washer (option B) | **Correct** - region has outer and inner radii |\n\n" +
+          "**Answer: B. Washer method with \\( V = \\pi\\int [(6-x)^2 - (x^2+2)^2]dx \\)**"
+      },
+      
+      {
+        id: "exam4_q6",
+        sectionId: "section_3",
+        questionNumber: 6,
+        type: "multiple-choice",
+        text: "Question 4 continued: Consider the region bounded by \\( y = 6 - x \\) and \\( y = x^2 + 2 \\), revolved about the x-axis.\n\nThe exact volume of the solid is:",
+        options: [
+          "A. \\( \\frac{136\\sqrt{17}\\pi}{5} \\)",
+          "B. \\( \\frac{68\\sqrt{17}\\pi}{5} \\)",
+          "C. \\( 136\\pi \\)",
+          "D. \\( \\frac{272\\pi}{5} \\)"
+        ],
+        correctAnswers: ["A"],
+        points: 4,
+        explanation: "**Evaluating the Washer Integral:**\n\n" +
+          "**Setup:**\n" +
+          "$$V = \\pi\\int_a^b [(6-x)^2 - (x^2+2)^2]dx$$\n\n" +
+          "where \\( a = \\frac{-1-\\sqrt{17}}{2} \\) and \\( b = \\frac{-1+\\sqrt{17}}{2} \\)\n\n" +
+          "**Step 1: Expand the integrand**\n\n" +
+          "$$(6-x)^2 = 36 - 12x + x^2$$\n" +
+          "$$(x^2+2)^2 = x^4 + 4x^2 + 4$$\n\n" +
+          "**Difference:**\n" +
+          "$$(6-x)^2 - (x^2+2)^2 = (36 - 12x + x^2) - (x^4 + 4x^2 + 4)$$\n" +
+          "$$= -x^4 - 3x^2 - 12x + 32$$\n\n" +
+          "**Step 2: Find antiderivative**\n" +
+          "$$\\int (-x^4 - 3x^2 - 12x + 32)dx = -\\frac{x^5}{5} - x^3 - 6x^2 + 32x$$\n\n" +
+          "**Step 3: Evaluate at limits**\n\n" +
+          "This requires careful algebra with the limits involving \\( \\sqrt{17} \\).\n\n" +
+          "**Key observation:** The interval length is:\n" +
+          "$$b - a = \\frac{-1+\\sqrt{17}}{2} - \\frac{-1-\\sqrt{17}}{2} = \\sqrt{17}$$\n\n" +
+          "After exact evaluation (using properties of the quadratic roots and symmetry), the result simplifies to:\n\n" +
+          "$$V = \\pi \\cdot \\frac{136\\sqrt{17}}{5} = \\frac{136\\sqrt{17}\\pi}{5}$$\n\n" +
+          "**Numerical verification:**\n" +
+          "$$\\frac{136\\sqrt{17}}{5} \\approx \\frac{136 \\times 4.123}{5} \\approx 112.15$$\n" +
+          "$$V \\approx 112.15\\pi \\approx 352.3 \\text{ cubic units}$$\n\n" +
+          "**Answer: A. \\( \\frac{136\\sqrt{17}\\pi}{5} \\)**"
+      },
+      
+      {
+        id: "exam4_q7",
+        sectionId: "section_3",
+        questionNumber: 7,
+        type: "open-ended",
+        text: "Consider the region bounded by \\( y = 7 - x^2 \\), \\( y = x + 1 \\), and \\( x = 0 \\), revolved about the y-axis.\n\nThe correct x-interval for the integral is \\( [a, b] \\). Find \\( b \\) (the right endpoint).",
+        correctAnswers: [
+          "2",
+          "2.0"
+        ],
+        options: {
+          allowSymbolic: false,
+          tolerance: 0.01,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 2,
+        explanation: "**Finding the Integration Bounds:**\n\n" +
+          "**Step 1: Find intersection of the two curves**\n\n" +
+          "Set \\( 7 - x^2 = x + 1 \\):\n" +
+          "$$7 - x^2 = x + 1$$\n" +
+          "$$-x^2 - x + 6 = 0$$\n" +
+          "$$x^2 + x - 6 = 0$$\n\n" +
+          "**Step 2: Factor**\n" +
+          "$$(x + 3)(x - 2) = 0$$\n\n" +
+          "Solutions: \\( x = -3 \\) and \\( x = 2 \\)\n\n" +
+          "**Step 3: Apply boundary constraints**\n\n" +
+          "The problem states the region includes the vertical line \\( x = 0 \\) as a boundary.\n\n" +
+          "**Analysis of the region:**\n" +
+          "- Left boundary: \\( x = 0 \\) (given)\n" +
+          "- Right boundary: intersection at \\( x = 2 \\)\n" +
+          "- The intersection at \\( x = -3 \\) is to the **left** of \\( x = 0 \\)\n\n" +
+          "**Visualization:**\n\n" +
+          "| **x-value** | **Curve behavior** |\n" +
+          "|---|---|\n" +
+          "| \\( x = -3 \\) | Intersection (excluded - outside region) |\n" +
+          "| \\( x = 0 \\) | Left boundary (given constraint) |\n" +
+          "| \\( x = 2 \\) | Right boundary (intersection) |\n\n" +
+          "**Verification at x = 0:**\n" +
+          "- \\( y = 7 - 0^2 = 7 \\)\n" +
+          "- \\( y = 0 + 1 = 1 \\)\n" +
+          "- Parabola is above the line ✓\n\n" +
+          "**Verification at x = 2:**\n" +
+          "- \\( y = 7 - 4 = 3 \\)\n" +
+          "- \\( y = 2 + 1 = 3 \\)\n" +
+          "- Curves meet ✓\n\n" +
+          "**Answer: b = 2**"
+      },
+      
+      {
+        id: "exam4_q8",
+        sectionId: "section_3",
+        questionNumber: 8,
+        type: "multiple-choice",
+        text: "Question 7 continued: Consider the region bounded by \\( y = 7 - x^2 \\), \\( y = x + 1 \\), and \\( x = 0 \\), revolved about the y-axis.\n\nWhich integral correctly represents the volume when rotating about the y-axis?",
+        options: [
+          "A. \\( \\pi\\int_0^2 [(7-x^2)^2 - (x+1)^2]dx \\)",
+          "B. \\( 2\\pi\\int_0^2 x(6 - x - x^2)dx \\)",
+          "C. \\( \\pi\\int_1^7 [(7-y) - (\\sqrt{7-y})]dy \\)",
+          "D. \\( 2\\pi\\int_1^7 y[(7-y) - (\\sqrt{7-y})]dy \\)"
+        ],
+        correctAnswers: ["B"],
+        points: 2,
+        explanation: "**Choosing Between Methods:**\n\n" +
+          "**Problem setup:**\n" +
+          "- Axis: y-axis (vertical)\n" +
+          "- Functions: Given as \\( y = f(x) \\)\n" +
+          "- Interval: \\( 0 \\leq x \\leq 2 \\)\n\n" +
+          "**Method comparison:**\n\n" +
+          "| **Method** | **Slicing direction** | **Best when...** |\n" +
+          "|---|---|---|\n" +
+          "| Washers | Horizontal (perpendicular to y-axis) | Can easily solve for \\( x = g(y) \\) |\n" +
+          "| Shells | Vertical (parallel to y-axis) | Functions are \\( y = f(x) \\) |\n\n" +
+          "**Step 1: Identify the shell method as appropriate**\n\n" +
+          "Since we have \\( y \\) as functions of \\( x \\) and rotate about the y-axis, **cylindrical shells** are simpler.\n\n" +
+          "**Shell formula:**\n" +
+          "$V = 2\\pi\\int_a^b (\\text{radius})(\\text{height})dx$\n\n" +
+          "**Step 2: Determine radius and height**\n\n" +
+          "- **Radius:** Distance from y-axis = \\( x \\)\n" +
+          "- **Height:** Top function minus bottom function\n\n" +
+          "At any \\( x \\in [0, 2] \\):\n" +
+          "- Top: \\( y = 7 - x^2 \\)\n" +
+          "- Bottom: \\( y = x + 1 \\)\n" +
+          "- Height: \\( h(x) = (7 - x^2) - (x + 1) = 6 - x - x^2 \\)\n\n" +
+          "**Step 3: Set up the integral**\n" +
+          "$V = 2\\pi\\int_0^2 x(6 - x - x^2)dx$\n\n" +
+          "**Why not the other options?**\n\n" +
+          "- **Option A:** Washer method about x-axis (wrong axis!)\n" +
+          "- **Option C, D:** These use \\( dy \\) which requires solving for \\( x(y) \\), creating piecewise functions (more complex)\n\n" +
+          "**Answer: B. \\( 2\\pi\\int_0^2 x(6 - x - x^2)dx \\)**"
+      },
+      
+      {
+        id: "exam4_q9",
+        sectionId: "section_3",
+        questionNumber: 9,
+        type: "multiple-choice",
+        text: "Question 7 continued: Consider the region bounded by \\( y = 7 - x^2 \\), \\( y = x + 1 \\), and \\( x = 0 \\), revolved about the y-axis.\n\nThe exact volume is:",
+        options: [
+          "A. \\( \\frac{32\\pi}{3} \\)",
+          "B. \\( \\frac{16\\pi}{3} \\)",
+          "C. \\( 16\\pi \\)",
+          "D. \\( \\frac{64\\pi}{3} \\)"
+        ],
+        correctAnswers: ["A"],
+        points: 4,
+        explanation: "**Evaluating the Shell Integral:**\n\n" +
+          "$V = 2\\pi\\int_0^2 x(6 - x - x^2)dx$\n\n" +
+          "**Step 1: Expand the integrand**\n" +
+          "$x(6 - x - x^2) = 6x - x^2 - x^3$\n\n" +
+          "**Step 2: Integrate term-by-term**\n" +
+          "$\\int_0^2 (6x - x^2 - x^3)dx = \\left[3x^2 - \\frac{x^3}{3} - \\frac{x^4}{4}\\right]_0^2$\n\n" +
+          "**Step 3: Evaluate at upper limit \\( x = 2 \\)**\n" +
+          "$= 3(2)^2 - \\frac{(2)^3}{3} - \\frac{(2)^4}{4}$\n" +
+          "$= 3(4) - \\frac{8}{3} - \\frac{16}{4}$\n" +
+          "$= 12 - \\frac{8}{3} - 4$\n" +
+          "$= 8 - \\frac{8}{3}$\n\n" +
+          "**Step 4: Simplify**\n" +
+          "$= \\frac{24}{3} - \\frac{8}{3} = \\frac{16}{3}$\n\n" +
+          "**Step 5: Multiply by \\( 2\\pi \\)**\n" +
+          "$V = 2\\pi \\cdot \\frac{16}{3} = \\frac{32\\pi}{3}$\n\n" +
+          "**Verification:**\n" +
+          "$\\frac{32\\pi}{3} \\approx \\frac{32 \\times 3.14159}{3} \\approx 33.5 \\text{ cubic units}$\n\n" +
+          "**Key Insight:**\n" +
+          "The shell method reduces this problem to a single straightforward integral, while the washer method would require:\n" +
+          "1. Solving \\( y = 7 - x^2 \\) for \\( x = \\sqrt{7-y} \\)\n" +
+          "2. Solving \\( y = x + 1 \\) for \\( x = y - 1 \\)\n" +
+          "3. Determining which is outer/inner radius for different y-intervals\n" +
+          "4. Possibly splitting into multiple integrals\n\n" +
+          "**Answer: A. \\( \\frac{32\\pi}{3} \\)**"
+      },
+      
+      // ============================================================
+      // SECTION D: SURFACE AREA AND ARC LENGTH (Q10-12)
+      // ============================================================
+      {
+        id: "exam4_q10",
+        sectionId: "section_4",
+        questionNumber: 10,
+        type: "multiple-choice",
+        text: "Find the exact surface area when \\( y = x^2 + 2 \\) on \\( [1, 3] \\) is revolved about the y-axis.",
+        options: [
+          "A. \\( \\frac{\\pi}{6}(37\\sqrt{37} - 5\\sqrt{5}) \\)",
+          "B. \\( \\frac{\\pi}{3}(37\\sqrt{37} - 5\\sqrt{5}) \\)",
+          "C. \\( \\frac{2\\pi}{3}(37^{3/2} - 5^{3/2}) \\)",
+          "D. \\( \\pi(37\\sqrt{37} - 5\\sqrt{5}) \\)"
+        ],
+        correctAnswers: ["A"],
+        points: 5,
+        explanation: "**Surface Area of Revolution About the y-axis:**\n\n" +
+          "**Formula:** When \\( y = f(x) \\) is revolved about the **y-axis**:\n" +
+          "$S = 2\\pi\\int_a^b x\\sqrt{1 + (y')^2}dx$\n\n" +
+          "The radius from the y-axis is \\( x \\), and the arc length element is \\( \\sqrt{1 + (y')^2}dx \\).\n\n" +
+          "**Step 1: Find the derivative**\n" +
+          "$y = x^2 + 2$\n" +
+          "$y' = 2x$\n\n" +
+          "**Step 2: Compute \\( 1 + (y')^2 \\)**\n" +
+          "$1 + (y')^2 = 1 + (2x)^2 = 1 + 4x^2$\n\n" +
+          "**Step 3: Set up the integral**\n" +
+          "$S = 2\\pi\\int_1^3 x\\sqrt{1 + 4x^2}dx$\n\n" +
+          "**Step 4: Use u-substitution**\n" +
+          "Let \\( u = 1 + 4x^2 \\)\n" +
+          "$du = 8x\\,dx \\implies x\\,dx = \\frac{1}{8}du$\n\n" +
+          "**Change limits:**\n" +
+          "- When \\( x = 1 \\): \\( u = 1 + 4(1)^2 = 5 \\)\n" +
+          "- When \\( x = 3 \\): \\( u = 1 + 4(3)^2 = 1 + 36 = 37 \\)\n\n" +
+          "**Step 5: Substitute and integrate**\n" +
+          "$S = 2\\pi\\int_5^{37} \\sqrt{u} \\cdot \\frac{1}{8}du = \\frac{2\\pi}{8}\\int_5^{37} u^{1/2}du$\n\n" +
+          "$= \\frac{\\pi}{4} \\cdot \\left[\\frac{2}{3}u^{3/2}\\right]_5^{37}$\n\n" +
+          "$= \\frac{\\pi}{4} \\cdot \\frac{2}{3}[u^{3/2}]_5^{37}$\n\n" +
+          "$= \\frac{\\pi}{6}(37^{3/2} - 5^{3/2})$\n\n" +
+          "**Step 6: Simplify the exact form**\n" +
+          "$37^{3/2} = 37\\sqrt{37}$\n" +
+          "$5^{3/2} = 5\\sqrt{5}$\n\n" +
+          "Therefore:\n" +
+          "$S = \\frac{\\pi}{6}(37\\sqrt{37} - 5\\sqrt{5})$\n\n" +
+          "**Numerical check:**\n" +
+          "$\\sqrt{37} \\approx 6.083, \\quad \\sqrt{5} \\approx 2.236$\n" +
+          "$S \\approx \\frac{\\pi}{6}(225.07 - 11.18) \\approx \\frac{\\pi}{6}(213.89) \\approx 112.0 \\text{ square units}$\n\n" +
+          "**Answer: A. \\( \\frac{\\pi}{6}(37\\sqrt{37} - 5\\sqrt{5}) \\)**"
+      },
+      
+      {
+        id: "exam4_q11",
+        sectionId: "section_4",
+        questionNumber: 11,
+        type: "multiple-choice",
+        text: "Find the length of the curve \\( y = x^{3/2} \\) on \\( [1, 5] \\).",
+        options: [
+          "A. \\( \\frac{343 - 13\\sqrt{13}}{27} \\)",
+          "B. \\( \\frac{343 + 13\\sqrt{13}}{27} \\)",
+          "C. \\( \\frac{343\\sqrt{13}}{27} \\)",
+          "D. \\( \\frac{343 - 13}{27} \\)"
+        ],
+        correctAnswers: ["A"],
+        points: 5,
+        explanation: "**Arc Length Formula:**\n\n" +
+          "For \\( y = f(x) \\) from \\( x = a \\) to \\( x = b \\):\n" +
+          "$L = \\int_a^b \\sqrt{1 + [f'(x)]^2}dx$\n\n" +
+          "**Step 1: Find the derivative**\n" +
+          "$f(x) = x^{3/2}$\n" +
+          "$f'(x) = \\frac{3}{2}x^{1/2}$\n\n" +
+          "**Step 2: Compute \\( [f'(x)]^2 \\)**\n" +
+          "$[f'(x)]^2 = \\left(\\frac{3}{2}x^{1/2}\\right)^2 = \\frac{9}{4}x$\n\n" +
+          "**Step 3: Set up the integral**\n" +
+          "$L = \\int_1^5 \\sqrt{1 + \\frac{9}{4}x}dx$\n\n" +
+          "**Step 4: Use u-substitution**\n" +
+          "Let \\( u = 1 + \\frac{9}{4}x \\)\n" +
+          "$du = \\frac{9}{4}dx \\implies dx = \\frac{4}{9}du$\n\n" +
+          "**Change limits:**\n" +
+          "- When \\( x = 1 \\): \\( u = 1 + \\frac{9}{4} = \\frac{13}{4} \\)\n" +
+          "- When \\( x = 5 \\): \\( u = 1 + \\frac{45}{4} = \\frac{49}{4} \\)\n\n" +
+          "**Step 5: Substitute and integrate**\n" +
+          "$L = \\int_{13/4}^{49/4} \\sqrt{u} \\cdot \\frac{4}{9}du = \\frac{4}{9}\\int_{13/4}^{49/4} u^{1/2}du$\n\n" +
+          "$= \\frac{4}{9} \\cdot \\frac{2}{3}[u^{3/2}]_{13/4}^{49/4}$\n\n" +
+          "$= \\frac{8}{27}\\left[\\left(\\frac{49}{4}\\right)^{3/2} - \\left(\\frac{13}{4}\\right)^{3/2}\\right]$\n\n" +
+          "**Step 6: Simplify fractional powers**\n" +
+          "$\\left(\\frac{49}{4}\\right)^{3/2} = \\frac{49^{3/2}}{4^{3/2}} = \\frac{(7^2)^{3/2}}{8} = \\frac{7^3}{8} = \\frac{343}{8}$\n\n" +
+          "$\\left(\\frac{13}{4}\\right)^{3/2} = \\frac{13^{3/2}}{8} = \\frac{13\\sqrt{13}}{8}$\n\n" +
+          "**Step 7: Compute the final result**\n" +
+          "$L = \\frac{8}{27}\\left(\\frac{343}{8} - \\frac{13\\sqrt{13}}{8}\\right)$\n\n" +
+          "$= \\frac{8}{27} \\cdot \\frac{1}{8}(343 - 13\\sqrt{13})$\n\n" +
+          "$= \\frac{343 - 13\\sqrt{13}}{27}$\n\n" +
+          "**Numerical verification:**\n" +
+          "$\\sqrt{13} \\approx 3.606$\n" +
+          "$L \\approx \\frac{343 - 46.88}{27} \\approx \\frac{296.12}{27} \\approx 10.97$\n\n" +
+          "**Answer: A. \\( \\frac{343 - 13\\sqrt{13}}{27} \\)**"
+      },
+      
+      {
+        id: "exam4_q12",
+        sectionId: "section_4",
+        questionNumber: 12,
+        type: "multiple-choice",
+        text: "A soap dispenser body is modeled by rotating \\( x = 1.5 + \\frac{3y}{8} \\) on \\( [0, 6] \\) about the y-axis. Determine the exact surface area.",
+        options: [
+          "A. \\( \\frac{63\\pi\\sqrt{73}}{16} \\)",
+          "B. \\( \\frac{63\\pi\\sqrt{73}}{8} \\)",
+          "C. \\( \\frac{126\\pi\\sqrt{73}}{16} \\)",
+          "D. \\( \\frac{63\\pi}{16}\\sqrt{64} \\)"
+        ],
+        correctAnswers: ["A"],
+        points: 6,
+        explanation: "**Surface Area with \\( x = g(y) \\) Revolved About y-axis:**\n\n" +
+          "**Formula:** When \\( x = g(y) \\) is revolved about the **y-axis**:\n" +
+          "$S = 2\\pi\\int_c^d x\\sqrt{1 + \\left(\\frac{dx}{dy}\\right)^2}dy$\n\n" +
+          "**Step 1: Find the derivative**\n" +
+          "$x(y) = 1.5 + \\frac{3y}{8}$\n" +
+          "$\\frac{dx}{dy} = \\frac{3}{8}$\n\n" +
+          "**Step 2: Compute \\( 1 + (dx/dy)^2 \\)**\n" +
+          "$1 + \\left(\\frac{dx}{dy}\\right)^2 = 1 + \\frac{9}{64} = \\frac{64 + 9}{64} = \\frac{73}{64}$\n\n" +
+          "$\\sqrt{1 + \\left(\\frac{dx}{dy}\\right)^2} = \\frac{\\sqrt{73}}{8}$\n\n" +
+          "**Step 3: Set up the integral**\n" +
+          "$S = 2\\pi\\int_0^6 \\left(1.5 + \\frac{3y}{8}\\right) \\cdot \\frac{\\sqrt{73}}{8}dy$\n\n" +
+          "$= 2\\pi \\cdot \\frac{\\sqrt{73}}{8}\\int_0^6 \\left(1.5 + \\frac{3y}{8}\\right)dy$\n\n" +
+          "**Step 4: Evaluate the inner integral**\n\n" +
+          "**First term:**\n" +
+          "$\\int_0^6 1.5\\,dy = 1.5 \\cdot 6 = 9$\n\n" +
+          "**Second term:**\n" +
+          "$\\int_0^6 \\frac{3y}{8}dy = \\frac{3}{8} \\cdot \\frac{y^2}{2}\\Big|_0^6 = \\frac{3}{8} \\cdot \\frac{36}{2} = \\frac{3}{8} \\cdot 18 = \\frac{54}{8} = \\frac{27}{4}$\n\n" +
+          "**Total:**\n" +
+          "$9 + \\frac{27}{4} = \\frac{36}{4} + \\frac{27}{4} = \\frac{63}{4}$\n\n" +
+          "**Step 5: Calculate surface area**\n" +
+          "$S = 2\\pi \\cdot \\frac{\\sqrt{73}}{8} \\cdot \\frac{63}{4}$\n\n" +
+          "$= 2\\pi \\cdot \\frac{63\\sqrt{73}}{32}$\n\n" +
+          "$= \\frac{126\\pi\\sqrt{73}}{32}$\n\n" +
+          "**Step 6: Simplify by dividing by GCD(126, 32) = 2**\n" +
+          "$S = \\frac{63\\pi\\sqrt{73}}{16}$\n\n" +
+          "**Practical context:**\n" +
+          "This models the lateral surface area of a soap dispenser with a conical/linear profile. The exact form preserves \\( \\sqrt{73} \\) which cannot be simplified further.\n\n" +
+          "**Numerical approximation:**\n" +
+          "$\\sqrt{73} \\approx 8.544$\n" +
+          "$S \\approx \\frac{63 \\times 3.14159 \\times 8.544}{16} \\approx 105.8 \\text{ square units}$\n\n" +
+          "**Answer: A. \\( \\frac{63\\pi\\sqrt{73}}{16} \\)**"
+      },
+      
+      // ============================================================
+      // SECTION E: CONCEPTUAL UNDERSTANDING (Q13)
+      // ============================================================
+      {
+        id: "exam4_q13",
+        sectionId: "section_5",
+        questionNumber: 13,
+        type: "multiple-choice",
+        text: "Which statement best describes the fundamental difference between the disk/washer method and the shell method for computing volumes of revolution?",
+        options: [
+          "A. Disk method uses slices parallel to the axis of rotation; shell method uses slices perpendicular to the axis",
+          "B. Disk/washer method slices perpendicular to the axis and integrates cross-sectional areas; shell method slices parallel to the axis and integrates lateral surface areas",
+          "C. Disk method is only for rotation about the x-axis; shell method is only for rotation about the y-axis",
+          "D. Disk method always produces exact answers; shell method produces approximations"
+        ],
+        correctAnswers: ["B"],
+        points: 3,
+        explanation: "**Comprehensive Comparison of Volume Methods:**\n\n" +
+          "**1. DISK/WASHER METHOD**\n\n" +
+          "**Slicing:** Perpendicular to the axis of rotation\n\n" +
+          "**What you integrate:** Cross-sectional areas\n" +
+          "$V = \\pi\\int_a^b [R(x)^2 - r(x)^2]dx$\n\n" +
+          "**Geometric interpretation:**\n" +
+          "- Each slice is a circular disk (or washer with hole)\n" +
+          "- Area of slice = \\( \\pi(R^2 - r^2) \\)\n" +
+          "- Sum up areas × thickness\n\n" +
+          "**2. SHELL METHOD**\n\n" +
+          "**Slicing:** Parallel to the axis of rotation\n\n" +
+          "**What you integrate:** Lateral (curved) surface areas\n" +
+          "$V = 2\\pi\\int_a^b (\\text{radius})(\\text{height})dx$\n\n" +
+          "**Geometric interpretation:**\n" +
+          "- Each slice becomes a cylindrical shell when rotated\n" +
+          "- Surface area = \\( 2\\pi r h \\)\n" +
+          "- Sum up surface areas × thickness\n\n" +
+          "**KEY CONCEPTUAL DIFFERENCES:**\n\n" +
+          "| **Aspect** | **Disk/Washer** | **Shell** |\n" +
+          "|---|---|---|\n" +
+          "| **Slice orientation** | ⊥ to axis | ∥ to axis |\n" +
+          "| **Integrate** | Cross-sectional areas | Lateral surface areas |\n" +
+          "| **Formula involves** | \\( \\pi R^2 \\) | \\( 2\\pi rh \\) |\n" +
+          "| **Best when** | Easy to find radii | Functions already in right form |\n\n" +
+          "**WHY OTHER OPTIONS ARE WRONG:**\n\n" +
+          "**Option A:** Backwards! Disk uses perpendicular slices; shell uses parallel slices.\n\n" +
+          "**Option C:** Both methods work for any axis - the choice depends on which gives simpler integrals, not which axis you're rotating about.\n\n" +
+          "**Option D:** Both methods produce exact answers when evaluated exactly. Neither is inherently approximate.\n\n" +
+          "**DECISION GUIDE:**\n\n" +
+          "**Use disk/washer when:**\n" +
+          "- Functions are \\( y = f(x) \\) and rotating about x-axis\n" +
+          "- OR functions are \\( x = g(y) \\) and rotating about y-axis\n" +
+          "- Radii are easy to express\n\n" +
+          "**Use shells when:**\n" +
+          "- Functions are \\( y = f(x) \\) and rotating about y-axis\n" +
+          "- OR functions are \\( x = g(y) \\) and rotating about x-axis\n" +
+          "- Solving for the other variable would be messy\n\n" +
+          "**EXAMPLES FROM THIS EXAM:**\n\n" +
+          "- **Q4-6:** Rotation about x-axis with \\( y = f(x) \\) → Used washers\n" +
+          "- **Q7-9:** Rotation about y-axis with \\( y = f(x) \\) → Used shells\n\n" +
+          "**Answer: B. Disk/washer method slices perpendicular to the axis and integrates cross-sectional areas; shell method slices parallel to the axis and integrates lateral surface areas**"
+      }
+    ]
   }
-
 ];
 
 // Export utility functions for working with exams
