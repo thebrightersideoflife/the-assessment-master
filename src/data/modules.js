@@ -749,11 +749,55 @@ export const modules = [
           }
         ]
       },
+
+//Week 6: The Primary Template -----------------------------------------------------------------------------------------------------------------
+
       {
         id: "ITMTB_W6",
         name: "Week 6",
-        title: "Not Yet Assigned 🙂‍↔️",
-        topics: []
+        title: "Continuation: Calculating Arc Length and Surface Area of Revolution",
+        topics: [
+              {
+                id: "ITMTB_W6_T1",
+                name: "Lesson 1: Arc Length — Definition & Basic Formula",
+                competency: "Assessment Coverage: 8.1 (Arc length definition & basic formula)",
+                explanation: "The **arc length** measures the distance along a smooth curve between two points. For a function $y = f(x)$ with a continuous derivative on $[a,b]$, we divide the curve into many small line segments and take the limit as the segment lengths approach zero. The resulting integral is the arc length formula:\n\n$$L = \\int_a^b \\sqrt{1 + [f'(x)]^2}\\,dx = \\int_a^b \\sqrt{1 + \\left(\\frac{dy}{dx}\\right)^2}\\,dx.$$",
+                example: "Example: Find the arc length of $y = \\tfrac{1}{3}x^{3/2}$ on $[1,4]$.\n\n1. Derivative: $\\dfrac{dy}{dx} = \\tfrac{1}{2}x^{1/2}$.\n2. Square it: $[\\dfrac{dy}{dx}]^2 = \\tfrac{1}{4}x$.\n3. Substitute into the formula: $L = \\int_1^4 \\sqrt{1 + \\tfrac{1}{4}x}\\,dx$.\n4. Let $u = 4 + x$ (or integrate directly): $L = \\tfrac{1}{2}\\int_{5}^{8} u^{1/2}\\,du = \\tfrac{1}{3}(8^{3/2} - 5^{3/2})$.\n\nApproximation: $L \\approx 3.82.$",
+                studyTip: "Follow this 3-step process every time: (1) find $f'(x)$, (2) form $\\sqrt{1 + [f'(x)]^2}$, (3) integrate or approximate. If the expression inside the square root simplifies to a perfect square, the integral becomes much easier.",
+                videoUrl: "https://www.youtube.com/watch?v=DNDAwWIL5FY",
+                quizId: "ITMTB_W6_Quiz"
+              },
+              {
+                id: "ITMTB_W6_T2",
+                name: "Lesson 2: Arc Length — Derivation, Functions of y, and Arc-Length Functions",
+                competency: "Assessment Coverage: 8.1 (Derivation, x- and y-forms, arc-length function)",
+                explanation: "The arc length formula is derived by approximating a curve with straight segments. Using the distance formula $|P_{i-1}P_i| = \\sqrt{(\\Delta x)^2 + (\\Delta y)^2}$ and applying the Mean Value Theorem ($\\Delta y \\approx f'(x_i^*)\\Delta x$), we take the limit to obtain:\n\n$$L = \\int_a^b \\sqrt{1 + [f'(x)]^2}\\,dx.$$ \n\nFor curves written as $x = g(y)$ on $[c,d]$:\n\n$$L = \\int_c^d \\sqrt{1 + [g'(y)]^2}\\,dy = \\int_c^d \\sqrt{1 + \\left(\\frac{dx}{dy}\\right)^2}\\,dy.$$ \n\nThe **arc-length function** from a fixed start point $a$ to a variable $x$ is defined by\n\n$$s(x) = \\int_a^x \\sqrt{1 + [f'(t)]^2}\\,dt, \\quad \\text{so that} \\quad \\frac{ds}{dx} = \\sqrt{1 + [f'(x)]^2}.$$",
+                example: "Example: Given $f(x) = x^2 - \\tfrac{1}{8}\\ln x$ with start point $x = 1$.\n\n1. Compute $f'(x) = 2x - \\tfrac{1}{8x}$.\n2. Simplify: $1 + [f'(x)]^2 = (2x + \\tfrac{1}{8x})^2$ (a perfect square!).\n3. Then $\\sqrt{1 + [f'(x)]^2} = 2x + \\tfrac{1}{8x}$.\n4. Integrate: $s(x) = \\int_1^x (2t + \\tfrac{1}{8t})\\,dt = x^2 + \\tfrac{1}{8}\\ln x - 1.$\n\nThis gives an explicit arc-length function for any $x \\ge 1.$",
+                studyTip: "Look for algebraic simplifications in $1 + [f'(x)]^2$. If it becomes a perfect square, integration is simple. If not, use substitution or numerical methods (e.g. Simpson’s Rule).",
+                videoUrl: "https://youtu.be/yfJB4n-IzBE",
+                quizId: "ITMTB_W6_Quiz"
+              },
+              {
+                id: "ITMTB_W6_T3",
+                name: "Lesson 3: Surface Area of a Revolution — Definition & Formula",
+                competency: "Assessment Coverage: 8.2, Week 6 (Surface area definitions & derivation for rotation about axes)",
+                explanation: "A **surface of revolution** is formed when a curve is revolved about an axis (usually the x- or y-axis). By rotating each small segment, we generate a frustum (a thin band). Summing these and taking the limit gives the surface area formula.\n\nFor a nonnegative $y = f(x)$ on $[a,b]$ rotated about the x-axis:\n\n$$S = \\int_a^b 2\\pi f(x) \\sqrt{1 + [f'(x)]^2}\\,dx.$$ \n\nFor rotation about the y-axis (or if $x = g(y)$):\n\n$$S = \\int_c^d 2\\pi g(y) \\sqrt{1 + [g'(y)]^2}\\,dy.$$",
+                example: "Example: Find the surface area when $y = x^3$ is rotated about the x-axis for $0 \\le x \\le 2$.\n\n1. $y = x^3$, so $y' = 3x^2$ and $(y')^2 = 9x^4$.\n2. Setup: $S = \\int_0^2 2\\pi x^3 \\sqrt{1 + 9x^4}\\,dx$.\n3. Let $u = 1 + 9x^4$, then $du = 36x^3\\,dx$.\n4. Substituting gives $S = \\dfrac{\\pi}{18} \\int_1^{145} u^{1/2}\\,du = \\dfrac{\\pi}{27}(145^{3/2} - 1).$",
+                studyTip: "Choose to integrate with respect to the variable that simplifies the expression. If the radius is naturally $y$, use $dx$; if it’s $x$, use $dy$. Look for substitutions where $du$ matches the polynomial under the square root.",
+                videoUrl: "https://youtu.be/zUzan1Ma9nE",
+                quizId: "ITMTB_W6_Quiz"
+              },
+              {
+                id: "ITMTB_W6_T4",
+                name: "Lesson 4: Surface Area — Worked Methods, Axis Choices & Numerical Approaches",
+                competency: "Assessment Coverage: 8.2 (Multiple methods for rotation, frustum derivation, numerical approximation)",
+                explanation: "Surface-area problems can be solved in more than one way — by integrating with respect to $x$ or $y$. The general mnemonic is:\n\n$$S = \\int 2\\pi (\\text{radius})\\,ds,$$ \n\nwhere $ds = \\sqrt{1 + (dy/dx)^2}\\,dx$ or $ds = \\sqrt{1 + (dx/dy)^2}\\,dy$. Some integrals can be evaluated exactly; others require numerical methods.",
+                example: "Example: Find the area generated by rotating $y = x^2$ from $x = 1$ to $x = 2$ about the y-axis.\n\n**Method A (integrate w.r.t. $x$):**\n\n$S = \\int_1^2 2\\pi x \\sqrt{1 + (2x)^2}\\,dx = 2\\pi \\int_1^2 x\\sqrt{1 + 4x^2}\\,dx.$\n\nLet $u = 1 + 4x^2$, $du = 8x\\,dx$.\n\n**Method B (integrate w.r.t. $y$):**\n\n$x = \\sqrt{y}$, so for $x:1\\to2$, $y:1\\to4$.\n\n$S = \\int_1^4 2\\pi x \\sqrt{1 + (\\tfrac{dx}{dy})^2}\\,dy = 2\\pi \\int_1^4 \\sqrt{y}\\sqrt{1 + \\tfrac{1}{4y}}\\,dy.$\n\nBoth methods yield the same numerical value when computed correctly.",
+                studyTip: "Try both $x$- and $y$-integrals to check your setup—they must agree. For complicated integrals (e.g. $y = e^x$ on $[0,1]$ rotated about the x-axis), use numerical integration (e.g. Simpson’s Rule).",
+                videoUrl: "https://www.youtube.com/watch?v=lQM-0Nqs9Pg",
+                quizId: "ITMTB_W6_Quiz"
+              }
+        ]
       },
       {
         id: "ITMTB_W7",
