@@ -44,8 +44,6 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
   const { isModuleVisible } = useStore();
   const [isModulesOpen, setIsModulesOpen] = useState(false);
   const [isQuizzesOpen, setIsQuizzesOpen] = useState(false);
-  const [openModules, setOpenModules] = useState({});
-  const [openQuizModules, setOpenQuizModules] = useState({});
 
   const handleMobileClose = () => {
     if (window.innerWidth < 768) {
@@ -62,20 +60,6 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       toggle();
-    }
-  };
-
-  const toggleModule = (moduleId, section) => {
-    if (section === "modules") {
-      setOpenModules((prev) => ({
-        ...prev,
-        [moduleId]: !prev[moduleId],
-      }));
-    } else if (section === "quizzes") {
-      setOpenQuizModules((prev) => ({
-        ...prev,
-        [moduleId]: !prev[moduleId],
-      }));
     }
   };
 
@@ -120,7 +104,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
           to="/"
           onClick={handleMobileClose}
           className={({ isActive }) =>
-            `w-full flex items-center p-3 rounded-lg mb-1 transition-colors ${
+            `w-full flex items-center p-3 rounded-lg mb-2 transition-colors ${
               isActive
                 ? "bg-gradient-to-r from-[#FFC300]/20 to-[#E67E22]/20 text-[#E67E22] border-l-4 border-[#FFC300]"
                 : "text-gray-600 hover:bg-gray-100 hover:text-gray-600"
@@ -134,14 +118,14 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
         </NavLink>
 
         {/* Modules */}
-        <div>
+        <div className="mb-2">
           <button
             role="button"
             onClick={() => setIsModulesOpen(!isModulesOpen)}
             onKeyDown={(e) =>
               handleKeyDown(e, () => setIsModulesOpen(!isModulesOpen))
             }
-            className={`w-full flex items-center p-3 rounded-lg mb-1 transition-colors ${
+            className={`w-full flex items-center p-3 rounded-lg transition-colors ${
               location.pathname.includes("/modules")
                 ? "bg-gradient-to-r from-[#FFC300]/20 to-[#E67E22]/20 text-[#E67E22] border-l-4 border-[#FFC300]"
                 : "text-gray-600 hover:bg-gray-100 hover:text-gray-600"
@@ -165,71 +149,23 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
           </button>
           {!sidebarState.collapsed && (
             <Collapsible isOpen={isModulesOpen} id="modules-submenu">
-              <div className="pl-6 space-y-2 mt-2">
+              <div className="pl-6 space-y-2 mt-2 mb-3">
                 {modules
                   .filter((mod) => isModuleVisible(mod.id))
                   .map((module) => (
-                    <div key={module.id}>
-                      <button
-                        role="button"
-                        onClick={() => toggleModule(module.id, "modules")}
-                        onKeyDown={(e) =>
-                          handleKeyDown(e, () => toggleModule(module.id, "modules"))
-                        }
-                        className={`w-full flex items-center py-2 px-4 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors ${
-                          location.pathname.includes(`/modules/${module.id}`)
-                            ? "bg-gray-100 text-gray-600 font-medium"
-                            : ""
-                        }`}
-                        aria-expanded={openModules[module.id] || false}
-                        aria-controls={`module-${module.id}-submenu`}
-                      >
-                        <span>{getModuleDisplayName(module)}</span>
-                        <AiOutlineRight
-                          className={`w-4 h-4 ml-auto transform transition-transform duration-200 ${
-                            openModules[module.id] ? "rotate-90" : "rotate-0"
-                          }`}
-                          aria-hidden="true"
-                        />
-                      </button>
-                      <Collapsible
-                        isOpen={openModules[module.id]}
-                        id={`module-${module.id}-submenu`}
-                      >
-                        <div className="pl-4 space-y-1 mt-1">
-                          {module.weeks.map((week) => (
-                            <NavLink
-                              key={week.id}
-                              to={`/modules/${module.id}/${week.id}`}
-                              onClick={handleMobileClose}
-                              className={({ isActive }) =>
-                                `block py-1 px-4 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors ${
-                                  isActive ? "bg-gray-100 text-gray-600 font-medium" : ""
-                                }`
-                              }
-                              aria-current={({ isActive }) => (isActive ? "page" : undefined)}
-                            >
-                              {week.name}
-                            </NavLink>
-                          ))}
-                            {module.exams?.map((exam) => (
-                              <NavLink
-                                key={exam.id}
-                                to={`/exam/${exam.id}`} // Changed from /quizzes/module/:moduleId/:examId
-                                onClick={handleMobileClose}
-                                className={({ isActive }) =>
-                                  `block py-1 px-4 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors ${
-                                    isActive ? "bg-gray-100 text-gray-600 font-medium" : ""
-                                  }`
-                                }
-                                aria-current={({ isActive }) => (isActive ? "page" : undefined)}
-                              >
-                                {exam.name}
-                              </NavLink>
-                            ))}
-                        </div>
-                      </Collapsible>
-                    </div>
+                    <NavLink
+                      key={module.id}
+                      to={`/modules/${module.id}`}
+                      onClick={handleMobileClose}
+                      className={({ isActive }) =>
+                        `w-full flex items-center py-2 px-4 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors ${
+                          isActive ? "bg-gray-100 text-gray-600 font-medium" : ""
+                        }`
+                      }
+                      aria-current={({ isActive }) => (isActive ? "page" : undefined)}
+                    >
+                      <span>{getModuleDisplayName(module)}</span>
+                    </NavLink>
                   ))}
               </div>
             </Collapsible>
@@ -237,14 +173,14 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
         </div>
 
         {/* Quizzes */}
-        <div>
+        <div className="mb-2">
           <button
             role="button"
             onClick={() => setIsQuizzesOpen(!isQuizzesOpen)}
             onKeyDown={(e) =>
               handleKeyDown(e, () => setIsQuizzesOpen(!isQuizzesOpen))
             }
-            className={`w-full flex items-center p-3 rounded-lg mb-1 transition-colors ${
+            className={`w-full flex items-center p-3 rounded-lg transition-colors ${
               location.pathname.includes("/quizzes")
                 ? "bg-gradient-to-r from-[#FFC300]/20 to-[#E67E22]/20 text-[#E67E22] border-l-4 border-[#FFC300]"
                 : "text-gray-600 hover:bg-gray-100 hover:text-gray-600"
@@ -268,71 +204,23 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
           </button>
           {!sidebarState.collapsed && (
             <Collapsible isOpen={isQuizzesOpen} id="quizzes-submenu">
-              <div className="pl-6 space-y-2 mt-2">
+              <div className="pl-6 space-y-2 mt-2 mb-3">
                 {modules
                   .filter((mod) => isModuleVisible(mod.id))
                   .map((module) => (
-                    <div key={module.id}>
-                      <button
-                        role="button"
-                        onClick={() => toggleModule(module.id, "quizzes")}
-                        onKeyDown={(e) =>
-                          handleKeyDown(e, () => toggleModule(module.id, "quizzes"))
-                        }
-                        className={`w-full flex items-center py-2 px-4 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors ${
-                          location.pathname.includes(`/quizzes/module/${module.id}`)
-                            ? "bg-gray-100 text-gray-600 font-medium"
-                            : ""
-                        }`}
-                        aria-expanded={openQuizModules[module.id] || false}
-                        aria-controls={`quiz-module-${module.id}-submenu`}
-                      >
-                        <span>{getModuleDisplayName(module)}</span>
-                        <AiOutlineRight
-                          className={`w-4 h-4 ml-auto transform transition-transform duration-200 ${
-                            openQuizModules[module.id] ? "rotate-90" : "rotate-0"
-                          }`}
-                          aria-hidden="true"
-                        />
-                      </button>
-                      <Collapsible
-                        isOpen={openQuizModules[module.id]}
-                        id={`quiz-module-${module.id}-submenu`}
-                      >
-                        <div className="pl-4 space-y-1 mt-1">
-                          {module.weeks.map((week) => (
-                            <NavLink
-                              key={week.id}
-                              to={`/quizzes/module/${module.id}/${week.id}`}
-                              onClick={handleMobileClose}
-                              className={({ isActive }) =>
-                                `block py-1 px-4 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors ${
-                                  isActive ? "bg-gray-100 text-gray-600 font-medium" : ""
-                                }`
-                              }
-                              aria-current={({ isActive }) => (isActive ? "page" : undefined)}
-                            >
-                              {week.name}
-                            </NavLink>
-                          ))}
-                            {module.exams?.map((exam) => (
-                              <NavLink
-                                key={exam.id}
-                                to={`/exam/${exam.id}`} // Changed from /quizzes/module/:moduleId/:examId
-                                onClick={handleMobileClose}
-                                className={({ isActive }) =>
-                                  `block py-1 px-4 rounded-lg text-sm text-gray-600 hover:bg-gray-100 transition-colors ${
-                                    isActive ? "bg-gray-100 text-gray-600 font-medium" : ""
-                                  }`
-                                }
-                                aria-current={({ isActive }) => (isActive ? "page" : undefined)}
-                              >
-                                {exam.name}
-                              </NavLink>
-                            ))}
-                        </div>
-                      </Collapsible>
-                    </div>
+                    <NavLink
+                      key={module.id}
+                      to={`/quizzes/module/${module.id}`}
+                      onClick={handleMobileClose}
+                      className={({ isActive }) =>
+                        `w-full flex items-center py-2 px-4 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors ${
+                          isActive ? "bg-gray-100 text-gray-600 font-medium" : ""
+                        }`
+                      }
+                      aria-current={({ isActive }) => (isActive ? "page" : undefined)}
+                    >
+                      <span>{getModuleDisplayName(module)}</span>
+                    </NavLink>
                   ))}
               </div>
             </Collapsible>
@@ -344,7 +232,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
           to="/dashboard"
           onClick={handleMobileClose}
           className={({ isActive }) =>
-            `w-full flex items-center p-3 rounded-lg mb-1 transition-colors ${
+            `w-full flex items-center p-3 rounded-lg mb-2 transition-colors ${
               isActive
                 ? "bg-gradient-to-r from-[#FFC300]/20 to-[#E67E22]/20 text-[#E67E22] border-l-4 border-[#FFC300]"
                 : "text-gray-600 hover:bg-gray-100 hover:text-gray-600"
