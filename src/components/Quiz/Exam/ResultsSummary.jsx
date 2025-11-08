@@ -1,5 +1,7 @@
+// src/components/Quiz/Exam/ResultsSummary.jsx
 import React from 'react';
 import { AnswerValidator } from '../../../utils/answerValidator';
+import { formatExamDate } from '../../../data/exams';
 
 /**
  * ResultsSummary
@@ -51,7 +53,10 @@ const ResultsSummary = ({
           <div className="mt-3 text-sm text-gray-500">
             <p><strong>Exam:</strong> {exam.title}</p>
             <p><strong>Exam By:</strong> {exam.examBy}</p>
-            <p><strong>Date:</strong> {new Date().toLocaleString()}</p>
+            {exam.createdOn && (
+              <p><strong>Exam Created:</strong> {formatExamDate(exam.createdOn)}</p>
+            )}
+            <p><strong>Date Taken:</strong> {new Date().toLocaleString()}</p>
             <p><strong>Attempt:</strong> #{attemptNumber || 1}</p>
           </div>
         </div>

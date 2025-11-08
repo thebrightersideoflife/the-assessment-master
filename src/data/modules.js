@@ -336,19 +336,23 @@ export const modules = [
       { 
         id: 'ITMTB_EXAM3', 
         name: 'ITMTB Exam: Interpreting Graphs', 
-        description: 'Applications of Integration: Covers reading graph data to answer questions.' 
+        description: 'Applications of Integration: Covers reading graph data to answer questions.',
+        examBy: 'The Brighter Side Team',
+        createdOn: '2025-10-25',
       },      
       { 
         id: 'ITMTB_EXAM1', 
         name: 'Online Test 1 (Mock Test)', 
         description: 'ITMTB Test 1 Prep: Calculus of Integration (Hardest Subset)', 
-        examBy: 'Mr Kwadwo Afrane-Okese' 
+        examBy: 'Mr Kwadwo Afrane-Okese', 
+        createdOn: '2025-10-20',
       },            
       { 
         id: 'ITMTB_EXAM4', 
         name: 'Midterm Assessment (Week 1-6)', 
         description: 'Explores integration methods, area between curves, volumes by rotation, surface area, arc length, and conceptual comparisons.', 
-        examBy: 'Mr. Mpho Nefale' 
+        examBy: 'Mr. Mpho Nefale', 
+        createdOn: '2025-11-03',
       },
       { 
         id: 'ITMTB_EXAM2', 

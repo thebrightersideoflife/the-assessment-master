@@ -1,9 +1,11 @@
+// src/components/Quiz/Exam/ExamResultsScreen.jsx
 import React, { useState } from 'react';
 import ResultsSummary from './ResultsSummary';
 import StudentDetailsForm from './StudentDetailsForm';
 import ExamQuestion from '../ExamQuestion';
 import ExamExplanation from '../ExamExplanation';
 import { AnswerValidator } from '../../../utils/answerValidator';
+import { printQuestionsOnly, handlePrintCheck } from '../../../utils/printUtils';
 
 /**
  * ExamResultsScreen
@@ -13,9 +15,11 @@ import { AnswerValidator } from '../../../utils/answerValidator';
  * - Section performance breakdown
  * - Detailed question review with explanations
  * - Student details form
- * - Print/Reset/Back buttons
+ * - Print buttons (Questions Only & Full Results)
+ * - Reset/Back buttons
  * 
  * ✅ FIXED: Now uses AnswerValidator for consistent validation
+ * ✅ NEW: Added "Print Questions Only" button for blank exam papers
  */
 const ExamResultsScreen = ({
   exam,
@@ -122,6 +126,7 @@ const ExamResultsScreen = ({
                     <h4 className="text-lg font-bold text-gray-800 mb-4">
                       {section.title}
                     </h4>
+
                     {sectionQs.map((question) => {
                       const userAnswer = userAnswers[question.id] || "";
                       
@@ -146,6 +151,7 @@ const ExamResultsScreen = ({
                               ({question.points || 1} {(question.points || 1) === 1 ? 'point' : 'points'})
                             </span>
                           </div>
+
                           <div className="mb-4">
                             <ExamQuestion 
                               question={question} 
@@ -153,6 +159,7 @@ const ExamResultsScreen = ({
                               showPoints={false}
                             />
                           </div>
+
                           <ExamExplanation
                             question={question}
                             userAnswer={userAnswer}
@@ -171,7 +178,6 @@ const ExamResultsScreen = ({
                   const userAnswer = userAnswers[question.id] || "";
                   
                   // ✅ CRITICAL FIX: Use AnswerValidator for consistent validation
-                  // This ensures visual correctness matches the percentage calculation
                   const validationResult = AnswerValidator.validate(
                     userAnswer,
                     question.correctAnswers,
@@ -191,6 +197,7 @@ const ExamResultsScreen = ({
                           ({question.points || 1} {(question.points || 1) === 1 ? 'point' : 'points'})
                         </span>
                       </div>
+
                       <div className="mb-4">
                         <ExamQuestion 
                           question={question} 
@@ -198,6 +205,7 @@ const ExamResultsScreen = ({
                           showPoints={false}
                         />
                       </div>
+
                       <ExamExplanation
                         question={question}
                         userAnswer={userAnswer}
@@ -218,12 +226,38 @@ const ExamResultsScreen = ({
 
           {/* Action Buttons */}
           <div className="no-print mt-6 flex flex-wrap gap-4 justify-center">
+            {/* Print Questions Only Button - NEW */}
+            <button
+              onClick={() => printQuestionsOnly(exam, questions)}
+              className="px-6 py-3 bg-gradient-to-r from-[#9b59b6] to-[#8e44ad] text-white rounded-xl font-semibold hover:shadow-lg transition-all flex items-center gap-2"
+              title="Print blank exam paper with questions only"
+            >
+              📄 Print Questions Only
+            </button>
+
+            {/* Print Full Results Button */}
+            <button
+              onClick={() => handlePrintCheck(studentDetails)}
+              disabled={!allDetailsFilled}
+              className={`px-6 py-3 rounded-xl font-semibold transition-all flex items-center gap-2 ${
+                allDetailsFilled
+                  ? 'bg-gradient-to-r from-[#28B463] to-[#27AE60] text-white hover:shadow-lg'
+                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              }`}
+              title="Print full results with answers and explanations"
+            >
+              🖨️ Print Full Results
+            </button>
+
+            {/* Reset Exam Button */}
             <button
               onClick={handleReset}
               className="px-6 py-3 bg-gradient-to-r from-[#E67E22] to-[#D35400] text-white rounded-xl font-semibold hover:shadow-lg transition-all"
             >
               🔄 Reset Exam
             </button>
+
+            {/* Back to Module Button */}
             <a
               href={`/modules/${exam.moduleId}`}
               className="px-6 py-3 bg-gradient-to-r from-[#4169E1] to-[#3498DB] text-white rounded-xl font-semibold hover:shadow-lg transition-all inline-block"

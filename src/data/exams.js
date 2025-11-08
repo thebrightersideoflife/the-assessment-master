@@ -5,6 +5,7 @@ export const exams = [
     title: "Online Test 1 (Mock Test): Calculus of Integration (Hardest Subset)",
     description: "Week 1-3. Covers the most challenging problems from Riemann Sums, Advanced Integration Techniques (IBP, Partial Fractions), and Velocity Applications. Total Score: 100 Points.",
     examBy: "Mr Kwadwo Afrane-Okese",
+    createdOn: "2025-10-20",
     timeLimit: 150,
     passingScore: 70,
     
@@ -822,7 +823,8 @@ export const exams = [
     moduleId: "ITMTB",
     title: "ITMTB Exam: Interpreting Graphs",
     description: "Applications of Integration: Covers reading graph data to answer questions.",
-    examBy: "Mr Kwadwo Afrane-Okese",
+    examBy: "The Brighter Side Team",
+    createdOn: "2025-10-25",
     timeLimit: null,
     passingScore: 10,
     
@@ -955,6 +957,7 @@ export const exams = [
     title: "Week 6, Class Test: Applications of Integration",
     description: "Explores integration methods, area between curves, volumes by rotation, surface area, arc length, and conceptual comparisons.",
     examBy: "Mr. Mpho Nefale",
+    createdOn: "2025-11-03",
     timeLimit: 75, // 1hr 15min
     passingScore: 70,
     
@@ -1606,4 +1609,35 @@ export const getTotalPoints = (examId) => {
   if (!exam) return 0;
   
   return exam.questions.reduce((total, q) => total + (q.points || 0), 0);
+};
+
+// New utility function to format the created date
+export const formatExamDate = (dateString) => {
+  if (!dateString) return null;
+  
+  const date = new Date(dateString);
+  
+  // Format as "January 15, 2025"
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+};
+
+// New utility function to get relative time (e.g., "2 weeks ago")
+export const getRelativeTime = (dateString) => {
+  if (!dateString) return null;
+  
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffTime = Math.abs(now - date);
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  
+  if (diffDays === 0) return 'Today';
+  if (diffDays === 1) return 'Yesterday';
+  if (diffDays < 7) return `${diffDays} days ago`;
+  if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+  if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
+  return `${Math.floor(diffDays / 365)} years ago`;
 };

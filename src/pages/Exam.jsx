@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getExamById } from '../data/exams';
+import { formatExamDate } from '../data/exams';
 import ExamManagerCore from '../components/Quiz/Exam/ExamManagerCore';
 import { renderMath } from '../utils/mathRenderer';
 
@@ -25,6 +26,7 @@ const Exam = () => {
       setLoading(false);
       return;
     }
+
     setExam(examData);
     setLoading(false);
     renderMath();
@@ -90,11 +92,16 @@ const Exam = () => {
             {exam.title}
           </h1>
           <p className="text-lg text-gray-600">{exam.description}</p>
-
-          {/* 👇 Added Lecturer Credit */}
+          {/* Lecturer Credit */}
           {exam.examBy && (
             <p className="text-sm text-gray-500 italic mt-1">
               <span className="font-medium text-gray-700">Exam by:</span> {exam.examBy}
+            </p>
+          )}
+          {/* Created On Date */}
+          {exam.createdOn && (
+            <p className="text-sm text-gray-500 italic mt-1">
+              <span className="font-medium text-gray-700">📅 Created:</span> {formatExamDate(exam.createdOn)}
             </p>
           )}
         </div>
@@ -116,6 +123,7 @@ const Exam = () => {
                 </p>
               </div>
             </div>
+
             <div className="flex items-start space-x-3">
               <span className="text-3xl">⭐</span>
               <div>
@@ -125,6 +133,7 @@ const Exam = () => {
                 </p>
               </div>
             </div>
+
             {exam.timeLimit && (
               <div className="flex items-start space-x-3">
                 <span className="text-3xl">⏱️</span>
@@ -136,6 +145,7 @@ const Exam = () => {
                 </div>
               </div>
             )}
+
             <div className="flex items-start space-x-3">
               <span className="text-3xl">🎯</span>
               <div>

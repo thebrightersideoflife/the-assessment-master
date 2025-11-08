@@ -108,21 +108,6 @@ const StudentDetailsForm = ({ studentDetails, setStudentDetails }) => {
           </div>
         </div>
       </div>
-
-      {/* Print Button */}
-      <div className="flex justify-center">
-        <button
-          onClick={() => handlePrintCheck(studentDetails)}
-          disabled={!allDetailsFilled}
-          className={`px-6 py-3 rounded-xl font-semibold transition-all ${
-            allDetailsFilled
-              ? 'bg-gradient-to-r from-[#28B463] to-[#27AE60] text-white hover:shadow-lg'
-              : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-          }`}
-        >
-          🖨️ Print Results
-        </button>
-      </div>
     </div>
   );
 };

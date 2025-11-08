@@ -2,13 +2,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import useStore from '../../store/useStore';
+import { formatExamDate, getRelativeTime } from '../../data/exams';
 
 const ExamCard = ({ exam }) => {
   const { getExamState } = useStore();
   const examState = getExamState(exam.id);
   const isSubmitted = examState.submitted;
   const results = examState.results;
-
+  
   return (
     <div className="bg-white border-2 border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all">
       {/* Exam Icon & Title */}
@@ -22,11 +23,18 @@ const ExamCard = ({ exam }) => {
             <p className="text-sm text-gray-600">
               {exam.description}
             </p>
-
-            {/* 👇 Added Lecturer Credit */}
+            {/* Lecturer Credit */}
             {exam.examBy && (
               <p className="text-xs text-gray-500 mt-1 italic">
                 <span className="font-medium text-gray-700">Exam by:</span> {exam.examBy}
+              </p>
+            )}
+            {/* Created On Date */}
+            {exam.createdOn && (
+              <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
+                <span className="font-medium text-gray-700">📅 Created:</span>
+                <span>{formatExamDate(exam.createdOn)}</span>
+                <span className="text-gray-400">({getRelativeTime(exam.createdOn)})</span>
               </p>
             )}
           </div>

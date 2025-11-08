@@ -1,5 +1,6 @@
 // src/components/Quiz/Exam/ExamStartScreen.jsx
 import React from 'react';
+import { formatExamDate } from '../../../data/exams';
 
 /**
  * ExamStartScreen
@@ -38,8 +39,7 @@ const ExamStartScreen = ({ exam, questions, attemptNumber, handleStart }) => {
               <span className="mr-2">•</span>
               <span><strong>Title:</strong> {exam.title}</span>
             </li>
-
-            {/* 👇 Added Exam By (Lecturer Credit) */}
+            {/* Exam By (Lecturer Credit) */}
             {exam.examBy && (
               <li className="flex items-start">
                 <span className="mr-2">•</span>
@@ -49,7 +49,16 @@ const ExamStartScreen = ({ exam, questions, attemptNumber, handleStart }) => {
                 </span>
               </li>
             )}
-
+            {/* Created On Date */}
+            {exam.createdOn && (
+              <li className="flex items-start">
+                <span className="mr-2">•</span>
+                <span>
+                  <strong>Created on:</strong>{' '}
+                  <span className="text-gray-600">{formatExamDate(exam.createdOn)}</span>
+                </span>
+              </li>
+            )}
             <li className="flex items-start">
               <span className="mr-2">•</span>
               <span><strong>Total Questions:</strong> {questions.length}</span>
@@ -86,6 +95,7 @@ const ExamStartScreen = ({ exam, questions, attemptNumber, handleStart }) => {
                   (sum, q) => sum + (q.points || 0),
                   0
                 );
+
                 return (
                   <div
                     key={section.id}
