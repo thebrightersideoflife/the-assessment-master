@@ -2,7 +2,7 @@ export const exams = [
 {
     id: "ITMTB_EXAM1",
     moduleId: "ITMTB",
-    title: "ITMTB Midterm Exam: Calculus of Integration (Hardest Subset)",
+    title: "Online Test 1 (Mock Test): Calculus of Integration (Hardest Subset)",
     description: "Week 1-3. Covers the most challenging problems from Riemann Sums, Advanced Integration Techniques (IBP, Partial Fractions), and Velocity Applications. Total Score: 100 Points.",
     examBy: "Mr Kwadwo Afrane-Okese",
     timeLimit: 150,
@@ -953,7 +953,7 @@ export const exams = [
     id: "ITMTB_EXAM4",
     moduleId: "ITMTB",
     title: "Week 6, Class Test: Applications of Integration",
-    description: "Covers advanced integration techniques, area between curves, volumes of revolution (disk/washer and shell methods), surface area of revolution, and arc length. Real-world engineering applications included.",
+    description: "Explores integration methods, area between curves, volumes by rotation, surface area, arc length, and conceptual comparisons.",
     examBy: "Mr. Mpho Nefale",
     timeLimit: 75, // 1hr 15min
     passingScore: 70,

@@ -10,6 +10,8 @@ import ScrollToTop from './components/UI/ScrollToTop';
 
 // Lazy-loaded pages
 const Home = React.lazy(() => import("./pages/Home"));
+const QuizzesLanding = React.lazy(() => import("./pages/QuizzesLanding"));
+const Quizzes = React.lazy(() => import("./pages/Quizzes"));
 const Quiz = React.lazy(() => import("./pages/Quiz"));
 const Topics = React.lazy(() => import("./pages/Topics"));
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
@@ -71,6 +73,14 @@ function App() {
             <Route path="/modules/:moduleId/:weekId" element={<Week />} />
 
             {/* ========== QUIZ ROUTES ========== */}
+            <Route
+              path="/quizzes"
+              element={<QuizzesLanding />}
+            />            
+            <Route
+              path="/quizzes/module/:moduleId"
+              element={<Quizzes />}
+            />
             <Route
               path="/quiz/:moduleId/:weekId/:quizIndex"
               element={<Quiz />}

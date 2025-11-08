@@ -156,7 +156,7 @@ const Quiz = () => {
 
               {/* Back to Quizzes */}
               <Link
-                to={`/modules/${moduleId}/${weekId}`}
+                to={`/quizzes/module/${module.id}`}
                 className="flex items-center space-x-2 px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-xl transition-all font-semibold border border-[#ffffff]/50"
                 aria-label="Back to quiz selection"
               >
