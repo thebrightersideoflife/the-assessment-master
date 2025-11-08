@@ -5620,6 +5620,556 @@ export const questions = [
             "- q117: \\( y = x^3 \\) about \\( x \\)-axis → \\( \\frac{\\pi}{27}(145\\sqrt{145} - 1) \\)\n" +
             "- q128: \\( x = y^3 \\) about \\( y \\)-axis → \\( \\frac{\\pi}{27}(10\\sqrt{10} - 1) \\)\n\n" +
             "The structure is identical - only the limits differ!"
+        },
+
+        {
+          id: "q129",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W6",
+          type: "open-ended",
+          text: "Find the volume of the solid formed by rotating the region bounded by \\( y = x \\) and \\( y = \\frac{x}{2} \\) around the \\( x \\)-axis for \\( 0 \\leq x \\leq 4 \\).",
+          correctAnswers: [
+            "16π",
+            "16*pi",
+            "16π",
+            "50.265",
+            "50.27"
+          ],
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.01,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          explanation: "**Method: Washer Method**\n\n" +
+            "**Step 1: Identify the outer and inner radii**\n\n" +
+            "For \\( 0 \\leq x \\leq 4 \\), the function \\( y = x \\) is above \\( y = \\frac{x}{2} \\).\n\n" +
+            "- Outer radius: \\( R(x) = x \\)\n" +
+            "- Inner radius: \\( r(x) = \\frac{x}{2} \\)\n\n" +
+            "**Step 2: Set up the volume integral**\n\n" +
+            "$$V = \\pi \\int_{0}^{4} [R(x)]^2 - [r(x)]^2 \\, dx$$\n\n" +
+            "$$= \\pi \\int_{0}^{4} \\left[ x^2 - \\left(\\frac{x}{2}\\right)^2 \\right] dx$$\n\n" +
+            "$$= \\pi \\int_{0}^{4} \\left( x^2 - \\frac{x^2}{4} \\right) dx$$\n\n" +
+            "$$= \\pi \\int_{0}^{4} \\frac{3x^2}{4} \\, dx$$\n\n" +
+            "**Step 3: Evaluate the integral**\n\n" +
+            "$$= \\pi \\cdot \\frac{3}{4} \\left[ \\frac{x^3}{3} \\right]_{0}^{4}$$\n\n" +
+            "$$= \\frac{3\\pi}{4} \\cdot \\frac{64}{3}$$\n\n" +
+            "$$= 16\\pi$$\n\n" +
+            "**Answer: \\( 16\\pi \\approx 50.27 \\) cubic units**"
+        },
+
+        {
+          id: "q130",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W6",
+          type: "open-ended",
+          text: "Find the volume of the solid formed when the region between \\( y = x^2 \\) and \\( y = 4 \\) is rotated about the \\( y \\)-axis.",
+          correctAnswers: [
+            "16π",
+            "16*pi",
+            "16π",
+            "50.265",
+            "50.27"
+          ],
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.01,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          explanation: "**Method: Cylindrical Shells**\n\n" +
+            "**Step 1: Find the bounds**\n\n" +
+            "The curves intersect when \\( x^2 = 4 \\), so \\( x = \\pm 2 \\).\n\n" +
+            "**Step 2: Set up the shell formula**\n\n" +
+            "For rotation about the \\( y \\)-axis:\n" +
+            "- Radius = \\( x \\)\n" +
+            "- Height = \\( 4 - x^2 \\)\n\n" +
+            "By symmetry, we can integrate from 0 to 2 and double:\n\n" +
+            "$$V = 2 \\cdot 2\\pi \\int_{0}^{2} x(4 - x^2) \\, dx$$\n\n" +
+            "$$= 4\\pi \\int_{0}^{2} (4x - x^3) \\, dx$$\n\n" +
+            "**Step 3: Evaluate the integral**\n\n" +
+            "$$= 4\\pi \\left[ 2x^2 - \\frac{x^4}{4} \\right]_{0}^{2}$$\n\n" +
+            "$$= 4\\pi \\left( 8 - 4 \\right)$$\n\n" +
+            "$$= 4\\pi \\cdot 4 = 16\\pi$$\n\n" +
+            "**Answer: \\( 16\\pi \\approx 50.27 \\) cubic units**"
+        },
+
+        {
+          id: "q131",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W6",
+          type: "open-ended",
+          text: "Find the exact length of the curve \\( y = (x+4)^{3/2} \\) for \\( 0 \\leq x \\leq 4 \\).",
+          correctAnswers: [
+            "(8/27)(19^(3/2) - 10^(3/2))",
+            "8/27*(19^(3/2) - 10^(3/2))",
+            "(8/27)(19^1.5 - 10^1.5)",
+            "10.5",
+            "10.50"
+          ],
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.05,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          explanation: "**Arc Length Formula:**\n\n" +
+            "$$L = \\int_{a}^{b} \\sqrt{1 + (y')^2} \\, dx$$\n\n" +
+            "**Step 1: Find the derivative**\n\n" +
+            "$$y' = \\frac{3}{2}(x+4)^{1/2}$$\n\n" +
+            "$$[y']^2 = \\frac{9}{4}(x+4)$$\n\n" +
+            "**Step 2: Set up the arc length integral**\n\n" +
+            "$$L = \\int_{0}^{4} \\sqrt{1 + \\frac{9}{4}(x+4)} \\, dx$$\n\n" +
+            "$$= \\int_{0}^{4} \\sqrt{\\frac{9x}{4} + 10} \\, dx$$\n\n" +
+            "**Step 3: Use substitution**\n\n" +
+            "Let \\( u = \\frac{9x}{4} + 10 \\), then \\( du = \\frac{9}{4}dx \\), so \\( dx = \\frac{4}{9}du \\)\n\n" +
+            "When \\( x = 0 \\): \\( u = 10 \\)\n\n" +
+            "When \\( x = 4 \\): \\( u = 19 \\)\n\n" +
+            "$$L = \\frac{4}{9} \\int_{10}^{19} u^{1/2} \\, du$$\n\n" +
+            "$$= \\frac{4}{9} \\cdot \\frac{2}{3} \\left[ u^{3/2} \\right]_{10}^{19}$$\n\n" +
+            "$$= \\frac{8}{27} \\left( 19^{3/2} - 10^{3/2} \\right)$$\n\n" +
+            "**Answer: \\( \\displaystyle \\frac{8}{27}(19^{3/2} - 10^{3/2}) \\approx 10.50 \\) units**"
+        },
+
+        {
+          id: "q132",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W6",
+          type: "multiple-choice",
+          text: "The curve \\( xy = 4 \\) for \\( 1 \\leq x \\leq 8 \\) is rotated about the \\( y \\)-axis. Set up an integral **with respect to \\( x \\)** for the area of the resulting surface.",
+          options: [
+            "A. \\( \\displaystyle 2\\pi \\int_{1}^{8} x\\sqrt{1 + \\frac{16}{x^4}} \\, dx \\)",
+            "B. \\( \\displaystyle 2\\pi \\int_{1}^{8} \\frac{4}{x}\\sqrt{1 + \\frac{16}{x^4}} \\, dx \\)",
+            "C. \\( \\displaystyle 2\\pi \\int_{1}^{8} x\\sqrt{1 + \\frac{4}{x^2}} \\, dx \\)",
+            "D. \\( \\displaystyle 2\\pi \\int_{1}^{8} \\sqrt{x^2 + \\frac{16}{x^2}} \\, dx \\)"
+          ],
+          correctAnswers: ["A"],
+          explanation: "**Surface Area Formula for Rotation about the \\( y \\)-axis:**\n\n" +
+            "$S = 2\\pi \\int_{a}^{b} x \\sqrt{1 + (y')^2} \\, dx$\n\n" +
+            "**Step 1: Express \\( y \\) as a function of \\( x \\)**\n\n" +
+            "From \\( xy = 4 \\), we get:\n\n" +
+            "$y = \\frac{4}{x}$\n\n" +
+            "**Step 2: Find the derivative**\n\n" +
+            "$\\frac{dy}{dx} = -\\frac{4}{x^2}$\n\n" +
+            "$\\left(\\frac{dy}{dx}\\right)^2 = \\frac{16}{x^4}$\n\n" +
+            "**Step 3: Set up the surface area integral**\n\n" +
+            "For rotation about the \\( y \\)-axis, the radius is \\( x \\):\n\n" +
+            "$S = 2\\pi \\int_{1}^{8} x \\sqrt{1 + \\frac{16}{x^4}} \\, dx$\n\n" +
+            "**Why other options are wrong:**\n\n" +
+            "- **Option B** uses \\( y = \\frac{4}{x} \\) as the radius, but we need \\( x \\) for rotation about the \\( y \\)-axis\n" +
+            "- **Option C** has the wrong derivative squared: \\( (y')^2 \\neq \\frac{4}{x^2} \\)\n" +
+            "- **Option D** doesn't follow the surface area formula structure\n\n" +
+            "**Answer: A**"
+        },
+
+        {
+          id: "q133",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W6",
+          type: "multiple-choice",
+          text: "Question q132 continued: Set up the same surface area integral **with respect to \\( y \\)** instead.",
+          options: [
+            "A. \\( \\displaystyle 2\\pi \\int_{1/2}^{4} \\frac{4}{y}\\sqrt{1 + \\frac{16}{y^4}} \\, dy \\)",
+            "B. \\( \\displaystyle 2\\pi \\int_{4}^{1/2} y\\sqrt{1 + \\frac{16}{y^4}} \\, dy \\)",
+            "C. \\( \\displaystyle 2\\pi \\int_{1/2}^{4} y\\sqrt{1 + \\frac{4}{y^2}} \\, dy \\)",
+            "D. \\( \\displaystyle 2\\pi \\int_{1}^{8} \\frac{4}{y}\\sqrt{1 + \\frac{16}{y^2}} \\, dy \\)"
+          ],
+          correctAnswers: ["A"],
+          explanation: "**Surface Area Formula for Rotation about the \\( y \\)-axis (in terms of \\( y \\)):**\n\n" +
+            "$S = 2\\pi \\int_{c}^{d} x \\sqrt{1 + \\left(\\frac{dx}{dy}\\right)^2} \\, dy$\n\n" +
+            "**Step 1: Express \\( x \\) as a function of \\( y \\)**\n\n" +
+            "From \\( xy = 4 \\):\n\n" +
+            "$x = \\frac{4}{y}$\n\n" +
+            "**Step 2: Find the bounds in terms of \\( y \\)**\n\n" +
+            "When \\( x = 1 \\): \\( y = 4 \\)\n\n" +
+            "When \\( x = 8 \\): \\( y = \\frac{1}{2} \\)\n\n" +
+            "So we integrate from \\( y = \\frac{1}{2} \\) to \\( y = 4 \\) (lower to upper bound)\n\n" +
+            "**Step 3: Find the derivative**\n\n" +
+            "$\\frac{dx}{dy} = -\\frac{4}{y^2}$\n\n" +
+            "$\\left(\\frac{dx}{dy}\\right)^2 = \\frac{16}{y^4}$\n\n" +
+            "**Step 4: Set up the surface area integral**\n\n" +
+            "The radius is \\( x = \\frac{4}{y} \\):\n\n" +
+            "$S = 2\\pi \\int_{1/2}^{4} \\frac{4}{y} \\sqrt{1 + \\frac{16}{y^4}} \\, dy$\n\n" +
+            "**Why other options are wrong:**\n\n" +
+            "- **Option B** has wrong bounds order and uses \\( y \\) instead of \\( x = \\frac{4}{y} \\) as the radius\n" +
+            "- **Option C** uses \\( y \\) as radius (wrong) and has incorrect derivative squared\n" +
+            "- **Option D** has wrong bounds (should be in \\( y \\), not \\( x \\)) and wrong derivative\n\n" +
+            "**Answer: A**"
+        },
+
+        {
+          id: "q134",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W6",
+          type: "open-ended",
+          text: "Use the arc length formula to find the length of the curve \\( y = 3 - 2x \\) from \\( x = -1 \\) to \\( x = 3 \\).",
+          image: {
+            src: "/images/ITMTB_Week 6_Quiz 2_Question 1.png",
+            alt: "Graph showing the linear function y = 3 - 2x from x = -1 to x = 3",
+            caption: "The straight line y = 3 - 2x on the given interval"
+          },
+          correctAnswers: [
+            "4√5",
+            "4*sqrt(5)",
+            "4√5",
+            "8.944",
+            "8.94"
+          ],
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.01,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          explanation: "**Arc Length Formula:**\n\n" +
+            "$L = \\int_{a}^{b} \\sqrt{1 + (y')^2} \\, dx$\n\n" +
+            "**Step 1: Find the derivative**\n\n" +
+            "For \\( y = 3 - 2x \\):\n\n" +
+            "$y' = -2$\n\n" +
+            "**Step 2: Set up the arc length integral**\n\n" +
+            "$L = \\int_{-1}^{3} \\sqrt{1 + (-2)^2} \\, dx$\n\n" +
+            "$= \\int_{-1}^{3} \\sqrt{1 + 4} \\, dx$\n\n" +
+            "$= \\int_{-1}^{3} \\sqrt{5} \\, dx$\n\n" +
+            "**Step 3: Evaluate**\n\n" +
+            "$L = \\sqrt{5} \\cdot [x]_{-1}^{3}$\n\n" +
+            "$= \\sqrt{5} \\cdot (3 - (-1))$\n\n" +
+            "$= 4\\sqrt{5}$\n\n" +
+            "**Verification:** This is a straight line, so we can use the distance formula:\n\n" +
+            "$d = \\sqrt{(3-(-1))^2 + ((3-2(3))-(3-2(-1)))^2} = \\sqrt{16 + 64} = \\sqrt{80} = 4\\sqrt{5}$ ✓\n\n" +
+            "**Answer: \\( 4\\sqrt{5} \\approx 8.94 \\) units**"
+        },
+
+        {
+          id: "q135",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W6",
+          type: "multiple-choice",
+          text: "Set up, but do not evaluate, an integral for the length of the curve \\( y = x^3 \\) from \\( x = 0 \\) to \\( x = 2 \\).",
+          options: [            
+            "A. \\( \\displaystyle \\int_{0}^{2} \\sqrt{1 + 3x^2} \\, dx \\)",
+            "B. \\( \\displaystyle \\int_{0}^{2} \\sqrt{1 + 9x^2} \\, dx \\)",
+            "C. \\( \\displaystyle \\int_{0}^{2} \\sqrt{1 + x^6} \\, dx \\)",
+            "D. \\( \\displaystyle \\int_{0}^{2} \\sqrt{1 + 9x^4} \\, dx \\)"
+          ],
+          correctAnswers: ["D"],
+          explanation: "**Arc Length Formula:**\n\n" +
+            "$L = \\int_{a}^{b} \\sqrt{1 + (y')^2} \\, dx$\n\n" +
+            "**Step 1: Find the derivative**\n\n" +
+            "For \\( y = x^3 \\):\n\n" +
+            "$y' = 3x^2$\n\n" +
+            "**Step 2: Square the derivative**\n\n" +
+            "$(y')^2 = (3x^2)^2 = 9x^4$\n\n" +
+            "**Step 3: Set up the integral**\n\n" +
+            "$L = \\int_{0}^{2} \\sqrt{1 + 9x^4} \\, dx$\n\n" +
+            "**Why other options are wrong:**\n\n" +
+            "- **Option B**: Uses \\( 3x^2 \\) instead of \\( (3x^2)^2 = 9x^4 \\) — forgot to square!\n" +
+            "- **Option C**: Incorrectly simplifies to \\( 9x^2 \\) instead of \\( 9x^4 \\)\n" +
+            "- **Option D**: Uses \\( x^6 \\) which doesn't match \\( (3x^2)^2 = 9x^4 \\)\n\n" +
+            "**Note:** This integral cannot be evaluated using elementary functions and would require numerical methods.\n\n" +
+            "**Answer: A**"
+        },
+
+        {
+          id: "q136",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W6",
+          type: "multiple-choice",
+          text: "Set up, but do not evaluate, an integral for the length of the curve \\( y = e^x \\) from \\( x = 1 \\) to \\( x = 3 \\).",
+          options: [            
+            "A. \\( \\displaystyle \\int_{1}^{3} \\sqrt{1 + e^x} \\, dx \\)",
+            "B. \\( \\displaystyle \\int_{1}^{3} \\sqrt{1 + e^{2x}} \\, dx \\)",
+            "C. \\( \\displaystyle \\int_{1}^{3} \\sqrt{e^{2x} + 1} \\, dx \\)",
+            "D. \\( \\displaystyle \\int_{1}^{3} (1 + e^x) \\, dx \\)"
+          ],
+          correctAnswers: ["B"],
+          explanation: "**Arc Length Formula:**\n\n" +
+            "$L = \\int_{a}^{b} \\sqrt{1 + (y')^2} \\, dx$\n\n" +
+            "**Step 1: Find the derivative**\n\n" +
+            "For \\( y = e^x \\):\n\n" +
+            "$y' = e^x$\n\n" +
+            "**Step 2: Square the derivative**\n\n" +
+            "$(y')^2 = (e^x)^2 = e^{2x}$\n\n" +
+            "**Step 3: Set up the integral**\n\n" +
+            "$L = \\int_{1}^{3} \\sqrt{1 + e^{2x}} \\, dx$\n\n" +
+            "**Why other options are wrong:**\n\n" +
+            "- **Option B**: Uses \\( e^x \\) instead of \\( (e^x)^2 = e^{2x} \\) — forgot to square the derivative!\n" +
+            "- **Option C**: Same as A (just reordered), but this would be correct too. However, standard form is \\( 1 + e^{2x} \\)\n" +
+            "- **Option D**: Missing the square root entirely!\n\n" +
+            "**Note:** This integral also cannot be expressed in terms of elementary functions and requires numerical methods for evaluation.\n\n" +
+            "**Answer: A** (Note: C is mathematically equivalent but A follows standard convention)"
+        },
+
+        {
+          id: "q137",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W6",
+          type: "open-ended",
+          text: "Find the exact length of the curve \\( 36y^2 = (x^2 - 4)^3 \\) for \\( 2 \\leq x \\leq 3 \\), where \\( y \\geq 0 \\).",
+          correctAnswers: [
+            "13/6",
+            "2.167",
+            "2.17"
+          ],
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.01,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          explanation: "**Step 1: Solve for \\( y \\) (positive branch)**\n\n" +
+            "$$36y^2 = (x^2 - 4)^3$$\n\n" +
+            "$$y = \\frac{(x^2 - 4)^{3/2}}{6}$$\n\n" +
+            "**Step 2: Find the derivative**\n\n" +
+            "$$y' = \\frac{1}{6} \\cdot \\frac{3}{2}(x^2 - 4)^{1/2} \\cdot 2x$$\n\n" +
+            "$$= \\frac{x}{2}(x^2 - 4)^{1/2}$$\n\n" +
+            "**Step 3: Square the derivative**\n\n" +
+            "$$(y')^2 = \\frac{x^2}{4}(x^2 - 4) = \\frac{x^4 - 4x^2}{4}$$\n\n" +
+            "**Step 4: Simplify \\( 1 + (y')^2 \\)**\n\n" +
+            "$$1 + (y')^2 = \\frac{4 + x^4 - 4x^2}{4} = \\frac{x^4 - 4x^2 + 4}{4}$$\n\n" +
+            "$$= \\frac{(x^2 - 2)^2}{4}$$\n\n" +
+            "$$\\sqrt{1 + (y')^2} = \\frac{x^2 - 2}{2}$$ (since \\( x \\geq 2 \\), this is positive)\n\n" +
+            "**Step 5: Evaluate the arc length**\n\n" +
+            "$$L = \\int_{2}^{3} \\frac{x^2 - 2}{2} \\, dx$$\n\n" +
+            "$$= \\frac{1}{2} \\left[ \\frac{x^3}{3} - 2x \\right]_{2}^{3}$$\n\n" +
+            "At \\( x = 3 \\): \\( \\frac{27}{3} - 6 = 9 - 6 = 3 \\)\n\n" +
+            "At \\( x = 2 \\): \\( \\frac{8}{3} - 4 = \\frac{8 - 12}{3} = -\\frac{4}{3} \\)\n\n" +
+            "$$L = \\frac{1}{2} \\left( 3 - \\left(-\\frac{4}{3}\\right) \\right)$$\n\n" +
+            "$$= \\frac{1}{2} \\cdot \\frac{13}{3} = \\frac{13}{6}$$\n\n" +
+            "**Answer: \\( \\displaystyle \\frac{13}{6} \\approx 2.17 \\) units**"
+        },
+
+        {
+          id: "q138",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W6",
+          type: "open-ended",
+          text: "Find the exact length of the curve \\( y = \\ln(\\cos x) \\) for \\( 0 \\leq x \\leq \\pi/3 \\).",
+          correctAnswers: [
+            "ln(2 + √3)",
+            "ln(2 + sqrt(3))",
+            "ln(2+√3)",
+            "1.317",
+            "1.32"
+          ],
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.01,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          explanation: "**Step 1: Find the derivative**\n\n" +
+            "For \\( y = \\ln(\\cos x) \\):\n\n" +
+            "$$y' = \\frac{-\\sin x}{\\cos x} = -\\tan x$$\n\n" +
+            "**Step 2: Use the trigonometric identity**\n\n" +
+            "$$(y')^2 = \\tan^2 x$$\n\n" +
+            "$$1 + (y')^2 = 1 + \\tan^2 x = \\sec^2 x$$\n\n" +
+            "**Step 3: Set up the arc length integral**\n\n" +
+            "$$L = \\int_{0}^{\\pi/3} \\sqrt{\\sec^2 x} \\, dx$$\n\n" +
+            "$$= \\int_{0}^{\\pi/3} \\sec x \\, dx$$ (positive on this interval)\n\n" +
+            "**Step 4: Evaluate using the standard integral**\n\n" +
+            "$$L = \\left[ \\ln|\\sec x + \\tan x| \\right]_{0}^{\\pi/3}$$\n\n" +
+            "At \\( x = \\frac{\\pi}{3} \\):\n" +
+            "- \\( \\sec\\left(\\frac{\\pi}{3}\\right) = 2 \\)\n" +
+            "- \\( \\tan\\left(\\frac{\\pi}{3}\\right) = \\sqrt{3} \\)\n" +
+            "- Value: \\( \\ln(2 + \\sqrt{3}) \\)\n\n" +
+            "At \\( x = 0 \\):\n" +
+            "- \\( \\sec(0) = 1 \\), \\( \\tan(0) = 0 \\)\n" +
+            "- Value: \\( \\ln(1) = 0 \\)\n\n" +
+            "$$L = \\ln(2 + \\sqrt{3}) - 0 = \\ln(2 + \\sqrt{3})$$\n\n" +
+            "**Answer: \\( \\ln(2 + \\sqrt{3}) \\approx 1.32 \\) units**"
+        },
+
+        {
+          id: "q139",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W6",
+          type: "open-ended",
+          text: "Find the length of the arc of the curve \\( x^2 = (y - 4)^3 \\) from point \\( P(1, 5) \\) to point \\( Q(8, 8) \\).",
+          correctAnswers: [
+            "(8/27)*10^(3/2) - (1/27)*13^(3/2)",
+            "8.203",
+            "8.20"
+          ],
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.05,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          explanation: "**Step 1: Express \\( x \\) as a function of \\( y \\)**\n\n" +
+            "From \\( x^2 = (y - 4)^3 \\), taking the positive branch:\n\n" +
+            "$$x = (y - 4)^{3/2}$$\n\n" +
+            "**Step 2: Find \\( \\frac{dx}{dy} \\)**\n\n" +
+            "$$\\frac{dx}{dy} = \\frac{3}{2}(y - 4)^{1/2}$$\n\n" +
+            "$$\\left(\\frac{dx}{dy}\\right)^2 = \\frac{9}{4}(y - 4)$$\n\n" +
+            "**Step 3: Identify the \\( y \\)-bounds**\n\n" +
+            "At \\( P(1, 5) \\): \\( y = 5 \\)\n\n" +
+            "At \\( Q(8, 8) \\): \\( y = 8 \\)\n\n" +
+            "**Step 4: Set up the arc length integral**\n\n" +
+            "$L = \\int_{5}^{8} \\sqrt{1 + \\frac{9}{4}(y - 4)} \\, dy$\n\n" +
+            "$= \\int_{5}^{8} \\sqrt{\\frac{9y}{4} - 8} \\, dy$\n\n" +
+            "**Step 5: Use substitution**\n\n" +
+            "Let \\( u = \\frac{9y}{4} - 8 \\), then \\( du = \\frac{9}{4}dy \\)\n\n" +
+            "When \\( y = 5 \\): \\( u = \\frac{45}{4} - 8 = \\frac{13}{4} \\)\n\n" +
+            "When \\( y = 8 \\): \\( u = \\frac{72}{4} - 8 = 10 \\)\n\n" +
+            "$L = \\frac{4}{9} \\int_{13/4}^{10} u^{1/2} \\, du$\n\n" +
+            "$= \\frac{4}{9} \\cdot \\frac{2}{3} \\left[ u^{3/2} \\right]_{13/4}^{10}$\n\n" +
+            "$= \\frac{8}{27} \\left( 10^{3/2} - \\left(\\frac{13}{4}\\right)^{3/2} \\right)$\n\n" +
+            "$= \\frac{8}{27} \\cdot 10^{3/2} - \\frac{8}{27} \\cdot \\frac{13^{3/2}}{8}$\n\n" +
+            "$= \\frac{8}{27} \\cdot 10^{3/2} - \\frac{1}{27} \\cdot 13^{3/2}$\n\n" +
+            "**Answer: \\( \\displaystyle \\frac{8}{27}\\cdot 10^{3/2} - \\frac{1}{27}\\cdot 13^{3/2} \\approx 8.20 \\) units**"
+        },
+
+        {
+          id: "q140",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W6",
+          type: "open-ended",
+          text: "Find the perimeter (total length) of the astroid \\( x^{2/3} + y^{2/3} = 1 \\).",
+          image: {
+            src: "/images/ITMTB_Week 6_Quiz 3_Question 2.png",
+            alt: "Graph of the astroid curve x^(2/3) + y^(2/3) = 1",
+            caption: "The astroid curve, which has four-fold symmetry."
+          },
+          correctAnswers: [
+            "6",
+            "6.0"
+          ],
+          options: {
+            "allowSymbolic": false,
+            "tolerance": 0.01,
+            "acceptedUnits": [],
+            "requiredUnit": null
+          },
+          explanation: "**Step 1: Use parametric representation**\n\n" +
+            "The astroid can be parameterized as:\n\n" +
+            "$x = \\cos^3 t, \\quad y = \\sin^3 t, \\quad 0 \\leq t \\leq 2\\pi$\n\n" +
+            "**Step 2: Find the derivatives**\n\n" +
+            "$\\frac{dx}{dt} = -3\\cos^2 t \\sin t$\n\n" +
+            "$\\frac{dy}{dt} = 3\\sin^2 t \\cos t$\n\n" +
+            "**Step 3: Calculate the arc length element**\n\n" +
+            "$\\sqrt{\\left(\\frac{dx}{dt}\\right)^2 + \\left(\\frac{dy}{dt}\\right)^2}$\n\n" +
+            "$= \\sqrt{9\\cos^4 t \\sin^2 t + 9\\sin^4 t \\cos^2 t}$\n\n" +
+            "$= 3|\\sin t \\cos t| \\sqrt{\\cos^2 t + \\sin^2 t}$\n\n" +
+            "$= 3|\\sin t \\cos t|$\n\n" +
+            "**Step 4: Use symmetry**\n\n" +
+            "The astroid has 4-fold symmetry. In the first quadrant (\\( 0 \\leq t \\leq \\frac{\\pi}{2} \\)):\n\n" +
+            "$L_{quarter} = \\int_{0}^{\\pi/2} 3\\sin t \\cos t \\, dt$\n\n" +
+            "$= \\frac{3}{2} \\int_{0}^{\\pi/2} \\sin(2t) \\, dt$\n\n" +
+            "$= \\frac{3}{2} \\left[ -\\frac{1}{2}\\cos(2t) \\right]_{0}^{\\pi/2}$\n\n" +
+            "$= \\frac{3}{2} \\cdot \\frac{1}{2} \\cdot 2 = \\frac{3}{2}$\n\n" +
+            "**Step 5: Calculate total perimeter**\n\n" +
+            "$L = 4 \\times \\frac{3}{2} = 6$\n\n" +
+            "**Answer: 6 units**"
+        },
+        {
+          id: "q141",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W6",
+          type: "multiple-choice",
+          text: "Find the arc length function \\( s(x) \\) for the curve \\( y = 2x^{3/2} \\) with starting point \\( P_0(1, 2) \\). This means \\( s(x) \\) represents the arc length from \\( x = 1 \\) to any point \\( x \\).",
+          options: [            
+            "A. \\( s(x) = \\frac{2}{3} \\left[ (1+9x)^{3/2} - 10^{3/2} \\right] \\)",
+            "B. \\( s(x) = \\frac{2}{27} \\left[ (1+9x)^{3/2} - 1 \\right] \\)",
+            "C. \\( s(x) = \\frac{2}{27} \\left[ (1+9x)^{3/2} - 10^{3/2} \\right] \\)",
+            "D. \\( s(x) = \\frac{2}{27} \\left[ (1+9x)^{3/2} - 10 \\right] \\)"
+          ],
+          correctAnswers: ["C"],
+          explanation: "**Arc Length Function:** \\( s(x) = \\int_{1}^{x} \\sqrt{1 + [f'(t)]^2} \\, dt \\)\n\n" +
+            "**Step 1: Find the derivative**\n\n" +
+            "For \\( y = 2x^{3/2} \\):\n\n" +
+            "$y' = 2 \\cdot \\frac{3}{2}x^{1/2} = 3x^{1/2}$\n\n" +
+            "**Step 2: Square the derivative**\n\n" +
+            "$(y')^2 = 9x$\n\n" +
+            "**Step 3: Set up the arc length function**\n\n" +
+            "$s(x) = \\int_{1}^{x} \\sqrt{1 + 9t} \\, dt$\n\n" +
+            "**Step 4: Evaluate the integral**\n\n" +
+            "Let \\( u = 1 + 9t \\), then \\( du = 9dt \\), so \\( dt = \\frac{1}{9}du \\)\n\n" +
+            "$s(x) = \\frac{1}{9} \\int_{1+9(1)}^{1+9x} u^{1/2} \\, du$\n\n" +
+            "$= \\frac{1}{9} \\cdot \\frac{2}{3} \\left[ u^{3/2} \\right]_{10}^{1+9x}$\n\n" +
+            "$= \\frac{2}{27} \\left[ (1+9x)^{3/2} - 10^{3/2} \\right]$\n\n" +
+            "**Verification:** At \\( x = 1 \\): \\( s(1) = \\frac{2}{27}(10^{3/2} - 10^{3/2}) = 0 \\) ✓\n\n" +
+            "**Answer: A** (\\( \\displaystyle s(x) = \\frac{2}{27}\\left[(1+9x)^{3/2} - 10^{3/2}\\right] \\))\n\n" +
+            "**Why other options are wrong:**\n\n" +
+            "- **Option B**: Forgot the \\( 1/9 \\) coefficient from the u-substitution.\n" +
+            "- **Option C**: Used the wrong starting point (\\( x=0 \\) instead of \\( x=1 \\), which would make the lower limit \\( 1 \\)).\n" +
+            "- **Option D**: Incorrectly evaluated the lower bound \\( 10^{3/2} \\) as \\( 10 \\)."
+        },
+
+        {
+          id: "q142",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W6",
+          type: "open-ended",
+          text: "A hawk drops its prey, which follows the parabolic trajectory \\( y = 180 - \\frac{x^2}{45} \\) until it hits the ground. Calculate the distance traveled by the prey from the time it is dropped (at the vertex) until it hits the ground. Express your answer in exact form.",
+          correctAnswers: [
+            "45√17 + (45/4)ln(4+√17)",
+            "45*sqrt(17) + 45/4*ln(4+sqrt(17))",
+            "196.52",
+            "196.5"
+          ],
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.5,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          explanation: "**Step 1: Find where the prey hits the ground**\n\n" +
+            "Set \\( y = 0 \\):\n\n" +
+            "$0 = 180 - \\frac{x^2}{45}$\n\n" +
+            "$x^2 = 8100$\n\n" +
+            "$x = \\pm 90$\n\n" +
+            "The prey is dropped at \\( x = 0 \\) and travels to \\( x = 90 \\) (using the positive side).\n\n" +
+            "**Step 2: Find the derivative**\n\n" +
+            "$y' = -\\frac{2x}{45}$\n\n" +
+            "$(y')^2 = \\frac{4x^2}{2025}$\n\n" +
+            "**Step 3: Set up the arc length integral**\n\n" +
+            "$L = \\int_{0}^{90} \\sqrt{1 + \\frac{4x^2}{2025}} \\, dx$\n\n" +
+            "$= \\int_{0}^{90} \\sqrt{1 + \\left(\\frac{2x}{45}\\right)^2} \\, dx$\n\n" +
+            "**Step 4: Use the standard integral formula**\n\n" +
+            "For \\( \\int \\sqrt{1 + a^2x^2} \\, dx \\) with \\( a = \\frac{2}{45} \\):\n\n" +
+            "$\\int \\sqrt{1 + a^2x^2} \\, dx = \\frac{x}{2}\\sqrt{1+a^2x^2} + \\frac{1}{2a}\\ln\\left|ax + \\sqrt{1+a^2x^2}\\right| + C$\n\n" +
+            "**Step 5: Evaluate at the bounds**\n\n" +
+            "At \\( x = 90 \\):\n" +
+            "- \\( \\frac{2(90)}{45} = 4 \\)\n" +
+            "- \\( \\sqrt{1 + 16} = \\sqrt{17} \\)\n" +
+            "- First term: \\( \\frac{90}{2}\\sqrt{17} = 45\\sqrt{17} \\)\n" +
+            "- Second term: \\( \\frac{45}{4}\\ln(4 + \\sqrt{17}) \\)\n\n" +
+            "At \\( x = 0 \\): both terms equal 0\n\n" +
+            "$L = 45\\sqrt{17} + \\frac{45}{4}\\ln(4 + \\sqrt{17})$\n\n" +
+            "**Answer: \\( \\displaystyle 45\\sqrt{17} + \\frac{45}{4}\\ln(4 + \\sqrt{17}) \\approx 196.5 \\) units**"
+        },
+
+        {
+          id: "q143",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W6",
+          type: "multiple-choice",
+          text: "The curve \\( y = \\sqrt[3]{x} \\) for \\( 1 \\leq x \\leq 8 \\) is rotated about the \\( x \\)-axis. Set up an integral for the area of the resulting surface by integrating with respect to \\( x \\).",
+          options: [
+            "A. \\( 2\\pi \\int_{1}^{8} x^{1/3} \\sqrt{1 + \\frac{1}{9x^{4/3}}} \\, dx \\)",
+            "B. \\( 2\\pi \\int_{1}^{8} x^{1/3} \\sqrt{1 + \\frac{1}{3}x^{-2/3}} \\, dx \\)",
+            "C. \\( 2\\pi \\int_{1}^{8} \\sqrt{1 + \\frac{1}{9x^{4/3}}} \\, dx \\)",
+            "D. \\( 2\\pi \\int_{1}^{8} x \\sqrt{1 + \\frac{1}{9x^{4/3}}} \\, dx \\)"
+          ],
+          correctAnswers: [
+            "A"
+          ],
+          explanation: "**Surface Area Formula for Rotation about the \\( x \\)-axis:**\n\n" +
+            "$S = 2\\pi \\int_{a}^{b} y \\sqrt{1 + (y')^2} \\, dx$\n\n" +
+            "**Step 1: Express \\( y \\) and find its derivative**\n\n" +
+            "$y = \\sqrt[3]{x} = x^{1/3}$\n\n" +
+            "$y' = \\frac{1}{3}x^{-2/3}$\n\n" +
+            "**Step 2: Square the derivative**\n\n" +
+            "$(y')^2 = \\left( \\frac{1}{3}x^{-2/3} \\right)^2 = \\frac{1}{9}x^{-4/3} = \\frac{1}{9x^{4/3}}$\n\n" +
+            "**Step 3: Set up the surface area integral**\n\n" +
+            "Plug \\( y = x^{1/3} \\) and \\( (y')^2 = \\frac{1}{9x^{4/3}} \\) into the formula:\n\n" +
+            "$S = 2\\pi \\int_{1}^{8} x^{1/3} \\sqrt{1 + \\frac{1}{9x^{4/3}}} \\, dx$\n\n" +
+            "**Answer: A**\n\n" +
+            "**Why other options are wrong:**\n\n" +
+            "- **Option B**: Uses \\( y' \\) instead of \\( (y')^2 \\) inside the square root.\n" +
+            "- **Option C**: This is the formula for arc length (multiplied by \\( 2\\pi \\)), not surface area. It's missing the radius function \\( y = x^{1/3} \\) outside the square root.\n" +
+            "- **Option D**: This would be the integral for rotation about the \\( y \\)-axis, which uses \\( x \\) as the radius, not \\( y \\)."
         }
 
 ]
