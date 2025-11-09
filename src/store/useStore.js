@@ -23,19 +23,16 @@ const useStore = create(
         longestStreak: 0,
       },
       
-      // Module visibility state
-      moduleVisibility: modules.reduce((acc, mod) => ({
-        ...acc,
-        [mod.id]: mod.isVisible !== false,
-      }), {}),
-
+      // Module visibility state - initialized from modules.js
+      moduleVisibility: {},
+      
       // ============================================================================
       // HELPER: Get quiz key
       // ============================================================================
       getQuizKey: (moduleId, weekId, quizIndex = 0) => {
         return `${moduleId}-${weekId}-${quizIndex}`;
       },
-
+      
       // ============================================================================
       // Initialize or get quiz state
       // ============================================================================
@@ -50,7 +47,7 @@ const useStore = create(
           }
         );
       },
-
+      
       // ============================================================================
       // EXAM STATE MANAGEMENT
       // ============================================================================
@@ -66,12 +63,12 @@ const useStore = create(
           }
         );
       },
-
+      
       // Get exam attempt count
       getExamAttemptCount: (examId) => {
         return get().examAttempts[examId] || 0;
       },
-
+      
       // Initialize exam (called when exam starts)
       initializeExam: (examId) =>
         set((state) => {
@@ -79,11 +76,9 @@ const useStore = create(
           if (state.exams[examId]?.submitted) {
             return state;
           }
-
           // Increment attempt counter
           const currentAttempts = state.examAttempts[examId] || 0;
           const newAttemptNumber = currentAttempts + 1;
-
           return {
             exams: {
               ...state.exams,
@@ -100,7 +95,7 @@ const useStore = create(
             },
           };
         }),
-
+      
       // Update a single answer
       updateExamAnswer: (examId, questionId, answer) =>
         set((state) => {
@@ -123,7 +118,7 @@ const useStore = create(
             },
           };
         }),
-
+      
       // Submit exam with results
       submitExam: (examId, results) =>
         set((state) => {
@@ -148,13 +143,13 @@ const useStore = create(
             },
           };
         }),
-
+      
       // Check if exam is submitted
       isExamSubmitted: (examId) => {
         const examState = get().exams[examId];
         return examState?.submitted === true;
       },
-
+      
       // Reset exam (for retakes)
       resetExam: (examId) =>
         set((state) => {
@@ -163,7 +158,7 @@ const useStore = create(
           // Note: We DON'T reset the attempt counter - it keeps incrementing
           return { exams: newExams };
         }),
-
+      
       // ============================================================================
       // QUIZ ACTIONS
       // ============================================================================
@@ -187,7 +182,7 @@ const useStore = create(
             },
           };
         }),
-
+      
       updateStats: (moduleId, weekId, quizIndex = 0, isCorrect) =>
         set((state) => {
           const quizKey = state.getQuizKey(moduleId, weekId, quizIndex);
@@ -241,7 +236,7 @@ const useStore = create(
             },
           };
         }),
-
+      
       completeQuiz: (moduleId, weekId, quizIndex = 0) =>
         set((state) => {
           const quizKey = state.getQuizKey(moduleId, weekId, quizIndex);
@@ -261,7 +256,7 @@ const useStore = create(
             },
           };
         }),
-
+      
       resetQuiz: (moduleId, weekId, quizIndex = 0) =>
         set((state) => {
           const quizKey = state.getQuizKey(moduleId, weekId, quizIndex);
@@ -269,7 +264,7 @@ const useStore = create(
           delete newQuizzes[quizKey];
           return { quizzes: newQuizzes };
         }),
-
+      
       resetWeekQuizzes: (moduleId, weekId) =>
         set((state) => {
           const newQuizzes = { ...state.quizzes };
@@ -283,13 +278,13 @@ const useStore = create(
           
           return { quizzes: newQuizzes };
         }),
-
+      
       getAccuracy: (moduleId, weekId, quizIndex = 0) => {
         const quizState = get().getQuizState(moduleId, weekId, quizIndex);
         const { stats } = quizState;
         return stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
       },
-
+      
       getWeekProgress: (moduleId, weekId, totalQuizzes) => {
         const quizzes = get().quizzes;
         let completedCount = 0;
@@ -323,38 +318,42 @@ const useStore = create(
           overallAccuracy,
         };
       },
-
+      
       resetAllProgress: () =>
-        set(() => ({
-          quizzes: {},
-          exams: {},
-          examAttempts: {},
-          streaks: { lastActivityDate: null, currentStreak: 0, longestStreak: 0 },
-          moduleVisibility: modules.reduce((acc, mod) => ({
+        set(() => {
+          // Create fresh module visibility from modules.js
+          const freshModuleVisibility = modules.reduce((acc, mod) => ({
             ...acc,
             [mod.id]: mod.isVisible !== false,
-          }), {}),
-        })),
-
-      toggleModuleVisibility: (moduleId) =>
-        set((state) => ({
-          moduleVisibility: {
-            ...state.moduleVisibility,
-            [moduleId]: !state.moduleVisibility[moduleId],
-          },
-        })),
-
-      isModuleVisible: (moduleId) => get().moduleVisibility[moduleId] !== false,
+          }), {});
+          
+          return {
+            quizzes: {},
+            exams: {},
+            examAttempts: {},
+            streaks: { lastActivityDate: null, currentStreak: 0, longestStreak: 0 },
+            moduleVisibility: freshModuleVisibility,
+          };
+        }),
+      
+      // Module visibility is determined by modules.js - always read from source
+      isModuleVisible: (moduleId) => {
+        const module = modules.find(m => m.id === moduleId);
+        // If module doesn't exist, hide it
+        if (!module) return false;
+        // Return the isVisible property, defaulting to true if not specified
+        return module.isVisible !== false;
+      },
     }),
     {
       name: 'quiz-storage',
-      version: 5, // Incremented for attempt tracking
+      version: 6, // Incremented for module visibility fix
       partialize: (state) => ({
         quizzes: state.quizzes,
         exams: state.exams,
         examAttempts: state.examAttempts,
         streaks: state.streaks,
-        moduleVisibility: state.moduleVisibility,
+        // DON'T persist moduleVisibility - always read from modules.js
       }),
       migrate: (persistedState, version) => {
         if (version < 3) {
@@ -390,12 +389,18 @@ const useStore = create(
             exams: persistedState.exams || {},
           };
         }
-
+        
         if (version < 5) {
           return {
             ...persistedState,
             examAttempts: persistedState.examAttempts || {},
           };
+        }
+        
+        if (version < 6) {
+          // Remove moduleVisibility from persisted state
+          const { moduleVisibility, ...rest } = persistedState;
+          return rest;
         }
         
         return persistedState;

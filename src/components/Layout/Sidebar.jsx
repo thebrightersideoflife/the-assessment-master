@@ -1,3 +1,4 @@
+// src/components/Layout/Sidebar.jsx
 import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import {
@@ -45,6 +46,9 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
   const [isModulesOpen, setIsModulesOpen] = useState(false);
   const [isQuizzesOpen, setIsQuizzesOpen] = useState(false);
 
+  // Filter visible modules
+  const visibleModules = modules.filter((mod) => isModuleVisible(mod.id));
+
   const handleMobileClose = () => {
     if (window.innerWidth < 768) {
       setSidebarState((prev) => ({ ...prev, open: false }));
@@ -62,6 +66,9 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
       toggle();
     }
   };
+
+  // Hide modules/quizzes sections if no visible modules
+  const shouldShowModules = visibleModules.length > 0;
 
   return (
     <aside
@@ -117,42 +124,42 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
           {!sidebarState.collapsed && <span>Home</span>}
         </NavLink>
 
-        {/* Modules */}
-        <div className="mb-2">
-          <button
-            role="button"
-            onClick={() => setIsModulesOpen(!isModulesOpen)}
-            onKeyDown={(e) =>
-              handleKeyDown(e, () => setIsModulesOpen(!isModulesOpen))
-            }
-            className={`w-full flex items-center p-3 rounded-lg transition-colors ${
-              location.pathname.includes("/modules")
-                ? "bg-gradient-to-r from-[#FFC300]/20 to-[#E67E22]/20 text-[#E67E22] border-l-4 border-[#FFC300]"
-                : "text-gray-600 hover:bg-gray-100 hover:text-gray-600"
-            }`}
-            aria-expanded={isModulesOpen}
-            aria-controls="modules-submenu"
-            title={sidebarState.collapsed ? "Modules" : ""}
-          >
-            <AiOutlineBook className="w-5 h-5 mr-3 flex-shrink-0" aria-hidden="true" />
+        {/* Modules - Only show if there are visible modules */}
+        {shouldShowModules && (
+          <div className="mb-2">
+            <button
+              role="button"
+              onClick={() => setIsModulesOpen(!isModulesOpen)}
+              onKeyDown={(e) =>
+                handleKeyDown(e, () => setIsModulesOpen(!isModulesOpen))
+              }
+              className={`w-full flex items-center p-3 rounded-lg transition-colors ${
+                location.pathname.includes("/modules")
+                  ? "bg-gradient-to-r from-[#FFC300]/20 to-[#E67E22]/20 text-[#E67E22] border-l-4 border-[#FFC300]"
+                  : "text-gray-600 hover:bg-gray-100 hover:text-gray-600"
+              }`}
+              aria-expanded={isModulesOpen}
+              aria-controls="modules-submenu"
+              title={sidebarState.collapsed ? "Modules" : ""}
+            >
+              <AiOutlineBook className="w-5 h-5 mr-3 flex-shrink-0" aria-hidden="true" />
+              {!sidebarState.collapsed && (
+                <>
+                  <span>Modules</span>
+                  <AiOutlineRight
+                    className={`w-5 h-5 ml-auto transform transition-transform duration-200 ${
+                      isModulesOpen ? "rotate-90" : "rotate-0"
+                    }`}
+                    aria-hidden="true"
+                  />
+                </>
+              )}
+            </button>
+
             {!sidebarState.collapsed && (
-              <>
-                <span>Modules</span>
-                <AiOutlineRight
-                  className={`w-5 h-5 ml-auto transform transition-transform duration-200 ${
-                    isModulesOpen ? "rotate-90" : "rotate-0"
-                  }`}
-                  aria-hidden="true"
-                />
-              </>
-            )}
-          </button>
-          {!sidebarState.collapsed && (
-            <Collapsible isOpen={isModulesOpen} id="modules-submenu">
-              <div className="pl-6 space-y-2 mt-2 mb-3">
-                {modules
-                  .filter((mod) => isModuleVisible(mod.id))
-                  .map((module) => (
+              <Collapsible isOpen={isModulesOpen} id="modules-submenu">
+                <div className="pl-6 space-y-2 mt-2 mb-3">
+                  {visibleModules.map((module) => (
                     <NavLink
                       key={module.id}
                       to={`/modules/${module.id}`}
@@ -167,47 +174,48 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
                       <span>{getModuleDisplayName(module)}</span>
                     </NavLink>
                   ))}
-              </div>
-            </Collapsible>
-          )}
-        </div>
-
-        {/* Quizzes */}
-        <div className="mb-2">
-          <button
-            role="button"
-            onClick={() => setIsQuizzesOpen(!isQuizzesOpen)}
-            onKeyDown={(e) =>
-              handleKeyDown(e, () => setIsQuizzesOpen(!isQuizzesOpen))
-            }
-            className={`w-full flex items-center p-3 rounded-lg transition-colors ${
-              location.pathname.includes("/quizzes")
-                ? "bg-gradient-to-r from-[#FFC300]/20 to-[#E67E22]/20 text-[#E67E22] border-l-4 border-[#FFC300]"
-                : "text-gray-600 hover:bg-gray-100 hover:text-gray-600"
-            }`}
-            aria-expanded={isQuizzesOpen}
-            aria-controls="quizzes-submenu"
-            title={sidebarState.collapsed ? "Quizzes" : ""}
-          >
-            <AiOutlineFileText className="w-5 h-5 mr-3 flex-shrink-0" aria-hidden="true" />
-            {!sidebarState.collapsed && (
-              <>
-                <span>Quizzes</span>
-                <AiOutlineRight
-                  className={`w-5 h-5 ml-auto transform transition-transform duration-200 ${
-                    isQuizzesOpen ? "rotate-90" : "rotate-0"
-                  }`}
-                  aria-hidden="true"
-                />
-              </>
+                </div>
+              </Collapsible>
             )}
-          </button>
-          {!sidebarState.collapsed && (
-            <Collapsible isOpen={isQuizzesOpen} id="quizzes-submenu">
-              <div className="pl-6 space-y-2 mt-2 mb-3">
-                {modules
-                  .filter((mod) => isModuleVisible(mod.id))
-                  .map((module) => (
+          </div>
+        )}
+
+        {/* Quizzes - Only show if there are visible modules */}
+        {shouldShowModules && (
+          <div className="mb-2">
+            <button
+              role="button"
+              onClick={() => setIsQuizzesOpen(!isQuizzesOpen)}
+              onKeyDown={(e) =>
+                handleKeyDown(e, () => setIsQuizzesOpen(!isQuizzesOpen))
+              }
+              className={`w-full flex items-center p-3 rounded-lg transition-colors ${
+                location.pathname.includes("/quizzes")
+                  ? "bg-gradient-to-r from-[#FFC300]/20 to-[#E67E22]/20 text-[#E67E22] border-l-4 border-[#FFC300]"
+                  : "text-gray-600 hover:bg-gray-100 hover:text-gray-600"
+              }`}
+              aria-expanded={isQuizzesOpen}
+              aria-controls="quizzes-submenu"
+              title={sidebarState.collapsed ? "Quizzes" : ""}
+            >
+              <AiOutlineFileText className="w-5 h-5 mr-3 flex-shrink-0" aria-hidden="true" />
+              {!sidebarState.collapsed && (
+                <>
+                  <span>Quizzes</span>
+                  <AiOutlineRight
+                    className={`w-5 h-5 ml-auto transform transition-transform duration-200 ${
+                      isQuizzesOpen ? "rotate-90" : "rotate-0"
+                    }`}
+                    aria-hidden="true"
+                  />
+                </>
+              )}
+            </button>
+
+            {!sidebarState.collapsed && (
+              <Collapsible isOpen={isQuizzesOpen} id="quizzes-submenu">
+                <div className="pl-6 space-y-2 mt-2 mb-3">
+                  {visibleModules.map((module) => (
                     <NavLink
                       key={module.id}
                       to={`/quizzes/module/${module.id}`}
@@ -222,10 +230,11 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
                       <span>{getModuleDisplayName(module)}</span>
                     </NavLink>
                   ))}
-              </div>
-            </Collapsible>
-          )}
-        </div>
+                </div>
+              </Collapsible>
+            )}
+          </div>
+        )}
 
         {/* Dashboard */}
         <NavLink
@@ -245,7 +254,7 @@ const Sidebar = ({ sidebarState, setSidebarState, onSettingsClick }) => {
           {!sidebarState.collapsed && <span>Dashboard</span>}
         </NavLink>
 
-        {/* Settings - Part of main navigation */}
+        {/* Settings */}
         <button
           onClick={handleSettingsClick}
           className="w-full flex items-center p-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-600 transition-colors"

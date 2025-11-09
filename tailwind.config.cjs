@@ -32,23 +32,37 @@ module.exports = {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       animation: {
-        'fade-in': 'fade-in 0.8s ease-out',       // 👈 Added this
-        'fade-in-fast': 'fade-in 0.4s ease-out',  // 👈 Optional variant
+        'fade-in': 'fade-in 0.8s ease-out',
+        'fade-in-fast': 'fade-in 0.4s ease-out',
         'slide-up': 'slideUp 0.3s ease-out',
         'pulse-slow': 'pulse 3s infinite',
+
+        /** ✅ New Animations for Dynamic Journey **/
+        step: 'stepFadeUp 0.6s ease-out forwards',
+        arrow: 'arrowFade 0.6s ease-out forwards',
       },
       keyframes: {
-        'fade-in': {                              // 👈 Matching the class name
+        'fade-in': {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
-        fadeIn: {                                 // ✅ Kept original for backward compatibility
+        fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
         slideUp: {
           '0%': { transform: 'translateY(10px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+
+        /** ✅ New Keyframes for Dynamic Journey **/
+        stepFadeUp: {
+          '0%': { opacity: '0', transform: 'translateY(12px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        arrowFade: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
         },
       },
     },

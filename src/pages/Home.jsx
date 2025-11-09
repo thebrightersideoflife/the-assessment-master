@@ -1,3 +1,4 @@
+// src/pages/Home.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AiOutlineBook, AiOutlineEdit, AiOutlineStar } from 'react-icons/ai';
@@ -6,6 +7,9 @@ import useStore from '../store/useStore';
 
 const Home = () => {
   const { isModuleVisible } = useStore();
+  
+  // Filter visible modules
+  const visibleModules = modules.filter((mod) => isModuleVisible(mod.id));
 
   return (
     <div className="max-w-4xl mx-auto text-center">
@@ -40,23 +44,23 @@ const Home = () => {
             students engage with IT-related mathematics.
           </p>
 
-        {/* ====== Embedded YouTube Video ====== */}
-        <div className="my-8 rounded-2xl overflow-hidden shadow-xl border border-[#4169E1]/20 print:hidden">
-          <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
-            <iframe
-              src="https://www.youtube.com/embed/ejfDKhKchA8"
-              title="The Assessment Master Intro Video"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="absolute top-0 left-0 w-full h-full rounded-2xl"
-            ></iframe>
+          {/* ====== Embedded YouTube Video ====== */}
+          <div className="my-8 rounded-2xl overflow-hidden shadow-xl border border-[#4169E1]/20 print:hidden">
+            <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
+              <iframe
+                src="https://www.youtube.com/embed/ejfDKhKchA8"
+                title="The Assessment Master Intro Video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute top-0 left-0 w-full h-full rounded-2xl"
+              ></iframe>
+            </div>
           </div>
-        </div>
 
           {/* Remaining Text */}
           <p>
             We believe learning should feel less like a chore and more like a
-            challenge worth conquering. That’s why The Assessment Master turns
+            challenge worth conquering. That's why The Assessment Master turns
             complex academic concepts into bite-sized, gamified experiences—
             where every quiz is a chance to grow, every explanation a moment of
             clarity, and every module a step closer to mastery.
@@ -76,7 +80,7 @@ const Home = () => {
               <li>
                 <span className="font-medium">Contextual Examples:</span>{' '}
                 Real-world applications that bridge theory and practice, helping
-                you see the “why” behind the “how.”
+                you see the "why" behind the "how."
               </li>
               <li>
                 <span className="font-medium">Study Tips & Memory Boosters:</span>{' '}
@@ -92,7 +96,7 @@ const Home = () => {
               <li>
                 <span className="font-medium">No Login Required:</span> Jump in,
                 learn, and level up—no accounts, no data collection, just pure
-                learning. (Though we’re building toward optional progress
+                learning. (Though we're building toward optional progress
                 tracking soon!)
               </li>
             </ul>
@@ -126,45 +130,67 @@ const Home = () => {
           Explore Modules
         </Link>
 
-        {/* ====== 3-Card Highlights ====== */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-          <div className="p-6 rounded-xl bg-gradient-to-br from-[#28B463]/10 to-[#28B463]/20 border border-[#28B463]/30">
-            <AiOutlineBook className="text-3xl text-[#28B463] mb-3 mx-auto" />
-            <h3 className="text-lg font-semibold text-[#28B463] mb-2">Learn</h3>
-            <p className="text-sm text-gray-600">
-              Interactive lessons and concepts
-            </p>
-          </div>
+        {/* ====== Learning Path: Dynamic Journey ====== */}
+        <div className="mt-12">
+          <h3 className="text-2xl font-semibold text-[#4169E1] mb-6 text-center">
+            Your Learning Journey
+          </h3>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-6 text-center md:text-left">
+            {/* Step 1: Learn */}
+            <div className="flex flex-col items-center md:items-start max-w-xs animate-step delay-100">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-xl">📘</span>
+                <span className="text-[#28B463] font-semibold text-lg">Learn</span>
+              </div>
+              <p className="text-gray-600 text-sm">
+                Start with clear, interactive lessons that simplify complex concepts.
+              </p>
+            </div>
 
-          <div className="p-6 rounded-xl bg-gradient-to-br from-[#3498DB]/10 to-[#3498DB]/20 border border-[#3498DB]/30">
-            <AiOutlineEdit className="text-3xl text-[#3498DB] mb-3 mx-auto" />
-            <h3 className="text-lg font-semibold text-[#3498DB] mb-2">
-              Practice
-            </h3>
-            <p className="text-sm text-gray-600">
-              Hands-on problem solving
-            </p>
-          </div>
+            {/* Arrow */}
+            <div className="text-gray-400 text-xl animate-arrow delay-200">
+              <span className="hidden md:inline">→</span>
+              <span className="md:hidden text-2xl my-2">↓</span>
+            </div>
 
-          <div className="p-6 rounded-xl bg-gradient-to-br from-[#4169E1]/10 to-[#4169E1]/20 border border-[#4169E1]/30">
-            <AiOutlineStar className="text-3xl text-[#4169E1] mb-3 mx-auto" />
-            <h3 className="text-lg font-semibold text-[#4169E1] mb-2">Excel</h3>
-            <p className="text-sm text-gray-600">
-              Achieve mastery and confidence
-            </p>
+            {/* Step 2: Practice */}
+            <div className="flex flex-col items-center md:items-start max-w-xs animate-step delay-300">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-xl">✏️</span>
+                <span className="text-[#3498DB] font-semibold text-lg">Practice</span>
+              </div>
+              <p className="text-gray-600 text-sm">
+                Reinforce understanding through guided problem-solving and quizzes.
+              </p>
+            </div>
+
+            {/* Arrow */}
+            <div className="text-gray-400 text-xl animate-arrow delay-400">
+              <span className="hidden md:inline">→</span>
+              <span className="md:hidden text-2xl my-2">↓</span>
+            </div>
+
+            {/* Step 3: Excel */}
+            <div className="flex flex-col items-center md:items-start max-w-xs animate-step delay-500">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-xl">⭐</span>
+                <span className="text-[#4169E1] font-semibold text-lg">Excel</span>
+              </div>
+              <p className="text-gray-600 text-sm">
+                Build confidence as you master concepts and track your progress.
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* ====== Featured Modules ====== */}
-        <div className="mt-12">
-          <h3 className="text-2xl font-semibold text-[#4169E1] mb-6">
-            Featured Modules
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {modules
-              .filter((mod) => isModuleVisible(mod.id))
-              .slice(0, 2)
-              .map((module) => (
+        {/* ====== Featured Modules - Only show if there are visible modules ====== */}
+        {visibleModules.length > 0 && (
+          <div className="mt-12">
+            <h3 className="text-2xl font-semibold text-[#4169E1] mb-6">
+              Featured Modules
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {visibleModules.slice(0, 2).map((module) => (
                 <Link
                   key={module.id}
                   to={`/modules/${module.id}`}
@@ -180,8 +206,9 @@ const Home = () => {
                   </p>
                 </Link>
               ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
