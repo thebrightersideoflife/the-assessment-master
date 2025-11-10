@@ -12,9 +12,11 @@ import ExamAnswerInput from '../ExamAnswerInput';
  * - Current question display
  * - Answer input
  * - Confirm Answer button
- * - Navigation (Previous/Next)
- * - Review Answers button
+ * - Navigation (Previous/Next or Review)
  * - Exit Exam button
+ * 
+ * ✅ FIXED: Next button changes to "Review Answers" on last question
+ * Properly handles section-aware navigation
  */
 const ExamActiveScreen = ({
   exam,
@@ -24,7 +26,7 @@ const ExamActiveScreen = ({
   currentAnswer,
   timeLeft,
   formatTime,
-  isTimerCritical, // NEW: Timer warning flag
+  isTimerCritical,
   handleAnswerChange,
   handleNext,
   handlePrev,
@@ -33,6 +35,7 @@ const ExamActiveScreen = ({
   handleExit,
   showConfirmationMessage,
   userAnswers,
+  currentSectionIndex, // NEW: Need this for proper last question detection
 }) => {
   const currentSection = exam.sections?.find(s => s.id === currentQuestion?.sectionId);
   
@@ -41,8 +44,23 @@ const ExamActiveScreen = ({
     return answer && answer.toString().trim() !== '';
   }).length;
 
-  const isFirstQuestion = currentQuestionIndex === 0;
-  const isLastQuestion = currentQuestionIndex === questions.length - 1;
+  // ✅ FIX: Properly detect first/last question across sections
+  const isFirstQuestion = currentSectionIndex === 0 && currentQuestionIndex === 0;
+  
+  // Check if we're on the last question of the current section
+  const currentSectionQuestions = exam.sections 
+    ? questions.filter(q => q.sectionId === currentSection?.id)
+    : questions;
+  const isLastQuestionInSection = currentQuestionIndex === currentSectionQuestions.length - 1;
+  
+  // Check if we're in the last section
+  const isLastSection = exam.sections 
+    ? currentSectionIndex === exam.sections.length - 1
+    : true;
+  
+  // Only the last question of the last section is truly the last question
+  const isLastQuestion = isLastQuestionInSection && isLastSection;
+  
   const hasAnswerContent = currentAnswer && currentAnswer.toString().trim() !== '';
 
   return (
@@ -106,6 +124,7 @@ const ExamActiveScreen = ({
           >
             Confirm Answer
           </button>
+
           {showConfirmationMessage && (
             <div className="flex items-center gap-2 text-green-700 animate-fade-in">
               <span className="text-2xl">✓</span>
@@ -128,27 +147,37 @@ const ExamActiveScreen = ({
         >
           ← Previous
         </button>
-        <button
-          onClick={handleNext}
-          disabled={isLastQuestion}
-          className={`px-5 py-3 rounded-xl font-semibold shadow transition-all ${
-            isLastQuestion
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              : 'bg-[#4169E1] text-white hover:bg-blue-600'
-          }`}
-        >
-          Next →
-        </button>
+
+        {/* ✅ FIX: Show Review button on last question, Next button otherwise */}
+        {isLastQuestion ? (
+          <button
+            onClick={handleReviewClick}
+            className="px-5 py-3 rounded-xl font-semibold shadow transition-all bg-gradient-to-r from-[#FFC300] to-[#E67E22] text-white hover:shadow-lg"
+          >
+            📝 Review Answers
+          </button>
+        ) : (
+          <button
+            onClick={handleNext}
+            className="px-5 py-3 rounded-xl font-semibold shadow transition-all bg-[#4169E1] text-white hover:bg-blue-600"
+          >
+            Next →
+          </button>
+        )}
       </div>
 
       {/* Bottom Action Buttons */}
       <div className="flex justify-center items-center gap-4">
-        <button
-          onClick={handleReviewClick}
-          className="px-6 py-3 bg-gradient-to-r from-[#FFC300] to-[#E67E22] text-white rounded-xl font-semibold hover:shadow-lg transition-all"
-        >
-          📝 Review Answers
-        </button>
+        {/* Only show bottom Review button if NOT on last question */}
+        {!isLastQuestion && (
+          <button
+            onClick={handleReviewClick}
+            className="px-6 py-3 bg-gradient-to-r from-[#FFC300] to-[#E67E22] text-white rounded-xl font-semibold hover:shadow-lg transition-all"
+          >
+            📝 Review Answers
+          </button>
+        )}
+        
         <button
           onClick={() => {
             if (window.confirm('⚠️ Are you sure you want to exit? Your progress will be saved.\nBut the timer will not stop')) {

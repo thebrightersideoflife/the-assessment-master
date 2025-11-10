@@ -346,6 +346,13 @@ export const modules = [
         description: 'ITMTB Test 1 Prep: Calculus of Integration (Hardest Subset)', 
         examBy: 'Mr Kwadwo Afrane-Okese', 
         createdOn: '2025-10-20',
+      },
+      { 
+        id: 'ITMTB_EXAM5', 
+        name: 'Online Test 1 - Official Proctored', 
+        description: 'ITMTB Test 1: Integral Calculus (Definitions, Techniques, and Applications)', 
+        examBy: 'The Brighter Side Team: Exam Analysis and Compilation', 
+        createdOn: '2025-11-10',
       },            
       { 
         id: 'ITMTB_EXAM4', 
@@ -353,7 +360,7 @@ export const modules = [
         description: 'Explores integration methods, area between curves, volumes by rotation, surface area, arc length, and conceptual comparisons.', 
         examBy: 'Mr. Mpho Nefale', 
         createdOn: '2025-11-03',
-      },
+      }, 
       { 
         id: 'ITMTB_EXAM2', 
         name: 'Final Exam', 

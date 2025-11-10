@@ -22,6 +22,8 @@ import ExamResultsScreen from "./ExamResultsScreen";
  * - "exam": Active exam with questions and navigation
  * - "review": Full-page review with grid navigation
  * - "results": Results page with score and student form
+ * 
+ * ✅ UPDATED: Now passes currentSectionIndex to ExamActiveScreen
  */
 const ExamManagerCore = ({ exam, onExit }) => {
   // Get all exam state and handlers from the hook
@@ -62,6 +64,7 @@ const ExamManagerCore = ({ exam, onExit }) => {
           questions={examState.questions}
           currentQuestion={examState.currentQuestion}
           currentQuestionIndex={examState.currentQuestionIndex}
+          currentSectionIndex={examState.currentSectionIndex} // ✅ NEW: Pass section index
           currentAnswer={examState.currentAnswer}
           userAnswers={examState.userAnswers}
           timeLeft={examState.timeLeft}

@@ -1581,7 +1581,1441 @@ export const exams = [
           "**Answer: B. Disk/washer method slices perpendicular to the axis and integrates cross-sectional areas; shell method slices parallel to the axis and integrates lateral surface areas**"
       }
     ]
-  }
+  },
+
+      {
+      "id": "ITMTB_EXAM5",
+      "moduleId": "ITMTB",
+      "title": "Online Test 1 - Official Proctored",
+      "description": "ITMTB Test 1: Integral Calculus (Definitions, Techniques, and Applications)",
+      "examBy": "The Brighter Side Team: Exam Analysis and Compilation",
+      "createdOn": "2025-11-10",
+      "timeLimit": 120,
+      "passingScore": 70,
+      "sections": [
+        {
+          "id": "section_1",
+          "title": "Section A: Fundamental Concepts and Graphical Analysis",
+          "description": "Covers the Fundamental Theorem of Calculus (Part 1), properties of integrals, and geometric interpretation of net area.",
+          "instructions": "Apply the FTC to find derivatives of integrals. Use given area values and integral properties to evaluate definite integrals."
+        },
+        {
+          "id": "section_2",
+          "title": "Section B: Numerical and Limit-Based Integration",
+          "description": "Focuses on numerical approximation (Midpoint, Left/Right Riemann Sums) and the formal limit definition of the integral.",
+          "instructions": "Calculate the specified approximations, showing subinterval setup. For limit definitions, show the Riemann sum setup and its evaluation."
+        },
+        {
+          "id": "section_3",
+          "title": "Section C: Techniques of Integration",
+          "description": "Assesses analytical integration methods including U-Substitution, Integration by Parts, and Partial Fraction Decomposition.",
+          "instructions": "Identify and apply the correct integration technique for each problem. Show all necessary steps (e.g., u/dv assignments, fraction decomposition)."
+        },
+        {
+          "id": "section_4",
+          "title": "Section D: Applications of Integration",
+          "description": "Involves solving real-world scenarios, including initial value problems (growth models) and finding the average value of a function.",
+          "instructions": "Set up the correct definite or indefinite integral based on the scenario. Solve for constants of integration (C, k) where required."
+        }
+      ],
+
+      questions: [
+      // ============================================================
+      // SECTION A: FUNDAMENTAL CONCEPTS AND GRAPHICAL ANALYSIS
+      // ============================================================
+      
+      // Question 1
+      {
+        id: "exam5_q1",
+        sectionId: "section_1",
+        questionNumber: 1,
+        type: "open-ended",
+        text: "The graph shows \\( y = 3x \\). The region under the line from \\( x = 0 \\) to \\( x = 2 \\) is shaded (a triangle). Find the area of the shaded region.",
+        image: {
+          src: "/images/ITMTB_Exam5_Area_of_the_Shaded_Region.png",
+          alt: "Graph of y = 3x with shaded triangular region from x = 0 to x = 2",
+          caption: "The shaded region represents the area under y = 3x from x = 0 to x = 2"
+        },
+        correctAnswers: [
+          "6",
+          "6.0",
+          "6 square units"
+        ],
+        options: {
+          allowSymbolic: false,
+          tolerance: 0.01,
+          acceptedUnits: ["square units", "units^2"],
+          requiredUnit: null
+        },
+        points: 3,
+        explanation: "**Understanding the Problem:**\n\n" +
+          "The curve \\( y = 3x \\) is a straight line through the origin with slope 3. On the interval \\([0, 2]\\), " +
+          "the graph and the x-axis enclose a **right triangle**.\n\n" +
+          "**Method 1: Geometric Formula (Triangle Area)**\n\n" +
+          "For a right triangle:\n" +
+          "$$\\text{Area} = \\frac{1}{2} \\times \\text{base} \\times \\text{height}$$\n\n" +
+          "**Step 1:** Find the base\n" +
+          "$$\\text{base} = 2 - 0 = 2$$\n\n" +
+          "**Step 2:** Find the height (value at \\( x = 2 \\))\n" +
+          "$$\\text{height} = y(2) = 3(2) = 6$$\n\n" +
+          "**Step 3:** Calculate area\n" +
+          "$$\\text{Area} = \\frac{1}{2} \\times 2 \\times 6 = 6$$\n\n" +
+          "**Method 2: Using Definite Integral**\n\n" +
+          "$$\\int_{0}^{2} 3x\\,dx = \\left[\\frac{3x^2}{2}\\right]_0^2$$\n\n" +
+          "$$= \\frac{3(2)^2}{2} - \\frac{3(0)^2}{2} = \\frac{12}{2} = 6$$\n\n" +
+          "**Answer: 6 square units**"
+      },
+      
+      // Question 2
+      {
+        id: "exam5_q2",
+        sectionId: "section_1",
+        questionNumber: 2,
+        type: "open-ended",
+        text: "For the function \\( y = f(x) \\), the magnitude of the area between the graph and x-axis is given on subintervals:\n\n" +
+          "- From \\( x = a \\) to \\( x = b \\): area **above** x-axis = 12\n" +
+          "- From \\( x = b \\) to \\( x = c \\): area **below** x-axis = 10\n" +
+          "- From \\( x = c \\) to \\( x = d \\): area **above** x-axis = 8\n\n" +
+          "Compute \\( \\displaystyle\\int_{b}^{d} f(x)\\,dx \\).",
+        image: {
+          src: "/images/ITMTB_Exam5_Area_of_the_Shaded_Region2.png",
+          alt: "Graph showing function f(x) with labeled regions above and below x-axis",
+          caption: "Function with areas above (positive) and below (negative) the x-axis"
+        },
+        correctAnswers: [
+          "-2",
+          "-2.0"
+        ],
+        options: {
+          allowSymbolic: false,
+          tolerance: 0.01,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 3,
+        explanation: "**Understanding Signed Area:**\n\n" +
+          "The definite integral represents **net signed area**:\n" +
+          "- Regions **above** the x-axis contribute **positive** area\n" +
+          "- Regions **below** the x-axis contribute **negative** area\n\n" +
+          "**Step 1: Break up the integral**\n\n" +
+          "$$\\int_b^d f(x)\\,dx = \\int_b^c f(x)\\,dx + \\int_c^d f(x)\\,dx$$\n\n" +
+          "**Step 2: Assign signs based on position**\n\n" +
+          "| Interval | Position | Magnitude | Signed Value |\n" +
+          "|---|---|---|---|\n" +
+          "| \\([b, c]\\) | Below x-axis | 10 | \\(-10\\) |\n" +
+          "| \\([c, d]\\) | Above x-axis | 8 | \\(+8\\) |\n\n" +
+          "**Step 3: Calculate net signed area**\n\n" +
+          "$$\\int_b^d f(x)\\,dx = (-10) + (+8) = -2$$\n\n" +
+          "**Interpretation:**\n\n" +
+          "The net signed area from \\( b \\) to \\( d \\) is \\(-2\\). The negative sign indicates " +
+          "that the portion below the x-axis (10 units) dominates the portion above (8 units) by 2 square units.\n\n" +
+          "**Answer: -2**"
+      },
+      
+      // Question 3
+      {
+        id: "exam5_q3",
+        sectionId: "section_1",
+        questionNumber: 3,
+        type: "open-ended",
+        text: "For \\( y = 2x - 6 \\):\n\n" +
+          "- From \\( x = 1 \\) to \\( x = 3 \\): the graph lies **below** the x-axis with area magnitude = 4\n" +
+          "- From \\( x = 3 \\) to \\( x = 6 \\): the graph lies **above** the x-axis with area magnitude = 9\n\n" +
+          "What is the net area, \\( \\displaystyle\\int_{1}^{6} (2x - 6)\\,dx \\)?",
+        image: {
+          src: "/images/ITMTB_Exam5_Area_of_the_Shaded_Region3.png",
+          alt: "Graph of y = 2x - 6 showing regions below and above the x-axis",
+          caption: "Linear function crossing x-axis at x = 3"
+        },
+        correctAnswers: [
+          "5",
+          "5.0"
+        ],
+        options: {
+          allowSymbolic: false,
+          tolerance: 0.01,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 4,
+        explanation: "**Method 1: Using Given Areas and Signs**\n\n" +
+          "**Step 1:** Assign signs to each region\n\n" +
+          "| Interval | Position | Magnitude | Signed Value |\n" +
+          "|---|---|---|---|\n" +
+          "| \\([1, 3]\\) | Below x-axis | 4 | \\(-4\\) |\n" +
+          "| \\([3, 6]\\) | Above x-axis | 9 | \\(+9\\) |\n\n" +
+          "**Step 2:** Calculate net integral\n\n" +
+          "$$\\int_{1}^{6} (2x - 6)\\,dx = \\int_{1}^{3} (2x - 6)\\,dx + \\int_{3}^{6} (2x - 6)\\,dx$$\n\n" +
+          "$$= (-4) + (+9) = 5$$\n\n" +
+          "**Method 2: Direct Integration (Verification)**\n\n" +
+          "**Step 1:** Find antiderivative\n" +
+          "$$\\int (2x - 6)\\,dx = x^2 - 6x + C$$\n\n" +
+          "**Step 2:** Evaluate using FTC\n" +
+          "$$\\int_{1}^{6} (2x - 6)\\,dx = [x^2 - 6x]_1^6$$\n\n" +
+          "**Step 3:** Compute at endpoints\n" +
+          "- At \\( x = 6 \\): \\( 6^2 - 6(6) = 36 - 36 = 0 \\)\n" +
+          "- At \\( x = 1 \\): \\( 1^2 - 6(1) = 1 - 6 = -5 \\)\n\n" +
+          "**Step 4:** Subtract\n" +
+          "$$0 - (-5) = 5$$\n\n" +
+          "Both methods confirm the answer.\n\n" +
+          "**Interpretation:**\n\n" +
+          "The positive area after \\( x = 3 \\) (9 units) outweighs the negative area before \\( x = 3 \\) (4 units) by **5 square units**.\n\n" +
+          "**Answer: 5**"
+      },
+      
+      // Question 4
+      {
+        id: "exam5_q4",
+        sectionId: "section_1",
+        questionNumber: 4,
+        type: "open-ended",
+        text: "Let \\( f(x) = \\int_{0}^{x} (t^3 + t)\\,dt \\). Find \\( f'(5) \\).",
+        correctAnswers: [
+          "130",
+          "130.0"
+        ],
+        options: {
+          allowSymbolic: false,
+          tolerance: 0.01,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 2,
+        explanation: "**Fundamental Theorem of Calculus (Part 1):**\n\n" +
+          "If \\( F(x) = \\int_{a}^{x} f(t)\\,dt \\), then:\n" +
+          "$$F'(x) = f(x)$$\n\n" +
+          "This states that **the derivative of an integral with a variable upper limit equals the integrand evaluated at that upper limit**.\n\n" +
+          "**Step 1:** Identify the integrand\n" +
+          "$$f(t) = t^3 + t$$\n\n" +
+          "**Step 2:** Apply FTC Part 1\n" +
+          "$$f'(x) = t^3 + t\\bigg|_{t=x} = x^3 + x$$\n\n" +
+          "**Step 3:** Evaluate at \\( x = 5 \\)\n" +
+          "$$f'(5) = 5^3 + 5 = 125 + 5 = 130$$\n\n" +
+          "**Key Concept:**\n\n" +
+          "The FTC Part 1 provides a direct way to differentiate integrals:\n" +
+          "- Replace the dummy variable \\( t \\) with \\( x \\)\n" +
+          "- Evaluate at the desired point\n\n" +
+          "**Answer: 130**"
+      },
+      
+      // Question 5
+      {
+        id: "exam5_q5",
+        sectionId: "section_1",
+        questionNumber: 5,
+        type: "open-ended",
+        text: "Given \\( f(x) = \\int_{0}^{x} (4t^2 - t + 1)\\,dt \\), find \\( f'(2) \\).",
+        correctAnswers: [
+          "15",
+          "15.0"
+        ],
+        options: {
+          allowSymbolic: false,
+          tolerance: 0.01,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 2,
+        explanation: "**Apply FTC Part 1:**\n\n" +
+          "$$\\frac{d}{dx}\\int_{a}^{x} g(t)\\,dt = g(x)$$\n\n" +
+          "**Step 1:** Identify the integrand\n" +
+          "$$g(t) = 4t^2 - t + 1$$\n\n" +
+          "**Step 2:** Find the derivative\n" +
+          "$$f'(x) = 4x^2 - x + 1$$\n\n" +
+          "**Step 3:** Evaluate at \\( x = 2 \\)\n" +
+          "$$f'(2) = 4(2)^2 - 2 + 1$$\n" +
+          "$$= 4(4) - 2 + 1$$\n" +
+          "$$= 16 - 2 + 1 = 15$$\n\n" +
+          "**Answer: 15**"
+      },
+      
+      // Question 6
+      {
+        id: "exam5_q6",
+        sectionId: "section_1",
+        questionNumber: 6,
+        type: "multiple-choice",
+        text: "Simplify: \\( \\displaystyle\\frac{d}{dx}\\int_{1}^{x} \\sin^2 t\\,dt \\)",
+        options: [
+          "A. \\( \\cos^2 x \\)",
+          "B. \\( \\sin^2 x \\)",
+          "C. \\( 2\\sin x \\cos x \\)",
+          "D. \\( \\sin x \\)"
+        ],
+        correctAnswers: ["B"],
+        points: 2,
+        explanation: "**Fundamental Theorem of Calculus (Part 1):**\n\n" +
+          "$$\\frac{d}{dx}\\int_{a}^{x} f(t)\\,dt = f(x)$$\n\n" +
+          "**Direct Application:**\n\n" +
+          "$$\\frac{d}{dx}\\int_{1}^{x} \\sin^2 t\\,dt = \\sin^2 x$$\n\n" +
+          "**Why the other options are incorrect:**\n\n" +
+          "- **Option A** (\\( \\cos^2 x \\)): This would be the result if we were differentiating \\( \\int \\cos^2 t\\,dt \\)\n" +
+          "- **Option C** (\\( 2\\sin x \\cos x \\)): This is \\( \\sin(2x) \\), which is the derivative of \\( \\sin^2 x \\), not our answer\n" +
+          "- **Option D** (\\( \\sin x \\)): This would be the result for \\( \\int \\sin t\\,dt \\)\n\n" +
+          "**Key Insight:**\n\n" +
+          "The FTC Part 1 essentially \"undoes\" the integration - the derivative of an integral with variable upper limit returns the original integrand.\n\n" +
+          "**Answer: B. \\( \\sin^2 x \\)**"
+      },
+      
+      // Question 7
+      {
+        id: "exam5_q7",
+        sectionId: "section_1",
+        questionNumber: 7,
+        type: "multiple-choice",
+        text: "Find the derivative of \\( F(x) = \\displaystyle\\int_{0}^{x} \\frac{t^2}{1 + t^3}\\,dt \\)",
+        options: [
+          "A. \\( \\displaystyle\\frac{x^2}{1 + x^3} \\)",
+          "B. \\( \\displaystyle\\frac{2x}{1 + x^3} \\)",
+          "C. \\( \\displaystyle\\frac{x^2}{(1 + x^3)^2} \\)",
+          "D. \\( \\ln(1 + x^3) \\)"
+        ],
+        correctAnswers: ["A"],
+        points: 2,
+        explanation: "**Apply FTC Part 1:**\n\n" +
+          "For \\( F(x) = \\int_{a}^{x} f(t)\\,dt \\), we have \\( F'(x) = f(x) \\).\n\n" +
+          "**Step 1:** Identify the integrand\n" +
+          "$$f(t) = \\frac{t^2}{1 + t^3}$$\n\n" +
+          "**Step 2:** Replace \\( t \\) with \\( x \\)\n" +
+          "$$F'(x) = \\frac{x^2}{1 + x^3}$$\n\n" +
+          "**Why other options are incorrect:**\n\n" +
+          "- **Option B**: This would be \\( \\frac{d}{dx}[x^2/(1+x^3)] \\) using the quotient rule, not our answer\n" +
+          "- **Option C**: This appears to confuse the integral with its derivative\n" +
+          "- **Option D**: This would be relevant if integrating \\( 1/(1+x^3) \\), but not our function\n\n" +
+          "**No additional computation is required** - the FTC gives us the answer directly.\n\n" +
+          "**Answer: A. \\( \\displaystyle\\frac{x^2}{1 + x^3} \\)**"
+      },
+
+      // ============================================================
+      // SECTION B: NUMERICAL AND LIMIT-BASED INTEGRATION
+      // ============================================================
+      
+      // Question 8
+      {
+        id: "exam5_q8",
+        sectionId: "section_2",
+        questionNumber: 8,
+        type: "open-ended",
+        text: "You have the function \\( f(x) = x \\) on the interval \\([0, 2]\\). The interval is divided into \\( n = 4 \\) equal subintervals. What is the width \\( \\Delta x \\) of each subinterval?",
+        correctAnswers: [
+          "0.5",
+          "1/2",
+          "0.50"
+        ],
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.01,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 2,
+        explanation: "**Formula for Subinterval Width:**\n\n" +
+          "When dividing an interval \\([a, b]\\) into \\( n \\) equal parts, the width of each subinterval is:\n" +
+          "$$\\Delta x = \\frac{b - a}{n}$$\n\n" +
+          "**Given Information:**\n" +
+          "- \\( a = 0 \\)\n" +
+          "- \\( b = 2 \\)\n" +
+          "- \\( n = 4 \\)\n\n" +
+          "**Calculate:**\n" +
+          "$$\\Delta x = \\frac{2 - 0}{4} = \\frac{2}{4} = \\frac{1}{2} = 0.5$$\n\n" +
+          "**Verification:**\n\n" +
+          "The subintervals are:\n" +
+          "- \\([0, 0.5]\\), \\([0.5, 1.0]\\), \\([1.0, 1.5]\\), \\([1.5, 2.0]\\)\n\n" +
+          "Each has width 0.5 ✓\n\n" +
+          "**Answer: \\( \\Delta x = \\frac{1}{2} = 0.5 \\)**"
+      },
+      
+      // Question 9
+      {
+        id: "exam5_q9",
+        sectionId: "section_2",
+        questionNumber: 9,
+        type: "open-ended",
+        text: "Use the **midpoint rule** with \\( n = 2 \\) equal subintervals to approximate \\( \\displaystyle\\int_0^2 x^2\\,dx \\).",
+        correctAnswers: [
+          "2.5",
+          "2.50",
+          "5/2"
+        ],
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.01,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 4,
+        explanation: "**Midpoint Rule Formula:**\n\n" +
+          "$$M_n = \\Delta x \\sum_{i=1}^{n} f(m_i)$$\n\n" +
+          "where \\( m_i \\) is the midpoint of the \\( i \\)-th subinterval.\n\n" +
+          "**Step 1: Find \\( \\Delta x \\)**\n" +
+          "$$\\Delta x = \\frac{2 - 0}{2} = 1$$\n\n" +
+          "**Step 2: Identify subintervals and midpoints**\n\n" +
+          "| Subinterval | Midpoint \\( m_i \\) |\n" +
+          "|---|---|\n" +
+          "| \\([0, 1]\\) | \\( m_1 = 0.5 \\) |\n" +
+          "| \\([1, 2]\\) | \\( m_2 = 1.5 \\) |\n\n" +
+          "**Step 3: Evaluate \\( f(x) = x^2 \\) at midpoints**\n" +
+          "- \\( f(0.5) = (0.5)^2 = 0.25 \\)\n" +
+          "- \\( f(1.5) = (1.5)^2 = 2.25 \\)\n\n" +
+          "**Step 4: Apply midpoint rule**\n" +
+          "$$M_2 = \\Delta x \\cdot [f(m_1) + f(m_2)]$$\n" +
+          "$$= 1 \\cdot (0.25 + 2.25) = 1 \\cdot 2.5 = 2.5$$\n\n" +
+          "**Comparison with Exact Value:**\n\n" +
+          "$$\\int_0^2 x^2\\,dx = \\left[\\frac{x^3}{3}\\right]_0^2 = \\frac{8}{3} \\approx 2.667$$\n\n" +
+          "The midpoint approximation \\( M_2 = 2.5 \\) is fairly close to the exact value.\n\n" +
+          "**Error Analysis:**\n" +
+          "$$\\text{Error} = 2.667 - 2.5 = 0.167$$\n\n" +
+          "The approximation underestimates by about 0.167 (6.25%).\n\n" +
+          "**Answer: 2.5**"
+      },
+
+      // Question 10
+      {
+        id: "exam5_q10",
+        sectionId: "section_2",
+        questionNumber: 10,
+        type: "open-ended",
+        text: "Approximate \\( \\displaystyle\\int_{1}^{3} \\frac{1}{x}\\,dx \\) using a **left-endpoint Riemann sum** with \\( n = 4 \\) subintervals. Express your answer as a fraction.",
+        correctAnswers: [
+          "77/60",
+          "1.283333",
+          "1.28333",
+          "1.2833"
+        ],
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.005,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 5,
+        explanation: "**Left Riemann Sum Formula:**\n\n" +
+          "$$L_n = \\Delta x \\sum_{i=0}^{n-1} f(x_i)$$\n\n" +
+          "where \\( x_i \\) are the left endpoints of each subinterval.\n\n" +
+          "**Step 1: Calculate \\( \\Delta x \\)**\n" +
+          "$$\\Delta x = \\frac{3 - 1}{4} = \\frac{2}{4} = 0.5$$\n\n" +
+          "**Step 2: Identify left endpoints**\n\n" +
+          "| Subinterval | Left Endpoint \\( x_i \\) | \\( f(x_i) = \\frac{1}{x_i} \\) |\n" +
+          "|---|---|---|\n" +
+          "| \\([1.0, 1.5]\\) | \\( x_0 = 1.0 \\) | \\( \\frac{1}{1.0} = 1 \\) |\n" +
+          "| \\([1.5, 2.0]\\) | \\( x_1 = 1.5 \\) | \\( \\frac{1}{1.5} = \\frac{2}{3} \\) |\n" +
+          "| \\([2.0, 2.5]\\) | \\( x_2 = 2.0 \\) | \\( \\frac{1}{2.0} = \\frac{1}{2} \\) |\n" +
+          "| \\([2.5, 3.0]\\) | \\( x_3 = 2.5 \\) | \\( \\frac{1}{2.5} = \\frac{2}{5} \\) |\n\n" +
+          "**Step 3: Sum the function values**\n" +
+          "$$\\sum f(x_i) = 1 + \\frac{2}{3} + \\frac{1}{2} + \\frac{2}{5}$$\n\n" +
+          "Find common denominator (LCD = 30):\n" +
+          "$$= \\frac{30}{30} + \\frac{20}{30} + \\frac{15}{30} + \\frac{12}{30} = \\frac{77}{30}$$\n\n" +
+          "**Step 4: Multiply by \\( \\Delta x \\)**\n" +
+          "$$L_4 = 0.5 \\times \\frac{77}{30} = \\frac{1}{2} \\times \\frac{77}{30} = \\frac{77}{60}$$\n\n" +
+          "**Decimal approximation:**\n" +
+          "$$\\frac{77}{60} \\approx 1.28333$$\n\n" +
+          "**Comparison with Exact Value:**\n\n" +
+          "The exact integral is:\n" +
+          "$$\\int_1^3 \\frac{1}{x}\\,dx = [\\ln x]_1^3 = \\ln 3 - \\ln 1 = \\ln 3 \\approx 1.0986$$\n\n" +
+          "Since \\( f(x) = \\frac{1}{x} \\) is **decreasing**, the left Riemann sum **overestimates** the integral.\n\n" +
+          "**Answer: \\( \\frac{77}{60} \\approx 1.28333 \\)**"
+      },
+      
+      // Question 10 continued (Right Riemann Sum)
+      {
+        id: "exam5_q10b",
+        sectionId: "section_2",
+        questionNumber: 11,
+        type: "open-ended",
+        text: "**Question 10 continued:** Now approximate the same integral \\( \\displaystyle\\int_{1}^{3} \\frac{1}{x}\\,dx \\) using a **right-endpoint Riemann sum** with \\( n = 4 \\) subintervals.",
+        correctAnswers: [
+          "57/60",
+          "0.95",
+          "19/20",
+          "0.950"
+        ],
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.005,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 4,
+        explanation: "**Right Riemann Sum Formula:**\n\n" +
+          "$$R_n = \\Delta x \\sum_{i=1}^{n} f(x_i)$$\n\n" +
+          "where \\( x_i \\) are the right endpoints of each subinterval.\n\n" +
+          "**Step 1: We already have \\( \\Delta x = 0.5 \\)**\n\n" +
+          "**Step 2: Identify right endpoints**\n\n" +
+          "| Subinterval | Right Endpoint \\( x_i \\) | \\( f(x_i) = \\frac{1}{x_i} \\) |\n" +
+          "|---|---|---|\n" +
+          "| \\([1.0, 1.5]\\) | \\( x_1 = 1.5 \\) | \\( \\frac{2}{3} \\) |\n" +
+          "| \\([1.5, 2.0]\\) | \\( x_2 = 2.0 \\) | \\( \\frac{1}{2} \\) |\n" +
+          "| \\([2.0, 2.5]\\) | \\( x_3 = 2.5 \\) | \\( \\frac{2}{5} \\) |\n" +
+          "| \\([2.5, 3.0]\\) | \\( x_4 = 3.0 \\) | \\( \\frac{1}{3} \\) |\n\n" +
+          "**Step 3: Sum the function values**\n" +
+          "$\\sum f(x_i) = \\frac{2}{3} + \\frac{1}{2} + \\frac{2}{5} + \\frac{1}{3}$\n\n" +
+          "Find common denominator (LCD = 30):\n" +
+          "$= \\frac{20}{30} + \\frac{15}{30} + \\frac{12}{30} + \\frac{10}{30} = \\frac{57}{30}$\n\n" +
+          "**Step 4: Multiply by \\( \\Delta x \\)**\n" +
+          "$R_4 = 0.5 \\times \\frac{57}{30} = \\frac{1}{2} \\times \\frac{57}{30} = \\frac{57}{60} = \\frac{19}{20}$\n\n" +
+          "**Decimal approximation:**\n" +
+          "$\\frac{57}{60} = 0.95$\n\n" +
+          "**Comparison:**\n\n" +
+          "| Method | Value | Relationship to Exact |\n" +
+          "|---|---|---|\n" +
+          "| Left Riemann (\\(L_4\\)) | \\(\\frac{77}{60} \\approx 1.283\\) | Overestimate |\n" +
+          "| Exact Value | \\(\\ln 3 \\approx 1.099\\) | — |\n" +
+          "| Right Riemann (\\(R_4\\)) | \\(\\frac{57}{60} = 0.95\\) | Underestimate |\n\n" +
+          "For a **decreasing function**, the left sum is always an **upper bound** and the right sum is a **lower bound**.\n\n" +
+          "**Answer: \\( \\frac{57}{60} = \\frac{19}{20} = 0.95 \\)**"
+      },
+      
+      // Question 12
+      {
+        id: "exam5_q12",
+        sectionId: "section_2",
+        questionNumber: 12,
+        type: "open-ended",
+        text: "Use a **left-endpoint Riemann sum** with \\( n = 5 \\) subintervals to approximate \\( \\displaystyle\\int_{0}^{15} 4\\sqrt{t+1}\\,dt \\). Give your answer in exact form using square roots.",
+        correctAnswers: [
+          "12(3 + sqrt(7) + sqrt(10) + sqrt(13))",
+          "12(3+√(7)+√(10)+√(13))",
+          "36 + 12*√(7) + 12*√(10) + 12*√(13)",
+          "148.96",
+          "148.963"
+        ],
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.5,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 6,
+        explanation: "**Left Riemann Sum Setup:**\n\n" +
+          "$L_n = \\Delta t \\sum_{i=0}^{n-1} p(t_i)$\n\n" +
+          "where \\( p(t) = 4\\sqrt{t+1} \\).\n\n" +
+          "**Step 1: Calculate \\( \\Delta t \\)**\n" +
+          "$\\Delta t = \\frac{15 - 0}{5} = 3$\n\n" +
+          "**Step 2: Identify left endpoints**\n\n" +
+          "| Subinterval | Left Endpoint \\( t_i \\) | \\( p(t_i) = 4\\sqrt{t_i+1} \\) |\n" +
+          "|---|---|---|\n" +
+          "| \\([0, 3]\\) | \\( t_0 = 0 \\) | \\( 4\\sqrt{1} = 4 \\) |\n" +
+          "| \\([3, 6]\\) | \\( t_1 = 3 \\) | \\( 4\\sqrt{4} = 8 \\) |\n" +
+          "| \\([6, 9]\\) | \\( t_2 = 6 \\) | \\( 4\\sqrt{7} \\) |\n" +
+          "| \\([9, 12]\\) | \\( t_3 = 9 \\) | \\( 4\\sqrt{10} \\) |\n" +
+          "| \\([12, 15]\\) | \\( t_4 = 12 \\) | \\( 4\\sqrt{13} \\) |\n\n" +
+          "**Step 3: Sum function values**\n" +
+          "$\\sum_{i=0}^{4} p(t_i) = 4 + 8 + 4\\sqrt{7} + 4\\sqrt{10} + 4\\sqrt{13}$\n\n" +
+          "Factor out 4:\n" +
+          "$= 4(1 + 2 + \\sqrt{7} + \\sqrt{10} + \\sqrt{13})$\n" +
+          "$= 4(3 + \\sqrt{7} + \\sqrt{10} + \\sqrt{13})$\n\n" +
+          "**Step 4: Multiply by \\( \\Delta t \\)**\n" +
+          "$L_5 = 3 \\times 4(3 + \\sqrt{7} + \\sqrt{10} + \\sqrt{13})$\n" +
+          "$= 12(3 + \\sqrt{7} + \\sqrt{10} + \\sqrt{13})$\n\n" +
+          "**Exact Answer:**\n" +
+          "$L_5 = 12(3 + \\sqrt{7} + \\sqrt{10} + \\sqrt{13})$\n\n" +
+          "**Numerical Approximation:**\n" +
+          "- \\( \\sqrt{7} \\approx 2.646 \\)\n" +
+          "- \\( \\sqrt{10} \\approx 3.162 \\)\n" +
+          "- \\( \\sqrt{13} \\approx 3.606 \\)\n" +
+          "- Sum inside: \\( 3 + 2.646 + 3.162 + 3.606 = 12.414 \\)\n" +
+          "- Multiply by 12: \\( L_5 \\approx 148.963 \\)\n\n" +
+          "**Answer: \\( 12(3 + \\sqrt{7} + \\sqrt{10} + \\sqrt{13}) \\approx 148.96 \\)**"
+      },
+      
+      // Question 13
+      {
+        id: "exam5_q13",
+        sectionId: "section_2",
+        questionNumber: 13,
+        type: "open-ended",
+        text: "Use the **right-endpoint Riemann sum** and the limit definition to find the exact area under \\( f(x) = 4x \\) from \\( x = 0 \\) to \\( x = 2 \\).",
+        correctAnswers: [
+          "8",
+          "8.0"
+        ],
+        options: {
+          allowSymbolic: false,
+          tolerance: 0.01,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 5,
+        explanation: "**Limit Definition Using Right Endpoints:**\n\n" +
+          "$\\int_a^b f(x)\\,dx = \\lim_{n \\to \\infty} \\sum_{i=1}^{n} f(x_i)\\Delta x$\n\n" +
+          "where \\( x_i \\) are right endpoints.\n\n" +
+          "**Step 1: Set up the partition**\n" +
+          "$\\Delta x = \\frac{2 - 0}{n} = \\frac{2}{n}$\n\n" +
+          "**Step 2: Find right endpoints**\n" +
+          "$x_i = 0 + i\\Delta x = \\frac{2i}{n}, \\quad i = 1, 2, \\ldots, n$\n\n" +
+          "**Step 3: Evaluate \\( f(x_i) \\)**\n" +
+          "$f(x_i) = 4x_i = 4 \\cdot \\frac{2i}{n} = \\frac{8i}{n}$\n\n" +
+          "**Step 4: Form the Riemann sum**\n" +
+          "$S_n = \\sum_{i=1}^{n} f(x_i)\\Delta x = \\sum_{i=1}^{n} \\frac{8i}{n} \\cdot \\frac{2}{n}$\n\n" +
+          "$= \\sum_{i=1}^{n} \\frac{16i}{n^2} = \\frac{16}{n^2} \\sum_{i=1}^{n} i$\n\n" +
+          "**Step 5: Apply the sum formula**\n\n" +
+          "We know that \\( \\sum_{i=1}^{n} i = \\frac{n(n+1)}{2} \\)\n\n" +
+          "$S_n = \\frac{16}{n^2} \\cdot \\frac{n(n+1)}{2} = \\frac{16n(n+1)}{2n^2} = \\frac{8(n+1)}{n}$\n\n" +
+          "**Step 6: Simplify**\n" +
+          "$S_n = 8 \\cdot \\frac{n+1}{n} = 8\\left(1 + \\frac{1}{n}\\right)$\n\n" +
+          "**Step 7: Take the limit**\n" +
+          "$\\lim_{n \\to \\infty} S_n = \\lim_{n \\to \\infty} 8\\left(1 + \\frac{1}{n}\\right) = 8(1 + 0) = 8$\n\n" +
+          "**Verification by Direct Integration:**\n" +
+          "$\\int_0^2 4x\\,dx = \\left[2x^2\\right]_0^2 = 2(4) - 0 = 8$ ✓\n\n" +
+          "**Key Concept - Limit Definition:**\n\n" +
+          "This problem demonstrates how the definite integral is formally defined as the limit of Riemann sums. " +
+          "As we take finer and finer partitions (\\( n \\to \\infty \\)), the sum converges to the exact area.\n\n" +
+          "**Answer: 8**"
+      },
+      
+      // Question 14
+      {
+        id: "exam5_q14",
+        sectionId: "section_2",
+        questionNumber: 14,
+        type: "open-ended",
+        text: "Use the **right-endpoint Riemann sum** and the limit definition to find the exact area under \\( g(x) = \\frac{1}{2}x \\) from \\( x = 2 \\) to \\( x = 4 \\).",
+        correctAnswers: [
+          "3",
+          "3.0"
+        ],
+        options: {
+          allowSymbolic: false,
+          tolerance: 0.01,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 5,
+        explanation: "**Limit Definition Using Right Endpoints:**\n\n" +
+          "**Step 1: Set up the partition**\n" +
+          "$\\Delta x = \\frac{4 - 2}{n} = \\frac{2}{n}$\n\n" +
+          "**Step 2: Find right endpoints**\n" +
+          "$x_i = 2 + i\\Delta x = 2 + \\frac{2i}{n}, \\quad i = 1, 2, \\ldots, n$\n\n" +
+          "**Step 3: Evaluate \\( g(x_i) \\)**\n" +
+          "$g(x_i) = \\frac{1}{2}x_i = \\frac{1}{2}\\left(2 + \\frac{2i}{n}\\right) = 1 + \\frac{i}{n}$\n\n" +
+          "**Step 4: Form the Riemann sum**\n" +
+          "$S_n = \\sum_{i=1}^{n} g(x_i)\\Delta x = \\sum_{i=1}^{n} \\left(1 + \\frac{i}{n}\\right) \\cdot \\frac{2}{n}$\n\n" +
+          "**Step 5: Distribute and separate**\n" +
+          "$S_n = \\frac{2}{n}\\sum_{i=1}^{n} 1 + \\frac{2}{n}\\sum_{i=1}^{n} \\frac{i}{n}$\n\n" +
+          "$= \\frac{2}{n} \\cdot n + \\frac{2}{n^2}\\sum_{i=1}^{n} i$\n\n" +
+          "**Step 6: Apply formulas**\n" +
+          "- First term: \\( \\frac{2}{n} \\cdot n = 2 \\)\n" +
+          "- Second term: \\( \\frac{2}{n^2} \\cdot \\frac{n(n+1)}{2} = \\frac{n(n+1)}{n^2} = \\frac{n+1}{n} \\)\n\n" +
+          "**Step 7: Combine**\n" +
+          "$S_n = 2 + \\frac{n+1}{n} = 2 + 1 + \\frac{1}{n} = 3 + \\frac{1}{n}$\n\n" +
+          "**Step 8: Take the limit**\n" +
+          "$\\lim_{n \\to \\infty} S_n = \\lim_{n \\to \\infty} \\left(3 + \\frac{1}{n}\\right) = 3 + 0 = 3$\n\n" +
+          "**Verification:**\n" +
+          "$\\int_2^4 \\frac{1}{2}x\\,dx = \\left[\\frac{x^2}{4}\\right]_2^4 = \\frac{16}{4} - \\frac{4}{4} = 4 - 1 = 3$ ✓\n\n" +
+          "**Answer: 3**"
+      },
+
+      // ============================================================
+      // SECTION C: TECHNIQUES OF INTEGRATION
+      // ============================================================
+      
+      // Question 15
+      {
+        id: "exam5_q15",
+        sectionId: "section_3",
+        questionNumber: 15,
+        type: "open-ended",
+        text: "Evaluate \\( \\displaystyle\\int_{4}^{9} \\frac{h + \\sqrt{h}}{h^2}\\,dh \\). Give your answer in exact form.",
+        correctAnswers: [
+          "ln(9/4) + 1/3",
+          "ln(9/4) + 0.333333",
+          "ln(2.25) + 1/3",
+          "1.1442"
+        ],
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.01,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 4,
+        explanation: "**Step 1: Rewrite the integrand**\n\n" +
+          "$\\frac{h + \\sqrt{h}}{h^2} = \\frac{h}{h^2} + \\frac{\\sqrt{h}}{h^2} = \\frac{1}{h} + \\frac{h^{1/2}}{h^2}$\n\n" +
+          "$= \\frac{1}{h} + h^{-3/2}$\n\n" +
+          "**Step 2: Find antiderivatives**\n\n" +
+          "For each term:\n" +
+          "- \\( \\int \\frac{1}{h}\\,dh = \\ln|h| + C \\)\n" +
+          "- \\( \\int h^{-3/2}\\,dh = \\frac{h^{-1/2}}{-1/2} = -2h^{-1/2} + C \\)\n\n" +
+          "Combined antiderivative:\n" +
+          "$F(h) = \\ln h - 2h^{-1/2} = \\ln h - \\frac{2}{\\sqrt{h}}$\n\n" +
+          "**Step 3: Evaluate definite integral**\n\n" +
+          "$\\int_4^9 \\frac{h + \\sqrt{h}}{h^2}\\,dh = \\left[\\ln h - \\frac{2}{\\sqrt{h}}\\right]_4^9$\n\n" +
+          "**At \\( h = 9 \\):**\n" +
+          "$\\ln 9 - \\frac{2}{\\sqrt{9}} = \\ln 9 - \\frac{2}{3}$\n\n" +
+          "**At \\( h = 4 \\):**\n" +
+          "$\\ln 4 - \\frac{2}{\\sqrt{4}} = \\ln 4 - \\frac{2}{2} = \\ln 4 - 1$\n\n" +
+          "**Step 4: Subtract**\n" +
+          "$\\left(\\ln 9 - \\frac{2}{3}\\right) - (\\ln 4 - 1)$\n\n" +
+          "$= \\ln 9 - \\ln 4 - \\frac{2}{3} + 1$\n\n" +
+          "$= \\ln\\left(\\frac{9}{4}\\right) + \\left(1 - \\frac{2}{3}\\right)$\n\n" +
+          "$= \\ln\\left(\\frac{9}{4}\\right) + \\frac{1}{3}$\n\n" +
+          "**Numerical approximation:**\n" +
+          "- \\( \\ln(9/4) = \\ln(2.25) \\approx 0.8109 \\)\n" +
+          "- \\( 1/3 \\approx 0.3333 \\)\n" +
+          "- Total \\( \\approx 1.1442 \\)\n\n" +
+          "**Answer: \\( \\ln\\left(\\frac{9}{4}\\right) + \\frac{1}{3} \\approx 1.1442 \\)**"
+      },
+      
+      // Question 16
+      {
+        id: "exam5_q16",
+        sectionId: "section_3",
+        questionNumber: 16,
+        type: "multiple-choice",
+        text: "Evaluate \\( \\displaystyle\\int x(1 + x^2)^5\\,dx \\)",
+        options: [
+          "A. \\( \\displaystyle\\frac{(1 + x^2)^6}{6} + C \\)",
+          "B. \\( \\displaystyle\\frac{(1 + x^2)^6}{12} + C \\)",
+          "C. \\( \\displaystyle\\frac{x^2(1 + x^2)^5}{10} + C \\)",
+          "D. \\( \\displaystyle\\frac{(1 + x^2)^5}{5} + C \\)"
+        ],
+        correctAnswers: ["B"],
+        points: 3,
+        explanation: "**U-Substitution Method:**\n\n" +
+          "**Step 1: Choose substitution**\n\n" +
+          "Let \\( u = 1 + x^2 \\)\n\n" +
+          "**Step 2: Find \\( du \\)**\n" +
+          "$du = 2x\\,dx \\quad \\Rightarrow \\quad x\\,dx = \\frac{1}{2}du$\n\n" +
+          "**Step 3: Rewrite the integral**\n" +
+          "$\\int x(1 + x^2)^5\\,dx = \\int u^5 \\cdot \\frac{1}{2}du = \\frac{1}{2}\\int u^5\\,du$\n\n" +
+          "**Step 4: Integrate**\n" +
+          "$= \\frac{1}{2} \\cdot \\frac{u^6}{6} + C = \\frac{u^6}{12} + C$\n\n" +
+          "**Step 5: Substitute back**\n" +
+          "$= \\frac{(1 + x^2)^6}{12} + C$\n\n" +
+          "**Why other options are incorrect:**\n\n" +
+          "- **Option A**: Missing the factor of \\( \\frac{1}{2} \\) from the \\( du \\) substitution\n" +
+          "- **Option C**: Incorrectly keeps \\( x^2 \\) outside instead of fully substituting\n" +
+          "- **Option D**: Wrong power (should be 6, not 5) and wrong denominator\n\n" +
+          "**Verification by differentiation:**\n" +
+          "$\\frac{d}{dx}\\left[\\frac{(1+x^2)^6}{12}\\right] = \\frac{1}{12} \\cdot 6(1+x^2)^5 \\cdot 2x = x(1+x^2)^5$ ✓\n\n" +
+          "**Answer: B. \\( \\displaystyle\\frac{(1 + x^2)^6}{12} + C \\)**"
+      },
+
+      // Question 17
+      {
+        id: "exam5_q17",
+        sectionId: "section_3",
+        questionNumber: 17,
+        type: "multiple-choice",
+        text: "Given \\( \\displaystyle\\int_a^b f(x)\\,dx = a + 2b \\), find \\( \\displaystyle\\int_a^b (f(x) + 3)\\,dx \\)",
+        options: [
+          "A. \\( a + 2b + 3 \\)",
+          "B. \\( -2a + 5b \\)",
+          "C. \\( a + 2b + 3(b + a) \\)",
+          "D. \\( 4a + 5b \\)"
+        ],
+        correctAnswers: ["B"],
+        points: 3,
+        explanation: "**Using Linearity of Integrals:**\n\n" +
+          "**Step 1: Split the integral**\n" +
+          "$\\int_a^b (f(x) + 3)\\,dx = \\int_a^b f(x)\\,dx + \\int_a^b 3\\,dx$\n\n" +
+          "**Step 2: Evaluate each part**\n\n" +
+          "Given: \\( \\displaystyle\\int_a^b f(x)\\,dx = a + 2b \\)\n\n" +
+          "For the constant:\n" +
+          "$\\int_a^b 3\\,dx = 3(b - a) = 3b - 3a$\n\n" +
+          "**Step 3: Add the results**\n" +
+          "$\\int_a^b (f(x) + 3)\\,dx = (a + 2b) + (3b - 3a)$\n\n" +
+          "**Step 4: Simplify**\n" +
+          "$= a + 2b + 3b - 3a$\n" +
+          "$= (a - 3a) + (2b + 3b)$\n" +
+          "$= -2a + 5b$\n\n" +
+          "**Key Property Used:**\n\n" +
+          "$\\int_a^b [f(x) + c]\\,dx = \\int_a^b f(x)\\,dx + c(b-a)$\n\n" +
+          "This shows that adding a constant to a function adds \\( c \\times \\text{(interval length)} \\) to the integral.\n\n" +
+          "**Answer: B. \\( -2a + 5b \\)**"
+      },
+      
+      // Question 18
+      {
+        id: "exam5_q18",
+        sectionId: "section_3",
+        questionNumber: 18,
+        type: "multiple-choice",
+        text: "Evaluate \\( \\displaystyle\\int x^2\\sqrt{5 + 2x^3}\\,dx \\)",
+        options: [
+          "A. \\( \\displaystyle\\frac{1}{9}(5 + 2x^3)^{3/2} + C \\)",
+          "B. \\( \\displaystyle\\frac{1}{3}(5 + 2x^3)^{3/2} + C \\)",
+          "C. \\( \\displaystyle\\frac{2}{9}(5 + 2x^3)^{3/2} + C \\)",
+          "D. \\( \\displaystyle\\frac{1}{6}(5 + 2x^3)^{3/2} + C \\)"
+        ],
+        correctAnswers: ["A"],
+        points: 3,
+        explanation: "**U-Substitution Method:**\n\n" +
+          "**Step 1: Choose substitution**\n\n" +
+          "Let \\( u = 5 + 2x^3 \\)\n\n" +
+          "**Step 2: Find \\( du \\)**\n" +
+          "$du = 6x^2\\,dx \\quad \\Rightarrow \\quad x^2\\,dx = \\frac{1}{6}du$\n\n" +
+          "**Step 3: Rewrite the integral**\n" +
+          "$\\int x^2\\sqrt{5 + 2x^3}\\,dx = \\int \\sqrt{u} \\cdot \\frac{1}{6}du = \\frac{1}{6}\\int u^{1/2}\\,du$\n\n" +
+          "**Step 4: Integrate**\n" +
+          "$= \\frac{1}{6} \\cdot \\frac{u^{3/2}}{3/2} + C = \\frac{1}{6} \\cdot \\frac{2u^{3/2}}{3} + C = \\frac{u^{3/2}}{9} + C$\n\n" +
+          "**Step 5: Substitute back**\n" +
+          "$= \\frac{(5 + 2x^3)^{3/2}}{9} + C$\n\n" +
+          "**Detailed calculation check:**\n\n" +
+          "$\\int u^{1/2}\\,du = \\frac{u^{3/2}}{3/2} = \\frac{2u^{3/2}}{3}$\n\n" +
+          "Multiply by \\( \\frac{1}{6} \\):\n" +
+          "$\\frac{1}{6} \\cdot \\frac{2u^{3/2}}{3} = \\frac{2u^{3/2}}{18} = \\frac{u^{3/2}}{9}$\n\n" +
+          "**Answer: A. \\( \\displaystyle\\frac{1}{9}(5 + 2x^3)^{3/2} + C \\)**"
+      },
+      
+      // Question 19
+      {
+        id: "exam5_q19",
+        sectionId: "section_3",
+        questionNumber: 19,
+        type: "multiple-choice",
+        text: "Evaluate \\( \\displaystyle\\int x^3\\sqrt{x^4 + 1}\\,dx \\)",
+        options: [
+          "A. \\( \\displaystyle\\frac{1}{6}(x^4 + 1)^{3/2} + C \\)",
+          "B. \\( \\displaystyle\\frac{1}{4}(x^4 + 1)^{3/2} + C \\)",
+          "C. \\( \\displaystyle\\frac{1}{8}(x^4 + 1)^{3/2} + C \\)",
+          "D. \\( \\displaystyle\\frac{2}{3}(x^4 + 1)^{3/2} + C \\)"
+        ],
+        correctAnswers: ["A"],
+        points: 3,
+        explanation: "**U-Substitution Method:**\n\n" +
+          "**Step 1: Choose substitution**\n\n" +
+          "Let \\( u = x^4 + 1 \\)\n\n" +
+          "**Step 2: Find \\( du \\)**\n" +
+          "$du = 4x^3\\,dx \\quad \\Rightarrow \\quad x^3\\,dx = \\frac{1}{4}du$\n\n" +
+          "**Step 3: Rewrite the integral**\n" +
+          "$\\int x^3\\sqrt{x^4 + 1}\\,dx = \\int \\sqrt{u} \\cdot \\frac{1}{4}du = \\frac{1}{4}\\int u^{1/2}\\,du$\n\n" +
+          "**Step 4: Integrate**\n" +
+          "$= \\frac{1}{4} \\cdot \\frac{u^{3/2}}{3/2} + C = \\frac{1}{4} \\cdot \\frac{2u^{3/2}}{3} + C = \\frac{u^{3/2}}{6} + C$\n\n" +
+          "**Step 5: Substitute back**\n" +
+          "$= \\frac{(x^4 + 1)^{3/2}}{6} + C$\n\n" +
+          "**Answer: A. \\( \\displaystyle\\frac{1}{6}(x^4 + 1)^{3/2} + C \\)**"
+      },
+      
+      // Question 20
+      {
+        id: "exam5_q20",
+        sectionId: "section_3",
+        questionNumber: 20,
+        type: "multiple-choice",
+        text: "If \\( \\displaystyle\\int_0^4 f(x)\\,dx = 5 \\) and \\( \\displaystyle\\int_0^4 g(x)\\,dx = -3 \\), find \\( \\displaystyle\\int_4^0 [g(x) - f(x)]\\,dx \\)",
+        options: [
+          "A. -8",
+          "B. -2",
+          "C. 2",
+          "D. 8"
+        ],
+        correctAnswers: ["D"],
+        points: 3,
+        explanation: "**Using Properties of Definite Integrals:**\n\n" +
+          "**Property 1: Reversing Limits**\n" +
+          "$\\int_b^a f(x)\\,dx = -\\int_a^b f(x)\\,dx$\n\n" +
+          "**Property 2: Linearity**\n" +
+          "$\\int_a^b [g(x) - f(x)]\\,dx = \\int_a^b g(x)\\,dx - \\int_a^b f(x)\\,dx$\n\n" +
+          "**Step 1: Apply reverse limits property**\n" +
+          "$\\int_4^0 [g(x) - f(x)]\\,dx = -\\int_0^4 [g(x) - f(x)]\\,dx$\n\n" +
+          "**Step 2: Apply linearity**\n" +
+          "$= -\\left(\\int_0^4 g(x)\\,dx - \\int_0^4 f(x)\\,dx\\right)$\n\n" +
+          "**Step 3: Substitute given values**\n" +
+          "$= -((-3) - 5) = -(-8) = 8$\n\n" +
+          "**Alternative approach (direct calculation):**\n" +
+          "$\\int_4^0 [g(x) - f(x)]\\,dx = \\int_4^0 g(x)\\,dx - \\int_4^0 f(x)\\,dx$\n\n" +
+          "$= -\\int_0^4 g(x)\\,dx - \\left(-\\int_0^4 f(x)\\,dx\\right)$\n\n" +
+          "$= -(-3) + 5 = 3 + 5 = 8$\n\n" +
+          "**Answer: D. 8**"
+      },
+      
+      // Question 21
+      {
+        id: "exam5_q21",
+        sectionId: "section_3",
+        questionNumber: 21,
+        type: "open-ended",
+        text: "Evaluate \\( \\displaystyle\\int_{1}^{2} \\ln x\\,dx \\) using integration by parts.",
+        correctAnswers: [
+          "2*ln(2) - 1",
+          "2ln(2) - 1",
+          "2*ln2 - 1",
+          "0.3863",
+          "0.386"
+        ],
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.005,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 5,
+        explanation: "**Integration by Parts Formula:**\n\n" +
+          "$\\int u\\,dv = uv - \\int v\\,du$\n\n" +
+          "**Step 1: Choose \\( u \\) and \\( dv \\)**\n\n" +
+          "Let:\n" +
+          "- \\( u = \\ln x \\) → \\( du = \\frac{1}{x}dx \\)\n" +
+          "- \\( dv = dx \\) → \\( v = x \\)\n\n" +
+          "**Step 2: Apply the formula**\n" +
+          "$\\int \\ln x\\,dx = x\\ln x - \\int x \\cdot \\frac{1}{x}dx$\n\n" +
+          "$= x\\ln x - \\int 1\\,dx$\n\n" +
+          "$= x\\ln x - x + C$\n\n" +
+          "**Step 3: Evaluate the definite integral**\n" +
+          "$\\int_1^2 \\ln x\\,dx = [x\\ln x - x]_1^2$\n\n" +
+          "**At \\( x = 2 \\):**\n" +
+          "$2\\ln 2 - 2$\n\n" +
+          "**At \\( x = 1 \\):**\n" +
+          "$1\\ln 1 - 1 = 1(0) - 1 = -1$\n\n" +
+          "**Step 4: Subtract**\n" +
+          "$= (2\\ln 2 - 2) - (-1)$\n" +
+          "$= 2\\ln 2 - 2 + 1$\n" +
+          "$= 2\\ln 2 - 1$\n\n" +
+          "**Numerical approximation:**\n" +
+          "$2\\ln 2 \\approx 2(0.6931) = 1.3863$\n" +
+          "$2\\ln 2 - 1 \\approx 0.3863$\n\n" +
+          "**Answer: \\( 2\\ln 2 - 1 \\approx 0.3863 \\)**"
+      },
+      
+      // Question 22
+      {
+        id: "exam5_q22",
+        sectionId: "section_3",
+        questionNumber: 22,
+        type: "multiple-choice",
+        text: "Evaluate \\( \\displaystyle\\int x^2\\cos x\\,dx \\) using integration by parts.",
+        options: [
+          "A. \\( x^2\\sin x + 2x\\cos x - 2\\sin x + C \\)",
+          "B. \\( x^2\\sin x - 2x\\cos x + 2\\sin x + C \\)",
+          "C. \\( x^2\\cos x + 2x\\sin x + 2\\cos x + C \\)",
+          "D. \\( x^2\\sin x + 2x\\cos x + 2\\sin x + C \\)"
+        ],
+        correctAnswers: ["A"],
+        points: 5,
+        explanation: "**Integration by Parts (Applied Twice):**\n\n" +
+          "**First Application:**\n\n" +
+          "Let:\n" +
+          "- \\( u_1 = x^2 \\) → \\( du_1 = 2x\\,dx \\)\n" +
+          "- \\( dv_1 = \\cos x\\,dx \\) → \\( v_1 = \\sin x \\)\n\n" +
+          "$\\int x^2\\cos x\\,dx = x^2\\sin x - \\int 2x\\sin x\\,dx$\n\n" +
+          "**Second Application:**\n\n" +
+          "For \\( \\int 2x\\sin x\\,dx \\):\n" +
+          "- \\( u_2 = 2x \\) → \\( du_2 = 2\\,dx \\)\n" +
+          "- \\( dv_2 = \\sin x\\,dx \\) → \\( v_2 = -\\cos x \\)\n\n" +
+          "$\\int 2x\\sin x\\,dx = 2x(-\\cos x) - \\int 2(-\\cos x)\\,dx$\n\n" +
+          "$= -2x\\cos x + 2\\int \\cos x\\,dx$\n\n" +
+          "$= -2x\\cos x + 2\\sin x$\n\n" +
+          "**Combine Results:**\n\n" +
+          "$\\int x^2\\cos x\\,dx = x^2\\sin x - (-2x\\cos x + 2\\sin x) + C$\n\n" +
+          "$= x^2\\sin x + 2x\\cos x - 2\\sin x + C$\n\n" +
+          "**Verification Strategy:**\n\n" +
+          "Differentiate the result:\n" +
+          "$\\frac{d}{dx}[x^2\\sin x + 2x\\cos x - 2\\sin x]$\n\n" +
+          "Using product rule:\n" +
+          "$= 2x\\sin x + x^2\\cos x + 2\\cos x - 2x\\sin x - 2\\cos x$\n" +
+          "$= x^2\\cos x$ ✓\n\n" +
+          "**Answer: A. \\( x^2\\sin x + 2x\\cos x - 2\\sin x + C \\)**"
+      },
+      
+      // Question 23
+      {
+        id: "exam5_q23",
+        sectionId: "section_3",
+        questionNumber: 23,
+        type: "multiple-choice",
+        text: "Evaluate \\( \\displaystyle\\int xe^{2x}\\,dx \\) using integration by parts.",
+        options: [          
+          "A. \\( \\displaystyle xe^{2x} - e^{2x} + C \\)",
+          "B. \\( \\displaystyle\\frac{xe^{2x}}{2} + \\frac{e^{2x}}{4} + C \\)",
+          "C. \\( \\displaystyle\\frac{xe^{2x}}{2} - \\frac{e^{2x}}{4} + C \\)",
+          "D. \\( \\displaystyle\\frac{e^{x}(2x - 1)}{2} + C \\)"
+        ],
+        correctAnswers: ["C"],
+        points: 4,
+        explanation: "**Integration by Parts:**\n\n" +
+          "**Step 1: Choose \\( u \\) and \\( dv \\)**\n\n" +
+          "Let:\n" +
+          "- \\( u = x \\) → \\( du = dx \\)\n" +
+          "- \\( dv = e^{2x}dx \\) → \\( v = \\frac{1}{2}e^{2x} \\)\n\n" +
+          "**Step 2: Apply formula**\n" +
+          "$\\int xe^{2x}\\,dx = x \\cdot \\frac{1}{2}e^{2x} - \\int \\frac{1}{2}e^{2x}\\,dx$\n\n" +
+          "$= \\frac{xe^{2x}}{2} - \\frac{1}{2}\\int e^{2x}\\,dx$\n\n" +
+          "**Step 3: Complete the integration**\n" +
+          "$= \\frac{xe^{2x}}{2} - \\frac{1}{2} \\cdot \\frac{e^{2x}}{2} + C$\n\n" +
+          "$= \\frac{xe^{2x}}{2} - \\frac{e^{2x}}{4} + C$\n\n" +
+          "**Alternative form (factored):**\n" +
+          "$= \\frac{e^{2x}}{4}(2x - 1) + C$\n\n" +
+          "Both forms are equivalent. Option A matches our result directly.\n\n" +
+          "**Note:** Option D is mathematically equivalent but written differently:\n" +
+          "$\\frac{e^{2x}(2x - 1)}{2} = \\frac{2xe^{2x} - e^{2x}}{2} = \\frac{xe^{2x}}{1} - \\frac{e^{2x}}{2}$\n\n" +
+          "This doesn't match, so Option A is the correct form.\n\n" +
+          "**Answer: A. \\( \\displaystyle\\frac{xe^{2x}}{2} - \\frac{e^{2x}}{4} + C \\)**"
+      },
+
+      // ============================================================
+      // SECTION D: APPLICATIONS OF INTEGRATION
+      // ============================================================
+      
+      // Question 24
+      {
+        id: "exam5_q24",
+        sectionId: "section_4",
+        questionNumber: 24,
+        type: "open-ended",
+        text: "For the function \\( y = e^x \\), the shaded region (B) between the curve and the x-axis from \\( x = 0 \\) to \\( x = b \\) has area equal to 3. Find the value of \\( b \\).",
+        image: {
+          src: "/images/ITMTB_Exam5_Area_of_the_Shaded_Region4.png",
+          alt: "Graph of y = e^x with shaded region from 0 to b",
+          caption: "Region B under the exponential curve"
+        },
+        correctAnswers: [
+          "ln(4)",
+          "ln4",
+          "1.3863",
+          "1.386"
+        ],
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.005,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 4,
+        explanation: "**Setting Up the Problem:**\n\n" +
+          "The area under \\( y = e^x \\) from \\( x = 0 \\) to \\( x = b \\) is:\n" +
+          "$\\text{Area} = \\int_0^b e^x\\,dx$\n\n" +
+          "**Step 1: Evaluate the integral**\n" +
+          "$\\int_0^b e^x\\,dx = [e^x]_0^b = e^b - e^0 = e^b - 1$\n\n" +
+          "**Step 2: Set equal to given area**\n" +
+          "$e^b - 1 = 3$\n\n" +
+          "**Step 3: Solve for \\( b \\)**\n" +
+          "$e^b = 4$\n\n" +
+          "Take natural logarithm of both sides:\n" +
+          "$b = \\ln 4$\n\n" +
+          "**Step 4: Simplify (optional)**\n" +
+          "$b = \\ln 4 = \\ln(2^2) = 2\\ln 2$\n\n" +
+          "**Numerical value:**\n" +
+          "$\\ln 4 \\approx 1.3863$\n\n" +
+          "**Verification:**\n" +
+          "$e^{\\ln 4} = 4 \\quad \\Rightarrow \\quad e^{\\ln 4} - 1 = 3$ ✓\n\n" +
+          "**Interpretation:**\n\n" +
+          "The area under the exponential curve from 0 to \\( \\ln 4 \\) is exactly 3 because the antiderivative " +
+          "of \\( e^x \\) is \\( e^x \\) itself, making the calculation straightforward.\n\n" +
+          "**Answer: \\( b = \\ln 4 \\approx 1.3863 \\)**"
+      },
+      
+      // Question 25
+      {
+        id: "exam5_q25",
+        sectionId: "section_4",
+        questionNumber: 25,
+        type: "open-ended",
+        text: "The function \\( y = 4e^{-x} \\) represents a quantity over the interval \\([0, 2]\\). Calculate the exact value of \\( \\displaystyle\\int_0^2 4e^{-x}\\,dx \\).",
+        image: {
+          src: "/images/ITMTB_Exam5_Area_Using_Left_Riemann_Sum.png",
+          alt: "Graph of y = 4e^(-x) with rectangular approximations",
+          caption: "Exponential decay function"
+        },
+        correctAnswers: [
+          "4(1 - e^(-2))",
+          "4(1-e^(-2))",
+          "4 - 4*e^(-2)",
+          "3.4587",
+          "3.459"
+        ],
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.005,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 4,
+        explanation: "**Direct Integration:**\n\n" +
+          "**Step 1: Find the antiderivative**\n\n" +
+          "For \\( f(x) = 4e^{-x} \\):\n" +
+          "$\\int 4e^{-x}\\,dx = 4 \\cdot (-e^{-x}) + C = -4e^{-x} + C$\n\n" +
+          "**Why the negative sign?**\n" +
+          "The derivative of \\( e^{-x} \\) is \\( -e^{-x} \\), so the antiderivative requires compensating with a negative.\n\n" +
+          "**Step 2: Apply FTC Part 2**\n" +
+          "$\\int_0^2 4e^{-x}\\,dx = [-4e^{-x}]_0^2$\n\n" +
+          "**Step 3: Evaluate at endpoints**\n\n" +
+          "**At \\( x = 2 \\):**\n" +
+          "$-4e^{-2}$\n\n" +
+          "**At \\( x = 0 \\):**\n" +
+          "$-4e^{0} = -4(1) = -4$\n\n" +
+          "**Step 4: Subtract**\n" +
+          "$= -4e^{-2} - (-4) = -4e^{-2} + 4 = 4(1 - e^{-2})$\n\n" +
+          "**Numerical Evaluation:**\n\n" +
+          "$e^{-2} = \\frac{1}{e^2} \\approx \\frac{1}{7.389} \\approx 0.1353$\n\n" +
+          "$1 - e^{-2} \\approx 1 - 0.1353 = 0.8647$\n\n" +
+          "$4(0.8647) \\approx 3.4587$\n\n" +
+          "**Physical Interpretation:**\n\n" +
+          "This represents the area under an exponential decay curve. The exact value \\( 4(1 - e^{-2}) \\) " +
+          "shows how much of the initial quantity (4 units at \\( x = 0 \\)) has accumulated over the interval.\n\n" +
+          "**Answer: \\( 4(1 - e^{-2}) \\approx 3.4587 \\)**"
+      },
+      
+      // Question 26
+      {
+        id: "exam5_q26",
+        sectionId: "section_4",
+        questionNumber: 26,
+        type: "open-ended",
+        text: "A bacteria population grows at a rate of \\( \\displaystyle\\frac{dP}{dt} = k\\sqrt{t} \\), where \\( k \\) is a constant. Given \\( P(0) = 500 \\) and \\( P(1) = 600 \\), find \\( P(7) \\).",
+        correctAnswers: [
+          "100*7^(3/2) + 500",
+          "100*7^(1.5) + 500",
+          "2352.03",
+          "2352",
+          "2350"
+        ],
+        options: {
+          allowSymbolic: true,
+          tolerance: 5,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 5,
+        explanation: "**Initial Value Problem:**\n\n" +
+          "**Step 1: Integrate the rate equation**\n\n" +
+          "$\\frac{dP}{dt} = k\\sqrt{t} = kt^{1/2}$\n\n" +
+          "$P(t) = \\int kt^{1/2}\\,dt = k \\cdot \\frac{t^{3/2}}{3/2} + C = \\frac{2k}{3}t^{3/2} + C$\n\n" +
+          "**Step 2: Apply initial condition \\( P(0) = 500 \\)**\n\n" +
+          "$P(0) = \\frac{2k}{3}(0)^{3/2} + C = C = 500$\n\n" +
+          "So:\n" +
+          "$P(t) = \\frac{2k}{3}t^{3/2} + 500$\n\n" +
+          "**Step 3: Use \\( P(1) = 600 \\) to find \\( k \\)**\n\n" +
+          "$600 = \\frac{2k}{3}(1)^{3/2} + 500$\n\n" +
+          "$600 = \\frac{2k}{3} + 500$\n\n" +
+          "$\\frac{2k}{3} = 100$\n\n" +
+          "$k = 150$\n\n" +
+          "**Step 4: Write the explicit formula**\n\n" +
+          "$P(t) = \\frac{2(150)}{3}t^{3/2} + 500 = 100t^{3/2} + 500$\n\n" +
+          "**Step 5: Calculate \\( P(7) \\)**\n\n" +
+          "$P(7) = 100(7)^{3/2} + 500$\n\n" +
+          "$7^{3/2} = 7^{1.5} = (\\sqrt{7})^3 = (2.6458)^3 \\approx 18.520$\n\n" +
+          "$P(7) = 100(18.520) + 500 = 1852.0 + 500 = 2352$\n\n" +
+          "**Summary:**\n\n" +
+          "| Time \\( t \\) | Population \\( P(t) \\) |\n" +
+          "|---|---|\n" +
+          "| 0 | 500 |\n" +
+          "| 1 | 600 |\n" +
+          "| 7 | 2352 |\n\n" +
+          "**Answer: \\( P(7) = 100 \\cdot 7^{3/2} + 500 \\approx 2352 \\)**"
+      },
+      
+      // Question 27
+      {
+        id: "exam5_q27",
+        sectionId: "section_4",
+        questionNumber: 27,
+        type: "open-ended",
+        text: "A bacteria population grows at a rate \\( \\displaystyle\\frac{dP}{dt} = \\frac{3000}{1 + 0.25t} \\) with \\( P(0) = 1000 \\). Find \\( P(3) \\).",
+        correctAnswers: [
+          "12000*ln(1.75) + 1000",
+          "12000*ln(1 + 0.75) + 1000",
+          "7715.39",
+          "7715",
+          "7716"
+        ],
+        options: {
+          allowSymbolic: true,
+          tolerance: 2,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 5,
+        explanation: "**Initial Value Problem with Logarithmic Integration:**\n\n" +
+          "**Step 1: Integrate using substitution**\n\n" +
+          "$P(t) = \\int \\frac{3000}{1 + 0.25t}\\,dt + C$\n\n" +
+          "Let \\( u = 1 + 0.25t \\), then \\( du = 0.25\\,dt \\), so \\( dt = 4\\,du \\)\n\n" +
+          "$P(t) = \\int \\frac{3000}{u} \\cdot 4\\,du = 12000\\int \\frac{1}{u}\\,du$\n\n" +
+          "$= 12000\\ln|u| + C = 12000\\ln(1 + 0.25t) + C$\n\n" +
+          "**Step 2: Apply initial condition \\( P(0) = 1000 \\)**\n\n" +
+          "$P(0) = 12000\\ln(1 + 0) + C = 12000(0) + C = 1000$\n\n" +
+          "So \\( C = 1000 \\)\n\n" +
+          "**Step 3: Write explicit formula**\n\n" +
+          "$P(t) = 12000\\ln(1 + 0.25t) + 1000$\n\n" +
+          "**Step 4: Evaluate \\( P(3) \\)**\n\n" +
+          "$P(3) = 12000\\ln(1 + 0.25(3)) + 1000$\n\n" +
+          "$= 12000\\ln(1.75) + 1000$\n\n" +
+          "**Numerical calculation:**\n\n" +
+          "$\\ln(1.75) \\approx 0.5596$\n\n" +
+          "$12000(0.5596) = 6715.39$\n\n" +
+          "$P(3) \\approx 6715.39 + 1000 = 7715.39$\n\n" +
+          "**Growth Analysis:**\n\n" +
+          "| Time | Population | Growth Rate |\n" +
+          "|---|---|---|\n" +
+          "| \\( t = 0 \\) | 1000 | 3000/min |\n" +
+          "| \\( t = 3 \\) | 7715 | 1714/min |\n\n" +
+          "The growth rate decreases over time due to the denominator \\( 1 + 0.25t \\).\n\n" +
+          "**Answer: \\( P(3) = 12000\\ln(1.75) + 1000 \\approx 7715 \\)**"
+      },
+      
+      // Question 28
+      {
+        id: "exam5_q28",
+        sectionId: "section_4",
+        questionNumber: 28,
+        type: "open-ended",
+        text: "Find the average value of \\( f(x) = x^2 \\) on the interval \\([0, 3]\\).",
+        correctAnswers: [
+          "3",
+          "3.0"
+        ],
+        options: {
+          allowSymbolic: false,
+          tolerance: 0.01,
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        points: 4,
+        explanation: "**Average Value Formula:**\n\n" +
+          "The average value of a function \\( f(x) \\) on \\([a, b]\\) is:\n" +
+          "$f_{\\text{avg}} = \\frac{1}{b - a}\\int_a^b f(x)\\,dx$\n\n" +
+          "**Step 1: Calculate the definite integral**\n\n" +
+          "$\\int_0^3 x^2\\,dx = \\left[\\frac{x^3}{3}\\right]_0^3 = \\frac{3^3}{3} - \\frac{0^3}{3} = \\frac{27}{3} = 9$\n\n" +
+          "**Step 2: Divide by interval length**\n\n" +
+          "$f_{\\text{avg}} = \\frac{1}{3 - 0} \\cdot 9 = \\frac{9}{3} = 3$\n\n" +
+          "**Geometric Interpretation:**\n\n" +
+          "The average value of 3 means that if we replaced the parabola \\( y = x^2 \\) with a horizontal line \\( y = 3 \\) " +
+          "over the interval \\([0, 3]\\), the area under both curves would be equal:\n\n" +
+          "$\\text{Area under } y = x^2: \\quad 9$\n" +
+          "$\\text{Area under } y = 3: \\quad 3 \\times 3 = 9$ ✓\n\n" +
+          "**Answer: 3**"
+      },
+      
+      // Question 29
+      {
+        id: "exam5_q29",
+        sectionId: "section_4",
+        questionNumber: 29,
+        type: "open-ended",
+        text: "The average current for \\( I(t) = 2\\sin(60\\pi t) + \\cos(120\\pi t) \\) over \\( 0 \\leq t \\leq \\frac{1}{60} \\) seconds is \\( \\frac{4}{\\pi} \\) amperes. Verify this result by calculating \\( \\displaystyle\\frac{1}{1/60}\\int_0^{1/60} I(t)\\,dt \\).",
+        correctAnswers: [
+          "4/pi",
+          "4/π",
+          "1.2732",
+          "1.273"
+        ],
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.005,
+          acceptedUnits: ["A", "amperes"],
+          requiredUnit: null
+        },
+        points: 6,
+        explanation: "**Average Value of a Function:**\n\n" +
+          "$\\bar{I} = \\frac{1}{b - a}\\int_a^b I(t)\\,dt$\n\n" +
+          "Here, \\( a = 0 \\), \\( b = \\frac{1}{60} \\), so:\n" +
+          "$\\bar{I} = \\frac{1}{1/60}\\int_0^{1/60} I(t)\\,dt = 60\\int_0^{1/60} [2\\sin(60\\pi t) + \\cos(120\\pi t)]\\,dt$\n\n" +
+          "**Step 1: Find antiderivatives**\n\n" +
+          "For \\( \\sin(60\\pi t) \\):\n" +
+          "$\\int \\sin(60\\pi t)\\,dt = -\\frac{\\cos(60\\pi t)}{60\\pi}$\n\n" +
+          "For \\( \\cos(120\\pi t) \\):\n" +
+          "$\\int \\cos(120\\pi t)\\,dt = \\frac{\\sin(120\\pi t)}{120\\pi}$\n\n" +
+          "**Step 2: Evaluate the definite integral**\n\n" +
+          "$\\int_0^{1/60} [2\\sin(60\\pi t) + \\cos(120\\pi t)]\\,dt$\n\n" +
+          "$= \\left[-\\frac{2\\cos(60\\pi t)}{60\\pi} + \\frac{\\sin(120\\pi t)}{120\\pi}\\right]_0^{1/60}$\n\n" +
+          "**At \\( t = \\frac{1}{60} \\):**\n" +
+          "- \\( 60\\pi \\cdot \\frac{1}{60} = \\pi \\), so \\( \\cos(\\pi) = -1 \\)\n" +
+          "- \\( 120\\pi \\cdot \\frac{1}{60} = 2\\pi \\), so \\( \\sin(2\\pi) = 0 \\)\n\n" +
+          "$= -\\frac{2(-1)}{60\\pi} + \\frac{0}{120\\pi} = \\frac{2}{60\\pi} = \\frac{1}{30\\pi}$\n\n" +
+          "**At \\( t = 0 \\):**\n" +
+          "- \\( \\cos(0) = 1 \\)\n" +
+          "- \\( \\sin(0) = 0 \\)\n\n" +
+          "$= -\\frac{2(1)}{60\\pi} + \\frac{0}{120\\pi} = -\\frac{2}{60\\pi} = -\\frac{1}{30\\pi}$\n\n" +
+          "**Step 3: Subtract**\n\n" +
+          "$\\int_0^{1/60} I(t)\\,dt = \\frac{1}{30\\pi} - \\left(-\\frac{1}{30\\pi}\\right) = \\frac{2}{30\\pi} = \\frac{1}{15\\pi}$\n\n" +
+          "**Step 4: Multiply by 60**\n\n" +
+          "$\\bar{I} = 60 \\cdot \\frac{1}{15\\pi} = \\frac{60}{15\\pi} = \\frac{4}{\\pi}$\n\n" +
+          "**Numerical value:**\n" +
+          "$\\frac{4}{\\pi} \\approx \\frac{4}{3.14159} \\approx 1.2732 \\text{ A}$\n\n" +
+          "**Physical Interpretation:**\n\n" +
+          "This represents the average electrical current over one complete cycle of the periodic function. " +
+          "The time interval \\( \\frac{1}{60} \\) second corresponds to one cycle at 60 Hz.\n\n" +
+          "**Answer: \\( \\frac{4}{\\pi} \\approx 1.273 \\) amperes**"
+      },
+      
+      // Question 30
+      {
+        id: "exam5_q30",
+        sectionId: "section_4",
+        questionNumber: 30,
+        type: "open-ended",
+        text: "CPU usage during a test is modeled by \\( U(t) = \\frac{\\pi}{4}\\sin t \\) for \\( 0 \\leq t \\leq \\pi \\). Find the total CPU-hours used during the test.",
+        correctAnswers: [
+          "pi/2",
+          "π/2",
+          "1.5708",
+          "1.571"
+        ],
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.005,
+          acceptedUnits: ["CPU-hours", "hours"],
+          requiredUnit: null
+        },
+        points: 4,
+        explanation: "**Total Usage as Definite Integral:**\n\n" +
+          "The total CPU-hours is the integral of the rate function:\n" +
+          "$\\text{Total} = \\int_0^\\pi U(t)\\,dt = \\int_0^\\pi \\frac{\\pi}{4}\\sin t\\,dt$\n\n" +
+          "**Step 1: Factor out constant**\n\n" +
+          "$= \\frac{\\pi}{4}\\int_0^\\pi \\sin t\\,dt$\n\n" +
+          "**Step 2: Find antiderivative**\n\n" +
+          "$\\int \\sin t\\,dt = -\\cos t + C$\n\n" +
+          "**Step 3: Evaluate definite integral**\n\n" +
+          "$\\int_0^\\pi \\sin t\\,dt = [-\\cos t]_0^\\pi$\n\n" +
+          "$= -\\cos(\\pi) - (-\\cos(0))$\n\n" +
+          "$= -(-1) - (-1) = 1 + 1 = 2$\n\n" +
+          "**Step 4: Multiply by constant**\n\n" +
+          "$\\text{Total} = \\frac{\\pi}{4} \\cdot 2 = \\frac{\\pi}{2}$\n\n" +
+          "**Numerical value:**\n" +
+          "$\\frac{\\pi}{2} \\approx 1.5708 \\text{ CPU-hours}$\n\n" +
+          "**Geometric Interpretation:**\n\n" +
+          "The function \\( U(t) = \\frac{\\pi}{4}\\sin t \\) peaks at \\( t = \\frac{\\pi}{2} \\) with maximum usage " +
+          "of \\( \\frac{\\pi}{4} \\approx 0.785 \\) CPU-hours per unit time. The total area under this sine curve " +
+          "from \\( 0 \\) to \\( \\pi \\) represents the cumulative CPU usage.\n\n" +
+          "**Answer: \\( \\frac{\\pi}{2} \\approx 1.571 \\) CPU-hours**"
+      },
+      
+      // Question 30 continued (Average Usage)
+      {
+        id: "exam5_q30b",
+        sectionId: "section_4",
+        questionNumber: 31,
+        type: "open-ended",
+        text: "**Question 30 continued:** Find the average CPU utilization over the test interval \\([0, \\pi]\\).",
+        correctAnswers: [
+          "1/2",
+          "0.5",
+          "0.50",
+          "50%"
+        ],
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.01,
+          acceptedUnits: ["%"],
+          requiredUnit: null
+        },
+        points: 3,
+        explanation: "**Average Value Formula:**\n\n" +
+          "$\\bar{U} = \\frac{1}{\\pi - 0}\\int_0^\\pi U(t)\\,dt$\n\n" +
+          "**Step 1: Use result from previous part**\n\n" +
+          "We found that:\n" +
+          "$\\int_0^\\pi U(t)\\,dt = \\frac{\\pi}{2}$\n\n" +
+          "**Step 2: Divide by interval length**\n\n" +
+          "$\\bar{U} = \\frac{1}{\\pi} \\cdot \\frac{\\pi}{2} = \\frac{1}{2}$\n\n" +
+          "**Interpretation:**\n\n" +
+          "The average CPU utilization is \\( \\frac{1}{2} \\) or **50%**.\n\n" +
+          "This means that over the entire test period, the CPU was operating at an average of 50% capacity, " +
+          "even though the instantaneous usage varied sinusoidally from 0% to about 78.5% (at \\( t = \\frac{\\pi}{2} \\)).\n\n" +
+          "**Relationship between Total and Average:**\n\n" +
+          "$\\text{Average} \\times \\text{Duration} = \\text{Total}$\n" +
+          "$\\frac{1}{2} \\times \\pi = \\frac{\\pi}{2}$ ✓\n\n" +
+          "**Answer: \\( \\frac{1}{2} \\) or 50%**"
+      },
+      
+      // Question 32
+      {
+        id: "exam5_q32",
+        sectionId: "section_4",
+        questionNumber: 32,
+        type: "open-ended",
+        text: "A leaking water tank drips at a rate \\( R(t) = \\frac{12}{t^2 + 5t + 6} \\) liters per minute. Find the total volume leaked between \\( t = 0 \\) and \\( t = 4 \\) minutes using partial fraction decomposition.",
+        correctAnswers: [
+          "12*ln(9/7)",
+          "12ln(9/7)",
+          "3.0158",
+          "3.016",
+          "3.02"
+        ],
+        options: {
+          allowSymbolic: true,
+          tolerance: 0.01,
+          acceptedUnits: ["liters", "L"],
+          requiredUnit: null
+        },
+        points: 6,
+        explanation: "**Partial Fraction Decomposition:**\n\n" +
+          "**Step 1: Factor the denominator**\n\n" +
+          "$t^2 + 5t + 6 = (t + 2)(t + 3)$\n\n" +
+          "**Step 2: Set up partial fractions**\n\n" +
+          "$\\frac{12}{(t + 2)(t + 3)} = \\frac{A}{t + 2} + \\frac{B}{t + 3}$\n\n" +
+          "**Step 3: Multiply both sides by \\((t + 2)(t + 3)\\)**\n\n" +
+          "$12 = A(t + 3) + B(t + 2)$\n\n" +
+          "**Step 4: Solve for constants**\n\n" +
+          "**Let \\( t = -2 \\):**\n" +
+          "$12 = A(1) + B(0) \\quad \\Rightarrow \\quad A = 12$\n\n" +
+          "**Let \\( t = -3 \\):**\n" +
+          "$12 = A(0) + B(-1) \\quad \\Rightarrow \\quad B = -12$\n\n" +
+          "**Step 5: Rewrite the integral**\n\n" +
+          "$\\int_0^4 \\frac{12}{t^2 + 5t + 6}\\,dt = \\int_0^4 \\left(\\frac{12}{t + 2} - \\frac{12}{t + 3}\\right)dt$\n\n" +
+          "$= 12\\int_0^4 \\frac{1}{t + 2}\\,dt - 12\\int_0^4 \\frac{1}{t + 3}\\,dt$\n\n" +
+          "**Step 6: Integrate**\n\n" +
+          "$= 12[\\ln|t + 2|]_0^4 - 12[\\ln|t + 3|]_0^4$\n\n" +
+          "$= 12[\\ln|t + 2| - \\ln|t + 3|]_0^4$\n\n" +
+          "**Step 7: Evaluate at endpoints**\n\n" +
+          "**At \\( t = 4 \\):**\n" +
+          "$\\ln(6) - \\ln(7) = \\ln\\left(\\frac{6}{7}\\right)$\n\n" +
+          "**At \\( t = 0 \\):**\n" +
+          "$\\ln(2) - \\ln(3) = \\ln\\left(\\frac{2}{3}\\right)$\n\n" +
+          "**Step 8: Subtract**\n\n" +
+          "$12\\left[\\ln\\left(\\frac{6}{7}\\right) - \\ln\\left(\\frac{2}{3}\\right)\\right]$\n\n" +
+          "$= 12\\ln\\left(\\frac{6/7}{2/3}\\right) = 12\\ln\\left(\\frac{6}{7} \\cdot \\frac{3}{2}\\right)$\n\n" +
+          "$= 12\\ln\\left(\\frac{18}{14}\\right) = 12\\ln\\left(\\frac{9}{7}\\right)$\n\n" +
+          "**Numerical calculation:**\n\n" +
+          "$\\frac{9}{7} \\approx 1.2857$\n" +
+          "$\\ln(1.2857) \\approx 0.2513$\n" +
+          "$12(0.2513) \\approx 3.0158$\n\n" +
+          "**Answer: \\( 12\\ln\\left(\\frac{9}{7}\\right) \\approx 3.016 \\) liters**"
+      },
+      
+      // Question 33
+      {
+        id: "exam5_q33",
+        sectionId: "section_4",
+        questionNumber: 33,
+        type: "open-ended",
+        text: "A SaaS company has total paying subscribers modeled by \\( r(t) = -\\frac{40000}{\\sqrt{1 + 0.2t}} + 50000 \\) for \\( 0 \\leq t \\leq 5 \\) years. Find the average number of paying subscribers over the next five years.",
+        correctAnswers: [
+          "-80000*sqrt(2) + 130000",
+          "130000 - 80000*sqrt(2)",
+          "16862.915",
+          "16863",
+          "16860"
+        ],
+        options: {
+          allowSymbolic: true,
+          tolerance: 10,
+          acceptedUnits: ["subscribers"],
+          requiredUnit: null
+        },
+        points: 7,
+        explanation: "**Average Value of a Function:**\n\n" +
+          "$\\bar{r} = \\frac{1}{5 - 0}\\int_0^5 r(t)\\,dt = \\frac{1}{5}\\int_0^5 \\left(-\\frac{40000}{\\sqrt{1 + 0.2t}} + 50000\\right)dt$\n\n" +
+          "**Step 1: Split the integral**\n\n" +
+          "$= \\frac{1}{5}\\left[-40000\\int_0^5 (1 + 0.2t)^{-1/2}\\,dt + 50000\\int_0^5 dt\\right]$\n\n" +
+          "**Step 2: Second integral (easy part)**\n\n" +
+          "$50000\\int_0^5 dt = 50000(5) = 250000$\n\n" +
+          "**Step 3: First integral (substitution)**\n\n" +
+          "Let \\( u = 1 + 0.2t \\), then \\( du = 0.2\\,dt \\), so \\( dt = 5\\,du \\)\n\n" +
+          "When \\( t = 0 \\): \\( u = 1 \\)\n" +
+          "When \\( t = 5 \\): \\( u = 1 + 0.2(5) = 2 \\)\n\n" +
+          "$-40000\\int_0^5 (1 + 0.2t)^{-1/2}\\,dt = -40000\\int_1^2 u^{-1/2} \\cdot 5\\,du$\n\n" +
+          "$= -200000\\int_1^2 u^{-1/2}\\,du$\n\n" +
+          "**Step 4: Integrate**\n\n" +
+          "$\\int u^{-1/2}\\,du = 2u^{1/2}$\n\n" +
+          "$= -200000[2u^{1/2}]_1^2 = -400000[\\sqrt{u}]_1^2$\n\n" +
+          "$= -400000(\\sqrt{2} - \\sqrt{1}) = -400000(\\sqrt{2} - 1)$\n\n" +
+          "$= -400000\\sqrt{2} + 400000$\n\n" +
+          "**Step 5: Combine results**\n\n" +
+          "$\\int_0^5 r(t)\\,dt = (-400000\\sqrt{2} + 400000) + 250000$\n\n" +
+          "$= -400000\\sqrt{2} + 650000$\n\n" +
+          "**Step 6: Calculate average**\n\n" +
+          "$\\bar{r} = \\frac{1}{5}(-400000\\sqrt{2} + 650000)$\n\n" +
+          "$= -80000\\sqrt{2} + 130000$\n\n" +
+          "**Numerical calculation:**\n\n" +
+          "$\\sqrt{2} \\approx 1.4142$\n" +
+          "$80000(1.4142) = 113136$\n" +
+          "$130000 - 113136 = 16864$\n\n" +
+          "**Interpretation:**\n\n" +
+          "Over the 5-year period, the company will have an average of approximately **16,863 paying subscribers**, " +
+          "even though the function shows the number declining from 50,000 initially.\n\n" +
+          "**Answer: \\( -80000\\sqrt{2} + 130000 \\approx 16,863 \\) subscribers**"
+      }
+    ],
+}
 ];
 
 // Export utility functions for working with exams

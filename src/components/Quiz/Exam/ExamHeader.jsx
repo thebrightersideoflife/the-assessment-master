@@ -10,6 +10,8 @@ import React from 'react';
  * Enhanced with:
  * - Critical timer warning (< 5 minutes)
  * - Animated pulse effect when time is low
+ * 
+ * ✅ FIXED: Only shows timer warning when timeLimit exists
  */
 const ExamHeader = ({
   exam,
@@ -19,8 +21,11 @@ const ExamHeader = ({
   totalQuestions,
   answeredCount,
   currentSection,
-  isTimerCritical, // NEW: Boolean flag for timer warning
+  isTimerCritical,
 }) => {
+  // ✅ FIX: Only show warning if exam has a time limit AND time is critical
+  const showWarning = exam.timeLimit && isTimerCritical;
+
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm mb-6">
       <div className="flex justify-between items-center">
@@ -38,7 +43,7 @@ const ExamHeader = ({
           {exam.timeLimit && (
             <>
               <div className={`text-2xl font-bold mb-1 transition-all ${
-                isTimerCritical 
+                showWarning 
                   ? 'text-red-600 animate-pulse' 
                   : 'text-gray-800'
               }`}>
@@ -46,7 +51,7 @@ const ExamHeader = ({
               </div>
               
               {/* Warning message when critical */}
-              {isTimerCritical && (
+              {showWarning && (
                 <p className="text-xs font-semibold text-red-600 animate-pulse">
                   ⚠️ TIME RUNNING OUT!
                 </p>
@@ -72,8 +77,8 @@ const ExamHeader = ({
         />
       </div>
       
-      {/* Timer warning banner */}
-      {isTimerCritical && (
+      {/* Timer warning banner - only when time limit exists AND is critical */}
+      {showWarning && (
         <div className="mt-4 bg-red-50 border-2 border-red-300 rounded-lg p-3 animate-pulse">
           <p className="text-sm font-bold text-red-800 text-center">
             🚨 Less than 5 minutes remaining! Please review and submit soon.
