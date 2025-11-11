@@ -6,7 +6,7 @@ import VideoEmbed from '../components/UI/VideoEmbed';
 import WeekQuizzes from './WeekQuizzes';
 import { modules } from '../data/modules';
 import useStore from "../store/useStore";
-import { InlineMath, BlockMath } from 'react-katex';
+import { renderTextWithMathAndMarkdown } from '../utils/textRenderer';
 import 'katex/dist/katex.min.css';
 import { AiOutlineRight } from 'react-icons/ai';
 
@@ -19,18 +19,6 @@ const Week = () => {
   const week = module?.weeks.find((w) => w.id === weekId);
   
   const [openTopicId, setOpenTopicId] = useState(null);
-  
-  const renderMath = (text) => {
-    if (!text) return null;
-    return text.split(/(\$\$.*?\$\$|\$.*?\$)/).map((part, index) => {
-      if (part.startsWith('$$') && part.endsWith('$$')) {
-        return <BlockMath key={index} math={part.slice(2, -2)} />;
-      } else if (part.startsWith('$') && part.endsWith('$')) {
-        return <InlineMath key={index} math={part.slice(1, -1)} />;
-      }
-      return part;
-    });
-  };
   
   useEffect(() => {
     if (!module || !isModuleVisible(moduleId) || !week) {
@@ -139,7 +127,6 @@ const Week = () => {
                 </div>
               </button>
               
-              {/* Changed: Removed max-h restriction and improved transitions */}
               {isOpen && (
                 <div
                   id={`topic-content-${topic.id}`}
@@ -147,15 +134,16 @@ const Week = () => {
                   role="region"
                 >
                   <div className="px-6 pb-6 pt-2 space-y-4">
-                    <div className="prose text-gray-700">
-                      {renderMath(topic.explanation)}
+                    {/* Enhanced explanation rendering with tables and markdown */}
+                    <div className="prose max-w-none text-gray-700">
+                      {renderTextWithMathAndMarkdown(topic.explanation)}
                     </div>
                     
                     {topic.example && (
                       <div className="bg-[#4169E1]/5 rounded-lg p-4 border-l-4 border-[#4169E1]">
                         <strong className="text-[#4169E1] block mb-2">Example:</strong>
-                        <div className="prose text-gray-700">
-                          {renderMath(topic.example)}
+                        <div className="prose max-w-none text-gray-700">
+                          {renderTextWithMathAndMarkdown(topic.example)}
                         </div>
                       </div>
                     )}
@@ -163,9 +151,9 @@ const Week = () => {
                     {topic.studyTip && (
                       <div className="bg-[#FFC300]/10 rounded-lg p-4 border-l-4 border-[#FFC300]">
                         <strong className="text-[#E67E22] block mb-2">💡 Study Tip:</strong>
-                        <p className="text-gray-700">
-                          {renderMath(topic.studyTip)}
-                        </p>
+                        <div className="prose max-w-none text-gray-700">
+                          {renderTextWithMathAndMarkdown(topic.studyTip)}
+                        </div>
                       </div>
                     )}
                     
@@ -184,7 +172,7 @@ const Week = () => {
           );
         })}
       </div>
-
+      
       {module.formulaSheet?.available && (
         <div className="mt-8">
           <Link

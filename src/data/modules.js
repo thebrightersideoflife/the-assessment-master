@@ -834,8 +834,59 @@ export const modules = [
       {
         id: "ITMTB_W7",
         name: "Week 7",
-        title: "Not Yet Assigned 🙂‍↔️",
-        topics: []
+        title: "Methods of Solving First-Order Differential Equations",
+        topics: [
+              {
+                id: "ITMTB_W7_T1",
+                name: "Lesson 1: General First-Order Linear Differential Equations",
+                ompetency: "Assessment Coverage: MyLMS 14.1",
+                explanation: "A **first-order linear differential equation** is an equation of the form\n\n$$\\frac{dy}{dx} + P(x)y = Q(x),$$\n\nwhere $P(x)$ and $Q(x)$ are known functions of $x$. These equations are called *linear* because $y$ and $\\dfrac{dy}{dx}$ appear only to the first power. To solve such equations, we use the **method of integrating factors (I.F.)**.\n\n**Solution Steps:**\n1. Identify $P(x)$ and $Q(x)$ by comparing with the standard form.\n2. Compute the integrating factor:\n\n$$I(x) = e^{\\int P(x)\\,dx}.$$\n\n3. Multiply the whole equation by $I(x)$ to make the left-hand side an exact derivative:\n\n$$\\frac{d}{dx}[I(x)y] = I(x)Q(x).$$\n\n4. Integrate both sides with respect to $x$:\n\n$$I(x)y = \\int I(x)Q(x)\\,dx + C.$$\n\n5. Solve for $y$:\n\n$$y = \\frac{1}{I(x)}\\left(\\int I(x)Q(x)\\,dx + C\\right).$$",
+                example: "Example: Solve $\\dfrac{dy}{dx} + 2y = e^{-x}.$\n\n1. Identify: $P(x) = 2$, $Q(x) = e^{-x}$.\n2. Compute I.F.: $I(x) = e^{\\int 2\\,dx} = e^{2x}$.\n3. Multiply through by $e^{2x}$:\n\n$$e^{2x}\\frac{dy}{dx} + 2e^{2x}y = e^{x}.$$\n\n4. Recognize the left-hand side as a derivative:\n\n$$\\frac{d}{dx}(e^{2x}y) = e^{x}.$$\n\n5. Integrate both sides:\n\n$$e^{2x}y = e^{x} + C.$$\n\n6. Solve for $y$:\n\n$$y = e^{-x} + Ce^{-2x}.$$",
+                studyTip: "Always check that your differential equation is in standard form $\\frac{dy}{dx} + P(x)y = Q(x)$ before starting. This ensures that $P(x)$ and $Q(x)$ are identified correctly for the integrating factor.",
+                videoUrl: "https://youtu.be/gd1FYn86P0c",
+                quizId: "ITMTB_W7_Quiz"
+              },
+              {
+                id: "ITMTB_W7_T1",
+                name: "Lesson 1: General First-Order Linear Differential Equations (Continued)",
+                ompetency: "Assessment Coverage: MyLMS 14.1",
+                explanation: "",
+                example: "",
+                studyTip: "",
+                videoUrl: "https://youtu.be/v5C0CtRAK10",
+                quizId: "ITMTB_W7_Quiz"
+              },
+              {
+                id: "ITMTB_W7_T2",
+                name: "Lesson 2: Applications of First-Order Linear Equations",
+                competency: "Assessment Coverage: MyLMS 14.1",
+                explanation: "First-order linear equations frequently model real-world phenomena where a quantity changes at a rate proportional to itself or to an external influence.\n\n**Common Applications:**\n\n(a) **Radioactive Decay**\n\n$$\\frac{dN}{dt} + \\lambda N = 0,$$\n\nwhere $N$ is the number of radioactive atoms and $\\lambda$ is the decay constant.\n\n(b) **Newton’s Law of Cooling**\n\n$$\\frac{dT}{dt} + k(T - T_a) = 0,$$\n\nwhere $T$ is the temperature of the object, $T_a$ is the ambient temperature, and $k$ is the cooling rate.\n\n(c) **RL Circuits**\n\n$$L\\frac{dI}{dt} + RI = E,$$\n\nwhere $I$ is current, $R$ is resistance, $L$ is inductance, and $E$ is applied voltage.",
+                example: "Example: Radioactive Decay.\n\n$$\\frac{dN}{dt} + \\lambda N = 0.$$\n\n1. Separate variables: $\\frac{dN}{N} = -\\lambda\\,dt.$\n2. Integrate: $\\ln|N| = -\\lambda t + C.$\n3. Exponentiate: $N = N_0 e^{-\\lambda t}.$\n\nThis shows that the quantity of radioactive material decreases exponentially over time.",
+                studyTip: "For application problems, identify the constants (like $k$, $\\lambda$, or $R/L$) and what they represent physically. It helps you check if your final formula makes sense (e.g., decays, cooling, or current flow).",
+                videoUrl: "",
+                quizId: "ITMTB_W7_Quiz"
+              },
+              {
+                id: "ITMTB_W7_T3",
+                name: "Lesson 3: Separable Differential Equations — Definition & General Solution",
+                competency: "Assessment Coverage: MyLMS 14.1",
+                explanation: "A **separable differential equation** is a first-order equation that can be written as:\n\n$$\\frac{dy}{dx} = g(x)h(y),$$\n\nwhere $g(x)$ is a function of $x$ only and $h(y)$ is a function of $y$ only. These equations are *separable* because the variables can be separated to opposite sides of the equation, allowing direct integration.",
+                example: "Example 1: Solve $\\dfrac{dy}{dx} = xy.$\n\n1. Rewrite in separable form: $\\dfrac{dy}{y} = x\\,dx.$\n2. Integrate both sides:\n\n$$\\int \\frac{1}{y}\\,dy = \\int x\\,dx.$$ \n\n3. Simplify: $\\ln|y| = \\dfrac{x^2}{2} + C.$\n4. Exponentiate both sides: $y = Ce^{x^2/2}.$",
+                studyTip: "Always rearrange carefully to isolate $dy$ and $dx$. Once the variables are separated, integration is straightforward — but mixing $x$ and $y$ terms is a common source of errors.",
+                videoUrl: "http://www.youtube.com/watch?v=C7nuJcJriWM",
+                quizId: "ITMTB_W7_Quiz"
+              },
+              {
+                id: "ITMTB_W7_T4",
+                name: "Lesson 4: Separable Equations — Initial Conditions & Applied Problems",
+                competency: "Assessment Coverage: MyLMS 14.1",
+                explanation: "This part applies the separable-equation method to problems that include **initial conditions** or practical scenarios. An initial condition like $y(x_0) = y_0$ allows determination of the constant $C$, giving a *particular solution* instead of a general one.",
+                example: "Example 2: Solve $\\dfrac{dy}{dx} = x$, with $y(1) = 2.$\n\n1. Integrate directly: $\\int dy = \\int x\\,dx.$\n2. Simplify: $y = \\dfrac{x^2}{2} + C.$\n3. Apply initial condition: $2 = \\dfrac{1}{2} + C \\Rightarrow C = \\dfrac{3}{2}.$\n4. Hence, $y = \\dfrac{x^2}{2} + \\dfrac{3}{2}.$\n\nThis satisfies $y(1) = 2.$",
+                studyTip: "When using an initial condition, substitute it right after integration. This reduces mistakes and helps interpret the physical meaning of $C$ (e.g., initial population, temperature, or voltage).",
+                videoUrl: "https://www.youtube.com/watch?v=kwGukY_2qWQ",
+                quizId: "ITMTB_W7_Quiz"
+              }
+        ]
       }
     ]
   }
