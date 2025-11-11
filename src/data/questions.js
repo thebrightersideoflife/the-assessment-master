@@ -6170,6 +6170,852 @@ export const questions = [
             "- **Option B**: Uses \\( y' \\) instead of \\( (y')^2 \\) inside the square root.\n" +
             "- **Option C**: This is the formula for arc length (multiplied by \\( 2\\pi \\)), not surface area. It's missing the radius function \\( y = x^{1/3} \\) outside the square root.\n" +
             "- **Option D**: This would be the integral for rotation about the \\( y \\)-axis, which uses \\( x \\) as the radius, not \\( y \\)."
+        },
+        // ============================================================
+        {
+          id: "q144",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          text: "Solve the first-order linear ODE using the integrating factor method:\n\n" +
+            "$$\\frac{dy}{dx} + 2y = e^{-x}$$\n\n" +
+            "Express your answer in the form \\( y = ... \\) (include the constant \\( C \\)).",
+          
+          correctAnswers: [
+            "e^(-x) + Ce^(-2x)",
+            "e^(-x) + C*e^(-2x)",
+            "Ce^(-2x) + e^(-x)",
+            "C*e^(-2x) + e^(-x)",
+            "e^-x + Ce^-2x",
+            "e^-x + C*e^-2x"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "**Step 1: Identify the standard form**\n\n" +
+            "The equation is already in standard form:\n\n" +
+            "$$\\frac{dy}{dx} + P(x)y = Q(x)$$\n\n" +
+            "where \\( P(x) = 2 \\) and \\( Q(x) = e^{-x} \\).\n\n" +
+            "**Step 2: Find the integrating factor**\n\n" +
+            "$$I(x) = e^{\\int P(x)\\,dx} = e^{\\int 2\\,dx} = e^{2x}$$\n\n" +
+            "**Step 3: Multiply the entire equation by \\( I(x) \\)**\n\n" +
+            "$$e^{2x}\\frac{dy}{dx} + 2e^{2x}y = e^{2x} \\cdot e^{-x} = e^{x}$$\n\n" +
+            "The left side is now the derivative of a product:\n\n" +
+            "$$\\frac{d}{dx}\\left(e^{2x}y\\right) = e^{x}$$\n\n" +
+            "**Step 4: Integrate both sides**\n\n" +
+            "$$e^{2x}y = \\int e^{x}\\,dx = e^{x} + C$$\n\n" +
+            "**Step 5: Solve for \\( y \\)**\n\n" +
+            "$$y = e^{-2x}(e^{x} + C) = e^{-x} + Ce^{-2x}$$\n\n" +
+            "**Answer: \\( y = e^{-x} + Ce^{-2x} \\)**\n\n" +
+            "---\n\n" +
+            "**Key Concept - Integrating Factor Method:**\n\n" +
+            "| **Step** | **Action** |\n" +
+            "|---|---|\n" +
+            "| 1. Standard form | Write as \\( \\frac{dy}{dx} + P(x)y = Q(x) \\) |\n" +
+            "| 2. Integrating factor | Compute \\( I(x) = e^{\\int P(x)\\,dx} \\) |\n" +
+            "| 3. Multiply | Multiply equation by \\( I(x) \\) |\n" +
+            "| 4. Recognize product | Left side becomes \\( \\frac{d}{dx}[I(x)y] \\) |\n" +
+            "| 5. Integrate | \\( I(x)y = \\int I(x)Q(x)\\,dx + C \\) |\n" +
+            "| 6. Solve for y | Divide by \\( I(x) \\) |"
+        },
+
+        // ============================================================
+        // QUESTION 145: Integrating Factor with Initial Condition
+        // ============================================================
+        {
+          id: "q145",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          text: "Solve the initial value problem using the integrating factor method:\n\n" +
+            "$$\\frac{dy}{dx} + \\frac{1}{x}y = \\frac{\\sin x}{x}, \\quad x > 0$$\n\n" +
+            "with \\( y(\\pi) = 0 \\).\n\n" +
+            "Express your answer as \\( y = ... \\) (no constant \\( C \\) needed).",
+          
+          correctAnswers: [
+            "-(cos(x)+1)/x",
+            "-(cos x + 1)/x",
+            "(-cos(x)-1)/x",
+            "(-cos x - 1)/x",
+            "(-(cos(x)+1))/x",
+            "(-(cos x + 1))/x",
+            "-(1+cos(x))/x",
+            "-(1+cos x)/x"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "**Step 1: Identify \\( P(x) \\) and find integrating factor**\n\n" +
+            "Standard form: \\( \\frac{dy}{dx} + \\frac{1}{x}y = \\frac{\\sin x}{x} \\)\n\n" +
+            "Here \\( P(x) = \\frac{1}{x} \\), so:\n\n" +
+            "$$I(x) = e^{\\int (1/x)\\,dx} = e^{ln[x]} = x$$\n\n" +
+            "**Step 2: Multiply equation by \\( I(x) = x \\)**\n\n" +
+            "$$x\\frac{dy}{dx} + y = \\sin x$$\n\n" +
+            "The left side is \\( \\frac{d}{dx}(xy) \\).\n\n" +
+            "**Step 3: Integrate both sides**\n\n" +
+            "$$xy = \\int \\sin x\\,dx = -\\cos x + C$$\n\n" +
+            "Thus:\n\n" +
+            "$$y = \\frac{-\\cos x + C}{x}$$\n\n" +
+            "**Step 4: Apply initial condition \\( y(\\pi) = 0 \\)**\n\n" +
+            "$$0 = \\frac{-\\cos(\\pi) + C}{\\pi} = \\frac{-(-1) + C}{\\pi} = \\frac{1 + C}{\\pi}$$\n\n" +
+            "This gives \\( 1 + C = 0 \\), so \\( C = -1 \\).\n\n" +
+            "**Step 5: Substitute \\( C = -1 \\)**\n\n" +
+            "$$y = \\frac{-\\cos x - 1}{x} = \\frac{-(\\cos x + 1)}{x}$$\n\n" +
+            "**Answer: \\( y = -\\frac{\\cos x + 1}{x} \\)**"
+        },
+
+        // ============================================================
+        // QUESTION 146: Separable ODE with Initial Condition
+        // ============================================================
+        {
+          id: "q146",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          text: "Solve the separable ODE:\n\n" +
+            "$$\\frac{dy}{dx} = xy^2, \\quad y(0) = 1$$\n\n" +
+            "Express your answer as \\( y = ... \\) (no constant \\( C \\)).",
+          
+          correctAnswers: [
+            "1/(1 - x^2/2)",
+            "1/(1 - x^(2)/2)",
+            "1/(1 - (x^2)/2)",
+            "2/(2 - x^2)",
+            "2/(2 - x^(2))"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "**Step 1: Separate variables**\n\n" +
+            "$$\\frac{dy}{y^2} = x\\,dx$$\n\n" +
+            "**Step 2: Integrate both sides**\n\n" +
+            "Left side:\n\n" +
+            "$$\\int y^{-2}\\,dy = -y^{-1} = -\\frac{1}{y}$$\n\n" +
+            "Right side:\n\n" +
+            "$$\\int x\\,dx = \\frac{x^2}{2} + C$$\n\n" +
+            "So:\n\n" +
+            "$$-\\frac{1}{y} = \\frac{x^2}{2} + C$$\n\n" +
+            "**Step 3: Solve for \\( y \\)**\n\n" +
+            "$$\\frac{1}{y} = -\\frac{x^2}{2} - C$$\n\n" +
+            "**Step 4: Apply initial condition \\( y(0) = 1 \\)**\n\n" +
+            "$$\\frac{1}{1} = -0 - C \\quad \\Rightarrow \\quad C = -1$$\n\n" +
+            "**Step 5: Substitute and simplify**\n\n" +
+            "$$\\frac{1}{y} = -\\frac{x^2}{2} + 1 = 1 - \\frac{x^2}{2}$$\n\n" +
+            "$$y = \\frac{1}{1 - \\frac{x^2}{2}}$$\n\n" +
+            "This can also be written as:\n\n" +
+            "$$y = \\frac{2}{2 - x^2}$$\n\n" +
+            "**Answer: \\( y = \\frac{1}{1 - \\frac{x^2}{2}} \\)** (valid where denominator ≠ 0)"
+        },
+
+        // ============================================================
+        // QUESTION 147: Separable ODE - Another Type
+        // ============================================================
+        {
+          id: "q147",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          text: "Solve the separable ODE:\n\n" +
+            "$$\\frac{dy}{dx} = \\frac{2x}{y}, \\quad y(1) = 2$$\n\n" +
+            "Express your answer as \\( y = ... \\) (take the positive square root).",
+          
+          correctAnswers: [
+            "sqrt(2x^2 + 2)",
+            "√(2x^2 + 2)",
+            "sqrt(2x^(2) + 2)",
+            "√(2x^(2) + 2)",
+            "(2x^2 + 2)^(1/2)",
+            "(2x^(2) + 2)^(1/2)"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "**Step 1: Separate variables**\n\n" +
+            "$$y\\,dy = 2x\\,dx$$\n\n" +
+            "**Step 2: Integrate both sides**\n\n" +
+            "$$\\int y\\,dy = \\int 2x\\,dx$$\n\n" +
+            "$$\\frac{y^2}{2} = x^2 + C$$\n\n" +
+            "**Step 3: Multiply by 2**\n\n" +
+            "$$y^2 = 2x^2 + 2C$$\n\n" +
+            "Let \\( C_1 = 2C \\), so:\n\n" +
+            "$$y^2 = 2x^2 + C_1$$\n\n" +
+            "**Step 4: Apply initial condition \\( y(1) = 2 \\)**\n\n" +
+            "$$4 = 2(1)^2 + C_1 = 2 + C_1$$\n\n" +
+            "$$C_1 = 2$$\n\n" +
+            "**Step 5: Solve for \\( y \\)**\n\n" +
+            "$$y^2 = 2x^2 + 2$$\n\n" +
+            "Since \\( y(1) = 2 > 0 \\), we take the positive root:\n\n" +
+            "$$y = \\sqrt{2x^2 + 2}$$\n\n" +
+            "**Answer: \\( y = \\sqrt{2x^2 + 2} \\)**"
+        },
+
+        // ============================================================
+        // QUESTION 148: Separable ODE with Integration by Parts
+        // ============================================================
+        {
+          id: "q148",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          text: "Solve the separable ODE:\n\n" +
+            "$$\\frac{dy}{dx} = \\frac{xe^x}{y}, \\quad y(0) = 2$$\n\n" +
+            "Express your answer as \\( y = ... \\) (take the positive square root).",
+          
+          correctAnswers: [
+            "sqrt(2((x-1)e^x + 3))",
+            "√(2((x-1)e^x + 3))",
+            "sqrt(2((x-1)*e^x + 3))",
+            "√(2((x-1)*e^x + 3))",
+            "(2((x-1)e^x + 3))^(1/2)",
+            "(2((x-1)*e^x + 3))^(1/2)"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "**Step 1: Separate variables**\n\n" +
+            "$$y\\,dy = xe^x\\,dx$$\n\n" +
+            "**Step 2: Integrate left side**\n\n" +
+            "$$\\int y\\,dy = \\frac{y^2}{2}$$\n\n" +
+            "**Step 3: Integrate right side using integration by parts**\n\n" +
+            "For \\( \\int xe^x\\,dx \\), let:\n" +
+            "- \\( u = x \\), \\( dv = e^x\\,dx \\)\n" +
+            "- \\( du = dx \\), \\( v = e^x \\)\n\n" +
+            "$$\\int xe^x\\,dx = xe^x - \\int e^x\\,dx = xe^x - e^x + C = (x-1)e^x + C$$\n\n" +
+            "**Step 4: Combine results**\n\n" +
+            "$$\\frac{y^2}{2} = (x-1)e^x + C$$\n\n" +
+            "**Step 5: Apply initial condition \\( y(0) = 2 \\)**\n\n" +
+            "$$\\frac{4}{2} = (0-1)e^0 + C = -1 + C$$\n\n" +
+            "$$2 = -1 + C \\quad \\Rightarrow \\quad C = 3$$\n\n" +
+            "**Step 6: Solve for \\( y \\)**\n\n" +
+            "$$\\frac{y^2}{2} = (x-1)e^x + 3$$\n\n" +
+            "$$y^2 = 2\\left((x-1)e^x + 3\\right)$$\n\n" +
+            "Since \\( y(0) = 2 > 0 \\), take positive root:\n\n" +
+            "$$y = \\sqrt{2\\left((x-1)e^x + 3\\right)}$$\n\n" +
+            "**Answer: \\( y = \\sqrt{2\\big((x-1)e^x + 3\\big)} \\)**"
+        },
+
+        // ============================================================
+        // QUESTION 149: Radioactive Decay - General Solution
+        // ============================================================
+        {
+          id: "q149",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          text: "A radioactive substance decays according to:\n\n" +
+            "$$\\frac{dN}{dt} = -\\lambda N$$\n\n" +
+            "where \\( \\lambda = 0.1 \\) day\\(^{-1}\\) and \\( N(0) = 1000 \\).\n\n" +
+            "Find \\( N(t) \\). Express your answer in the form \\( N(t) = ... \\)",
+          
+          correctAnswers: [
+            "1000e^(-0.1t)",
+            "1000*e^(-0.1t)",
+            "1000*e^(-0.1*t)",
+            "1000e^(-0.1*t)"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "**Step 1: Recognize as separable ODE**\n\n" +
+            "$$\\frac{dN}{dt} = -\\lambda N$$\n\n" +
+            "**Step 2: Separate variables**\n\n" +
+            "$$\\frac{dN}{N} = -\\lambda\\,dt$$\n\n" +
+            "**Step 3: Integrate both sides**\n\n" +
+            "$$\\int \\frac{dN}{N} = \\int -\\lambda\\,dt$$\n\n" +
+            "$$\\ln[N] = -\\lambda t + C$$\n\n" +
+            "**Step 4: Exponentiate**\n\n" +
+            "$$N = e^{-\\lambda t + C} = e^C \\cdot e^{-\\lambda t}$$\n\n" +
+            "Let \\( N_0 = e^C \\), so:\n\n" +
+            "$$N(t) = N_0 e^{-\\lambda t}$$\n\n" +
+            "**Step 5: Apply initial condition \\( N(0) = 1000 \\)**\n\n" +
+            "$$1000 = N_0 e^0 = N_0$$\n\n" +
+            "**Step 6: Substitute values**\n\n" +
+            "With \\( \\lambda = 0.1 \\) day\\(^{-1}\\):\n\n" +
+            "$$N(t) = 1000e^{-0.1t}$$\n\n" +
+            "**Answer: \\( N(t) = 1000e^{-0.1t} \\)**\n\n" +
+            "---\n\n" +
+            "**Application Note:** This is the exponential decay model used for:\n" +
+            "- Radioactive decay\n" +
+            "- Drug concentration in bloodstream\n" +
+            "- Population decline\n" +
+            "- Capacitor discharge"
+        },
+
+        // ============================================================
+        // QUESTION 150: Radioactive Decay - Half-life Calculation
+        // ============================================================
+        {
+          id: "q150",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          text: "**Question 149 continued:**\n\n" +
+            "Using the decay model \\( N(t) = 1000e^{-0.1t} \\), find the half-life \\( t_{1/2} \\) (the time when \\( N = 500 \\)).\n\n" +
+            "Round your answer to 2 decimal places and include units.",
+          
+          correctAnswers: [
+            "6.93 days",
+            "6.93days",
+            "≈6.93 days",
+            "6.93 day",
+            "6.93day"
+          ],
+          
+          options: {
+            allowSymbolic: false,
+            tolerance: 0.02,
+            acceptedUnits: ["days", "day"],
+            requiredUnit: null
+          },
+          
+          explanation: "**Step 1: Set up half-life equation**\n\n" +
+            "At half-life, \\( N(t_{1/2}) = \\frac{N_0}{2} \\):\n\n" +
+            "$$500 = 1000e^{-0.1t_{1/2}}$$\n\n" +
+            "**Step 2: Divide both sides by 1000**\n\n" +
+            "$$\\frac{1}{2} = e^{-0.1t_{1/2}}$$\n\n" +
+            "**Step 3: Take natural logarithm**\n\n" +
+            "$$\\ln\\left(\\frac{1}{2}\\right) = -0.1t_{1/2}$$\n\n" +
+            "$$-\\ln(2) = -0.1t_{1/2}$$\n\n" +
+            "**Step 4: Solve for \\( t_{1/2} \\)**\n\n" +
+            "$$t_{1/2} = \\frac{\\ln(2)}{0.1} = \\frac{0.693147}{0.1} = 6.93147\\text{ days}$$\n\n" +
+            "**Answer: \\( t_{1/2} \\approx 6.93 \\) days**\n\n" +
+            "---\n\n" +
+            "**General Half-Life Formula:**\n\n" +
+            "For exponential decay \\( N(t) = N_0e^{-\\lambda t} \\):\n\n" +
+            "$$t_{1/2} = \\frac{\\ln(2)}{\\lambda}$$\n\n" +
+            "This shows half-life is inversely proportional to the decay constant."
+        },
+
+        // ============================================================
+        // QUESTION 151: Newton's Law of Cooling
+        // ============================================================
+        {
+          id: "q151",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          text: "Newton's law of cooling states:\n\n" +
+            "$$\\frac{dT}{dt} = -k(T - T_a)$$\n\n" +
+            "where \\( T_a = 20°C \\) (ambient temperature), \\( T(0) = 90°C \\) (initial temperature), and \\( k = 0.03 \\) min\\(^{-1}\\).\n\n" +
+            "Find the temperature after 10 minutes, \\( T(10) \\). Round to 2 decimal places.",
+          
+          correctAnswers: [
+            "71.86 °C",
+            "71.86°C",
+            "71.86 C",
+            "71.86C",
+            "≈71.86 °C",
+            "71.85 °C",
+            "71.85°C"
+          ],
+          
+          options: {
+            allowSymbolic: false,
+            tolerance: 0.05,
+            acceptedUnits: ["°C", "C"],
+            requiredUnit: null
+          },
+          
+          explanation: "**Step 1: General solution for Newton's cooling**\n\n" +
+            "The solution to \\( \\frac{dT}{dt} = -k(T - T_a) \\) is:\n\n" +
+            "$$T(t) = T_a + (T_0 - T_a)e^{-kt}$$\n\n" +
+            "**Step 2: Substitute known values**\n\n" +
+            "- \\( T_a = 20°C \\)\n" +
+            "- \\( T_0 = T(0) = 90°C \\)\n" +
+            "- \\( k = 0.03 \\) min\\(^{-1}\\)\n\n" +
+            "$$T(t) = 20 + (90 - 20)e^{-0.03t} = 20 + 70e^{-0.03t}$$\n\n" +
+            "**Step 3: Calculate \\( T(10) \\)**\n\n" +
+            "$$T(10) = 20 + 70e^{-0.03(10)} = 20 + 70e^{-0.3}$$\n\n" +
+            "**Step 4: Evaluate \\( e^{-0.3} \\)**\n\n" +
+            "$$e^{-0.3} \\approx 0.740818$$\n\n" +
+            "**Step 5: Calculate final temperature**\n\n" +
+            "$$T(10) = 20 + 70(0.740818) = 20 + 51.857 = 71.857°C$$\n\n" +
+            "**Answer: \\( T(10) \\approx 71.86°C \\)**\n\n" +
+            "---\n\n" +
+            "**Physical Interpretation:**\n\n" +
+            "The temperature decays exponentially from 90°C toward the ambient temperature of 20°C. After 10 minutes, it has cooled to approximately 72°C."
+        },
+
+        // ============================================================
+        // QUESTION 152: RL Circuit Current
+        // ============================================================
+        {
+          id: "q152",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          text: "An RL circuit is governed by:\n\n" +
+            "$$L\\frac{di}{dt} + Ri = E$$\n\n" +
+            "where \\( L = 2 \\) H (inductance), \\( R = 4 \\) Ω (resistance), \\( E = 10 \\) V (constant voltage), and \\( i(0) = 0 \\) A.\n\n" +
+            "Find the current as a function of time: \\( i(t) = ... \\)",
+          
+          correctAnswers: [
+            "(5/2)(1 - e^(-2t))",
+            "(5/2)*(1 - e^(-2t))",
+            "2.5(1 - e^(-2t))",
+            "2.5*(1 - e^(-2t))",
+            "(5/2)(1 - e^(-2*t))",
+            "2.5(1 - e^(-2*t))"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "**Step 1: Divide by \\( L \\) to get standard form**\n\n" +
+            "$$\\frac{di}{dt} + \\frac{R}{L}i = \\frac{E}{L}$$\n\n" +
+            "Substitute values:\n\n" +
+            "$$\\frac{di}{dt} + \\frac{4}{2}i = \\frac{10}{2}$$\n\n" +
+            "$$\\frac{di}{dt} + 2i = 5$$\n\n" +
+            "**Step 2: Find integrating factor**\n\n" +
+            "$$I(t) = e^{\\int 2\\,dt} = e^{2t}$$\n\n" +
+            "**Step 3: Multiply equation by \\( e^{2t} \\)**\n\n" +
+            "$$e^{2t}\\frac{di}{dt} + 2e^{2t}i = 5e^{2t}$$\n\n" +
+            "Left side is \\( \\frac{d}{dt}(e^{2t}i) \\):\n\n" +
+            "$$\\frac{d}{dt}(e^{2t}i) = 5e^{2t}$$\n\n" +
+            "**Step 4: Integrate**\n\n" +
+            "$$e^{2t}i = \\int 5e^{2t}\\,dt = \\frac{5}{2}e^{2t} + C$$\n\n" +
+            "**Step 5: Solve for \\( i \\)**\n\n" +
+            "$$i(t) = \\frac{5}{2} + Ce^{-2t}$$\n\n" +
+            "**Step 6: Apply \\( i(0) = 0 \\)**\n\n" +
+            "$$0 = \\frac{5}{2} + C \\quad \\Rightarrow \\quad C = -\\frac{5}{2}$$\n\n" +
+            "**Step 7: Final solution**\n\n" +
+            "$i(t) = \\frac{5}{2} - \\frac{5}{2}e^{-2t} = \\frac{5}{2}\\left(1 - e^{-2t}\\right)$\n\n" +
+            "Or: \\( i(t) = 2.5(1 - e^{-2t}) \\) A\n\n" +
+            "**Answer: \\( i(t) = \\frac{5}{2}(1 - e^{-2t}) \\) A**\n\n" +
+            "---\n\n" +
+            "**Physical Interpretation:**\n\n" +
+            "| **Quantity** | **Value** |\n" +
+            "|---|---|\n" +
+            "| Steady-state current | \\( \\frac{E}{R} = \\frac{10}{4} = 2.5 \\) A |\n" +
+            "| Time constant | \\( \\tau = \\frac{L}{R} = \\frac{2}{4} = 0.5 \\) s |\n" +
+            "| Decay rate | \\( \\frac{1}{\\tau} = 2 \\) s\\(^{-1}\\) |\n\n" +
+            "The current rises exponentially from 0 to the steady-state value of 2.5 A."
+        },
+
+        // ============================================================
+        // QUESTION 153: Linear ODE with Polynomial RHS
+        // ============================================================
+        {
+          id: "q153",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          text: "Solve the initial value problem:\n\n" +
+            "$\\frac{dy}{dx} + 3y = x, \\quad y(0) = 2$\n\n" +
+            "Express your answer as \\( y = ... \\) (no constant \\( C \\)).",
+          
+          correctAnswers: [
+            "x/3 - 1/9 + (19/9)e^(-3x)",
+            "x/3 - 1/9 + (19/9)*e^(-3x)",
+            "(x/3) - (1/9) + (19/9)e^(-3x)",
+            "(x/3) - (1/9) + (19/9)*e^(-3x)",
+            "x/3 - 1/9 + 19e^(-3x)/9",
+            "x/3 - 1/9 + 19*e^(-3x)/9"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "**Step 1: Identify \\( P(x) \\) and find integrating factor**\n\n" +
+            "Standard form: \\( \\frac{dy}{dx} + 3y = x \\)\n\n" +
+            "Here \\( P(x) = 3 \\), so:\n\n" +
+            "$I(x) = e^{\\int 3\\,dx} = e^{3x}$\n\n" +
+            "**Step 2: Multiply equation by \\( e^{3x} \\)**\n\n" +
+            "$e^{3x}\\frac{dy}{dx} + 3e^{3x}y = xe^{3x}$\n\n" +
+            "Left side: \\( \\frac{d}{dx}(e^{3x}y) \\)\n\n" +
+            "**Step 3: Integrate right side by parts**\n\n" +
+            "$\\int xe^{3x}\\,dx$\n\n" +
+            "Let \\( u = x \\), \\( dv = e^{3x}dx \\):\n" +
+            "- \\( du = dx \\)\n" +
+            "- \\( v = \\frac{1}{3}e^{3x} \\)\n\n" +
+            "$\\int xe^{3x}\\,dx = \\frac{x}{3}e^{3x} - \\int \\frac{1}{3}e^{3x}\\,dx$\n\n" +
+            "$= \\frac{x}{3}e^{3x} - \\frac{1}{9}e^{3x} + C = \\frac{e^{3x}}{3}\\left(x - \\frac{1}{3}\\right) + C$\n\n" +
+            "**Step 4: General solution**\n\n" +
+            "$e^{3x}y = \\frac{e^{3x}}{3}\\left(x - \\frac{1}{3}\\right) + C$\n\n" +
+            "Divide by \\( e^{3x} \\):\n\n" +
+            "$y = \\frac{x}{3} - \\frac{1}{9} + Ce^{-3x}$\n\n" +
+            "**Step 5: Apply \\( y(0) = 2 \\)**\n\n" +
+            "$2 = 0 - \\frac{1}{9} + C$\n\n" +
+            "$C = 2 + \\frac{1}{9} = \\frac{18 + 1}{9} = \\frac{19}{9}$\n\n" +
+            "**Answer: \\( y = \\frac{x}{3} - \\frac{1}{9} + \\frac{19}{9}e^{-3x} \\)**"
+        },
+
+        // ============================================================
+        // QUESTION 154: Separable with Power of x
+        // ============================================================
+        {
+          id: "q154",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          text: "Solve the separable ODE:\n\n" +
+            "$\\frac{dy}{dx} = \\frac{3y}{x}, \\quad y(1) = 4, \\quad x > 0$\n\n" +
+            "Express your answer as \\( y = ... \\)",
+          
+          correctAnswers: [
+            "4x^3",
+            "4*x^3",
+            "4x^(3)",
+            "4*x^(3)"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "**Step 1: Separate variables**\n\n" +
+            "$\\frac{dy}{y} = \\frac{3}{x}\\,dx$\n\n" +
+            "**Step 2: Integrate both sides**\n\n" +
+            "$\\int \\frac{dy}{y} = \\int \\frac{3}{x}\\,dx$\n\n" +
+            "$\\ln|y| = 3\\ln|x| + C$\n\n" +
+            "**Step 3: Simplify using logarithm properties**\n\n" +
+            "$\\ln|y| = \\ln(x^3) + C$\n\n" +
+            "**Step 4: Exponentiate**\n\n" +
+            "$|y| = e^{\\ln(x^3) + C} = e^C \\cdot x^3$\n\n" +
+            "Let \\( C_1 = e^C \\), so:\n\n" +
+            "$y = C_1 x^3$\n\n" +
+            "**Step 5: Apply \\( y(1) = 4 \\)**\n\n" +
+            "$4 = C_1(1)^3 = C_1$\n\n" +
+            "**Answer: \\( y = 4x^3 \\)**\n\n" +
+            "---\n\n" +
+            "**Key Pattern:** When you have \\( \\frac{dy}{dx} = \\frac{ky}{x} \\), the solution is \\( y = Cx^k \\)."
+        },
+
+        // ============================================================
+        // QUESTION 155: Linear ODE with Trigonometric Terms
+        // ============================================================
+        {
+          id: "q155",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          text: "Solve the initial value problem:\n\n" +
+            "$\\frac{dy}{dx} + y\\tan x = \\sin x, \\quad y(0) = 0, \\quad -\\frac{\\pi}{2} < x < \\frac{\\pi}{2}$\n\n" +
+            "Express your answer as \\( y = ... \\) (no constant).",
+          
+          correctAnswers: [
+            "-cos(x)*ln(cos(x))",
+            "-cos(x)*ln(cos x)",
+            "-cos x*ln(cos x)",
+            "-cos(x)ln(cos(x))",
+            "-cos(x)ln(cos x)",
+            "-cos x ln(cos x)"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "**Step 1: Identify \\( P(x) \\) and find integrating factor**\n\n" +
+            "Here \\( P(x) = \\tan x \\).\n\n" +
+            "$I(x) = e^{\\int \\tan x\\,dx}$\n\n" +
+            "Recall: \\( \\int \\tan x\\,dx = -\\ln|\\cos x| \\)\n\n" +
+            "$I(x) = e^{-\\ln|\\cos x|} = e^{\\ln|\\cos x|^{-1}} = \\frac{1}{\\cos x}$\n\n" +
+            "**Step 2: Multiply equation by \\( \\frac{1}{\\cos x} \\)**\n\n" +
+            "$\\frac{1}{\\cos x}\\frac{dy}{dx} + y\\frac{\\tan x}{\\cos x} = \\frac{\\sin x}{\\cos x}$\n\n" +
+            "$\\frac{1}{\\cos x}\\frac{dy}{dx} + y\\frac{\\sin x}{\\cos^2 x} = \\tan x$\n\n" +
+            "Left side is \\( \\frac{d}{dx}\\left(\\frac{y}{\\cos x}\\right) \\).\n\n" +
+            "**Step 3: Integrate both sides**\n\n" +
+            "$\\frac{y}{\\cos x} = \\int \\tan x\\,dx = -\\ln|\\cos x| + C$\n\n" +
+            "**Step 4: Solve for \\( y \\)**\n\n" +
+            "$y = \\cos x(-\\ln|\\cos x| + C)$\n\n" +
+            "For \\( -\\frac{\\pi}{2} < x < \\frac{\\pi}{2} \\), \\( \\cos x > 0 \\), so:\n\n" +
+            "$y = \\cos x(-\\ln(\\cos x) + C)$\n\n" +
+            "**Step 5: Apply \\( y(0) = 0 \\)**\n\n" +
+            "$0 = \\cos(0)(-\\ln(\\cos 0) + C) = 1 \\cdot (-\\ln(1) + C) = 0 + C$\n\n" +
+            "So \\( C = 0 \\).\n\n" +
+            "**Answer: \\( y = -\\cos x \\ln(\\cos x) \\)**"
+        },
+
+        // ============================================================
+        // QUESTION 156: Separable with Arctan
+        // ============================================================
+        {
+          id: "q156",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          text: "Solve the separable ODE:\n\n" +
+            "$\\frac{dy}{dx} = \\frac{y}{1 + x^2}, \\quad y(0) = 3$\n\n" +
+            "Express your answer as \\( y = ... \\)",
+          
+          correctAnswers: [
+            "3e^(tan⁻¹(x))",
+            "3*e^(tan⁻¹(x))",
+            "3e^(arctan(x))",
+            "3*e^(arctan(x))",
+            "3*e^(tan^(-1)(x))",
+            "3e^(tan^(-1)(x))"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "**Step 1: Separate variables**\n\n" +
+            "$\\frac{dy}{y} = \\frac{dx}{1 + x^2}$\n\n" +
+            "**Step 2: Integrate both sides**\n\n" +
+            "Left side:\n\n" +
+            "$\\int \\frac{dy}{y} = \\ln|y|$\n\n" +
+            "Right side (standard integral):\n\n" +
+            "$\\int \\frac{dx}{1 + x^2} = \\arctan(x) + C$\n\n" +
+            "**Step 3: Combine**\n\n" +
+            "$\\ln|y| = \\arctan(x) + C$\n\n" +
+            "**Step 4: Exponentiate**\n\n" +
+            "$|y| = e^{\\arctan(x) + C} = e^C \\cdot e^{\\arctan(x)}$\n\n" +
+            "Let \\( C_1 = e^C \\), so:\n\n" +
+            "$y = C_1 e^{\\arctan(x)}$\n\n" +
+            "**Step 5: Apply \\( y(0) = 3 \\)**\n\n" +
+            "$3 = C_1 e^{\\arctan(0)} = C_1 e^0 = C_1$\n\n" +
+            "**Answer: \\( y = 3e^{\\arctan(x)} \\)**\n\n" +
+            "---\n\n" +
+            "**Note:** You can also write this as \\( y = 3e^{\\tan^{-1}(x)} \\)."
+        },
+
+        // ============================================================
+        // QUESTION 157: Linear ODE with x in Denominator
+        // ============================================================
+        {
+          id: "q157",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          text: "Solve the initial value problem:\n\n" +
+            "$\\frac{dy}{dx} + \\frac{2}{x}y = x^2, \\quad x > 0, \\quad y(1) = 0$\n\n" +
+            "Express your answer as \\( y = ... \\) (no constant).",
+          
+          correctAnswers: [
+            "x^3/5 - 1/(5x^2)",
+            "x^(3)/5 - 1/(5x^(2))",
+            "(x^3)/5 - 1/(5x^2)",
+            "(x^(3))/5 - 1/(5x^(2))",
+            "x^3/5 - 1/(5*x^2)",
+            "(x^3)/5 - 1/(5*x^2)"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "**Step 1: Identify \\( P(x) \\) and find integrating factor**\n\n" +
+            "Here \\( P(x) = \\frac{2}{x} \\).\n\n" +
+            "$I(x) = e^{\\int \\frac{2}{x}\\,dx} = e^{2\\ln x} = e^{\\ln x^2} = x^2$\n\n" +
+            "**Step 2: Multiply equation by \\( x^2 \\)**\n\n" +
+            "$x^2\\frac{dy}{dx} + 2xy = x^4$\n\n" +
+            "Left side is \\( \\frac{d}{dx}(x^2 y) \\).\n\n" +
+            "**Step 3: Integrate**\n\n" +
+            "$x^2 y = \\int x^4\\,dx = \\frac{x^5}{5} + C$\n\n" +
+            "**Step 4: Solve for \\( y \\)**\n\n" +
+            "$y = \\frac{x^5}{5x^2} + \\frac{C}{x^2} = \\frac{x^3}{5} + Cx^{-2}$\n\n" +
+            "**Step 5: Apply \\( y(1) = 0 \\)**\n\n" +
+            "$0 = \\frac{1}{5} + C$\n\n" +
+            "$C = -\\frac{1}{5}$\n\n" +
+            "**Answer: \\( y = \\frac{x^3}{5} - \\frac{1}{5x^2} \\)**"
+        },
+
+        // ============================================================
+        // QUESTION 158: Separable - Numerical Evaluation
+        // ============================================================
+        {
+          id: "q158",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          text: "Solve the separable ODE:\n\n" +
+            "$\\frac{dy}{dx} = x^2 y^2, \\quad y(0) = 1$\n\n" +
+            "Then evaluate \\( y(0.5) \\). Round to 5 decimal places.",
+          
+          correctAnswers: [
+            "1.04348",
+            "≈1.04348",
+            "1.04347",
+            "1.0435"
+          ],
+          
+          options: {
+            allowSymbolic: false,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "**Step 1: Separate variables**\n\n" +
+            "$\\frac{dy}{y^2} = x^2\\,dx$\n\n" +
+            "**Step 2: Integrate both sides**\n\n" +
+            "$\\int y^{-2}\\,dy = \\int x^2\\,dx$\n\n" +
+            "$-y^{-1} = \\frac{x^3}{3} + C$\n\n" +
+            "$-\\frac{1}{y} = \\frac{x^3}{3} + C$\n\n" +
+            "**Step 3: Solve for \\( y \\)**\n\n" +
+            "$\\frac{1}{y} = -\\frac{x^3}{3} - C$\n\n" +
+            "**Step 4: Apply \\( y(0) = 1 \\)**\n\n" +
+            "$\\frac{1}{1} = -0 - C \\quad \\Rightarrow \\quad C = -1$\n\n" +
+            "**Step 5: Substitute \\( C = -1 \\)**\n\n" +
+            "$\\frac{1}{y} = -\\frac{x^3}{3} + 1 = 1 - \\frac{x^3}{3}$\n\n" +
+            "$y = \\frac{1}{1 - \\frac{x^3}{3}}$\n\n" +
+            "**Step 6: Evaluate at \\( x = 0.5 \\)**\n\n" +
+            "$1 - \\frac{(0.5)^3}{3} = 1 - \\frac{0.125}{3} = 1 - 0.041667 = 0.958333$\n\n" +
+            "$y(0.5) = \\frac{1}{0.958333} \\approx 1.04348$\n\n" +
+            "**Answer: \\( y(0.5) \\approx 1.04348 \\)**"
+        },
+
+        // ============================================================
+        // QUESTION 159: Logistic Growth Model - General Solution
+        // ============================================================
+        {
+          id: "q159",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          text: "A population grows according to the logistic model:\n\n" +
+            "$\\frac{dy}{dt} = ry\\left(1 - \\frac{y}{K}\\right)$\n\n" +
+            "with \\( r = 1 \\), \\( K = 10 \\) (carrying capacity), and \\( y(0) = 1 \\).\n\n" +
+            "Find the general solution \\( y(t) = ... \\)",
+          
+          correctAnswers: [
+            "10e^t/(9 + e^t)",
+            "10*e^t/(9 + e^t)",
+            "10e^(t)/(9 + e^(t))",
+            "10*e^(t)/(9 + e^(t))"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "**Step 1: Separate variables**\n\n" +
+            "$\\frac{dy}{y\\left(1 - \\frac{y}{K}\\right)} = r\\,dt$\n\n" +
+            "With \\( K = 10 \\):\n\n" +
+            "$\\frac{dy}{y\\left(1 - \\frac{y}{10}\\right)} = dt$\n\n" +
+            "**Step 2: Rewrite left side**\n\n" +
+            "$1 - \\frac{y}{10} = \\frac{10 - y}{10}$\n\n" +
+            "So:\n\n" +
+            "$\\frac{dy}{y \\cdot \\frac{10-y}{10}} = \\frac{10\\,dy}{y(10-y)} = dt$\n\n" +
+            "**Step 3: Partial fractions**\n\n" +
+            "$\\frac{10}{y(10-y)} = \\frac{A}{y} + \\frac{B}{10-y}$\n\n" +
+            "Multiply by \\( y(10-y) \\):\n\n" +
+            "$10 = A(10-y) + By$\n\n" +
+            "Let \\( y = 0 \\): \\( 10 = 10A \\Rightarrow A = 1 \\)\n\n" +
+            "Let \\( y = 10 \\): \\( 10 = 10B \\Rightarrow B = 1 \\)\n\n" +
+            "So:\n\n" +
+            "$\\frac{10}{y(10-y)} = \\frac{1}{y} + \\frac{1}{10-y}$\n\n" +
+            "**Step 4: Integrate**\n\n" +
+            "$\\int \\left(\\frac{1}{y} + \\frac{1}{10-y}\\right)dy = \\int dt$\n\n" +
+            "$\\ln|y| - \\ln|10-y| = t + C$\n\n" +
+            "$\\ln\\left|\\frac{y}{10-y}\\right| = t + C$\n\n" +
+            "**Step 5: Exponentiate**\n\n" +
+            "$\\frac{y}{10-y} = C_1 e^t$\n\n" +
+            "**Step 6: Solve for \\( y \\)**\n\n" +
+            "$y = (10-y)C_1 e^t$\n\n" +
+            "$y(1 + C_1 e^t) = 10C_1 e^t$\n\n" +
+            "$y = \\frac{10C_1 e^t}{1 + C_1 e^t}$\n\n" +
+            "**Step 7: Apply \\( y(0) = 1 \\)**\n\n" +
+            "$1 = \\frac{10C_1}{1 + C_1}$\n\n" +
+            "$1 + C_1 = 10C_1$\n\n" +
+            "$1 = 9C_1 \\quad \\Rightarrow \\quad C_1 = \\frac{1}{9}$\n\n" +
+            "**Step 8: Substitute and simplify**\n\n" +
+            "$y(t) = \\frac{10 \\cdot \\frac{1}{9} e^t}{1 + \\frac{1}{9}e^t} = \\frac{\\frac{10}{9}e^t}{1 + \\frac{1}{9}e^t}$\n\n" +
+            "Multiply numerator and denominator by 9:\n\n" +
+            "$y(t) = \\frac{10e^t}{9 + e^t}$\n\n" +
+            "**Answer: \\( y(t) = \\frac{10e^t}{9 + e^t} \\)**"
+        },
+
+        // ============================================================
+        // QUESTION 160: Logistic Growth - Numerical Evaluation
+        // ============================================================
+        {
+          id: "q160",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          text: "**Question 159 continued:**\n\n" +
+            "Using the logistic model \\( y(t) = \\frac{10e^t}{9 + e^t} \\), evaluate the population at \\( t = 2 \\).\n\n" +
+            "Round to 3 decimal places.",
+          
+          correctAnswers: [
+            "4.507",
+            "≈4.507",
+            "4.51"
+          ],
+          
+          options: {
+            allowSymbolic: false,
+            tolerance: 0.01,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "**Step 1: Substitute \\( t = 2 \\) into the solution**\n\n" +
+            "$y(2) = \\frac{10e^2}{9 + e^2}$\n\n" +
+            "**Step 2: Evaluate \\( e^2 \\)**\n\n" +
+            "$e^2 \\approx 7.389056$\n\n" +
+            "**Step 3: Calculate numerator**\n\n" +
+            "$10 \\times 7.389056 = 73.89056$\n\n" +
+            "**Step 4: Calculate denominator**\n\n" +
+            "$9 + 7.389056 = 16.389056$\n\n" +
+            "**Step 5: Divide**\n\n" +
+            "$y(2) = \\frac{73.89056}{16.389056} \\approx 4.507$\n\n" +
+            "**Answer: \\( y(2) \\approx 4.507 \\)**\n\n" +
+            "---\n\n" +
+            "**Logistic Growth Behavior:**\n\n" +
+            "| **Time** | **Population** | **% of Capacity** |\n" +
+            "|---|---|---|\n" +
+            "| \\( t = 0 \\) | 1 | 10% |\n" +
+            "| \\( t = 2 \\) | 4.507 | 45% |\n" +
+            "| \\( t \\to \\infty \\) | 10 | 100% |\n\n" +
+            "The population grows rapidly at first, then slows as it approaches the carrying capacity \\( K = 10 \\)."
         }
 
 ]

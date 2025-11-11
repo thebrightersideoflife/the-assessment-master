@@ -863,7 +863,27 @@ export const modules = [
                 explanation: "First-order linear equations frequently model real-world phenomena where a quantity changes at a rate proportional to itself or to an external influence.\n\n**Common Applications:**\n\n(a) **Radioactive Decay**\n\n$$\\frac{dN}{dt} + \\lambda N = 0,$$\n\nwhere $N$ is the number of radioactive atoms and $\\lambda$ is the decay constant.\n\n(b) **Newton’s Law of Cooling**\n\n$$\\frac{dT}{dt} + k(T - T_a) = 0,$$\n\nwhere $T$ is the temperature of the object, $T_a$ is the ambient temperature, and $k$ is the cooling rate.\n\n(c) **RL Circuits**\n\n$$L\\frac{dI}{dt} + RI = E,$$\n\nwhere $I$ is current, $R$ is resistance, $L$ is inductance, and $E$ is applied voltage.",
                 example: "Example: Radioactive Decay.\n\n$$\\frac{dN}{dt} + \\lambda N = 0.$$\n\n1. Separate variables: $\\frac{dN}{N} = -\\lambda\\,dt.$\n2. Integrate: $\\ln|N| = -\\lambda t + C.$\n3. Exponentiate: $N = N_0 e^{-\\lambda t}.$\n\nThis shows that the quantity of radioactive material decreases exponentially over time.",
                 studyTip: "For application problems, identify the constants (like $k$, $\\lambda$, or $R/L$) and what they represent physically. It helps you check if your final formula makes sense (e.g., decays, cooling, or current flow).",
-                videoUrl: "",
+                videoUrl: "https://www.youtube.com/watch?v=b53nhCEXlGI",
+                quizId: "ITMTB_W7_Quiz"
+              },
+              {
+                id: "ITMTB_W7_T2",
+                name: "Lesson 2: Applications of First-Order Linear Equations (Continued)",
+                ompetency: "Assessment Coverage: MyLMS 14.1",
+                explanation: "",
+                example: "",
+                studyTip: "",
+                videoUrl: "https://www.youtube.com/watch?v=_bAjWNsNrQA",
+                quizId: "ITMTB_W7_Quiz"
+              },
+              {
+                id: "ITMTB_W7_T2",
+                name: "Lesson 2: Applications of First-Order Linear Equations (Continued)",
+                ompetency: "Assessment Coverage: MyLMS 14.1",
+                explanation: "",
+                example: "",
+                studyTip: "",
+                videoUrl: "https://www.youtube.com/watch?v=zsOQ4lbeiWI",
                 quizId: "ITMTB_W7_Quiz"
               },
               {
