@@ -4653,7 +4653,11 @@ export const questions = [
           weekId: "ITMTB_W5",
           type: "open-ended",
           text: "Find the volume of the solid formed when the region between \\( x = y^3 \\) and \\( x = 1 \\) is rotated about the \\( x \\)-axis.",
-          
+          image: {
+            src: "/images/ITMTB_Week 5_Quiz 1_Question 3.png",
+            alt: "Region in the xy plane bounded by the curve x = y^3 and the line x = 1.",
+            caption: "Region bounded by ( x = y^3) and ( x = 1)."
+          },
           correctAnswers: [
             "3π/5",
             "3*π/5",
