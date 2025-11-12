@@ -4656,7 +4656,7 @@ export const questions = [
           image: {
             src: "/images/ITMTB_Week 5_Quiz 1_Question 3.png",
             alt: "Region in the xy plane bounded by the curve x = y^3 and the line x = 1.",
-            caption: "Region bounded by ( x = y^3) and ( x = 1)."
+            caption: "Region bounded by (x = y^3) and (x = 1)."
           },
           correctAnswers: [
             "3π/5",
