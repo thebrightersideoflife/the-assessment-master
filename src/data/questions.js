@@ -4681,18 +4681,18 @@ export const questions = [
             requiredUnit: null
           },
           
-          explanation: "This problem is best solved using the **cylindrical shell method**. Although we're rotating about the \\( x \\)-axis, it's easier to integrate with respect to \\( y \\).\n\n" +
-            "**Formula for Shell Method (rotating about \\( x \\)-axis, integrating with \\( y \\)):**\n\n" +
+            explanation: "This problem is best solved using the **cylindrical shell method**. Although we're rotating about the x-axis, it's easier to integrate with respect to y.\n\n" +
+            "**Formula for Shell Method (rotating about x-axis, integrating with y):**\n\n" +
             "$$V = \\int_{c}^{d} 2\\pi y \\cdot h(y) \\, dy$$\n\n" +
-            "where \\( y \\) is the **radius** and \\( h(y) \\) is the **height** of each shell.\n\n" +
-            "**Step 1: Identify Components (in terms of \\( y \\))**\n\n" +
-            "- **Radius:** Distance from \\( x \\)-axis to point at height \\( y \\) is just \\( y \\)\n" +
+            "where y is the **radius** and h(y) is the **height** of each shell.\n\n" +
+            "**Step 1: Identify Components (in terms of y)**\n\n" +
+            "- **Radius:** Distance from x-axis to point at height y is just y\n" +
             "- **Height:** Rightmost curve minus leftmost curve\n" +
-            "  - Right: \\( x = 1 \\)\n" +
-            "  - Left: \\( x = y^3 \\)\n" +
-            "  - Height: \\( h(y) = 1 - y^3 \\)\n" +
-            "- **Limits:** The curves intersect when \\( y^3 = 1 \\), so \\( y = 1 \\)\n" +
-            "  - From \\( c = 0 \\) to \\( d = 1 \\)\n\n" +
+            "  - Right: x = 1\n" +
+            "  - Left: x = y^3\n" +
+            "  - Height: h(y) = 1 - y^3\n" +
+            "- **Limits:** The curves intersect when y^3 = 1, so y = 1\n" +
+            "  - From c = 0 to d = 1\n\n" +
             "**Step 2: Set Up the Integral**\n\n" +
             "$$V = \\int_{0}^{1} 2\\pi y (1 - y^3) \\, dy$$\n\n" +
             "**Step 3: Simplify**\n\n" +
@@ -4701,87 +4701,30 @@ export const questions = [
             "$$V = 2\\pi \\left[ \\frac{y^2}{2} - \\frac{y^5}{5} \\right]_{0}^{1}$$\n\n" +
             "**Step 5: Evaluate**\n\n" +
             "$$V = 2\\pi \\left( \\frac{1}{2} - \\frac{1}{5} - 0 \\right)$$\n\n" +
-            "$$V = 2\\pi \\left( \\frac{5 - 2}{10} \\right) = 2\\pi \\left( \\frac{3}{10} \\right) = \\frac{6\\pi}{10} = \\frac{3\\pi}{5}$$\n\n" +
-            "**Answer: \\( \\frac{3\\pi}{5} \\) cubic units** (approximately 1.885 cubic units)\n\n" +
+            "$$V = 2\\pi \\left( \\frac{3}{10} \\right) = \\frac{6\\pi}{10} = \\frac{3\\pi}{5}$$\n\n" +
+            "**Answer: \\( \\frac{3\\pi}{5} \\)** cubic units (≈ 1.885 cubic units)\n\n" +
             "---\n\n" +
-            "**Key Concept - When to Use Shell Method:**\n\n" +
+            "**Alternative Solution — Disk/Washer Method**\n\n" +
+            "We can also solve this using the **disk/washer method** by integrating with respect to x.\n\n" +
+            "**Step 1:** Express y in terms of x:  \\( y = x^{1/3} \\)\n\n" +
+            "The radius of each disk (distance from x-axis to curve) is y = x^{1/3}.\n\n" +
+            "**Step 2:** Use the washer formula (no hole, since region starts at y=0):\n\n" +
+            "$$V = \\pi \\int_{0}^{1} [R(x)]^2 \\, dx$$\n\n" +
+            "Here, \\( R(x) = x^{1/3} \\)\n\n" +
+            "**Step 3:** Substitute and integrate:\n\n" +
+            "$$V = \\pi \\int_{0}^{1} (x^{1/3})^2 \\, dx = \\pi \\int_{0}^{1} x^{2/3} \\, dx$$\n\n" +
+            "$$V = \\pi \\left[ \\frac{x^{5/3}}{5/3} \\right]_{0}^{1} = \\pi \\cdot \\frac{3}{5} = \\frac{3\\pi}{5}$$\n\n" +
+            "**Same Result:** \\( V = \\frac{3\\pi}{5} \\)\n\n" +
+            "---\n\n" +
+            "**Key Concept - When to Use Each Method:**\n\n" +
             "| **Scenario** | **Best Method** | **Why?** |\n" +
             "|---|---|---|\n" +
-            "| Rotating about \\( x \\)-axis, function is \\( y = f(x) \\) | Disk/Washer | Natural to integrate with \\( dx \\) |\n" +
-            "| Rotating about \\( x \\)-axis, function is \\( x = g(y) \\) | Shell Method | Easier to integrate with \\( dy \\) |\n" +
-            "| Rotating about \\( y \\)-axis, function is \\( x = g(y) \\) | Disk/Washer | Natural to integrate with \\( dy \\) |\n" +
-            "| Rotating about \\( y \\)-axis, function is \\( y = f(x) \\) | Shell Method | Easier to integrate with \\( dx \\) |\n\n" +
-            "**Shell Method Intuition:** Imagine wrapping the region with cylindrical shells (like nested cans). Each shell has:\n" +
-            "- Circumference: \\( 2\\pi r \\) (where \\( r \\) is distance to axis)\n" +
-            "- Height: \\( h \\) (width of the region)\n" +
-            "- Volume of thin shell: \\( 2\\pi r \\cdot h \\cdot dr \\)"
-        },
-
-        // Question 115: Arc Length - Geometric Check (Part 1 - Finding Arc Length)
-        {
-          id: "q115",
-          moduleId: "ITMTB",
-          weekId: "ITMTB_W5",
-          type: "open-ended",
-          text: "Use the arc length formula to find the length of the curve \\( y = \\sqrt{4 - x^2} \\) for \\( 0 \\le x \\le 2 \\).",
-          
-          image: {
-            src: "/images/ITMTB_Week 5_Quiz 1_Question 4.png",
-            alt: "Graph showing quarter circle from point (0,2) to (2,0)",
-            caption: "The curve is the upper half of the circle x² + y² = 4 in the first quadrant"
-          },
-          
-          correctAnswers: [
-            "π",
-            "pi",
-            "3.14159",
-            "3.1416",
-            "3.142",
-            "3.14",
-            "≈π",
-            "≈3.14"
-          ],
-          
-          options: {
-            allowSymbolic: true,
-            tolerance: 0.01,
-            acceptedUnits: [],
-            requiredUnit: null
-          },
-          
-          explanation: "This problem demonstrates how the arc length formula matches geometric results.\n\n" +
-            "**Arc Length Formula:**\n\n" +
-            "$$L = \\int_{a}^{b} \\sqrt{1 + (y')^2} \\, dx$$\n\n" +
-            "**Step 1: Find the Derivative**\n\n" +
-            "Given \\( y = (4 - x^2)^{1/2} \\), using the chain rule:\n\n" +
-            "$$y' = \\frac{1}{2}(4 - x^2)^{-1/2} \\cdot (-2x) = \\frac{-x}{\\sqrt{4 - x^2}}$$\n\n" +
-            "**Step 2: Find \\( 1 + (y')^2 \\)**\n\n" +
-            "First square the derivative:\n\n" +
-            "$$(y')^2 = \\frac{x^2}{4 - x^2}$$\n\n" +
-            "Then add 1:\n\n" +
-            "$$1 + (y')^2 = 1 + \\frac{x^2}{4 - x^2} = \\frac{(4 - x^2) + x^2}{4 - x^2} = \\frac{4}{4 - x^2}$$\n\n" +
-            "**Step 3: Set Up the Integral**\n\n" +
-            "$$L = \\int_{0}^{2} \\sqrt{\\frac{4}{4 - x^2}} \\, dx = \\int_{0}^{2} \\frac{2}{\\sqrt{4 - x^2}} \\, dx$$\n\n" +
-            "**Step 4: Integrate**\n\n" +
-            "This is a standard inverse trig integral: \\( \\int \\frac{1}{\\sqrt{a^2 - x^2}} dx = \\sin^{-1}\\left(\\frac{x}{a}\\right) + C \\)\n\n" +
-            "With \\( a = 2 \\):\n\n" +
-            "$$L = 2 \\left[ \\sin^{-1}\\left(\\frac{x}{2}\\right) \\right]_{0}^{2}$$\n\n" +
-            "**Step 5: Evaluate**\n\n" +
-            "$$L = 2 \\left( \\sin^{-1}(1) - \\sin^{-1}(0) \\right)$$\n\n" +
-            "$$L = 2 \\left( \\frac{\\pi}{2} - 0 \\right) = \\pi$$\n\n" +
-            "**Geometric Verification:**\n\n" +
-            "The equation \\( y = \\sqrt{4 - x^2} \\) represents the upper half of circle \\( x^2 + y^2 = 4 \\) with radius \\( r = 2 \\).\n\n" +
-            "The limits \\( 0 \\le x \\le 2 \\) give us the arc from \\( (0, 2) \\) to \\( (2, 0) \\) - exactly one quarter of the circle.\n\n" +
-            "- Full circumference: \\( C = 2\\pi r = 4\\pi \\)\n" +
-            "- Quarter arc: \\( \\frac{1}{4} \\times 4\\pi = \\pi \\) ✓\n\n" +
-            "**Answer: \\( \\pi \\)** (approximately 3.14159)\n\n" +
-            "---\n\n" +
-            "**Key Concept - Arc Length Intuition:**\n\n" +
-            "The arc length formula \\( ds = \\sqrt{1 + (y')^2} \\, dx \\) comes from the Pythagorean theorem:\n\n" +
-            "- Horizontal distance: \\( dx \\)\n" +
-            "- Vertical distance: \\( dy = y' dx \\)\n" +
-            "- Actual distance along curve: \\( ds = \\sqrt{(dx)^2 + (dy)^2} = \\sqrt{1 + (y')^2} \\, dx \\)\n\n" +
-            "We integrate these tiny arc segments to get total length."
+            "| Rotating about x-axis, function is y = f(x) | Disk/Washer | Natural to integrate with dx |\n" +
+            "| Rotating about x-axis, function is x = g(y) | Shell Method | Easier to integrate with dy |\n" +
+            "| Rotating about y-axis, function is x = g(y) | Disk/Washer | Natural to integrate with dy |\n" +
+            "| Rotating about y-axis, function is y = f(x) | Shell Method | Easier to integrate with dx |\n\n" +
+            "**Shell Method Intuition:** Each thin horizontal strip at height y forms a cylindrical shell when rotated — like nested cans. Volume = circumference × height × thickness:\n" +
+            "$$dV = 2\\pi r \\cdot h \\cdot dr$$"
         },
 
         // Question 116: Arc Length - Perfect Square Problem
