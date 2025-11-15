@@ -6,6 +6,7 @@ import { modules } from "../data/modules";
 import { exams } from "../data/exams";
 import { chunkQuestions } from "../utils/chunkQuestions";
 import { questions } from "../data/questions";
+import ChallengePrompt from "../components/UI/ChallengePrompt";
 
 const Dashboard = () => {
   const {
@@ -17,7 +18,12 @@ const Dashboard = () => {
     resetAllProgress,
     streaks,
     getWeekProgress,
+    getTotalPoints, // ✅ NEW
+    getModulePoints, // ✅ NEW
   } = useStore();
+
+  // ✅ NEW: Get total points
+  const totalPoints = getTotalPoints();
 
   // Aggregate global stats (quizzes + exams)
   const aggregateStats = Object.values(quizzes).reduce(
@@ -50,7 +56,7 @@ const Dashboard = () => {
 
   // Count completed exams
   const completedExams = Object.values(examStates).filter((e) => e.submitted).length;
-  const totalExams = exams.length; // Use exams from data/exams.js
+  const totalExams = exams.length;
 
   // Get recent exam results (last 3 submitted exams)
   const recentExams = Object.entries(examStates)
@@ -85,6 +91,7 @@ const Dashboard = () => {
   const handleImportProgress = (e) => {
     const file = e.target.files[0];
     if (!file) return;
+
     const reader = new FileReader();
     reader.onload = (event) => {
       try {
@@ -114,16 +121,15 @@ const Dashboard = () => {
   // Build per-module stats (weeks + exams)
   const moduleStats = modules
     .filter((module) => module.isVisible !== false)
-    .map((module) => ({
-      moduleId: module.id,
-      moduleName: module.name,
-      weeks: module.weeks.map((week) => {
+    .map((module) => {
+      const weeks = module.weeks.map((week) => {
         const weekQuestions = questions.filter(
           (q) => q.moduleId === module.id && q.weekId === week.id
         );
         const questionChunks = chunkQuestions(weekQuestions);
         const totalQuizzes = questionChunks.length;
         const progress = getWeekProgress(module.id, week.id, totalQuizzes);
+
         return {
           weekId: week.id,
           weekName: week.name,
@@ -132,24 +138,68 @@ const Dashboard = () => {
           totalQuizzes,
           completedQuizzes: progress.completedQuizzes,
         };
-      }),
-      exams: (exams.filter((e) => e.moduleId === module.id) || []).map((exam) => {
-        const examState = getExamState(exam.id);
-        const attemptCount = getExamAttemptCount(exam.id);
-        return {
-          examId: exam.id,
-          examName: exam.title,
-          duration: exam.duration,
-          isCompleted: examState.submitted || false,
-          percentage: examState.results?.percentage || 0,
-          passed: examState.results?.passed || false,
-          earnedPoints: examState.results?.earnedPoints || 0,
-          totalPoints: examState.results?.totalPoints || exam.questions?.length || 0,
-          attemptCount,
-          inProgress: examState.startTime && !examState.submitted,
-        };
-      }),
-    }));
+      });
+
+      // Calculate module completion percentage
+      const totalWeekQuestions = weeks.reduce((sum, w) => sum + w.stats.total, 0);
+      const totalWeekCorrect = weeks.reduce((sum, w) => sum + w.stats.correct, 0);
+      const totalCompletedQuizzes = weeks.reduce((sum, w) => sum + w.completedQuizzes, 0);
+      const totalAllQuizzes = weeks.reduce((sum, w) => sum + w.totalQuizzes, 0);
+      
+      const completionPercentage = totalWeekQuestions > 0 
+        ? Math.round((totalWeekCorrect / totalWeekQuestions) * 100)
+        : 0;
+
+      return {
+        moduleId: module.id,
+        moduleName: module.name,
+        completionPercentage,
+        completedQuizzes: totalCompletedQuizzes,
+        totalQuizzes: totalAllQuizzes,
+        weeks,
+        exams: (exams.filter((e) => e.moduleId === module.id) || []).map((exam) => {
+          const examState = getExamState(exam.id);
+          const attemptCount = getExamAttemptCount(exam.id);
+          return {
+            examId: exam.id,
+            examName: exam.title,
+            duration: exam.duration,
+            isCompleted: examState.submitted || false,
+            percentage: examState.results?.percentage || 0,
+            passed: examState.results?.passed || false,
+            earnedPoints: examState.results?.earnedPoints || 0,
+            totalPoints: examState.results?.totalPoints || exam.questions?.length || 0,
+            attemptCount,
+            inProgress: examState.startTime && !examState.submitted,
+          };
+        }),
+      };
+    });
+
+  // Helper function to generate module milestone messages
+  const getModuleMilestone = (completionPercent, moduleName, completedCount, totalCount) => {
+    // Requirements for showing a milestone:
+    // 1. Must have completed at least 5 items (quizzes/weeks)
+    // 2. Must have at least 10 total items in the module
+    // 3. Completion percentage must be meaningful
+    if (completedCount < 5 || totalCount < 10) return null;
+    if (completionPercent === 0) return null;
+    
+    const milestones = {
+      25: { emoji: "🚀", message: `Quarter way through ${moduleName}! Keep it up!` },
+      50: { emoji: "🎯", message: `Halfway through ${moduleName}! You're doing amazing!` },
+      75: { emoji: "🔥", message: `75% complete in ${moduleName}! Almost there!` },
+      100: { emoji: "🎉", message: `${moduleName} completed! Congratulations!` }
+    };
+    
+    // Find the highest milestone achieved
+    const achieved = Object.keys(milestones)
+      .map(Number)
+      .filter(m => completionPercent >= m)
+      .sort((a, b) => b - a)[0];
+    
+    return achieved ? milestones[achieved] : null;
+  };
 
   // Render math for any formulas
   useEffect(() => {
@@ -171,26 +221,42 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* Top Stats Cards */}
+        {/* Top Stats Cards - Updated with Points */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          {/* ✅ NEW: Total Points Card - Premium Diamond Design */}
+          <div className="relative bg-gradient-to-r from-[#4169E1] via-[#5B9BD5] to-[#3498DB] p-[2px] rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="bg-white rounded-[10px] p-6 h-full">
+              <div className="flex items-center space-x-4">
+                <div className="bg-gradient-to-br from-[#4169E1]/10 to-[#3498DB]/20 p-3 rounded-lg">
+                  <span className="text-3xl">💎</span>
+                </div>
+                <div className="flex-1">
+                  <div className="text-3xl font-black bg-gradient-to-r from-[#4169E1] via-[#5B9BD5] to-[#3498DB] bg-clip-text text-transparent">
+                    {totalPoints.toLocaleString()}
+                  </div>
+                  <div className="text-sm font-bold bg-gradient-to-r from-[#4169E1] to-[#3498DB] bg-clip-text text-transparent">
+                    Total Points
+                  </div>
+                  <div className="text-xs text-gray-400 mt-1">Your achievement score</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
           <StatCard
             icon={<AiOutlineStar className="w-6 h-6 text-[#28B463]" />}
             value={totalCorrect}
-            label="Points Earned"
+            label="Correct Answers"
             iconBg="bg-[#28B463]/10"
           />
-          <StatCard
-            icon={<AiOutlineBook className="w-6 h-6 text-[#3498DB]" />}
-            value={totalAttempted}
-            label="Total Attempted"
-            iconBg="bg-[#3498DB]/10"
-          />
+          
           <StatCard
             icon={<AiOutlineTrophy className="w-6 h-6 text-[#4169E1]" />}
             value={`${overallAccuracy}%`}
             label="Accuracy Rate"
             iconBg="bg-[#4169E1]/10"
           />
+          
           <StatCard
             icon={<AiOutlineFire className="w-6 h-6 text-[#E67E22]" />}
             value={`${streaks.currentStreak} days`}
@@ -269,6 +335,9 @@ const Dashboard = () => {
           </p>
         </div>
 
+        {/* Challenge Prompts */}
+        <ChallengePrompt position="dashboard" />
+
         {/* Action Buttons */}
         <div className="flex flex-wrap justify-center gap-4">
           <ActionButton
@@ -306,68 +375,102 @@ const Dashboard = () => {
             <div className="h-1 flex-1 bg-gradient-to-l from-[#4169E1] to-transparent rounded-full"></div>
           </div>
 
-          {moduleStats.map((module, moduleIndex) => (
-            <div
-              key={module.moduleId}
-              className="space-y-6 animate-fadeIn"
-              style={{ animationDelay: `${moduleIndex * 100}ms` }}
-            >
-              <h3 className="text-2xl font-bold text-[#4169E1] flex items-center space-x-2">
-                <span className="w-2 h-8 bg-gradient-to-b from-[#4169E1] to-[#3498DB] rounded-full"></span>
-                <span>{module.moduleName}</span>
-              </h3>
+          {moduleStats.map((module, moduleIndex) => {
+            const modulePoints = getModulePoints(module.moduleId); // ✅ Get points for this module
+            
+            return (
+              <div
+                key={module.moduleId}
+                className="space-y-6 animate-fadeIn"
+                style={{ animationDelay: `${moduleIndex * 100}ms` }}
+              >
+                <div className="flex items-center justify-between flex-wrap gap-4">
+                  <h3 className="text-2xl font-bold text-[#4169E1] flex items-center space-x-2 flex-wrap">
+                    <span className="w-2 h-8 bg-gradient-to-b from-[#4169E1] to-[#3498DB] rounded-full"></span>
+                    <span>{module.moduleName}</span>
+                    {(() => {
+                      const milestone = getModuleMilestone(
+                        module.completionPercentage, 
+                        module.moduleName,
+                        module.completedQuizzes,
+                        module.totalQuizzes
+                      );
+                      return milestone ? (
+                        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-[#4169E1]/10 to-[#28B463]/10 border border-[#4169E1]/20 text-sm font-medium text-gray-700 animate-fadeIn ml-2">
+                          <span className="text-lg animate-bounce">{milestone.emoji}</span>
+                          <span>{milestone.message}</span>
+                        </span>
+                      ) : null;
+                    })()}
+                  </h3>
+                  
+                  {/* ✅ NEW: Module points badge - Premium Diamond Design */}
+                  {modulePoints > 0 && (
+                    <div className="relative bg-gradient-to-r from-[#4169E1] via-[#5B9BD5] to-[#3498DB] p-[2px] rounded-full shadow-md hover:shadow-lg transition-all duration-300">
+                      <div className="bg-white rounded-full px-4 py-2 flex items-center gap-2">
+                        <span className="text-xl">💎</span>
+                        <span className="font-black bg-gradient-to-r from-[#4169E1] via-[#5B9BD5] to-[#3498DB] bg-clip-text text-transparent">
+                          {modulePoints.toLocaleString()}
+                        </span>
+                        <span className="text-xs font-semibold text-[#4169E1]">pts</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
 
-              {/* Exams Section */}
-              {module.exams.length > 0 && (
-                <div className="mb-8">
+                {/* Exams Section */}
+                {module.exams.length > 0 && (
+                  <div className="mb-8">
+                    <h4 className="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
+                      📝 Exams
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {module.exams.map((exam, examIndex) => (
+                        <ExamCard
+                          key={exam.examId}
+                          exam={exam}
+                          moduleId={module.moduleId}
+                          delay={examIndex * 50}
+                          onRetake={() => {
+                            if (window.confirm(`Retake ${exam.examName}? This will reset your current progress for this exam.`)) {
+                              resetExam(exam.examId);
+                              window.location.reload();
+                            }
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Weeks Section */}
+                <div>
                   <h4 className="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
-                    📝 Exams
+                    📅 Weekly Quizzes
                   </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {module.exams.map((exam, examIndex) => (
-                      <ExamCard
-                        key={exam.examId}
-                        exam={exam}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {module.weeks.map((week, weekIndex) => (
+                      <WeekCard
+                        key={week.weekId}
+                        week={week}
                         moduleId={module.moduleId}
-                        delay={examIndex * 50}
-                        onRetake={() => {
-                          if (window.confirm(`Retake ${exam.examName}? This will reset your current progress for this exam.`)) {
-                            resetExam(exam.examId);
-                            window.location.reload();
-                          }
-                        }}
+                        delay={weekIndex * 50}
                       />
                     ))}
                   </div>
                 </div>
-              )}
-
-              {/* Weeks Section */}
-              <div>
-                <h4 className="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
-                  📅 Weekly Quizzes
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {module.weeks.map((week, weekIndex) => (
-                    <WeekCard
-                      key={week.weekId}
-                      week={week}
-                      moduleId={module.moduleId}
-                      delay={weekIndex * 50}
-                    />
-                  ))}
-                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
   );
 };
 
+// ✅ UPDATED: StatCard - removed highlight prop since points card is custom now
 const StatCard = ({ icon, value, label, iconBg, subLabel }) => (
-  <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+  <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-all">
     <div className="flex items-center space-x-4">
       <div className={`${iconBg} p-3 rounded-lg`}>{icon}</div>
       <div className="flex-1">
@@ -385,6 +488,7 @@ const ActionButton = ({ onClick, color, icon, label }) => {
     blue: "border-[#3498DB]/30 text-[#3498DB] bg-[#3498DB]/5 hover:bg-[#3498DB]/15",
     green: "border-[#28B463]/30 text-[#28B463] bg-[#28B463]/5 hover:bg-[#28B463]/15",
   };
+
   return (
     <button
       onClick={onClick}
@@ -404,6 +508,7 @@ const ExamCard = ({ exam, moduleId, delay, onRetake }) => {
     if (exam.passed) return "border-[#28B463]/40 bg-[#28B463]/5";
     return "border-[#E67E22]/40 bg-[#E67E22]/5";
   };
+
   const getStatusBadge = () => {
     if (exam.inProgress) {
       return <span className="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700">In Progress</span>;
@@ -416,6 +521,7 @@ const ExamCard = ({ exam, moduleId, delay, onRetake }) => {
     }
     return <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#E67E22]/20 text-[#E67E22]">Review</span>;
   };
+
   return (
     <div
       className={`group relative p-5 rounded-xl border-2 ${getStatusColor()}
@@ -429,9 +535,11 @@ const ExamCard = ({ exam, moduleId, delay, onRetake }) => {
           </h5>
           {getStatusBadge()}
         </div>
+
         <div className="text-sm text-gray-600">
           <p>Attempts: {exam.attemptCount}</p>
         </div>
+
         {exam.isCompleted && (
           <div className="space-y-2">
             <div className="flex justify-between text-sm text-gray-600">
@@ -450,6 +558,7 @@ const ExamCard = ({ exam, moduleId, delay, onRetake }) => {
             </div>
           </div>
         )}
+
         <div className="flex items-center space-x-3">
           <Link
             to={`/exam/${exam.examId}`}
@@ -497,6 +606,7 @@ const WeekCard = ({ week, moduleId, delay }) => {
       style={{ animationDelay: `${delay}ms` }}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-[#4169E1]/5 to-[#3498DB]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
       <div className="relative z-10 space-y-4">
         <div className="flex justify-between items-start">
           <h4 className="text-xl font-bold text-[#3498DB] group-hover:text-[#4169E1] transition-colors">
@@ -506,6 +616,7 @@ const WeekCard = ({ week, moduleId, delay }) => {
             {week.accuracy}%
           </span>
         </div>
+
         <div className="space-y-2">
           <div className="flex justify-between text-sm text-gray-600">
             <span>{week.stats.correct} / {week.stats.total} correct</span>
@@ -520,6 +631,7 @@ const WeekCard = ({ week, moduleId, delay }) => {
             </div>
           </div>
         </div>
+
         <Link
           to={`/modules/${moduleId}/${week.weekId}`}
           className="inline-flex items-center space-x-2 text-[#4169E1] hover:text-[#3498DB] 

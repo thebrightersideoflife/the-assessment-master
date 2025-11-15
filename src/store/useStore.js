@@ -26,6 +26,14 @@ const useStore = create(
       // Module visibility state - initialized from modules.js
       moduleVisibility: {},
       
+      // ✅ Points tracking
+      points: {
+        total: 0,                    // Total lifetime points
+        byModule: {},                // Points per module { moduleId: points }
+        byWeek: {},                  // Points per week { moduleId-weekId: points }
+        history: []                  // Point earning history
+      },
+      
       // ============================================================================
       // HELPER: Get quiz key
       // ============================================================================
@@ -43,7 +51,9 @@ const useStore = create(
             currentQuestionIndex: 0,
             stats: { correct: 0, total: 0 },
             completed: false,
+            completedAt: null,
             lastAnsweredQuestion: -1,
+            pointsEarned: 0,
           }
         );
       },
@@ -170,7 +180,9 @@ const useStore = create(
             currentQuestionIndex: 0,
             stats: { correct: 0, total: 0 },
             completed: false,
+            completedAt: null,
             lastAnsweredQuestion: -1,
+            pointsEarned: 0,
           };
           return {
             quizzes: {
@@ -190,7 +202,9 @@ const useStore = create(
             currentQuestionIndex: 0,
             stats: { correct: 0, total: 0 },
             completed: false,
+            completedAt: null,
             lastAnsweredQuestion: -1,
+            pointsEarned: 0,
           };
           
           // CRITICAL: Prevent duplicate submissions for the same question
@@ -237,6 +251,7 @@ const useStore = create(
           };
         }),
       
+      // ✅ Complete quiz with points calculation
       completeQuiz: (moduleId, weekId, quizIndex = 0) =>
         set((state) => {
           const quizKey = state.getQuizKey(moduleId, weekId, quizIndex);
@@ -244,39 +259,135 @@ const useStore = create(
             currentQuestionIndex: 0,
             stats: { correct: 0, total: 0 },
             completed: false,
+            completedAt: null,
             lastAnsweredQuestion: -1,
+            pointsEarned: 0,
           };
+          
+          // ✅ If quiz was previously completed, subtract old points before adding new ones
+          const previousPoints = quizState.pointsEarned || 0;
+          const weekKey = `${moduleId}-${weekId}`;
+          
+          // Calculate new points earned
+          const accuracy = quizState.stats.total > 0 
+            ? Math.round((quizState.stats.correct / quizState.stats.total) * 100) 
+            : 0;
+          
+          let pointsEarned = quizState.stats.correct * 10; // 10 points per correct answer
+          let bonusReason = '';
+          
+          if (accuracy === 100) {
+            pointsEarned += 50;
+            bonusReason = 'Perfect Score Bonus';
+          } else if (accuracy >= 90) {
+            pointsEarned += 25;
+            bonusReason = 'Excellent Performance Bonus';
+          } else if (accuracy >= 80) {
+            pointsEarned += 10;
+            bonusReason = 'Good Job Bonus';
+          }
+          
+          // Calculate the point difference (new - old)
+          const pointDifference = pointsEarned - previousPoints;
+          
+          // Create history entry only if there's a change in points
+          const historyEntry = pointDifference !== 0 ? {
+            timestamp: Date.now(),
+            moduleId,
+            weekId,
+            quizIndex,
+            points: pointsEarned,
+            previousPoints,
+            reason: quizState.completed ? 'Quiz Retry' : (bonusReason || 'Quiz Completion'),
+            accuracy,
+            quizKey
+          } : null;
+          
           return {
             quizzes: {
               ...state.quizzes,
               [quizKey]: {
                 ...quizState,
                 completed: true,
+                completedAt: Date.now(),
+                pointsEarned
               },
             },
+            points: {
+              total: state.points.total + pointDifference,
+              byModule: {
+                ...state.points.byModule,
+                [moduleId]: (state.points.byModule[moduleId] || 0) + pointDifference
+              },
+              byWeek: {
+                ...state.points.byWeek,
+                [weekKey]: (state.points.byWeek[weekKey] || 0) + pointDifference
+              },
+              history: historyEntry ? [...state.points.history, historyEntry] : state.points.history
+            }
           };
         }),
       
+      // ✅ Reset quiz - removes points from totals
       resetQuiz: (moduleId, weekId, quizIndex = 0) =>
         set((state) => {
           const quizKey = state.getQuizKey(moduleId, weekId, quizIndex);
+          const quizState = state.quizzes[quizKey];
+          
+          if (!quizState) return state;
+          
+          const pointsToRemove = quizState.pointsEarned || 0;
+          const weekKey = `${moduleId}-${weekId}`;
+          
           const newQuizzes = { ...state.quizzes };
           delete newQuizzes[quizKey];
-          return { quizzes: newQuizzes };
+          
+          return {
+            quizzes: newQuizzes,
+            points: {
+              total: Math.max(0, state.points.total - pointsToRemove),
+              byModule: {
+                ...state.points.byModule,
+                [moduleId]: Math.max(0, (state.points.byModule[moduleId] || 0) - pointsToRemove)
+              },
+              byWeek: {
+                ...state.points.byWeek,
+                [weekKey]: Math.max(0, (state.points.byWeek[weekKey] || 0) - pointsToRemove)
+              },
+              history: state.points.history
+            }
+          };
         }),
       
       resetWeekQuizzes: (moduleId, weekId) =>
         set((state) => {
           const newQuizzes = { ...state.quizzes };
           const prefix = `${moduleId}-${weekId}-`;
+          const weekKey = `${moduleId}-${weekId}`;
+          let totalPointsToRemove = 0;
           
           Object.keys(newQuizzes).forEach((key) => {
             if (key.startsWith(prefix)) {
+              totalPointsToRemove += newQuizzes[key].pointsEarned || 0;
               delete newQuizzes[key];
             }
           });
           
-          return { quizzes: newQuizzes };
+          return {
+            quizzes: newQuizzes,
+            points: {
+              total: Math.max(0, state.points.total - totalPointsToRemove),
+              byModule: {
+                ...state.points.byModule,
+                [moduleId]: Math.max(0, (state.points.byModule[moduleId] || 0) - totalPointsToRemove)
+              },
+              byWeek: {
+                ...state.points.byWeek,
+                [weekKey]: 0
+              },
+              history: state.points.history
+            }
+          };
         }),
       
       getAccuracy: (moduleId, weekId, quizIndex = 0) => {
@@ -319,6 +430,64 @@ const useStore = create(
         };
       },
       
+      // ============================================================================
+      // POINTS SYSTEM
+      // ============================================================================
+      
+      // ✅ Calculate points for a quiz (without awarding them)
+      calculateQuizPoints: (moduleId, weekId, quizIndex) => {
+        const state = get();
+        const quizKey = state.getQuizKey(moduleId, weekId, quizIndex);
+        const quizState = state.quizzes[quizKey];
+        
+        if (!quizState || !quizState.completed) return 0;
+        
+        return quizState.pointsEarned || 0;
+      },
+      
+      // ✅ Award streak bonus points
+      awardStreakBonus: (streakDays) =>
+        set((state) => {
+          const bonusPoints = Math.floor(streakDays / 7) * 100; // 100 points per 7-day milestone
+          
+          if (bonusPoints === 0) return state;
+          
+          const historyEntry = {
+            timestamp: Date.now(),
+            moduleId: null,
+            weekId: null,
+            quizIndex: null,
+            points: bonusPoints,
+            reason: `${streakDays}-Day Streak Bonus`,
+            quizKey: null
+          };
+          
+          return {
+            points: {
+              ...state.points,
+              total: state.points.total + bonusPoints,
+              history: [...state.points.history, historyEntry]
+            }
+          };
+        }),
+      
+      // ✅ Get total points
+      getTotalPoints: () => {
+        return get().points.total;
+      },
+      
+      // ✅ Get points for a specific module
+      getModulePoints: (moduleId) => {
+        return get().points.byModule[moduleId] || 0;
+      },
+      
+      // ✅ Get points for a specific week
+      getWeekPoints: (moduleId, weekId) => {
+        const weekKey = `${moduleId}-${weekId}`;
+        return get().points.byWeek[weekKey] || 0;
+      },
+      
+      // ✅ Reset all progress including points
       resetAllProgress: () =>
         set(() => {
           // Create fresh module visibility from modules.js
@@ -333,6 +502,12 @@ const useStore = create(
             examAttempts: {},
             streaks: { lastActivityDate: null, currentStreak: 0, longestStreak: 0 },
             moduleVisibility: freshModuleVisibility,
+            points: {
+              total: 0,
+              byModule: {},
+              byWeek: {},
+              history: []
+            }
           };
         }),
       
@@ -347,12 +522,13 @@ const useStore = create(
     }),
     {
       name: 'quiz-storage',
-      version: 6, // Incremented for module visibility fix
+      version: 7, // ✅ Incremented for points system
       partialize: (state) => ({
         quizzes: state.quizzes,
         exams: state.exams,
         examAttempts: state.examAttempts,
         streaks: state.streaks,
+        points: state.points, // ✅ Persist points
         // DON'T persist moduleVisibility - always read from modules.js
       }),
       migrate: (persistedState, version) => {
@@ -367,11 +543,15 @@ const useStore = create(
               newQuizzes[`${key}-0`] = {
                 ...quiz,
                 lastAnsweredQuestion: -1,
+                completedAt: null,
+                pointsEarned: 0,
               };
             } else {
               newQuizzes[key] = {
                 ...quiz,
                 lastAnsweredQuestion: quiz.lastAnsweredQuestion ?? -1,
+                completedAt: quiz.completedAt || null,
+                pointsEarned: quiz.pointsEarned || 0,
               };
             }
           });
@@ -380,6 +560,12 @@ const useStore = create(
             ...persistedState,
             quizzes: newQuizzes,
             exams: {},
+            points: {
+              total: 0,
+              byModule: {},
+              byWeek: {},
+              history: []
+            }
           };
         }
         
@@ -401,6 +587,19 @@ const useStore = create(
           // Remove moduleVisibility from persisted state
           const { moduleVisibility, ...rest } = persistedState;
           return rest;
+        }
+        
+        if (version < 7) {
+          // Add points structure to existing state
+          return {
+            ...persistedState,
+            points: {
+              total: 0,
+              byModule: {},
+              byWeek: {},
+              history: []
+            }
+          };
         }
         
         return persistedState;
