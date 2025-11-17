@@ -653,7 +653,7 @@ export const questions = [
       moduleId: "ITMTB",
       weekId: "ITMTB_W2",
       type: "open-ended",
-      text: "What is the difference between a definite integral \\( \\int_{a}^{b}f(x)\\,dx \\) and an indefinite integral \\( \\int f(x)\\,dx \\)? Calculate \\( \\int x^2\\,dx \\).",
+      text: "Calculate \\( \\int x^2\\,dx \\).",
       correctAnswers: [
         "x³/3 + C",
         "(x^3)/3 + C",
@@ -696,7 +696,7 @@ export const questions = [
       moduleId: "ITMTB",
       weekId: "ITMTB_W2",
       type: "open-ended",
-      text: "Evaluate \\( \\int_{-1}^{1}x^{100}\\,dx \\) and explain which part of the Fundamental Theorem you used.",
+      text: "Evaluate \\( \\int_{-1}^{1}x^{100}\\,dx \\).",
       correctAnswers: [
         "2/101",
         "0.0198",
@@ -748,51 +748,64 @@ export const questions = [
       moduleId: "ITMTB",
       weekId: "ITMTB_W2",
       type: "open-ended",
-      text: "Evaluate the definite integral \\( \\int_{0}^{\\pi/3}\\sec \\theta \\tan \\theta\\,d\\theta \\).",
+      
+      text: "Let \\( G(x) = \\displaystyle\\int_{0}^{x^2} \\left(3t^2 - 4\\right)\\,dt \\). Compute \\( G'(1) \\).",
+      
       correctAnswers: [
-        "1",
-        "1.0",
-        "one"
+        "-2",
+        "-2.0",
+        "≈-2",
+        "−2"  // Unicode minus sign
       ],
-      explanation:
-        "**Evaluating \\( \\int_{0}^{\\pi/3}\\sec \\theta \\tan \\theta\\,d\\theta \\)**\n\n" +
-        "We use **Part 2 of the Fundamental Theorem of Calculus**.\n\n" +
+      
+      options: {
+        allowSymbolic: false,
+        tolerance: 0.001,
+        acceptedUnits: [],
+        requiredUnit: null
+      },
+      
+      explanation: "The function \\( G(x) \\) is a definite integral with a **variable upper limit** that is itself a function of \\( x \\) (here, the upper limit is \\( x^2 \\)). This requires **FTC1 combined with the Chain Rule**.\n\n" +
+        "**Fundamental Theorem of Calculus Part 1 (FTC1) with Chain Rule:**\n\n" +
+        "$$\\frac{d}{dx}\\left(\\int_{a}^{u(x)} f(t)\\,dt\\right) = f(u(x)) \\cdot u'(x)$$\n\n" +
         "---\n\n" +
-        "**Step 1: Recognize the antiderivative pattern**\n\n" +
-        "We need to recall (or derive) that:\n" +
-        "$\\frac{d}{d\\theta}[\\sec \\theta] = \\sec \\theta \\tan \\theta$\n\n" +
-        "**Quick verification:**\n" +
-        "$\\sec \\theta = \\frac{1}{\\cos \\theta}$\n\n" +
-        "Using the quotient rule:\n" +
-        "$\\frac{d}{d\\theta}\\left[\\frac{1}{\\cos \\theta}\\right] = \\frac{0 \\cdot \\cos \\theta - 1 \\cdot (-\\sin \\theta)}{\\cos^2 \\theta} = \\frac{\\sin \\theta}{\\cos^2 \\theta}$\n\n" +
-        "$= \\frac{1}{\\cos \\theta} \\cdot \\frac{\\sin \\theta}{\\cos \\theta} = \\sec \\theta \\tan \\theta$ ✓\n\n" +
-        "Therefore, the antiderivative is:\n" +
-        "$F(\\theta) = \\sec \\theta$\n\n" +
+        "**Step 1: Identify the components**\n\n" +
+        "| **Component** | **Value** |\n" +
+        "|---|---|\n" +
+        "| Integrand \\( f(t) \\) | \\( 3t^2 - 4 \\) |\n" +
+        "| Upper limit \\( u(x) \\) | \\( x^2 \\) |\n" +
+        "| Lower limit | \\( 0 \\) (constant) |\n\n" +
         "---\n\n" +
-        "**Step 2: Apply the Fundamental Theorem**\n\n" +
-        "$\\int_{0}^{\\pi/3}\\sec \\theta \\tan \\theta\\,d\\theta = [\\sec \\theta]_{0}^{\\pi/3}$\n\n" +
-        "**Step 3: Evaluate at the upper limit (\\( \\theta = \\pi/3 \\))**\n\n" +
-        "$\\sec\\left(\\frac{\\pi}{3}\\right) = \\frac{1}{\\cos(\\pi/3)}$\n\n" +
-        "Recall that \\( \\cos(\\pi/3) = \\frac{1}{2} \\):\n" +
-        "$\\sec\\left(\\frac{\\pi}{3}\\right) = \\frac{1}{1/2} = 2$\n\n" +
-        "**Step 4: Evaluate at the lower limit (\\( \\theta = 0 \\))**\n\n" +
-        "$\\sec(0) = \\frac{1}{\\cos(0)} = \\frac{1}{1} = 1$\n\n" +
-        "**Step 5: Calculate the difference**\n\n" +
-        "$\\int_{0}^{\\pi/3}\\sec \\theta \\tan \\theta\\,d\\theta = \\sec\\left(\\frac{\\pi}{3}\\right) - \\sec(0)$\n" +
-        "$= 2 - 1 = 1$\n\n" +
+        "**Step 2: Apply FTC1 + Chain Rule**\n\n" +
+        "$$G'(x) = f(u(x)) \\cdot u'(x)$$\n\n" +
+        "$$G'(x) = f(x^2) \\cdot \\frac{d}{dx}(x^2)$$\n\n" +
+        "**Part A:** Evaluate the integrand at the upper limit \\( x^2 \\):\n\n" +
+        "$$f(x^2) = 3(x^2)^2 - 4 = 3x^4 - 4$$\n\n" +
+        "**Part B:** Find the derivative of the upper limit:\n\n" +
+        "$$\\frac{d}{dx}(x^2) = 2x$$\n\n" +
+        "**Combine:**\n\n" +
+        "$$G'(x) = (3x^4 - 4)(2x)$$\n\n" +
         "---\n\n" +
-        "**Geometric Interpretation:**\n\n" +
-        "This integral represents the signed area under the curve \\( y = \\sec \\theta \\tan \\theta \\) from \\( \\theta = 0 \\) to \\( \\theta = \\pi/3 \\).\n\n" +
-        "Since \\( \\sec \\theta > 0 \\) and \\( \\tan \\theta > 0 \\) in the interval \\( (0, \\pi/3) \\), the integrand is positive, so the area is positive.\n\n" +
+        "**Step 3: Evaluate at \\( x = 1 \\)**\n\n" +
+        "$$G'(1) = (3(1)^4 - 4)(2 \\cdot 1)$$\n\n" +
+        "$$= (3 - 4)(2)$$\n\n" +
+        "$$= (-1)(2)$$\n\n" +
+        "$$= -2$$\n\n" +
         "---\n\n" +
-        "**Common Trigonometric Antiderivatives to Remember:**\n\n" +
-        "- \\( \\int \\sec \\theta \\tan \\theta\\,d\\theta = \\sec \\theta + C \\)\n" +
-        "- \\( \\int \\csc \\theta \\cot \\theta\\,d\\theta = -\\csc \\theta + C \\)\n" +
-        "- \\( \\int \\sec^2 \\theta\\,d\\theta = \\tan \\theta + C \\)\n" +
-        "- \\( \\int \\csc^2 \\theta\\,d\\theta = -\\cot \\theta + C \\)\n\n" +
+        "**Answer: \\( G'(1) = -2 \\)**\n\n" +
         "---\n\n" +
-        "**Answer:**\n" +
-        "$\\int_{0}^{\\pi/3}\\sec \\theta \\tan \\theta\\,d\\theta = 1$"
+        "**Physical Interpretation:**\n\n" +
+        "The value \\( -2 \\) represents the **instantaneous rate of change** of the accumulated area under the curve \\( 3t^2 - 4 \\) at \\( x = 1 \\).\n\n" +
+        "The **negative value** indicates that at this moment:\n" +
+        "- The integrand evaluated at the moving upper limit is negative\n" +
+        "- The accumulated area function \\( G(x) \\) is **decreasing** with respect to \\( x \\)\n\n" +
+        "**Key Concept - When to Use Chain Rule with FTC1:**\n\n" +
+        "| **Situation** | **Formula** | **Chain Rule Needed?** |\n" +
+        "|---|---|---|\n" +
+        "| \\( \\frac{d}{dx}\\int_a^x f(t)\\,dt \\) | \\( f(x) \\) | No |\n" +
+        "| \\( \\frac{d}{dx}\\int_a^{g(x)} f(t)\\,dt \\) | \\( f(g(x)) \\cdot g'(x) \\) | **Yes!** |\n" +
+        "| \\( \\frac{d}{dx}\\int_{h(x)}^{g(x)} f(t)\\,dt \\) | \\( f(g(x))g'(x) - f(h(x))h'(x) \\) | **Yes, twice!** |\n\n" +
+        "Whenever the limit of integration is **not simply** \\( x \\), you must apply the Chain Rule!"
     },
     {
       id: "q18",
@@ -868,62 +881,89 @@ export const questions = [
       moduleId: "ITMTB",
       weekId: "ITMTB_W2",
       type: "open-ended",
-      text: "Rewrite \\( F(x)=\\int_{x}^{0}\\sqrt{1+\\sec t}\\,dt \\) so that the lower limit is constant, then find \\( F'(x) \\) using Part 1 of the FTC.",
+      
+      text: "Let \\( H(x) = \\displaystyle\\int_{1}^{\\sqrt{x}} \\left(4t^3 - \\frac{2}{t}\\right)\\,dt \\). Compute \\( H'(4) \\).",
+      
       correctAnswers: [
-        "-√(1+sec x)",
-        "-sqrt(1+sec x)",
-        "-(1+sec x)^(1/2)",
-        "-√(1+sec(x))"
+        "31/4",
+        "7.75",
+        "7.75",
+        "31/4",
+        "7 3/4",
+        "≈7.75",
+        "7.750"
       ],
-      explanation:
-        "**Rewriting and Differentiating \\( F(x)=\\int_{x}^{0}\\sqrt{1+\\sec t}\\,dt \\)**\n\n" +
-        "The challenge here is that the variable \\( x \\) appears as the **lower limit** instead of the upper limit. Part 1 of the FTC applies when \\( x \\) is the **upper limit**.\n\n" +
+      
+      options: {
+        allowSymbolic: true,  // Accept both fraction and decimal
+        tolerance: 0.001,
+        acceptedUnits: [],
+        requiredUnit: null
+      },
+      
+      explanation: "This problem uses **FTC1 with a non-linear upper limit** (\\( \\sqrt{x} \\)) and an integrand that combines polynomial and reciprocal terms.\n\n" +
+        "**FTC1 with Chain Rule Formula:**\n\n" +
+        "$$H'(x) = f(u(x)) \\cdot u'(x)$$\n\n" +
+        "where \\( u(x) \\) is the upper limit.\n\n" +
         "---\n\n" +
-        "**Step 1: Use the property of definite integrals to swap limits**\n\n" +
-        "**Property:** \\( \\int_a^b f(t)\\,dt = -\\int_b^a f(t)\\,dt \\)\n\n" +
-        "Applying this property:\n" +
-        "$F(x) = \\int_{x}^{0}\\sqrt{1+\\sec t}\\,dt = -\\int_{0}^{x}\\sqrt{1+\\sec t}\\,dt$\n\n" +
-        "Now the lower limit is constant (0) and the upper limit is variable (\\( x \\))!\n\n" +
+        "**Step 1: Identify the components**\n\n" +
+        "| **Component** | **Value** |\n" +
+        "|---|---|\n" +
+        "| Integrand \\( f(t) \\) | \\( 4t^3 - \\frac{2}{t} \\) |\n" +
+        "| Upper limit \\( u(x) \\) | \\( \\sqrt{x} = x^{1/2} \\) |\n" +
+        "| Lower limit | \\( 1 \\) (constant, no effect on derivative) |\n\n" +
         "---\n\n" +
-        "**Step 2: Apply Part 1 of the Fundamental Theorem**\n\n" +
-        "**Part 1 states:** If \\( g(x) = \\int_a^x f(t)\\,dt \\) and \\( f \\) is continuous, then:\n" +
-        "$g'(x) = f(x)$\n\n" +
-        "For our rewritten function:\n" +
-        "$F(x) = -\\int_{0}^{x}\\sqrt{1+\\sec t}\\,dt$\n\n" +
-        "We can write:\n" +
-        "$F(x) = -g(x) \\quad \\text{where} \\quad g(x) = \\int_{0}^{x}\\sqrt{1+\\sec t}\\,dt$\n\n" +
+        "**Step 2: Find the derivative of the upper limit**\n\n" +
+        "$$u(x) = \\sqrt{x} = x^{1/2}$$\n\n" +
+        "$$u'(x) = \\frac{d}{dx}(x^{1/2}) = \\frac{1}{2}x^{-1/2} = \\frac{1}{2\\sqrt{x}}$$\n\n" +
         "---\n\n" +
-        "**Step 3: Differentiate using the chain rule**\n\n" +
-        "$F'(x) = \\frac{d}{dx}\\left[-\\int_{0}^{x}\\sqrt{1+\\sec t}\\,dt\\right]$\n\n" +
-        "$= -\\frac{d}{dx}\\int_{0}^{x}\\sqrt{1+\\sec t}\\,dt$\n\n" +
-        "By Part 1 of the FTC:\n" +
-        "$\\frac{d}{dx}\\int_{0}^{x}\\sqrt{1+\\sec t}\\,dt = \\sqrt{1+\\sec x}$\n\n" +
-        "Therefore:\n" +
-        "$F'(x) = -\\sqrt{1+\\sec x}$\n\n" +
+        "**Step 3: Evaluate the integrand at the upper limit**\n\n" +
+        "We need \\( f(\\sqrt{x}) \\):\n\n" +
+        "$$f(\\sqrt{x}) = 4(\\sqrt{x})^3 - \\frac{2}{\\sqrt{x}}$$\n\n" +
+        "Simplify using exponent rules:\n\n" +
+        "$$= 4x^{3/2} - 2x^{-1/2}$$\n\n" +
         "---\n\n" +
-        "**Understanding the Negative Sign:**\n\n" +
-        "The negative sign comes from having \\( x \\) in the **lower limit** instead of the upper limit.\n\n" +
-        "**General rule:**\n" +
-        "- \\( \\frac{d}{dx}\\int_a^x f(t)\\,dt = f(x) \\) (positive)\n" +
-        "- \\( \\frac{d}{dx}\\int_x^a f(t)\\,dt = -f(x) \\) (negative)\n\n" +
-        "**Intuitive explanation:**\n" +
-        "- When \\( x \\) is the upper limit and increases, we're **adding** area, so the derivative is positive\n" +
-        "- When \\( x \\) is the lower limit and increases, we're **removing** area from the interval, so the derivative is negative\n\n" +
+        "**Step 4: Apply FTC1 + Chain Rule**\n\n" +
+        "$$H'(x) = f(\\sqrt{x}) \\cdot u'(x)$$\n\n" +
+        "$$H'(x) = \\left(4x^{3/2} - 2x^{-1/2}\\right) \\cdot \\frac{1}{2\\sqrt{x}}$$\n\n" +
         "---\n\n" +
-        "**Step-by-Step Summary:**\n\n" +
-        "1. **Original:** \\( F(x)=\\int_{x}^{0}\\sqrt{1+\\sec t}\\,dt \\)\n\n" +
-        "2. **Rewritten:** \\( F(x) = -\\int_{0}^{x}\\sqrt{1+\\sec t}\\,dt \\)\n\n" +
-        "3. **Derivative:** \\( F'(x) = -\\sqrt{1+\\sec x} \\)\n\n" +
+        "**Step 5: Evaluate at \\( x = 4 \\)**\n\n" +
+        "**Method 1: Direct substitution into the formula**\n\n" +
+        "At \\( x = 4 \\):\n\n" +
+        "$$\\sqrt{4} = 2$$\n\n" +
+        "**Evaluate integrand at upper limit:**\n\n" +
+        "$$f(2) = 4(2)^3 - \\frac{2}{2} = 4(8) - 1 = 32 - 1 = 31$$\n\n" +
+        "**Evaluate derivative of upper limit:**\n\n" +
+        "$$u'(4) = \\frac{1}{2\\sqrt{4}} = \\frac{1}{2(2)} = \\frac{1}{4}$$\n\n" +
+        "**Multiply:**\n\n" +
+        "$$H'(4) = 31 \\cdot \\frac{1}{4} = \\frac{31}{4} = 7.75$$\n\n" +
         "---\n\n" +
-        "**Verification (optional):**\n\n" +
-        "We can verify this makes sense by considering small changes:\n" +
-        "- As \\( x \\) increases from \\( x \\) to \\( 0 \\), the interval \\([x, 0]\\) becomes smaller\n" +
-        "- So \\( F(x) = \\int_x^0 \\sqrt{1+\\sec t}\\,dt \\) decreases\n" +
-        "- Therefore \\( F'(x) < 0 \\), which matches our result ✓\n\n" +
+        "**Method 2: Using exponent notation (verification)**\n\n" +
+        "$$4x^{3/2} - 2x^{-1/2} = 4(4)^{3/2} - 2(4)^{-1/2}$$\n\n" +
+        "Calculate each term:\n" +
+        "- \\( 4^{3/2} = (\\sqrt{4})^3 = 2^3 = 8 \\)\n" +
+        "- \\( 4^{-1/2} = \\frac{1}{\\sqrt{4}} = \\frac{1}{2} \\)\n\n" +
+        "So:\n\n" +
+        "$$= 4(8) - 2\\left(\\frac{1}{2}\\right) = 32 - 1 = 31$$\n\n" +
+        "And:\n\n" +
+        "$$u'(4) = \\frac{1}{2}(4)^{-1/2} = \\frac{1}{2} \\cdot \\frac{1}{2} = \\frac{1}{4}$$\n\n" +
+        "Therefore:\n\n" +
+        "$$H'(4) = 31 \\cdot \\frac{1}{4} = \\frac{31}{4}$$\n\n" +
         "---\n\n" +
-        "**Answer:**\n\n" +
-        "**Rewritten form:** \\( F(x) = -\\int_{0}^{x}\\sqrt{1+\\sec t}\\,dt \\)\n\n" +
-        "**Derivative:** \\( F'(x) = -\\sqrt{1+\\sec x} \\)"
+        "**Answer: \\( H'(4) = \\frac{31}{4} = 7.75 \\)**\n\n" +
+        "---\n\n" +
+        "**Physical Interpretation:**\n\n" +
+        "This value represents the **instantaneous rate of change** of the accumulated area when the upper limit moves like \\( \\sqrt{x} \\). At \\( x = 4 \\), the area under the curve is growing at a rate of \\( 7.75 \\) square units per unit increase in \\( x \\).\n\n" +
+        "---\n\n" +
+        "**Key Concept - Working with Non-Linear Upper Limits:**\n\n" +
+        "| **Upper Limit** | **Derivative \\( u'(x) \\)** | **Remember** |\n" +
+        "|---|---|---|\n" +
+        "| \\( x \\) | \\( 1 \\) | Standard case |\n" +
+        "| \\( x^2 \\) | \\( 2x \\) | Power rule |\n" +
+        "| \\( \\sqrt{x} \\) | \\( \\frac{1}{2\\sqrt{x}} \\) | Rewrite as \\( x^{1/2} \\) first |\n" +
+        "| \\( x^3 \\) | \\( 3x^2 \\) | Power rule |\n" +
+        "| \\( e^x \\) | \\( e^x \\) | Exponential |\n\n" +
+        "**Pro Tip:** Always rewrite radicals as fractional exponents (\\( \\sqrt{x} = x^{1/2} \\)) before applying the power rule!"
     },
     {
       id: "q20",
@@ -1018,34 +1058,101 @@ export const questions = [
         "**Answer: A** — Finding areas, volumes, and curve lengths required genius-level geometric intuition; Newton and Leibniz created a systematic method making these problems accessible to everyone"
     },
     {
-      id: "q21",
-      moduleId: "ITMTB",
-      weekId: "ITMTB_W2",
-      type: "open-ended",
-      text: "Use the Fundamental Theorem of Calculus, Part 1, combined with the Chain Rule, to find the derivative of the function $$y = \\int_{0}^{\\tan x} e^{-t^{2}}\\,dt$$.",
-      correctAnswers: ["e^(-tan^2 x) * sec^2 x", "e^(-(tan(x))^2) * sec^2(x)","sec^2 (x) * e^(-tan(x)^2)","sec^2 (x) * e^(-tan^2 (x))"],
-      explanation:
-        "We apply the **Fundamental Theorem of Calculus, Part 1 (FTC1)** together with the **Chain Rule**:\n\n" +
-        "FTC1 states:\n" +
-        "$$\\frac{d}{dx}\\int_{a}^{x} f(t)\\,dt = f(x)$$\n\n" +
-        "For $$y = \\int_{0}^{u} f(t)\\,dt$$ where $$u = \\tan x$$ and $$f(t) = e^{-t^2}$$, we have:\n\n" +
-        "**Step 1: Differentiate with respect to u (FTC1)**\n" +
-        "$$\\frac{dy}{du} = e^{-u^2}$$\n\n" +
-        "**Step 2: Differentiate u with respect to x (Chain Rule)**\n" +
-        "$$u = \\tan x \\implies \\frac{du}{dx} = \\sec^2 x$$\n\n" +
-        "**Step 3: Apply the Chain Rule**\n" +
-        "$$\\frac{dy}{dx} = \\frac{dy}{du}\\cdot\\frac{du}{dx} = e^{-u^2}\\sec^2 x$$\n\n" +
-        "Substitute back $$u = \\tan x$$:\n" +
-        "$$\\frac{dy}{dx} = e^{-(\\tan x)^2}\\sec^2 x$$\n\n" +
-        "**Final Answer:**\n" +
-        "$$\\frac{dy}{dx} = e^{-\\tan^2 x}\\sec^2 x$$",
-    },
+        id: "q21",
+        moduleId: "ITMTB",
+        weekId: "ITMTB_W2",
+        type: "open-ended",
+        
+        text: "Let \\( N(x) = \\displaystyle\\int_{1/x}^{x^2} \\ln(1 + t^2)\\,dt \\). Compute \\( N'(1) \\). (Give either the exact value or a decimal approximation.)",
+        
+        correctAnswers: [
+          "3*ln(2)",
+          "3ln(2)",
+          "3ln2",
+          "ln(2^3)",
+          "ln(8)",
+          "2.079",
+          "2.08",
+          "2.079441542",
+          "2.0794",
+          "≈2.08",
+          "≈2.079",
+          "3*ln2"
+        ],
+        
+        options: {
+          allowSymbolic: true,  // Accept symbolic expressions with ln
+          tolerance: 0.01,      // 1% tolerance for decimal approximations
+          acceptedUnits: [],
+          requiredUnit: null
+        },
+        
+        explanation: "This problem involves a definite integral where **both limits depend on \\( x \\)**. This is the most general case of FTC1 and requires applying the formula for both limits.\n\n" +
+          "**FTC1 with Both Variable Limits:**\n\n" +
+          "$$\\frac{d}{dx}\\left(\\int_{a(x)}^{b(x)} f(t)\\,dt\\right) = f(b(x)) \\cdot b'(x) - f(a(x)) \\cdot a'(x)$$\n\n" +
+          "---\n\n" +
+          "**Step 1: Identify all components**\n\n" +
+          "| **Component** | **Value** | **Derivative** |\n" +
+          "|---|---|---|\n" +
+          "| Integrand \\( f(t) \\) | \\( \\ln(1 + t^2) \\) | — |\n" +
+          "| Upper limit \\( b(x) \\) | \\( x^2 \\) | \\( b'(x) = 2x \\) |\n" +
+          "| Lower limit \\( a(x) \\) | \\( \\frac{1}{x} = x^{-1} \\) | \\( a'(x) = -x^{-2} = -\\frac{1}{x^2} \\) |\n\n" +
+          "---\n\n" +
+          "**Step 2: Apply the general FTC1 formula**\n\n" +
+          "$$N'(x) = f(b(x)) \\cdot b'(x) - f(a(x)) \\cdot a'(x)$$\n\n" +
+          "Substitute our components:\n\n" +
+          "$$N'(x) = \\ln(1 + (x^2)^2) \\cdot 2x - \\ln\\left(1 + \\left(\\frac{1}{x}\\right)^2\\right) \\cdot \\left(-\\frac{1}{x^2}\\right)$$\n\n" +
+          "---\n\n" +
+          "**Step 3: Simplify the expressions**\n\n" +
+          "**Upper limit term:**\n\n" +
+          "$$1 + (x^2)^2 = 1 + x^4$$\n\n" +
+          "So: $$\\ln(1 + x^4) \\cdot 2x$$\n\n" +
+          "**Lower limit term:**\n\n" +
+          "$$1 + \\left(\\frac{1}{x}\\right)^2 = 1 + \\frac{1}{x^2} = \\frac{x^2 + 1}{x^2}$$\n\n" +
+          "So: $$\\ln\\left(\\frac{x^2 + 1}{x^2}\\right) \\cdot \\left(-\\frac{1}{x^2}\\right)$$\n\n" +
+          "Notice the **negative sign** in front of \\( a'(x) \\) becomes **positive** in the formula:\n\n" +
+          "$$N'(x) = \\ln(1 + x^4) \\cdot 2x + \\ln\\left(\\frac{x^2 + 1}{x^2}\\right) \\cdot \\frac{1}{x^2}$$\n\n" +
+          "---\n\n" +
+          "**Step 4: Evaluate at \\( x = 1 \\)**\n\n" +
+          "**Upper limit contribution:**\n\n" +
+          "$$b(1) = 1^2 = 1$$\n\n" +
+          "$$f(b(1)) = \\ln(1 + 1^2) = \\ln(2)$$\n\n" +
+          "$$b'(1) = 2(1) = 2$$\n\n" +
+          "**First term:** $$\\ln(2) \\cdot 2 = 2\\ln(2)$$\n\n" +
+          "**Lower limit contribution:**\n\n" +
+          "$$a(1) = \\frac{1}{1} = 1$$\n\n" +
+          "$$f(a(1)) = \\ln(1 + 1^2) = \\ln(2)$$\n\n" +
+          "$$a'(1) = -\\frac{1}{1^2} = -1$$\n\n" +
+          "**Second term:** $$-\\ln(2) \\cdot (-1) = \\ln(2)$$\n\n" +
+          "---\n\n" +
+          "**Step 5: Combine the terms**\n\n" +
+          "$$N'(1) = 2\\ln(2) + \\ln(2) = 3\\ln(2)$$\n\n" +
+          "**Decimal approximation:**\n\n" +
+          "$$3\\ln(2) \\approx 3 \\times 0.693147 \\approx 2.079$$\n\n" +
+          "---\n\n" +
+          "**Answer: \\( N'(1) = 3\\ln(2) \\approx 2.079 \\)**\n\n" +
+          "---\n\n" +
+          "**Key Insight:**\n\n" +
+          "When **both limits are variable**, you must:\n" +
+          "1. Evaluate the integrand at the **upper limit** and multiply by its derivative (positive contribution)\n" +
+          "2. Evaluate the integrand at the **lower limit** and multiply by its derivative (negative contribution - note the minus sign in the formula!)\n\n" +
+          "In this problem, both limits happened to equal 1 when \\( x = 1 \\), so both gave \\( \\ln(2) \\), but with different coefficients from the derivatives.\n\n" +
+          "---\n\n" +
+          "**Summary Table - FTC1 for Different Cases:**\n\n" +
+          "| **Integral Form** | **Formula** | **Complexity** |\n" +
+          "|---|---|---|\n" +
+          "| \\( \\int_a^x f(t)\\,dt \\) | \\( f(x) \\) | Simplest - no chain rule |\n" +
+          "| \\( \\int_a^{g(x)} f(t)\\,dt \\) | \\( f(g(x)) \\cdot g'(x) \\) | Chain rule for upper limit |\n" +
+          "| \\( \\int_{h(x)}^b f(t)\\,dt \\) | \\( -f(h(x)) \\cdot h'(x) \\) | Chain rule for lower limit |\n" +
+          "| \\( \\int_{h(x)}^{g(x)} f(t)\\,dt \\) | \\( f(g(x))g'(x) - f(h(x))h'(x) \\) | **Both limits variable** |\n\n" +
+          "**Remember:** The lower limit always gets a **minus sign** in front!"
+      },
     {
       id: "q22",
       moduleId: "ITMTB",
       weekId: "ITMTB_W2",
       type: "open-ended",
-      text: "Evaluate the integral $$\\int_{-1}^{2} x^{3}\\,dx$$ and interpret the result as an area or a difference of areas.",
+      text: "Evaluate the integral $$\\int_{-1}^{2} x^{3}\\,dx$$.",
       correctAnswers: ["15/4", "3.75", "3 3/4"],
       explanation:
         "**Step 1: Evaluate the integral**\n\n" +
@@ -1079,7 +1186,7 @@ export const questions = [
         "To determine the **units** of a definite integral, analyze what happens during integration:\n\n" +
         "**Step 1: Recall what a definite integral represents**\n" +
         "The integral $$\\int_a^b f(x)\\,dx$$ can be thought of as:\n" +
-        "- The *sum of infinitely many small rectangles* of height $$f(x)$$ and width $$dx$$.\n" +
+        "- The **sum of infinitely many small rectangles** of height $$f(x)$$ and width $$dx$$.\n" +
         "- Each small term $$f(x)\\,dx$$ has units equal to the product of the units of $$f(x)$$ and $$x$$.\n\n" +
         "**Step 2: Apply this to the given physical quantities**\n" +
         "- $$f(x)$$ is measured in **newtons (N)** → this represents **force**.\n" +
@@ -1157,7 +1264,7 @@ export const questions = [
     weekId: "ITMTB_W2",
     type: "open-ended",
     text: "Evaluate the definite integral \\( \\int_{1}^{3} \\left(\\frac{3x^2 + 4x + 1}{x}\\right) dx \\).",
-    correctAnswers: ["19 + 3ln(3)", "19 + 3ln3", "19 + 3 ln(3)"],
+    correctAnswers: ["19 + 3ln(3)", "19 + 3ln3", "19 + 3 ln(3)", "21,099","21,0986", "21.1", "21.0986", "≈21.1", "≈21.0986"],
     explanation:
         "To evaluate $$\\int_{1}^{3}\\left(\\frac{3x^2+4x+1}{x}\\right)dx$$, we simplify and integrate term by term.\n\n" +
         "**Step 1: Simplify the integrand**\n" +

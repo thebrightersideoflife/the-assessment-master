@@ -740,6 +740,16 @@ export const modules = [
             quizId: "ITMTB_W5_Quiz"
           },
           {
+            id: "ITMTB_W5_T1.2",
+            name: "Lesson 1: Cylindrical Shells (Continued)",
+            competency: "Assessment Coverage: MyLMS 10.1",
+            explanation: "",
+            example: "",
+            studyTip: "",
+            videoUrl: "https://www.youtube.com/watch?v=bWiG3SBDKio",
+            quizId: "ITMTB_W5_Quiz"
+          },
+          {
             id: "ITMTB_W5_T3",
             name: "Lesson 3: Arc Length",
             competency: "Assessment Coverage: 8.1 (Prescribed Textbook)",
