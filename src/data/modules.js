@@ -842,82 +842,97 @@ export const modules = [
         ]
       },
       {
-        id: "ITMTB_W7",
-        name: "Week 7",
-        title: "Methods of Solving First-Order Differential Equations",
-        topics: [
+            "id": "ITMTB_W7",
+            "name": "Week 7",
+            "title": "Methods of Solving First-Order Differential Equations",
+            "topics": [
               {
-                id: "ITMTB_W7_T1",
-                name: "Lesson 1: General First-Order Linear Differential Equations",
-                ompetency: "Assessment Coverage: MyLMS 14.1",
-                explanation: "A **first-order linear differential equation** is an equation of the form\n\n$$\\frac{dy}{dx} + P(x)y = Q(x),$$\n\nwhere $P(x)$ and $Q(x)$ are known functions of $x$. These equations are called *linear* because $y$ and $\\dfrac{dy}{dx}$ appear only to the first power. To solve such equations, we use the **method of integrating factors (I.F.)**.\n\n**Solution Steps:**\n1. Identify $P(x)$ and $Q(x)$ by comparing with the standard form.\n2. Compute the integrating factor:\n\n$$I(x) = e^{\\int P(x)\\,dx}.$$\n\n3. Multiply the whole equation by $I(x)$ to make the left-hand side an exact derivative:\n\n$$\\frac{d}{dx}[I(x)y] = I(x)Q(x).$$\n\n4. Integrate both sides with respect to $x$:\n\n$$I(x)y = \\int I(x)Q(x)\\,dx + C.$$\n\n5. Solve for $y$:\n\n$$y = \\frac{1}{I(x)}\\left(\\int I(x)Q(x)\\,dx + C\\right).$$",
-                example: "Example: Solve $\\dfrac{dy}{dx} + 2y = e^{-x}.$\n\n1. Identify: $P(x) = 2$, $Q(x) = e^{-x}$.\n2. Compute I.F.: $I(x) = e^{\\int 2\\,dx} = e^{2x}$.\n3. Multiply through by $e^{2x}$:\n\n$$e^{2x}\\frac{dy}{dx} + 2e^{2x}y = e^{x}.$$\n\n4. Recognize the left-hand side as a derivative:\n\n$$\\frac{d}{dx}(e^{2x}y) = e^{x}.$$\n\n5. Integrate both sides:\n\n$$e^{2x}y = e^{x} + C.$$\n\n6. Solve for $y$:\n\n$$y = e^{-x} + Ce^{-2x}.$$",
-                studyTip: "Always check that your differential equation is in standard form $\\frac{dy}{dx} + P(x)y = Q(x)$ before starting. This ensures that $P(x)$ and $Q(x)$ are identified correctly for the integrating factor.",
-                videoUrl: "https://youtu.be/gd1FYn86P0c",
-                quizId: "ITMTB_W7_Quiz"
+                "id": "ITMTB_W7_T1",
+                "name": "Lesson 1: General First-Order Linear Differential Equations",
+                "competency": "Assessment Coverage: MyLMS 14.1",
+                "explanation": "A **first-order linear differential equation** is an equation of the form\n\n$$\\frac{dy}{dx} + P(x)y = Q(x),$$\n\nwhere $P(x)$ and $Q(x)$ depend only on $x$. The standard method of solving such equations is the **Integrating Factor Method**.\n\n**Steps to Solve:**\n1. Write the equation in standard form.\n2. Identify $P(x)$ and compute the integrating factor:\n\n$$I(x) = e^{\\int P(x)\\,dx}.$$\n\n3. Multiply the entire equation by $I(x)$.\n4. Recognize the left side as the derivative of $I(x)y$.\n5. Integrate both sides.\n6. Solve for $y$.",
+                "example": "Example: Solve $\\dfrac{dy}{dx} + 2y = e^{-x}.$\n\n1. $P(x)=2$, $Q(x)=e^{-x}$.\n2. I.F.: $I(x) = e^{2x}$.\n3. Multiply: $e^{2x} \\dfrac{dy}{dx} + 2 e^{2x} y = e^{x}$.\n4. Recognize derivative: $\\dfrac{d}{dx}(e^{2x} y) = e^x$.\n5. Integrate: $e^{2x}y = e^x + C$.\n6. Solve: $y = e^{-x} + C e^{-2x}$.\n\n**Additional Example:** Solve $\\dfrac{dy}{dx} - 3y = 6$.\n\n1. I.F.: $I(x)=e^{-3x}$.\n2. Multiply: $e^{-3x} \\frac{dy}{dx} - 3 e^{-3x} y = 6e^{-3x}$.\n3. LHS = $\\dfrac{d}{dx}(y e^{-3x})$.\n4. Integrate: $y e^{-3x} = -2e^{-3x} + C$.\n5. Solve: $y = -2 + C e^{3x}$.",
+                "studyTip": "Always convert to standard form first. Missing this step leads to incorrect integrating factors.",
+                "videoUrl": "https://youtu.be/gd1FYn86P0c",
+                "quizId": "ITMTB_W7_Quiz"
               },
               {
-                id: "ITMTB_W7_T1",
-                name: "Lesson 1: General First-Order Linear Differential Equations (Continued)",
-                ompetency: "Assessment Coverage: MyLMS 14.1",
-                explanation: "",
-                example: "",
-                studyTip: "",
-                videoUrl: "https://youtu.be/v5C0CtRAK10",
-                quizId: "ITMTB_W7_Quiz"
+                "id": "ITMTB_W7_T1B",
+                "name": "Lesson 1: General First-Order Linear Differential Equations (Continued)",
+                "competency": "Assessment Coverage: MyLMS 14.1",
+                "explanation": "",
+                "example": "",
+                "studyTip": "",
+                "videoUrl": "https://youtu.be/v5C0CtRAK10",
+                "quizId": "ITMTB_W7_Quiz"
+              },
+
+              {
+                "id": "ITMTB_W7_T2",
+                "name": "Lesson 2: Applications of First-Order Linear Equations",
+                "competency": "Assessment Coverage: MyLMS 14.1",
+                "explanation": "Many physical processes are modeled by first-order linear differential equations.\n\n**Common Applications:**\n1. **Radioactive Decay:**\n\n$$\\frac{dN}{dt} + \\lambda N = 0.$$\n\n2. **Newton’s Law of Cooling:**\n\n$$\\frac{dT}{dt} + k(T - T_a) = 0.$$\n\n3. **RL Circuits:**\n\n$$L\\frac{dI}{dt} + RI = E.$$\n\nThese all have identical structure and are solved with an integrating factor.",
+                "example": "Example: Cooling Law.\n\nSolve $\\dfrac{dT}{dt} + 0.5T = 20$.\n\n1. I.F.: $e^{0.5 t}$.\n2. Multiply: $e^{0.5 t}\\dfrac{dT}{dt} + 0.5 e^{0.5t} T = 20 e^{0.5 t}$.\n3. LHS = $\\dfrac{d}{dt}(Te^{0.5t})$.\n4. Integrate: $T e^{0.5 t} = 40 e^{0.5 t} + C$.\n5. Solve: $T = 40 + C e^{-0.5 t}$.\n\n**Interpretation:** The temperature approaches 40°C as time increases.",
+                "studyTip": "Identify what physical quantity the constant $C$ represents. Often it describes an initial temperature, current, or amount.",
+                "videoUrl": "https://www.youtube.com/watch?v=b53nhCEXlGI",
+                "quizId": "ITMTB_W7_Quiz"
+              },
+
+              {
+                "id": "ITMTB_W7_T2B",
+                "name": "Lesson 2: Applications of First-Order Linear Equations (Continued)",
+                "competency": "Assessment Coverage: MyLMS 14.1",
+                "explanation": "",
+                "example": "",
+                "studyTip": "",
+                "videoUrl": "https://www.youtube.com/watch?v=_bAjWNsNrQA",
+                "quizId": "ITMTB_W7_Quiz"
               },
               {
-                id: "ITMTB_W7_T2",
-                name: "Lesson 2: Applications of First-Order Linear Equations",
-                competency: "Assessment Coverage: MyLMS 14.1",
-                explanation: "First-order linear equations frequently model real-world phenomena where a quantity changes at a rate proportional to itself or to an external influence.\n\n**Common Applications:**\n\n(a) **Radioactive Decay**\n\n$$\\frac{dN}{dt} + \\lambda N = 0,$$\n\nwhere $N$ is the number of radioactive atoms and $\\lambda$ is the decay constant.\n\n(b) **Newton’s Law of Cooling**\n\n$$\\frac{dT}{dt} + k(T - T_a) = 0,$$\n\nwhere $T$ is the temperature of the object, $T_a$ is the ambient temperature, and $k$ is the cooling rate.\n\n(c) **RL Circuits**\n\n$$L\\frac{dI}{dt} + RI = E,$$\n\nwhere $I$ is current, $R$ is resistance, $L$ is inductance, and $E$ is applied voltage.",
-                example: "Example: Radioactive Decay.\n\n$$\\frac{dN}{dt} + \\lambda N = 0.$$\n\n1. Separate variables: $\\frac{dN}{N} = -\\lambda\\,dt.$\n2. Integrate: $\\ln|N| = -\\lambda t + C.$\n3. Exponentiate: $N = N_0 e^{-\\lambda t}.$\n\nThis shows that the quantity of radioactive material decreases exponentially over time.",
-                studyTip: "For application problems, identify the constants (like $k$, $\\lambda$, or $R/L$) and what they represent physically. It helps you check if your final formula makes sense (e.g., decays, cooling, or current flow).",
-                videoUrl: "https://www.youtube.com/watch?v=b53nhCEXlGI",
-                quizId: "ITMTB_W7_Quiz"
+                "id": "ITMTB_W7_T2C",
+                "name": "Lesson 2: Applications of First-Order Linear Equations (Continued)",
+                "competency": "Assessment Coverage: MyLMS 14.1",
+                "explanation": "",
+                "example": "",
+                "studyTip": "",
+                "videoUrl": "https://www.youtube.com/watch?v=zsOQ4lbeiWI",
+                "quizId": "ITMTB_W7_Quiz"
               },
+
               {
-                id: "ITMTB_W7_T2",
-                name: "Lesson 2: Applications of First-Order Linear Equations (Continued)",
-                ompetency: "Assessment Coverage: MyLMS 14.1",
-                explanation: "",
-                example: "",
-                studyTip: "",
-                videoUrl: "https://www.youtube.com/watch?v=_bAjWNsNrQA",
-                quizId: "ITMTB_W7_Quiz"
+                "id": "ITMTB_W7_T3",
+                "name": "Lesson 3: Separable Differential Equations — Definition & General Solution",
+                "competency": "Assessment Coverage: MyLMS 14.1",
+                "explanation": "A **separable differential equation** has the form\n\n$$\\frac{dy}{dx} = g(x) h(y),$$\n\nwhich can be rewritten as\n\n$$\\frac{1}{h(y)} dy = g(x) dx.$$",
+                "example": "Example: Solve $\\dfrac{dy}{dx} = xy$.\n\n1. Separate: $\\dfrac{dy}{y} = x dx$.\n2. Integrate: $\\ln|y| = \\dfrac{x^2}{2} + C$.\n3. Solve: $y = Ce^{x^2/2}$.\n\n**Additional Example:** Solve $\\dfrac{dy}{dx} = (3x^2)(2y)$.\n\n1. Separate: $\\dfrac{1}{y} dy = 6x^2 dx$.\n2. Integrate: $\\ln|y| = 2x^3 + C$.\n3. Solve: $y = Ce^{2x^3}$.",
+                "studyTip": "Ensure variables are fully separated before integrating—no $x$ should remain with $dy$ and no $y$ should remain with $dx$.",
+                "videoUrl": "http://www.youtube.com/watch?v=C7nuJcJriWM",
+                "quizId": "ITMTB_W7_Quiz"
               },
+
               {
-                id: "ITMTB_W7_T2",
-                name: "Lesson 2: Applications of First-Order Linear Equations (Continued)",
-                ompetency: "Assessment Coverage: MyLMS 14.1",
-                explanation: "",
-                example: "",
-                studyTip: "",
-                videoUrl: "https://www.youtube.com/watch?v=zsOQ4lbeiWI",
-                quizId: "ITMTB_W7_Quiz"
+                "id": "ITMTB_W7_T3A",
+                "name": "Lesson 3A: Method of Separation of Variables",
+                "competency": "Assessment Coverage: MyLMS 14.1",
+                "explanation": "The **Method of Separation of Variables** solves equations written as:\n\n$$M(y)\\,dy = N(x)\\,dx.$$",
+                "example": "Example: Solve $\\dfrac{dy}{dx} = 3y^2$.\n\n1. Separate: $\\dfrac{dy}{y^2} = 3 dx$.\n2. Integrate: $-\\dfrac{1}{y} = 3x + C$.\n3. Solve: $y = -\\dfrac{1}{3x + C}$.\n\n**Additional Example:** Solve $\\dfrac{dy}{dx} = (y+1)(x^2)$.\n\n1. Separate: $\\dfrac{dy}{y+1} = x^2 dx$.\n2. Integrate: $\\ln|y+1| = \\dfrac{x^3}{3} + C$.\n3. Solve: $y = -1 + C e^{x^3/3}$.",
+                "studyTip": "If an equation cannot be rearranged to isolate $dy$ with $y$-terms and $dx$ with $x$-terms, it is **not separable**.",
+                "videoUrl": "https://www.youtube.com/watch?v=7Y-frhf-1Zk",
+                "quizId": "ITMTB_W7_Quiz"
               },
+
               {
-                id: "ITMTB_W7_T3",
-                name: "Lesson 3: Separable Differential Equations — Definition & General Solution",
-                competency: "Assessment Coverage: MyLMS 14.1",
-                explanation: "A **separable differential equation** is a first-order equation that can be written as:\n\n$$\\frac{dy}{dx} = g(x)h(y),$$\n\nwhere $g(x)$ is a function of $x$ only and $h(y)$ is a function of $y$ only. These equations are *separable* because the variables can be separated to opposite sides of the equation, allowing direct integration.",
-                example: "Example 1: Solve $\\dfrac{dy}{dx} = xy.$\n\n1. Rewrite in separable form: $\\dfrac{dy}{y} = x\\,dx.$\n2. Integrate both sides:\n\n$$\\int \\frac{1}{y}\\,dy = \\int x\\,dx.$$ \n\n3. Simplify: $\\ln|y| = \\dfrac{x^2}{2} + C.$\n4. Exponentiate both sides: $y = Ce^{x^2/2}.$",
-                studyTip: "Always rearrange carefully to isolate $dy$ and $dx$. Once the variables are separated, integration is straightforward — but mixing $x$ and $y$ terms is a common source of errors.",
-                videoUrl: "http://www.youtube.com/watch?v=C7nuJcJriWM",
-                quizId: "ITMTB_W7_Quiz"
-              },
-              {
-                id: "ITMTB_W7_T4",
-                name: "Lesson 4: Separable Equations — Initial Conditions & Applied Problems",
-                competency: "Assessment Coverage: MyLMS 14.1",
-                explanation: "This part applies the separable-equation method to problems that include **initial conditions** or practical scenarios. An initial condition like $y(x_0) = y_0$ allows determination of the constant $C$, giving a *particular solution* instead of a general one.",
-                example: "Example 2: Solve $\\dfrac{dy}{dx} = x$, with $y(1) = 2.$\n\n1. Integrate directly: $\\int dy = \\int x\\,dx.$\n2. Simplify: $y = \\dfrac{x^2}{2} + C.$\n3. Apply initial condition: $2 = \\dfrac{1}{2} + C \\Rightarrow C = \\dfrac{3}{2}.$\n4. Hence, $y = \\dfrac{x^2}{2} + \\dfrac{3}{2}.$\n\nThis satisfies $y(1) = 2.$",
-                studyTip: "When using an initial condition, substitute it right after integration. This reduces mistakes and helps interpret the physical meaning of $C$ (e.g., initial population, temperature, or voltage).",
-                videoUrl: "https://www.youtube.com/watch?v=kwGukY_2qWQ",
-                quizId: "ITMTB_W7_Quiz"
+                "id": "ITMTB_W7_T4",
+                "name": "Lesson 4: Separable Equations — Initial Conditions & Applied Problems",
+                "competency": "Assessment Coverage: MyLMS 14.1",
+                "explanation": "Initial conditions allow solving for the constant $C$ and produce a *particular solution*:",
+                "example": "Example: Solve $\\dfrac{dy}{dx} = x$ with $y(1)=2$.\n\n1. Integrate: $y = \\dfrac{x^2}{2} + C$.\n2. Apply initial condition: $2 = \\dfrac{1}{2} + C \\Rightarrow C=\\dfrac{3}{2}$.\n3. Final solution: $y = \\dfrac{x^2}{2} + \\dfrac{3}{2}$.\n\n**Additional Example (Growth Model):**\n\nSolve $\\dfrac{dy}{dx} = 0.2 y$ with $y(0)=5$.\n1. Separate: $\\dfrac{dy}{y} = 0.2 dx$.\n2. Integrate: $\\ln y = 0.2x + C$.\n3. Apply initial condition: $5 = e^C \\Rightarrow e^C = 5$.\n4. Solution: $y = 5e^{0.2x}$.",
+                "studyTip": "Substitute the initial condition *immediately* after integration; it avoids losing the constant or mixing terms later.",
+                "videoUrl": "https://www.youtube.com/watch?v=kwGukY_2qWQ",
+                "quizId": "ITMTB_W7_Quiz"
               }
-        ]
-      }
+            ]
+          }
     ]
   }
 ];

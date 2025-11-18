@@ -7070,6 +7070,913 @@ export const questions = [
             "| \\( t = 2 \\) | 4.507 | 45% |\n" +
             "| \\( t \\to \\infty \\) | 10 | 100% |\n\n" +
             "The population grows rapidly at first, then slows as it approaches the carrying capacity \\( K = 10 \\)."
+        },
+        {
+          id: "q161",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          
+          text: "Find the general solution to the differential equation \\( \\displaystyle\\frac{dy}{dx} = 6x^2 \\).",
+          
+          correctAnswers: [
+            "2x^3 + C",
+            "2x^3+C",
+            "2*x^3 + C",
+            "C + 2x^3",
+            "2(x^3) + C"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This is the simplest type of separable differential equation where the right side depends only on \\( x \\).\n\n" +
+            "---\n\n" +
+            "**Step 1: Separate the variables**\n\n" +
+            "Move the \\( dx \\) term to the right side:\n\n" +
+            "$$dy = 6x^2\\,dx$$\n\n" +
+            "---\n\n" +
+            "**Step 2: Integrate both sides**\n\n" +
+            "$$\\int dy = \\int 6x^2\\,dx$$\n\n" +
+            "**Left side:** The integral of 1 with respect to \\( y \\) is simply \\( y \\)\n\n" +
+            "**Right side:** Apply the power rule \\( \\int x^n\\,dx = \\frac{x^{n+1}}{n+1} + C \\):\n\n" +
+            "$$y = 6 \\cdot \\frac{x^3}{3} + C$$\n\n" +
+            "$$y = 2x^3 + C$$\n\n" +
+            "---\n\n" +
+            "**Answer: \\( y = 2x^3 + C \\)**\n\n" +
+            "---\n\n" +
+            "**Key Concept - Simple Separable Equations:**\n\n" +
+            "When \\( \\frac{dy}{dx} = f(x) \\) (only depends on \\( x \\)), the solution is straightforward:\n\n" +
+            "$$y = \\int f(x)\\,dx$$\n\n" +
+            "**Remember:** Always include the constant of integration \\( C \\) for general solutions!"
+        },
+
+        // Question 162
+        {
+          id: "q162",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          
+          text: "Solve the differential equation \\( \\displaystyle\\frac{dy}{dx} = \\frac{y}{x} \\) for \\( x > 0, y > 0 \\).",
+          
+          correctAnswers: [
+            "y = Cx",
+            "y=Cx",
+            "y = C*x",
+            "Cx",
+            "C*x"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This equation requires true separation of variables - getting all \\( y \\) terms on one side and all \\( x \\) terms on the other.\n\n" +
+            "---\n\n" +
+            "**Step 1: Separate the variables**\n\n" +
+            "Divide both sides by \\( y \\) and multiply both sides by \\( dx \\):\n\n" +
+            "$$\\frac{1}{y}\\,dy = \\frac{1}{x}\\,dx$$\n\n" +
+            "---\n\n" +
+            "**Step 2: Integrate both sides**\n\n" +
+            "$$\\int \\frac{1}{y}\\,dy = \\int \\frac{1}{x}\\,dx$$\n\n" +
+            "Both integrals are natural logarithms:\n\n" +
+            "$$\\ln|y| = \\ln|x| + C_1$$\n\n" +
+            "---\n\n" +
+            "**Step 3: Solve for \\( y \\)**\n\n" +
+            "To isolate \\( y \\), exponentiate both sides:\n\n" +
+            "$$e^{\\ln|y|} = e^{\\ln|x| + C_1}$$\n\n" +
+            "Using exponent properties \\( e^{a+b} = e^a \\cdot e^b \\):\n\n" +
+            "$$|y| = e^{\\ln|x|} \\cdot e^{C_1}$$\n\n" +
+            "Since \\( e^{\\ln x} = x \\) and \\( e^{C_1} \\) is just another constant (call it \\( C \\)):\n\n" +
+            "$$y = Cx$$\n\n" +
+            "---\n\n" +
+            "**Answer: \\( y = Cx \\)**\n\n" +
+            "---\n\n" +
+            "**Key Pattern - Logarithmic Integration:**\n\n" +
+            "When you have \\( \\frac{dy}{dx} = \\frac{y}{x} \\), the pattern is:\n\n" +
+            "| **Step** | **Process** |\n" +
+            "|---|---|\n" +
+            "| Separate | \\( \\frac{dy}{y} = \\frac{dx}{x} \\) |\n" +
+            "| Integrate | \\( \\ln|y| = \\ln|x| + C_1 \\) |\n" +
+            "| Exponentiate | \\( y = e^{\\ln|x| + C_1} = Cx \\) |\n\n" +
+            "This represents a family of **straight lines through the origin** with slope \\( C \\)."
+        },
+
+        // Question 163
+        {
+          id: "q163",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          
+          text: "Determine the particular solution for \\( \\displaystyle\\frac{dy}{dx} = 4y \\) given the initial condition \\( y(0) = 3 \\).",
+          
+          correctAnswers: [
+            "y = 3e^(4x)",
+            "y=3e^(4x)",
+            "3e^(4x)",
+            "3*e^(4x)",
+            "y = 3*e^(4*x)"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This is an **exponential growth/decay** differential equation. The initial condition allows us to find the specific constant.\n\n" +
+            "---\n\n" +
+            "**Step 1: Find the general solution**\n\n" +
+            "Separate variables by dividing by \\( y \\) and multiplying by \\( dx \\):\n\n" +
+            "$$\\frac{1}{y}\\,dy = 4\\,dx$$\n\n" +
+            "Integrate both sides:\n\n" +
+            "$$\\int \\frac{1}{y}\\,dy = \\int 4\\,dx$$\n\n" +
+            "$$\\ln|y| = 4x + C_1$$\n\n" +
+            "Exponentiate both sides:\n\n" +
+            "$$y = e^{4x + C_1} = e^{C_1} \\cdot e^{4x}$$\n\n" +
+            "Let \\( C = e^{C_1} \\) (arbitrary positive constant):\n\n" +
+            "$$y = Ce^{4x}$$\n\n" +
+            "---\n\n" +
+            "**Step 2: Apply the initial condition**\n\n" +
+            "Substitute \\( x = 0 \\) and \\( y = 3 \\):\n\n" +
+            "$$3 = Ce^{4(0)}$$\n\n" +
+            "$$3 = Ce^0$$\n\n" +
+            "$$3 = C \\cdot 1$$\n\n" +
+            "$$C = 3$$\n\n" +
+            "---\n\n" +
+            "**Step 3: Write the particular solution**\n\n" +
+            "Substitute \\( C = 3 \\) back into the general solution:\n\n" +
+            "$$y = 3e^{4x}$$\n\n" +
+            "---\n\n" +
+            "**Answer: \\( y = 3e^{4x} \\)**\n\n" +
+            "---\n\n" +
+            "**Standard Form - Exponential Growth/Decay:**\n\n" +
+            "The differential equation \\( \\frac{dy}{dx} = ky \\) has the general solution:\n\n" +
+            "$$y = Ce^{kx}$$\n\n" +
+            "| **Value of \\( k \\)** | **Behavior** | **Example** |\n" +
+            "|---|---|---|\n" +
+            "| \\( k > 0 \\) | Exponential growth | Population growth |\n" +
+            "| \\( k < 0 \\) | Exponential decay | Radioactive decay |\n" +
+            "| \\( k = 4 \\) | Rapid growth | This problem |\n\n" +
+            "**Key Insight:** The initial condition \\( y(0) = y_0 \\) always gives \\( C = y_0 \\) because \\( e^0 = 1 \\)."
+        },
+
+        // Question 164
+        {
+          id: "q164",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          
+          text: "Find the general solution for the equation \\( \\displaystyle\\frac{dy}{dx} = e^{x-y} \\).",
+          
+          correctAnswers: [
+            "e^y = e^x + C",
+            "e^(y) = e^(x) + C",
+            "e^y=e^x+C",
+            "e^(y)=e^(x)+C"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This equation requires algebraic manipulation using **exponent rules** before separation.\n\n" +
+            "---\n\n" +
+            "**Step 1: Rewrite using exponent properties**\n\n" +
+            "Use the rule \\( e^{a-b} = \\frac{e^a}{e^b} \\):\n\n" +
+            "$$\\frac{dy}{dx} = e^{x-y} = \\frac{e^x}{e^y}$$\n\n" +
+            "---\n\n" +
+            "**Step 2: Separate the variables**\n\n" +
+            "Multiply both sides by \\( e^y \\) and \\( dx \\):\n\n" +
+            "$$e^y\\,dy = e^x\\,dx$$\n\n" +
+            "---\n\n" +
+            "**Step 3: Integrate both sides**\n\n" +
+            "$$\\int e^y\\,dy = \\int e^x\\,dx$$\n\n" +
+            "The integral of \\( e^u \\) is simply \\( e^u \\):\n\n" +
+            "$$e^y = e^x + C$$\n\n" +
+            "---\n\n" +
+            "**Answer: \\( e^y = e^x + C \\)**\n\n" +
+            "---\n\n" +
+            "**Note on Solution Form:**\n\n" +
+            "This solution is given in **implicit form** (we haven't solved for \\( y \\) explicitly). While we could solve for \\( y \\):\n\n" +
+            "$$y = \\ln(e^x + C)$$\n\n" +
+            "The implicit form \\( e^y = e^x + C \\) is often simpler and equally valid.\n\n" +
+            "---\n\n" +
+            "**Key Technique - Exponent Rule Separation:**\n\n" +
+            "| **Original Form** | **Rewrite As** | **Why?** |\n" +
+            "|---|---|---|\n" +
+            "| \\( e^{x-y} \\) | \\( \\frac{e^x}{e^y} \\) | Separates \\( x \\) and \\( y \\) |\n" +
+            "| \\( e^{x+y} \\) | \\( e^x \\cdot e^y \\) | Allows separation |\n" +
+            "| \\( e^{2x-3y} \\) | \\( \\frac{e^{2x}}{e^{3y}} \\) | General pattern |\n\n" +
+            "**Remember:** \\( \\int e^u\\,du = e^u + C \\) (the exponential is its own antiderivative!)"
+        },
+
+        // Question 165
+        {
+          id: "q165",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          
+          text: "What is the general solution to \\( \\displaystyle\\frac{dy}{dx} = y + 1 \\)?",
+          
+          correctAnswers: [
+            "y = Ce^x - 1",
+            "y=Ce^x-1",
+            "Ce^x - 1",
+            "Ce^(x) - 1",
+            "y = C*e^x - 1"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This equation requires treating \\( (y+1) \\) as a **single unit** during separation.\n\n" +
+            "---\n\n" +
+            "**Step 1: Separate the variables**\n\n" +
+            "Treat \\( (y+1) \\) as one term and divide by it:\n\n" +
+            "$$\\frac{1}{y+1}\\,dy = 1\\,dx$$\n\n" +
+            "or equivalently:\n\n" +
+            "$$\\frac{dy}{y+1} = dx$$\n\n" +
+            "---\n\n" +
+            "**Step 2: Integrate both sides**\n\n" +
+            "$$\\int \\frac{1}{y+1}\\,dy = \\int 1\\,dx$$\n\n" +
+            "**Left side:** Use substitution \\( u = y+1 \\), so \\( du = dy \\):\n\n" +
+            "$$\\int \\frac{1}{u}\\,du = \\ln|u| = \\ln|y+1|$$\n\n" +
+            "**Right side:**\n\n" +
+            "$$\\int 1\\,dx = x$$\n\n" +
+            "Therefore:\n\n" +
+            "$$\\ln|y+1| = x + C_1$$\n\n" +
+            "---\n\n" +
+            "**Step 3: Solve for \\( y \\)**\n\n" +
+            "Exponentiate both sides:\n\n" +
+            "$$e^{\\ln|y+1|} = e^{x + C_1}$$\n\n" +
+            "$$|y+1| = e^x \\cdot e^{C_1}$$\n\n" +
+            "Let \\( C = e^{C_1} \\) (or \\( C = \\pm e^{C_1} \\) to account for absolute value):\n\n" +
+            "$$y + 1 = Ce^x$$\n\n" +
+            "$$y = Ce^x - 1$$\n\n" +
+            "---\n\n" +
+            "**Answer: \\( y = Ce^x - 1 \\)**\n\n" +
+            "---\n\n" +
+            "**Key Pattern - Shifted Exponential Growth:**\n\n" +
+            "The differential equation \\( \\frac{dy}{dx} = y + a \\) has solution:\n\n" +
+            "$$y = Ce^x - a$$\n\n" +
+            "| **Equation** | **General Solution** | **Horizontal Asymptote** |\n" +
+            "|---|---|---|\n" +
+            "| \\( \\frac{dy}{dx} = y \\) | \\( y = Ce^x \\) | None (pure exponential) |\n" +
+            "| \\( \\frac{dy}{dx} = y + 1 \\) | \\( y = Ce^x - 1 \\) | \\( y = -1 \\) |\n" +
+            "| \\( \\frac{dy}{dx} = y - 3 \\) | \\( y = Ce^x + 3 \\) | \\( y = 3 \\) |\n\n" +
+            "**Tip:** The constant term in the differential equation becomes the **opposite sign** in the solution!"
+        },
+
+        // Question 166
+        {
+          id: "q166",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          
+          text: "Solve \\( \\displaystyle\\frac{dy}{dx} = xy^2 \\).",
+          
+          correctAnswers: [
+            "y = -2/(x^2 + C)",
+            "y=-2/(x^2+C)",
+            "y = -1/(0.5x^2 + C)",
+            "-2/(x^2 + C)",
+            "y=-1/(0.5*x^2+C)"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This equation involves a **negative power of \\( y \\)** after separation, requiring careful algebra.\n\n" +
+            "---\n\n" +
+            "**Step 1: Separate the variables**\n\n" +
+            "Divide by \\( y^2 \\) (or multiply by \\( y^{-2} \\)):\n\n" +
+            "$$y^{-2}\\,dy = x\\,dx$$\n\n" +
+            "or equivalently:\n\n" +
+            "$$\\frac{dy}{y^2} = x\\,dx$$\n\n" +
+            "---\n\n" +
+            "**Step 2: Integrate both sides**\n\n" +
+            "$$\\int y^{-2}\\,dy = \\int x\\,dx$$\n\n" +
+            "**Left side:** Using power rule with \\( n = -2 \\):\n\n" +
+            "$$\\int y^{-2}\\,dy = \\frac{y^{-1}}{-1} = -\\frac{1}{y}$$\n\n" +
+            "**Right side:**\n\n" +
+            "$$\\int x\\,dx = \\frac{x^2}{2}$$\n\n" +
+            "Therefore:\n\n" +
+            "$$-\\frac{1}{y} = \\frac{x^2}{2} + C_1$$\n\n" +
+            "---\n\n" +
+            "**Step 3: Solve for \\( y \\)**\n\n" +
+            "Multiply both sides by \\( -1 \\):\n\n" +
+            "$$\\frac{1}{y} = -\\frac{x^2}{2} - C_1$$\n\n" +
+            "Take the reciprocal to isolate \\( y \\):\n\n" +
+            "$$y = \\frac{1}{-\\frac{x^2}{2} - C_1}$$\n\n" +
+            "To clean this up, multiply numerator and denominator by \\( -2 \\), and let \\( C = 2C_1 \\):\n\n" +
+            "$$y = \\frac{-2}{x^2 + C}$$\n\n" +
+            "---\n\n" +
+            "**Answer: \\( y = \\frac{-2}{x^2 + C} \\)**\n\n" +
+            "---\n\n" +
+            "**Alternative Form:**\n\n" +
+            "You could also write this as:\n\n" +
+            "$$y = \\frac{-1}{0.5x^2 + C}$$\n\n" +
+            "Both forms are correct (just different choices for the constant).\n\n" +
+            "---\n\n" +
+            "**Key Technique - Negative Powers:**\n\n" +
+            "When you have \\( \\frac{dy}{dx} = f(x) \\cdot y^n \\) with \\( n \\neq 1 \\):\n\n" +
+            "| **Step** | **Process** |\n" +
+            "|---|---|\n" +
+            "| 1. Separate | \\( y^{-n}\\,dy = f(x)\\,dx \\) |\n" +
+            "| 2. Integrate | \\( \\frac{y^{-n+1}}{-n+1} = \\int f(x)\\,dx \\) |\n" +
+            "| 3. Solve for \\( y \\) | Take reciprocal if needed |\n\n" +
+            "**Common Mistake:** Forgetting to account for the negative sign when \\( n > 1 \\)!"
+        },
+
+        // Question 167
+        {
+          id: "q167",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "multiple-choice",
+          
+          text: "Which of the following algebraic steps correctly separates the variables for the equation \\( \\displaystyle\\frac{dy}{dx} = \\frac{x + 1}{y - 2} \\)?",
+          
+          options: [
+            "A. \\( dy = (x + 1)(y - 2)\\,dx \\)",
+            "B. \\( (y - 2)\\,dy = (x + 1)\\,dx \\)",
+            "C. \\( \\frac{dy}{x+1} = \\frac{dx}{y-2} \\)",
+            "D. \\( y\\,dy = x\\,dx \\)"
+          ],
+          
+          correctAnswers: ["B"],
+          
+          explanation: "This question tests your understanding of the **mechanical process of separating variables**.\n\n" +
+            "---\n\n" +
+            "**Starting Equation:**\n\n" +
+            "$$\\frac{dy}{dx} = \\frac{x + 1}{y - 2}$$\n\n" +
+            "---\n\n" +
+            "**Goal of Separation:**\n\n" +
+            "Get all \\( y \\)-terms (including \\( dy \\)) on one side and all \\( x \\)-terms (including \\( dx \\)) on the other.\n\n" +
+            "---\n\n" +
+            "**Step-by-Step Separation:**\n\n" +
+            "1. **Multiply both sides by \\( (y-2) \\)** (to move it from denominator to numerator):\n\n" +
+            "   $$(y-2) \\cdot \\frac{dy}{dx} = (x+1)$$\n\n" +
+            "2. **Multiply both sides by \\( dx \\)** (to separate differentials):\n\n" +
+            "   $$(y-2)\\,dy = (x+1)\\,dx$$\n\n" +
+            "---\n\n" +
+            "**Answer: B. \\( (y - 2)\\,dy = (x + 1)\\,dx \\)**\n\n" +
+            "---\n\n" +
+            "**Why the Other Options Are Wrong:**\n\n" +
+            "| **Option** | **Why It's Incorrect** |\n" +
+            "|---|---|\n" +
+            "| **A** | This multiplies the right side terms together instead of separating them |\n" +
+            "| **C** | The fractions are inverted incorrectly |\n" +
+            "| **D** | This ignores the constants (+1 and -2) entirely |\n\n" +
+            "---\n\n" +
+            "**General Separation Strategy:**\n\n" +
+            "For \\( \\frac{dy}{dx} = \\frac{f(x)}{g(y)} \\):\n\n" +
+            "1. Multiply both sides by \\( g(y) \\)\n" +
+            "2. Multiply both sides by \\( dx \\)\n" +
+            "3. Result: \\( g(y)\\,dy = f(x)\\,dx \\)\n\n" +
+            "**Memory Tip:** Think of \\( \\frac{dy}{dx} \\) as a fraction you can manipulate algebraically (even though technically it's not!)."
+        },
+
+        // Question 168
+        {
+          id: "q168",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          
+          text: "Solve the differential equation \\( \\displaystyle\\frac{dy}{dx} = y\\cos(x) \\).",
+          
+          correctAnswers: [
+            "y = Ce^(sin(x))",
+            "y=Ce^(sin(x))",
+            "Ce^(sin(x))",
+            "y = C*e^(sin(x))",
+            "Ce^(sin x)"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This equation combines **exponential growth with trigonometric integration**.\n\n" +
+            "---\n\n" +
+            "**Step 1: Separate the variables**\n\n" +
+            "Divide by \\( y \\) and multiply by \\( dx \\):\n\n" +
+            "$$\\frac{1}{y}\\,dy = \\cos(x)\\,dx$$\n\n" +
+            "---\n\n" +
+            "**Step 2: Integrate both sides**\n\n" +
+            "$$\\int \\frac{1}{y}\\,dy = \\int \\cos(x)\\,dx$$\n\n" +
+            "**Left side:**\n\n" +
+            "$$\\ln|y|$$\n\n" +
+            "**Right side:** Recall that \\( \\int \\cos(x)\\,dx = \\sin(x) + C \\):\n\n" +
+            "$$\\sin(x) + C_1$$\n\n" +
+            "Therefore:\n\n" +
+            "$$\\ln|y| = \\sin(x) + C_1$$\n\n" +
+            "---\n\n" +
+            "**Step 3: Solve for \\( y \\)**\n\n" +
+            "Exponentiate both sides:\n\n" +
+            "$$e^{\\ln|y|} = e^{\\sin(x) + C_1}$$\n\n" +
+            "$$|y| = e^{\\sin(x)} \\cdot e^{C_1}$$\n\n" +
+            "Let \\( C = \\pm e^{C_1} \\):\n\n" +
+            "$$y = Ce^{\\sin(x)}$$\n\n" +
+            "---\n\n" +
+            "**Answer: \\( y = Ce^{\\sin(x)} \\)**\n\n" +
+            "---\n\n" +
+            "**Key Observation:**\n\n" +
+            "The exponent contains \\( \\sin(x) \\), not \\( x \\) itself! This creates an **oscillating exponential** behavior:\n\n" +
+            "- When \\( \\sin(x) = 1 \\) (at \\( x = \\frac{\\pi}{2} \\)): \\( y = Ce^1 = Ce \\)\n" +
+            "- When \\( \\sin(x) = 0 \\) (at \\( x = 0, \\pi \\)): \\( y = Ce^0 = C \\)\n" +
+            "- When \\( \\sin(x) = -1 \\) (at \\( x = \\frac{3\\pi}{2} \\)): \\( y = Ce^{-1} = \\frac{C}{e} \\)\n\n" +
+            "---\n\n" +
+            "**Common Trig Integrals for Separation:**\n\n" +
+            "| **Function** | **Integral** |\n" +
+            "|---|---|\n" +
+            "| \\( \\cos(x) \\) | \\( \\sin(x) + C \\) |\n" +
+            "| \\( \\sin(x) \\) | \\( -\\cos(x) + C \\) |\n" +
+            "| \\( \\sec^2(x) \\) | \\( \\tan(x) + C \\) |\n\n" +
+            "**Remember:** Always check if your integral results in a trigonometric function in the exponent!"
+        },
+
+        // Question 169
+        {
+          id: "q169",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          
+          text: "Solve the initial value problem \\( \\displaystyle\\frac{dy}{dx} = \\frac{2x}{y} \\) given \\( y(0) = -4 \\).",
+          
+          correctAnswers: [
+            "y = -sqrt(2x^2 + 16)",
+            "y=-sqrt(2x^2+16)",
+            "y = -√(2x^2 + 16)",
+            "-sqrt(2x^2 + 16)",
+            "-√(2x^2 + 16)"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This problem requires **careful attention to the sign** when applying the initial condition.\n\n" +
+            "---\n\n" +
+            "**Step 1: Separate the variables**\n\n" +
+            "Multiply both sides by \\( y \\) and \\( dx \\):\n\n" +
+            "$y\\,dy = 2x\\,dx$\n\n" +
+            "---\n\n" +
+            "**Step 2: Integrate both sides**\n\n" +
+            "$\\int y\\,dy = \\int 2x\\,dx$\n\n" +
+            "$\\frac{y^2}{2} = x^2 + C_1$\n\n" +
+            "---\n\n" +
+            "**Step 3: Simplify**\n\n" +
+            "Multiply both sides by 2 to clean up:\n\n" +
+            "$y^2 = 2x^2 + C$\n\n" +
+            "(where \\( C = 2C_1 \\))\n\n" +
+            "---\n\n" +
+            "**Step 4: Apply the initial condition**\n\n" +
+            "Substitute \\( x = 0 \\) and \\( y = -4 \\):\n\n" +
+            "$(-4)^2 = 2(0)^2 + C$\n\n" +
+            "$16 = 0 + C$\n\n" +
+            "$C = 16$\n\n" +
+            "So we have:\n\n" +
+            "$y^2 = 2x^2 + 16$\n\n" +
+            "---\n\n" +
+            "**Step 5: Solve for \\( y \\) (CRUCIAL STEP!)**\n\n" +
+            "Take the square root of both sides:\n\n" +
+            "$y = \\pm\\sqrt{2x^2 + 16}$\n\n" +
+            "**Which sign do we choose?**\n\n" +
+            "Since the initial condition gives \\( y(0) = -4 \\) (which is **negative**), we must choose the **negative root**:\n\n" +
+            "$y = -\\sqrt{2x^2 + 16}$\n\n" +
+            "---\n\n" +
+            "**Answer: \\( y = -\\sqrt{2x^2 + 16} \\)**\n\n" +
+            "---\n\n" +
+            "**Critical Concept - Sign Choice:**\n\n" +
+            "When you have \\( y^2 = f(x) \\) and take the square root, you get:\n\n" +
+            "$y = \\pm\\sqrt{f(x)}$\n\n" +
+            "The **initial condition** determines which sign to use:\n\n" +
+            "| **Initial \\( y \\)-value** | **Choose** | **Example** |\n" +
+            "|---|---|---|\n" +
+            "| Positive | \\( + \\sqrt{f(x)} \\) | \\( y(0) = 4 \\) |\n" +
+            "| Negative | \\( - \\sqrt{f(x)} \\) | \\( y(0) = -4 \\) |\n" +
+            "| Zero | Either (check context) | \\( y(0) = 0 \\) |\n\n" +
+            "**Verification:** Check at \\( x = 0 \\):\n\n" +
+            "$y = -\\sqrt{2(0)^2 + 16} = -\\sqrt{16} = -4$ ✓"
+        },
+
+        // Question 170
+        {
+          id: "q170",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          
+          text: "Find the general solution for \\( \\displaystyle\\frac{dy}{dx} = 3x^2y^2 \\).",
+          
+          correctAnswers: [
+            "y = -1/(x^3 + C)",
+            "y=-1/(x^3+C)",
+            "-1/(x^3 + C)",
+            "y = -1/(x^3+C)"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This equation combines **polynomial and negative power** integration.\n\n" +
+            "---\n\n" +
+            "**Step 1: Separate the variables**\n\n" +
+            "Divide by \\( y^2 \\) to move it to the left:\n\n" +
+            "$\\frac{1}{y^2}\\,dy = 3x^2\\,dx$\n\n" +
+            "or equivalently:\n\n" +
+            "$y^{-2}\\,dy = 3x^2\\,dx$\n\n" +
+            "---\n\n" +
+            "**Step 2: Integrate both sides**\n\n" +
+            "$\\int y^{-2}\\,dy = \\int 3x^2\\,dx$\n\n" +
+            "**Left side:** Use power rule with \\( n = -2 \\):\n\n" +
+            "$\\frac{y^{-1}}{-1} = -\\frac{1}{y}$\n\n" +
+            "**Right side:**\n\n" +
+            "$3 \\cdot \\frac{x^3}{3} = x^3$\n\n" +
+            "Therefore:\n\n" +
+            "$-\\frac{1}{y} = x^3 + C$\n\n" +
+            "---\n\n" +
+            "**Step 3: Solve for \\( y \\)**\n\n" +
+            "Multiply both sides by \\( -1 \\):\n\n" +
+            "$\\frac{1}{y} = -(x^3 + C)$\n\n" +
+            "$\\frac{1}{y} = -x^3 - C$\n\n" +
+            "Take the reciprocal:\n\n" +
+            "$y = \\frac{1}{-x^3 - C}$\n\n" +
+            "Factor out the negative:\n\n" +
+            "$y = \\frac{-1}{x^3 + C}$\n\n" +
+            "---\n\n" +
+            "**Answer: \\( y = \\frac{-1}{x^3 + C} \\)**\n\n" +
+            "---\n\n" +
+            "**Key Pattern - Negative Power with Polynomial:**\n\n" +
+            "For \\( \\frac{dy}{dx} = f(x) \\cdot y^{-n} \\) where \\( n > 1 \\):\n\n" +
+            "| **Equation** | **General Solution** |\n" +
+            "|---|---|\n" +
+            "| \\( \\frac{dy}{dx} = xy^2 \\) | \\( y = \\frac{-2}{x^2 + C} \\) |\n" +
+            "| \\( \\frac{dy}{dx} = 3x^2y^2 \\) | \\( y = \\frac{-1}{x^3 + C} \\) |\n" +
+            "| \\( \\frac{dy}{dx} = x^2y^3 \\) | \\( y = \\pm\\sqrt{\\frac{-2}{\\frac{2x^3}{3} + C}} \\) |\n\n" +
+            "**Pattern Recognition:** When you integrate \\( y^{-2} \\), you always get \\( -\\frac{1}{y} \\), leading to solutions with \\( y \\) in the denominator."
+        },
+
+        // Question 171
+        {
+          id: "q171",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          
+          text: "Solve the differential equation \\( \\displaystyle\\frac{dy}{dx} = 2(y - 5) \\).",
+          
+          correctAnswers: [
+            "y = Ce^(2x) + 5",
+            "y=Ce^(2x)+5",
+            "Ce^(2x) + 5",
+            "y = C*e^(2x) + 5",
+            "Ce^(2*x) + 5"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This is another **shifted exponential growth** problem, similar to q165.\n\n" +
+            "---\n\n" +
+            "**Step 1: Separate the variables**\n\n" +
+            "Treat \\( (y-5) \\) as a single unit. Divide by it:\n\n" +
+            "$\\frac{1}{y-5}\\,dy = 2\\,dx$\n\n" +
+            "---\n\n" +
+            "**Step 2: Integrate both sides**\n\n" +
+            "$\\int \\frac{1}{y-5}\\,dy = \\int 2\\,dx$\n\n" +
+            "**Left side:** Use substitution \\( u = y-5 \\), so \\( du = dy \\):\n\n" +
+            "$\\int \\frac{1}{u}\\,du = \\ln|u| = \\ln|y-5|$\n\n" +
+            "**Right side:**\n\n" +
+            "$\\int 2\\,dx = 2x$\n\n" +
+            "Therefore:\n\n" +
+            "$\\ln|y-5| = 2x + C_1$\n\n" +
+            "---\n\n" +
+            "**Step 3: Solve for \\( y \\)**\n\n" +
+            "Exponentiate both sides:\n\n" +
+            "$e^{\\ln|y-5|} = e^{2x + C_1}$\n\n" +
+            "$|y-5| = e^{2x} \\cdot e^{C_1}$\n\n" +
+            "Let \\( C = \\pm e^{C_1} \\):\n\n" +
+            "$y - 5 = Ce^{2x}$\n\n" +
+            "$y = Ce^{2x} + 5$\n\n" +
+            "---\n\n" +
+            "**Answer: \\( y = Ce^{2x} + 5 \\)**\n\n" +
+            "---\n\n" +
+            "**Equilibrium Solution:**\n\n" +
+            "Notice that \\( y = 5 \\) is a **constant solution** (called an equilibrium):\n\n" +
+            "If \\( y = 5 \\), then \\( \\frac{dy}{dx} = 2(5-5) = 0 \\)\n\n" +
+            "This means the horizontal line \\( y = 5 \\) is a solution where the function doesn't change.\n\n" +
+            "---\n\n" +
+            "**Behavior Analysis:**\n\n" +
+            "| **Initial Condition** | **Behavior** | **Why?** |\n" +
+            "|---|---|---|\n" +
+            "| \\( y(0) > 5 \\) | Grows exponentially away from 5 | \\( C > 0 \\), \\( y-5 > 0 \\) |\n" +
+            "| \\( y(0) = 5 \\) | Stays at 5 forever | \\( C = 0 \\), equilibrium |\n" +
+            "| \\( y(0) < 5 \\) | Decays exponentially toward \\(-\\infty\\) | \\( C < 0 \\), \\( y-5 < 0 \\) |\n\n" +
+            "**Key Insight:** The constant 5 acts as an **unstable equilibrium** - solutions move away from it."
+        },
+
+        // Question 172
+        {
+          id: "q172",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          
+          text: "Find the general solution for \\( \\displaystyle\\frac{dy}{dx} = \\frac{\\sqrt{x}}{y} \\).",
+          
+          correctAnswers: [
+            "y^2 = (4/3)x^(3/2) + C",
+            "y^2=(4/3)x^(3/2)+C",
+            "y^2 = (4/3)*x^(3/2) + C",
+            "y^2 = 4x^(3/2)/3 + C"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This problem involves integrating a **fractional exponent**, requiring the power rule with \\( n = \\frac{1}{2} \\).\n\n" +
+            "---\n\n" +
+            "**Step 1: Rewrite the square root**\n\n" +
+            "Express \\( \\sqrt{x} \\) as a fractional exponent:\n\n" +
+            "$\\frac{dy}{dx} = \\frac{x^{1/2}}{y}$\n\n" +
+            "---\n\n" +
+            "**Step 2: Separate the variables**\n\n" +
+            "Multiply both sides by \\( y \\) and \\( dx \\):\n\n" +
+            "$y\\,dy = x^{1/2}\\,dx$\n\n" +
+            "---\n\n" +
+            "**Step 3: Integrate both sides**\n\n" +
+            "$\\int y\\,dy = \\int x^{1/2}\\,dx$\n\n" +
+            "**Left side:**\n\n" +
+            "$\\frac{y^2}{2}$\n\n" +
+            "**Right side:** Use power rule with \\( n = \\frac{1}{2} \\):\n\n" +
+            "$\\int x^{1/2}\\,dx = \\frac{x^{1/2 + 1}}{1/2 + 1} = \\frac{x^{3/2}}{3/2} = \\frac{2}{3}x^{3/2}$\n\n" +
+            "Therefore:\n\n" +
+            "$\\frac{y^2}{2} = \\frac{2}{3}x^{3/2} + C_1$\n\n" +
+            "---\n\n" +
+            "**Step 4: Simplify**\n\n" +
+            "Multiply both sides by 2 to isolate \\( y^2 \\):\n\n" +
+            "$y^2 = 2 \\cdot \\frac{2}{3}x^{3/2} + C$\n\n" +
+            "$y^2 = \\frac{4}{3}x^{3/2} + C$\n\n" +
+            "(where \\( C = 2C_1 \\))\n\n" +
+            "---\n\n" +
+            "**Answer: \\( y^2 = \\frac{4}{3}x^{3/2} + C \\)**\n\n" +
+            "---\n\n" +
+            "**Note on Implicit vs. Explicit Solutions:**\n\n" +
+            "This answer is in **implicit form** (\\( y^2 = ... \\)). We could solve explicitly:\n\n" +
+            "$y = \\pm\\sqrt{\\frac{4}{3}x^{3/2} + C}$\n\n" +
+            "But the implicit form is often cleaner and equally valid.\n\n" +
+            "---\n\n" +
+            "**Key Technique - Fractional Exponent Integration:**\n\n" +
+            "| **Integral** | **Result** | **Remember** |\n" +
+            "|---|---|---|\n" +
+            "| \\( \\int \\sqrt{x}\\,dx \\) | \\( \\frac{2}{3}x^{3/2} + C \\) | \\( n = \\frac{1}{2} \\) |\n" +
+            "| \\( \\int x^{1/3}\\,dx \\) | \\( \\frac{3}{4}x^{4/3} + C \\) | \\( n = \\frac{1}{3} \\) |\n" +
+            "| \\( \\int \\frac{1}{\\sqrt{x}}\\,dx \\) | \\( 2\\sqrt{x} + C \\) | \\( n = -\\frac{1}{2} \\) |\n\n" +
+            "**Formula:** \\( \\int x^n\\,dx = \\frac{x^{n+1}}{n+1} + C \\) works for **all** \\( n \\neq -1 \\), including fractions!"
+        },
+
+        // Question 173
+        {
+          id: "q173",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "open-ended",
+          
+          text: "Solve the differential equation \\( \\displaystyle\\frac{dy}{dx} = y^2\\sin(x) \\).",
+          
+          correctAnswers: [
+            "y = 1/(cos(x) + C)",
+            "y=1/(cos(x)+C)",
+            "1/(cos(x) + C)",
+            "y = 1/(cos x + C)"
+          ],
+          
+          options: {
+            allowSymbolic: true,
+            tolerance: 0.001,
+            acceptedUnits: [],
+            requiredUnit: null
+          },
+          
+          explanation: "This equation combines **negative powers of \\( y \\)** with **trigonometric integration**.\n\n" +
+            "---\n\n" +
+            "**Step 1: Separate the variables**\n\n" +
+            "Divide by \\( y^2 \\) and multiply by \\( dx \\):\n\n" +
+            "$y^{-2}\\,dy = \\sin(x)\\,dx$\n\n" +
+            "or equivalently:\n\n" +
+            "$\\frac{dy}{y^2} = \\sin(x)\\,dx$\n\n" +
+            "---\n\n" +
+            "**Step 2: Integrate both sides**\n\n" +
+            "$\\int y^{-2}\\,dy = \\int \\sin(x)\\,dx$\n\n" +
+            "**Left side:**\n\n" +
+            "$\\int y^{-2}\\,dy = \\frac{y^{-1}}{-1} = -\\frac{1}{y}$\n\n" +
+            "**Right side:** Recall that \\( \\int \\sin(x)\\,dx = -\\cos(x) + C \\):\n\n" +
+            "$-\\cos(x) + C_1$\n\n" +
+            "Therefore:\n\n" +
+            "$-\\frac{1}{y} = -\\cos(x) + C_1$\n\n" +
+            "---\n\n" +
+            "**Step 3: Algebraic manipulation**\n\n" +
+            "Multiply everything by \\( -1 \\):\n\n" +
+            "$\\frac{1}{y} = \\cos(x) - C_1$\n\n" +
+            "Let \\( C = -C_1 \\) (just renaming the constant):\n\n" +
+            "$\\frac{1}{y} = \\cos(x) + C$\n\n" +
+            "---\n\n" +
+            "**Step 4: Solve for \\( y \\)**\n\n" +
+            "Take the reciprocal:\n\n" +
+            "$y = \\frac{1}{\\cos(x) + C}$\n\n" +
+            "---\n\n" +
+            "**Answer: \\( y = \\frac{1}{\\cos(x) + C} \\)**\n\n" +
+            "---\n\n" +
+            "**Behavior Analysis:**\n\n" +
+            "This solution has **vertical asymptotes** where the denominator equals zero:\n\n" +
+            "$\\cos(x) + C = 0$\n\n" +
+            "$\\cos(x) = -C$\n\n" +
+            "For example, if \\( C = 0 \\):\n\n" +
+            "$y = \\frac{1}{\\cos(x)}$\n\n" +
+            "This has vertical asymptotes at \\( x = \\frac{\\pi}{2}, \\frac{3\\pi}{2}, ... \\) where \\( \\cos(x) = 0 \\).\n\n" +
+            "---\n\n" +
+            "**Key Integration Formulas:**\n\n" +
+            "| **Function** | **Integral** | **Common Mistake** |\n" +
+            "|---|---|---|\n" +
+            "| \\( \\sin(x) \\) | \\( -\\cos(x) + C \\) | Forgetting the negative sign |\n" +
+            "| \\( \\cos(x) \\) | \\( \\sin(x) + C \\) | None (straightforward) |\n" +
+            "| \\( y^{-2} \\) | \\( -y^{-1} + C \\) | Wrong sign or wrong exponent |\n\n" +
+            "**Remember:** When integrating \\( \\sin(x) \\), the result is \\( -\\cos(x) \\) (negative!)"
+        },
+
+        // Question 174 - Bonus comparison question
+        {
+          id: "q174",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "multiple-choice",
+          
+          text: "Which of the following differential equations has the solution \\( y = Ce^x + 3 \\)?",
+          
+          options: [
+            "A. \\( \\displaystyle\\frac{dy}{dx} = y + 3 \\)",
+            "B. \\( \\displaystyle\\frac{dy}{dx} = y - 3 \\)",
+            "C. \\( \\displaystyle\\frac{dy}{dx} = y \\)",
+            "D. \\( \\displaystyle\\frac{dy}{dx} = 3y \\)"
+          ],
+          
+          correctAnswers: ["B"],
+          
+          explanation: "This question tests your understanding of the relationship between **differential equations and their solutions**.\n\n" +
+            "---\n\n" +
+            "**Given Solution:**\n\n" +
+            "$y = Ce^x + 3$\n\n" +
+            "---\n\n" +
+            "**Method: Work backwards by differentiating**\n\n" +
+            "Find \\( \\frac{dy}{dx} \\):\n\n" +
+            "$\\frac{dy}{dx} = \\frac{d}{dx}(Ce^x + 3)$\n\n" +
+            "$= Ce^x + 0$\n\n" +
+            "$= Ce^x$\n\n" +
+            "---\n\n" +
+            "**Now express this in terms of \\( y \\)**\n\n" +
+            "From the solution, we know:\n\n" +
+            "$y = Ce^x + 3$\n\n" +
+            "Solve for \\( Ce^x \\):\n\n" +
+            "$Ce^x = y - 3$\n\n" +
+            "---\n\n" +
+            "**Substitute back:**\n\n" +
+            "$\\frac{dy}{dx} = Ce^x = y - 3$\n\n" +
+            "---\n\n" +
+            "**Answer: B. \\( \\displaystyle\\frac{dy}{dx} = y - 3 \\)**\n\n" +
+            "---\n\n" +
+            "**Why the Other Options Are Wrong:**\n\n" +
+            "Let's verify by solving each option:\n\n" +
+            "| **Option** | **Differential Equation** | **General Solution** | **Match?** |\n" +
+            "|---|---|---|\n" +
+            "| **A** | \\( \\frac{dy}{dx} = y + 3 \\) | \\( y = Ce^x - 3 \\) | ❌ (wrong sign) |\n" +
+            "| **B** | \\( \\frac{dy}{dx} = y - 3 \\) | \\( y = Ce^x + 3 \\) | ✅ |\n" +
+            "| **C** | \\( \\frac{dy}{dx} = y \\) | \\( y = Ce^x \\) | ❌ (no constant) |\n" +
+            "| **D** | \\( \\frac{dy}{dx} = 3y \\) | \\( y = Ce^{3x} \\) | ❌ (wrong exponent) |\n\n" +
+            "---\n\n" +
+            "**Key Pattern Recognition:**\n\n" +
+            "For shifted exponential solutions:\n\n" +
+            "$y = Ce^{kx} + a \\implies \\frac{dy}{dx} = k(y - a)$\n\n" +
+            "**Examples:**\n" +
+            "- \\( y = Ce^x + 3 \\) comes from \\( \\frac{dy}{dx} = y - 3 \\)\n" +
+            "- \\( y = Ce^{2x} - 5 \\) comes from \\( \\frac{dy}{dx} = 2(y + 5) \\)\n" +
+            "- \\( y = Ce^{-x} + 1 \\) comes from \\( \\frac{dy}{dx} = -(y - 1) \\)"
+        },
+
+        // Question 175 - Comprehensive review
+        {
+          id: "q175",
+          moduleId: "ITMTB",
+          weekId: "ITMTB_W7",
+          type: "multiple-choice",
+          
+          text: "Which method should be used FIRST when solving \\( \\displaystyle\\frac{dy}{dx} = \\frac{e^{2x}}{y^3} \\)?",
+          
+          options: [
+            "A. Integration by parts",
+            "B. Separation of variables",
+            "C. Substitution \\( u = e^{2x} \\)",
+            "D. Partial fractions"
+          ],
+          
+          correctAnswers: ["B"],
+          
+          explanation: "This question tests your ability to **recognize when separation of variables applies**.\n\n" +
+            "---\n\n" +
+            "**Given Equation:**\n\n" +
+            "$\\frac{dy}{dx} = \\frac{e^{2x}}{y^3}$\n\n" +
+            "---\n\n" +
+            "**Key Observation:**\n\n" +
+            "The right side can be written as:\n\n" +
+            "$\\frac{dy}{dx} = \\frac{f(x)}{g(y)}$\n\n" +
+            "where \\( f(x) = e^{2x} \\) and \\( g(y) = y^3 \\)\n\n" +
+            "This is the **perfect form** for separation of variables!\n\n" +
+            "---\n\n" +
+            "**Solution Process:**\n\n" +
+            "**Step 1:** Separate\n\n" +
+            "$y^3\\,dy = e^{2x}\\,dx$\n\n" +
+            "**Step 2:** Integrate\n\n" +
+            "$\\int y^3\\,dy = \\int e^{2x}\\,dx$\n\n" +
+            "$\\frac{y^4}{4} = \\frac{e^{2x}}{2} + C$\n\n" +
+            "**Step 3:** Solve for \\( y \\) if needed\n\n" +
+            "$y^4 = 2e^{2x} + C$\n\n" +
+            "$y = \\sqrt[4]{2e^{2x} + C}$\n\n" +
+            "---\n\n" +
+            "**Answer: B. Separation of variables**\n\n" +
+            "---\n\n" +
+            "**Why the Other Options Don't Work:**\n\n" +
+            "| **Method** | **When to Use** | **Why Not Here?** |\n" +
+            "|---|---|---|\n" +
+            "| **A. Integration by parts** | \\( \\int u\\,dv \\) form with product | No product to integrate |\n" +
+            "| **B. Separation of variables** | \\( \\frac{dy}{dx} = f(x)g(y) \\) form | ✅ **This is the right choice!** |\n" +
+            "| **C. Substitution** | To simplify integrals | Not needed yet; separate first |\n" +
+            "| **D. Partial fractions** | Rational functions | No rational function here |\n\n" +
+            "---\n\n" +
+            "**Recognition Guide - When to Use Separation of Variables:**\n\n" +
+            "✅ **Use separation when:**\n" +
+            "- The right side can be written as \\( f(x) \\cdot g(y) \\) or \\( \\frac{f(x)}{g(y)} \\)\n" +
+            "- You can algebraically move all \\( y \\)-terms to one side and \\( x \\)-terms to the other\n" +
+            "- The equation has the form \\( \\frac{dy}{dx} = \\) [something separable]\n\n" +
+            "❌ **Don't use separation when:**\n" +
+            "- The equation has terms like \\( xy \\) or \\( x + y \\) that can't be separated\n" +
+            "- You see \\( \\frac{dy}{dx} + p(x)y = q(x) \\) (use integrating factor instead)\n" +
+            "- The equation is not first-order\n\n" +
+            "---\n\n" +
+            "**Quick Check - Is It Separable?**\n\n" +
+            "| **Equation** | **Separable?** | **Why?** |\n" +
+            "|---|---|---|\n" +
+            "| \\( \\frac{dy}{dx} = xy \\) | ✅ Yes | \\( \\frac{dy}{y} = x\\,dx \\) |\n" +
+            "| \\( \\frac{dy}{dx} = x + y \\) | ❌ No | Can't separate \\( x + y \\) |\n" +
+            "| \\( \\frac{dy}{dx} = \\frac{x}{y} \\) | ✅ Yes | \\( y\\,dy = x\\,dx \\) |\n" +
+            "| \\( \\frac{dy}{dx} = \\frac{e^{2x}}{y^3} \\) | ✅ Yes | \\( y^3\\,dy = e^{2x}\\,dx \\) |\n" +
+            "| \\( \\frac{dy}{dx} + 2y = x \\) | ❌ No | Linear, use integrating factor |\n\n" +
+            "**Pro Tip:** Always look for the pattern \\( \\frac{dy}{dx} = \\frac{f(x)}{g(y)} \\) - this screams \"separation of variables!\""
         }
 
 ]
