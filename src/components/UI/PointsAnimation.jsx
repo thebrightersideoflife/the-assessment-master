@@ -64,9 +64,9 @@ const PointsAnimation = ({ points, previousTotal = 0, onComplete }) => {
   }, [points, previousTotal, onComplete]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm animate-fadeIn">
-      <div className="relative">
-        {/* Arc Stars Animation */}
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm animate-fadeIn px-4">
+      <div className="relative w-full max-w-md">
+        {/* Arc Stars Animation - Responsive Positioning */}
         {showStars && (
           <>
             {/* Left Star */}
@@ -75,80 +75,79 @@ const PointsAnimation = ({ points, previousTotal = 0, onComplete }) => {
               style={{ 
                 animation: 'starPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards',
                 animationDelay: '0ms',
-                transform: 'translate(calc(-50% - 4rem), calc(-50% - 1rem))'
+                transform: 'translate(calc(-50% - 2.5rem), calc(-50% - 0.5rem))'
               }}
             >
-              <span className="text-4xl">⭐</span>
+              <span className="text-2xl sm:text-4xl">⭐</span>
             </div>
-
             {/* Center Star */}
             <div 
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
               style={{ 
                 animation: 'starPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards',
                 animationDelay: '150ms',
-                transform: 'translate(-50%, calc(-50% - 3rem))'
+                transform: 'translate(-50%, calc(-50% - 2rem))'
               }}
             >
-              <span className="text-4xl">⭐</span>
+              <span className="text-2xl sm:text-4xl">⭐</span>
             </div>
-
             {/* Right Star */}
             <div 
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
               style={{ 
                 animation: 'starPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards',
                 animationDelay: '300ms',
-                transform: 'translate(calc(-50% + 4rem), calc(-50% - 1rem))'
+                transform: 'translate(calc(-50% + 2.5rem), calc(-50% - 0.5rem))'
               }}
             >
-              <span className="text-4xl">⭐</span>
+              <span className="text-2xl sm:text-4xl">⭐</span>
             </div>
           </>
         )}
 
-        {/* Points Counter Card */}
+        {/* Points Counter Card - Responsive Layout */}
         <div className="relative bg-gradient-to-r from-[#4169E1] via-[#5B9BD5] to-[#3498DB] p-[3px] rounded-3xl shadow-2xl">
-          <div className="bg-white rounded-[21px] px-12 py-8 min-w-[400px]">
+          <div className="bg-white rounded-[21px] px-6 sm:px-12 py-6 sm:py-8">
             {phase === 'quiz' ? (
               // Phase 1: Show quiz points
-              <div className="flex items-center justify-center gap-4">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
                 <span 
-                  className="text-6xl"
+                  className="text-4xl sm:text-6xl"
                   style={{ animation: 'diamondBounce 0.6s ease-in-out infinite' }}
                 >
                   💎
                 </span>
                 <div className="text-center">
-                  <div className="text-5xl font-black bg-gradient-to-r from-[#4169E1] via-[#5B9BD5] to-[#3498DB] bg-clip-text text-transparent">
+                  <div className="text-3xl sm:text-5xl font-black bg-gradient-to-r from-[#4169E1] via-[#5B9BD5] to-[#3498DB] bg-clip-text text-transparent">
                     +{currentPoints}
                   </div>
-                  <div className="text-sm text-gray-600 font-semibold mt-1">
+                  <div className="text-xs sm:text-sm text-gray-600 font-semibold mt-1">
                     Points Earned!
                   </div>
                 </div>
               </div>
             ) : (
-              // Phase 2: Show addition to total
-              <div className="space-y-4">
-                <div className="flex items-center justify-center gap-3">
+              // Phase 2: Show addition to total - Mobile Optimized
+              <div className="space-y-3 sm:space-y-4">
+                {/* Calculation Row - Responsive */}
+                <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-gray-400">
+                    <div className="text-lg sm:text-2xl font-bold text-gray-400">
                       {previousTotal}
                     </div>
-                    <div className="text-xs text-gray-500">Previous</div>
+                    <div className="text-[10px] sm:text-xs text-gray-500">Previous</div>
                   </div>
-                  <div className="text-3xl text-[#4169E1] font-black">+</div>
+                  <div className="text-2xl sm:text-3xl text-[#4169E1] font-black">+</div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-[#4169E1]">
+                    <div className="text-lg sm:text-2xl font-bold text-[#4169E1]">
                       {points}
                     </div>
-                    <div className="text-xs text-[#4169E1] font-semibold">Earned</div>
+                    <div className="text-[10px] sm:text-xs text-[#4169E1] font-semibold">Earned</div>
                   </div>
-                  <div className="text-3xl text-gray-300 font-black">=</div>
+                  <div className="text-2xl sm:text-3xl text-gray-300 font-black">=</div>
                   <div className="text-center">
                     <span 
-                      className="text-4xl"
+                      className="text-3xl sm:text-4xl"
                       style={{ animation: 'diamondBounce 0.6s ease-in-out infinite' }}
                     >
                       💎
@@ -156,11 +155,12 @@ const PointsAnimation = ({ points, previousTotal = 0, onComplete }) => {
                   </div>
                 </div>
                 
-                <div className="text-center border-t-2 border-gray-200 pt-4">
-                  <div className="text-5xl font-black bg-gradient-to-r from-[#4169E1] via-[#5B9BD5] to-[#3498DB] bg-clip-text text-transparent">
+                {/* Total Display */}
+                <div className="text-center border-t-2 border-gray-200 pt-3 sm:pt-4">
+                  <div className="text-3xl sm:text-5xl font-black bg-gradient-to-r from-[#4169E1] via-[#5B9BD5] to-[#3498DB] bg-clip-text text-transparent">
                     {currentTotal}
                   </div>
-                  <div className="text-sm text-gray-700 font-bold mt-1">
+                  <div className="text-xs sm:text-sm text-gray-700 font-bold mt-1">
                     New Total Points!
                   </div>
                 </div>
@@ -184,7 +184,7 @@ const PointsAnimation = ({ points, previousTotal = 0, onComplete }) => {
               transform: scale(1) rotate(360deg);
             }
           }
-
+          
           @keyframes diamondBounce {
             0%, 100% {
               transform: translateY(0);
