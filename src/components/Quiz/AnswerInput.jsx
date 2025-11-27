@@ -175,21 +175,7 @@ const AnswerInput = ({
             {isCorrect ? (
               'Correct! Well done.'
             ) : (
-              <span className="flex items-center gap-2 flex-wrap">
-                <span>Incorrect. The answer was:</span>
-                <span className="inline-flex items-center">
-                  {Array.isArray(correctAnswer)
-                    ? correctAnswer.map((ans, i) => (
-                        <span key={i} className="mx-1">
-                          {renderMath(ans)}
-                          {i < correctAnswer.length - 1 && (
-                            <span className="text-gray-500 mx-1">or</span>
-                          )}
-                        </span>
-                      ))
-                    : renderMath(correctAnswer)}
-                </span>
-              </span>
+              'Incorrect.'
             )}
           </span>
         </div>

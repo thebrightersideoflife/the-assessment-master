@@ -221,8 +221,8 @@ An advanced educational platform inspired by Siyavula's pedagogical approach, fe
 
 ### Demo Content
 
-- **ITMTA (Calculus)**: Derivatives, integrals, limits
-- **ITMTB (Linear Algebra)**: Matrices, vectors, transformations
+- **ITMTA (Calculus Part 1)**: Derivatives
+- **ITMTB (Calculus Part 2)**: Integrals, Application of Derivatives and Integrals
 
 ### Test Features
 
